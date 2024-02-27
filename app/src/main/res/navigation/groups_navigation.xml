@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_groups">
+
+    <fragment
+        android:id="@+id/nav_groups"
+        android:name="berlin.mfn.naturblick.ui.species.groups.GroupsFragment"
+        android:label="@string/species_portraits"
+        tools:layout="@layout/fragment_groups" >
+        <action
+            android:id="@+id/action_nav_groups_to_nav_portraits"
+            app:destination="@id/nav_portraits" >
+        </action>
+    </fragment>
+
+    <activity
+        android:id="@+id/nav_portraits"
+        android:name="berlin.mfn.naturblick.ui.species.specieslist.SpeciesListActivity">
+        <argument
+            android:name="query"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="group"
+            app:argType="string"
+            app:nullable="true"
+            />
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="true"
+            />
+        <argument
+            android:name="is_open"
+            app:argType="boolean"
+            app:nullable="false"
+            />
+    </activity>
+</navigation>

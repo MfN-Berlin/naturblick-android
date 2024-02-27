@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="berlin.mfn.naturblick.ui.fieldbook.observation.ObservationViewModel" />
+
+        <variable
+            name="fetchingLocation"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimary">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/fragment_observation_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <berlin.mfn.naturblick.ui.shared.BottomSheetView
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/default_elevation"
+            android:focusable="true"
+            app:layout_behavior="berlin.mfn.naturblick.utils.StartOpenBehavior">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <berlin.mfn.naturblick.ui.shared.HRView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hr_height" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/default_margin">
+
+                        <ImageView
+                            android:id="@+id/species_image"
+                            android:layout_width="@dimen/avatar_size"
+                            android:layout_height="@dimen/avatar_size"
+                            app:imageUrlThumbnailCrop="@{model.currentObservationAndSpecies.species.avatarUrl}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/species"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_margin"
+                            android:layout_marginTop="@dimen/avatar_text_offset"
+                            android:text="@string/species"
+                            android:textAppearance="?attr/textAppearanceCaption"
+                            android:textColor="@color/primary_200"
+                            app:layout_constraintEnd_toStartOf="@id/button_select_species"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toEndOf="@id/species_image"
+                            app:layout_constraintTop_toTopOf="@id/species_image"
+                            app:layout_constraintVertical_bias="0" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_margin"
+                            android:layout_marginBottom="@dimen/avatar_text_offset"
+                            android:text="@{model.currentObservationAndSpecies.species != null ? model.currentObservationAndSpecies.species.nameWithFallback : @string/no_species_selected}"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/button_select_species"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toEndOf="@id/species_image"
+                            app:layout_constraintTop_toBottomOf="@id/species"
+                            app:layout_constraintVertical_bias="0" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@id/button_select_species"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_margin"
+                            android:text="@string/change"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/name"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <berlin.mfn.naturblick.ui.shared.HRView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hr_height" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingTop="@dimen/default_margin">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_margin"
+                            android:hint="@string/location"
+                            android:onClick="@{() -> model.changeLocation(model.currentObservation.coordinatesState)}"
+                            app:layout_constraintBottom_toTopOf="@id/quantity"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/ic_place_24px">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
+                                android:inputType="text"
+                                android:onClick="@{() -> model.changeLocation(model.currentObservation.coordinatesState)}"
+                                android:text='@{model.currentObservation.coordinatesState != null ? @string/location_text(model.currentObservation.latitudeString, model.currentObservation.longitudeString) : fetchingLocation ? @string/fetching_location : @string/no_location}' />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/quantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/default_margin"
+                            android:layout_marginBottom="@dimen/default_margin"
+                            android:hint="@string/quantity"
+                            app:layout_constraintBottom_toTopOf="@+id/behavior"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/location"
+                            app:startIconDrawable="@drawable/ic_amount">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:afterTextChanged="@{(e) -> model.individualsChanged(e.toString())}"
+                                android:inputType="number"
+                                android:text="@{model.currentObservation.individualsState.toString()}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/behavior"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/default_margin"
+                            android:layout_marginBottom="@dimen/default_margin"
+                            app:layout_constraintBottom_toTopOf="@+id/details"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/quantity"
+                            android:hint="@string/observation"
+                            app:startIconDrawable="@drawable/ic_place_24px">
+
+                            <AutoCompleteTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:afterTextChanged="@{(e) -> model.behaviorChanged(e.toString())}"
+                                android:inputType="none"
+                                android:editable="false"
+                                android:text="@{model.currentObservation.behaviorState}"
+                                app:setAdapter="@{model.currentBehaviorList}"
+                                />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/default_margin"
+                            android:layout_marginBottom="@dimen/default_margin"
+                            android:hint="@string/details"
+                            app:layout_constraintBottom_toTopOf="@+id/button_sheet"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/behavior"
+                            app:startIconDrawable="@drawable/ic_details">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editText2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:afterTextChanged="@{(e) -> model.detailsChanged(e.toString())}"
+                                android:inputType="text|textMultiLine"
+                                android:text="@{model.currentObservation.detailsState}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:id="@+id/button_sheet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/sheet"
+                            android:elevation="@dimen/default_elevation"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/default_margin"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/details">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/delete"
+                                style="@style/Widget.Naturblick.OutlinedErrorButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="50"
+                                android:text="@string/delete" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/save"
+                                style="@style/Widget.MaterialComponents.Button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_margin"
+                                android:layout_weight="50"
+                                android:enabled="@{model.currentObservation.hasChanges()}"
+                                android:text="@string/save" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </berlin.mfn.naturblick.ui.shared.BottomSheetView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

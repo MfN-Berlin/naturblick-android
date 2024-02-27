@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.Naturblick.DarkBackgroundOverlay"
+        android:clipChildren="false"
+        android:paddingBottom="@dimen/double_margin">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:text="@string/home_identify_animals_and_plants"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/record_a_bird"
+            layout="@layout/fragment_home_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            app:background="@{@drawable/ic_button_background}"
+            app:icon="@{@drawable/ic_microphone}"
+            app:layout_constraintEnd_toStartOf="@+id/select_characteristics"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_home"
+            app:layout_constraintWidth_percent="0.25"
+            app:text="@{@string/record_a_bird}" />
+
+        <include
+            android:id="@+id/select_characteristics"
+            layout="@layout/fragment_home_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            app:background="@{@drawable/ic_button_background}"
+            app:icon="@{@drawable/ic_features}"
+            app:layout_constraintEnd_toStartOf="@+id/photograph_a_plant"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/record_a_bird"
+            app:layout_constraintTop_toTopOf="@id/record_a_bird"
+            app:layout_constraintWidth_percent="0.25"
+            app:text="@{@string/select_characteristics}" />
+
+        <include
+            android:id="@+id/photograph_a_plant"
+            layout="@layout/fragment_home_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            app:background="@{@drawable/ic_button_background}"
+            app:icon="@{@drawable/ic_photo24}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/select_characteristics"
+            app:layout_constraintTop_toTopOf="@id/record_a_bird"
+            app:layout_constraintWidth_percent="0.25"
+            app:text="@{@string/photograph_a_plant}" />
+
+        <include
+            android:id="@+id/field_book"
+            layout="@layout/fragment_home_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            app:background="@{@drawable/ic_secondary_button_background}"
+            app:icon="@{@drawable/ic_feldbuch24}"
+            app:layout_constraintEnd_toStartOf="@+id/species_portraits"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/record_a_bird"
+            app:layout_constraintWidth_percent="0.22"
+            app:text="@{@string/field_book}" />
+
+        <include
+            android:id="@+id/species_portraits"
+            layout="@layout/fragment_home_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            app:background="@{@drawable/ic_secondary_button_background}"
+            app:icon="@{@drawable/ic_specportraits}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/field_book"
+            app:layout_constraintTop_toTopOf="@id/field_book"
+            app:layout_constraintWidth_percent="0.22"
+            app:text="@{@string/species_portraits}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

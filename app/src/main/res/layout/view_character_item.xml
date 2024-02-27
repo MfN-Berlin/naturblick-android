@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="character"
+            type="berlin.mfn.naturblick.room.CharacterWithValues" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/character_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{character.character.name}"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintBottom_toTopOf="@id/character_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/character_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{character.character.description}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/half_margin"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:visibility="@{character.character.description != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/character_values"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/character_name"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <berlin.mfn.naturblick.ui.character.CharacterValues
+            android:id="@+id/character_values"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:padding="@dimen/half_margin"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/character_description">
+
+        </berlin.mfn.naturblick.ui.character.CharacterValues>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

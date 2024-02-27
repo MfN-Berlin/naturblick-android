@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="trackingModel"
+            type="berlin.mfn.naturblick.utils.TrackingViewModel" />
+    </data>
+
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.mapbox.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            mapbox:mapbox_cameraTargetLat="51.163375"
+            mapbox:mapbox_cameraTargetLng="10.447683"
+            mapbox:mapbox_cameraZoom="5.0" />
+
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="@dimen/fab_margin"
+            app:efab_icon="@drawable/ic_add"
+            app:efab_orientation="portrait"
+            app:efab_size="mini"
+            app:layout_anchor="@id/toggle_gps_container"
+            app:layout_anchorGravity="top|end"
+            style="@style/Theme.Naturblick.FABOverlay"
+            />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_square_logo"
+            app:label_text="@string/create_manual" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_photo_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_photo24"
+            app:label_text="@string/photograph_a_plant" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_audio_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_audio24"
+            app:label_text="@string/record_a_bird" />
+
+        <LinearLayout
+            android:id="@+id/toggle_gps_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/fab_margin"
+            android:paddingBottom="@dimen/fab_margin"
+            app:layout_anchor="@id/list_button"
+            app:layout_anchorGravity="top|end">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/toggle_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="mini"
+                android:src="@{ trackingModel.track ? @drawable/ic_round_gps_fixed_24 : @drawable/ic_round_gps_not_fixed_24}"
+                style="@style/Theme.Naturblick.FABOverlay"/>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/design_fab_size_mini"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:text="@string/observation_list"
+            app:icon="@drawable/ic_baseline_list_24"
+            style="@style/Theme.Naturblick.FABOverlay"/>
+
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+
+</layout>

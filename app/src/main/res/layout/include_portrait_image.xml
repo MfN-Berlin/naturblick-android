@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="berlin.mfn.naturblick.BuildConfig" />
+
+        <variable
+            name="image"
+            type="berlin.mfn.naturblick.room.ImageWithSizes" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/portrait_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:imageWithSizesRoundCorners='@{image}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_cc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_copyright_24"
+            app:backgroundTint="#4C000000"
+            android:layout_margin="@dimen/half_margin"
+            android:padding="@dimen/small_margin"
+            app:layout_constraintTop_toTopOf="@id/portrait_image"
+            app:layout_constraintEnd_toEndOf="@id/portrait_image"
+            app:elevation="0dp"
+            app:pressedTranslationZ="0dp"
+            app:hoveredFocusedTranslationZ="0dp"
+            app:fabCustomSize="@dimen/fab_micro_size"
+            app:maxImageSize="@dimen/fab_micro_max_icon_size"
+         />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/portrait_image_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@{image.image.text}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="@id/portrait_image"
+            app:layout_constraintTop_toBottomOf="@id/portrait_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

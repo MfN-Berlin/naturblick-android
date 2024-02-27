@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="behavior_inside">in Gebäude</string>
+    <string name="plant_behavior_losing_leafs">Blätter abwerfend</string>
+    <string name="plant_behavior_blooming">blühend</string>
+    <string name="plant_behavior_carrying_fruits">Früchte tragend</string>
+    <string name="plant_behavior_with_buds">knospend</string>
+    <string name="plant_behavior_new_shoots">neue Triebe</string>
+    <string name="plant_behavior_withered">verblüht</string>
+    <string name="animal_behavior_on_a_flower">an einer Blüte</string>
+    <string name="animal_behavior_nest">Bau/Nest</string>
+    <string name="animal_behavior_bite_marks">Fraßspuren</string>
+    <string name="animal_behavior_shell">Gehäuse/Schale</string>
+    <string name="animal_behavior_carcass">Kadaver (Totes Tier)</string>
+    <string name="animal_behavior_cocoon">Kokon</string>
+    <string name="animal_behavior_feces">Kot</string>
+    <string name="animal_behavior_eggs">Laich/Eier</string>
+    <string name="animal_behavior_call">Laut/Gesang/Ruf</string>
+    <string name="animal_behavior_track">Spur</string>
+</resources>

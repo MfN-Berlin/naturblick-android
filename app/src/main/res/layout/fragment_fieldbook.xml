@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_fieldbook"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_fieldbook_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:dividerItemDecoration="@{true}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="@dimen/fab_margin"
+            app:efab_icon="@drawable/ic_add"
+            app:efab_orientation="portrait"
+            app:efab_size="mini"
+            app:layout_anchor="@id/map_button_container"
+            app:layout_anchorGravity="top|end"
+            style="@style/Theme.Naturblick.FABOverlay"/>
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_square_logo"
+            app:label_text="@string/create_manual" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_photo_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_photo24"
+            app:label_text="@string/photograph_a_plant" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_audio_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_audio24"
+            app:label_text="@string/record_a_bird" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_gallery_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_phone_action_image"
+            app:label_text="@string/add_image_from_gallery" />
+
+        <LinearLayout
+            android:id="@+id/map_button_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:padding="@dimen/fab_margin"
+            android:clipToPadding="false">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/map_button"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/design_fab_size_mini"
+                android:text="@string/observation_map"
+                app:icon="@drawable/ic_map"
+                style="@style/Theme.Naturblick.FABOverlay"/>
+        </LinearLayout>
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+</layout>

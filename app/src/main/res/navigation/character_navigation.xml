@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_character_groups">
+
+    <fragment
+        android:id="@+id/nav_character_groups"
+        android:name="berlin.mfn.naturblick.ui.character.CharacterGroupsFragment"
+        android:label="@string/select_characteristics"
+        tools:layout="@layout/fragment_groups">
+         <action
+            android:id="@+id/action_nav_character_groups_to_nav_characters"
+            app:destination="@id/nav_characters" >
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_characters"
+        android:name="berlin.mfn.naturblick.ui.character.CharacterFragment"
+        tools:layout="@layout/fragment_character">
+        <argument
+            android:name="group"
+            app:argType="string"/>
+        <argument
+            android:name="group_name"
+            app:argType="string"/>
+    </fragment>
+</navigation>

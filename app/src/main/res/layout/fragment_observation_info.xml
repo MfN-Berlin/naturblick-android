@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="berlin.mfn.naturblick.ui.fieldbook.observation.ObservationViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Naturblick.DarkBackgroundOverlay"
+        android:padding="@dimen/default_margin">
+
+        <ImageView
+            android:id="@+id/species_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:imageUrlThumbnailCrop="@{model.currentObservationAndSpecies.thumbnailRequest}"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            android:maxWidth="400dp"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_fullscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_resize"
+            android:visibility="gone"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/species_image"
+            app:layout_constraintEnd_toEndOf="@id/species_image" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_toggle_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_play_circle_outline_24"
+            android:visibility="gone"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/species_image"
+            app:layout_constraintEnd_toEndOf="@id/species_image"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sciname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{model.currentObservationAndSpecies.species.sciname}"
+            android:textAppearance="?attr/textAppearanceOverline"
+            android:textAlignment="center"
+            android:textColor="@color/sunset"
+            android:layout_marginTop="@dimen/double_margin"
+            android:visibility="@{model.currentObservationAndSpecies.name != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/species_image"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@{model.currentObservationAndSpecies.species != null ? model.currentObservationAndSpecies.nameOrSciname : @string/no_species_selected}"
+            android:textAppearance="?attr/textAppearanceHeadline2"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sciname"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/datetime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:text="@{model.currentObservationAndSpecies.localDateTimeString}"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textAlignment="center"
+            android:textColor="@color/primary_100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

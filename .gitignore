@@ -1,0 +1,13 @@
+*.iml
+.gradle
+/local.properties
+.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+gradle/wrapper/gradle-wrapper.jar
+/app/lint/
+/strapi-db/build/

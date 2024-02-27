@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_margin">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/cc_info_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_margin"
+                app:layout_constraintTop_toTopOf="parent"
+                autoLink="${true} "/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="berlin.mfn.naturblick.ui.character.CharacterViewModel" />
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <berlin.mfn.naturblick.ui.character.Characters
+                android:id="@+id/character_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/character_bottom_sheet_size"
+                />
+        </ScrollView>
+
+        <berlin.mfn.naturblick.ui.shared.BottomSheetView
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/default_elevation"
+            app:layout_behavior="berlin.mfn.naturblick.utils.StartClosedBehavior"
+            >
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/search_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:enabled="@{model.numberOfResults > 0}"
+                android:text="@{@string/show_results(model.numberOfResults != null ? model.numberOfResults : 0)}" />
+        </berlin.mfn.naturblick.ui.shared.BottomSheetView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

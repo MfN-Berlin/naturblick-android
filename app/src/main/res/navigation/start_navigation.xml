@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_start">
+
+    <fragment
+        android:id="@+id/nav_start"
+        android:name="berlin.mfn.naturblick.ui.home.HomeFragment"
+        android:label="@string/menu_start"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_start_to_nav_groups"
+            app:destination="@id/nav_species" />
+
+        <action
+            android:id="@+id/action_nav_start_to_nav_characters"
+            app:destination="@id/nav_characters" />
+
+        <action
+            android:id="@+id/action_nav_start_to_nav_field_book"
+            app:destination="@id/nav_field_book" />
+
+        <action
+            android:id="@+id/action_nav_start_to_nav_fieldbook_observation"
+            app:destination="@id/nav_field_book" />
+    </fragment>
+
+    <activity
+        android:id="@+id/nav_species"
+        android:name="berlin.mfn.naturblick.ui.species.groups.GroupsActivity" />
+
+    <activity
+        android:id="@+id/nav_field_book"
+        android:name="berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookActivity">
+        <argument
+            android:name="observation_action"
+            app:argType="berlin.mfn.naturblick.ui.fieldbook.ObservationAction"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </activity>
+
+    <activity
+        android:id="@+id/nav_characters"
+        android:name="berlin.mfn.naturblick.ui.character.CharacterActivity" />
+
+</navigation>

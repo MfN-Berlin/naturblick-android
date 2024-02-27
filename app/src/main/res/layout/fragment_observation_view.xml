@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="berlin.mfn.naturblick.ui.fieldbook.observation.ObservationViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimary">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/include"
+                layout="@layout/fragment_observation_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <berlin.mfn.naturblick.ui.shared.BottomSheetView
+                android:id="@+id/bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/default_elevation"
+                app:layout_behavior="berlin.mfn.naturblick.utils.StartClosedBehavior">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/fab_height_and_margin">
+
+
+                        <berlin.mfn.naturblick.ui.shared.HRView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/hr_height"
+                            app:layout_constraintBottom_toTopOf="@+id/imageView"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/species_link"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/default_margin">
+
+                            <ImageView
+                                android:id="@+id/species_image"
+                                android:layout_width="@dimen/avatar_size"
+                                android:layout_height="@dimen/avatar_size"
+                                app:imageUrlThumbnailCrop="@{model.currentObservationAndSpecies.species.avatarUrl}"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/species"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_margin"
+                                android:layout_marginTop="@dimen/avatar_text_offset"
+                                android:text="@string/species"
+                                android:textAppearance="?attr/textAppearanceCaption"
+                                android:textColor="@color/primary_200"
+                                app:layout_constraintEnd_toStartOf="@id/chevron"
+                                app:layout_constraintStart_toEndOf="@id/species_image"
+                                app:layout_constraintTop_toTopOf="@id/species_image" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/name"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_margin"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/avatar_text_offset"
+                                android:text="@{model.currentObservationAndSpecies.species != null ? model.currentObservationAndSpecies.species.nameWithFallback : @string/no_species_selected}"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/chevron"
+                                app:layout_constraintStart_toEndOf="@id/species_image"
+                                app:layout_constraintTop_toBottomOf="@id/species"
+                                app:layout_constraintVertical_bias="0" />
+
+
+                            <ImageView
+                                android:id="@+id/chevron"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_margin"
+                                android:src="@drawable/ic_chevron_right_24px"
+                                android:visibility="@{model.currentObservationAndSpecies.species != null ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/primary_100" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <berlin.mfn.naturblick.ui.shared.HRView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/hr_height"
+                            app:layout_constraintBottom_toTopOf="@+id/imageView"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <include
+                            android:id="@+id/location_link"
+                            layout="@layout/include_observation_property"
+                            app:caption="@{@string/location}"
+                            app:chevron="@{model.currentObservation.coordinatesState != null ? true : false }"
+                            app:icon="@{@drawable/ic_place_24px}"
+                            app:text="@{model.currentObservation.coordinatesState != null ? @string/location_text(model.currentObservation.latitudeString, model.currentObservation.longitudeString) : @string/no_location}" />
+
+                        <berlin.mfn.naturblick.ui.shared.HRView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/hr_height"
+                            app:layout_constraintBottom_toTopOf="@+id/imageView"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                        <include
+                            layout="@layout/include_observation_property"
+                            app:caption="@{@string/quantity}"
+                            app:chevron="@{false}"
+                            app:icon="@{@drawable/ic_amount}"
+                            app:text='@{model.currentObservation.individualsState != null ? model.currentObservation.individualsState.toString() : "1"}' />
+
+                        <include
+                            layout="@layout/include_observation_property"
+                            app:caption="@{@string/observation}"
+                            app:chevron="@{false}"
+                            app:icon="@{@drawable/ic_place_24px}"
+                            app:text="@{model.currentObservation.behaviorState}" />
+
+                        <include
+                            layout="@layout/include_observation_property"
+                            app:caption="@{@string/details}"
+                            app:chevron="@{false}"
+                            app:icon="@{@drawable/ic_details}"
+                            app:text="@{model.currentObservation.detailsState}" />
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </berlin.mfn.naturblick.ui.shared.BottomSheetView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/edit_button"
+            style="@style/Theme.Naturblick.FABOverlay"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/design_fab_size_mini"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:elevation="@dimen/default_elevation"
+            android:text="@string/edit"
+            app:icon="@drawable/ic_create_24px" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

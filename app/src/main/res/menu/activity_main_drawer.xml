@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/nav_main_group" android:checkableBehavior="single">
+        <item
+            android:id="@id/nav_start"
+            android:icon="@drawable/ic_square_logo"
+            android:title="@string/menu_start" />
+        <item
+            android:id="@id/nav_field_book"
+            android:icon="@drawable/ic_feldbuch24"
+            android:title="@string/field_book" />
+        <item
+            android:id="@+id/nav_record_a_bird"
+            android:icon="@drawable/ic_audio24"
+            android:title="@string/record_a_bird" />
+        <item
+            android:id="@+id/nav_photograph_a_plant"
+            android:icon="@drawable/ic_photo24"
+            android:title="@string/photograph_a_plant" />
+        <item
+            android:id="@id/nav_help"
+            android:icon="@drawable/ic_info2"
+            android:title="@string/help" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@id/nav_account"
+            android:title="@string/account" />
+        <item
+            android:id="@id/nav_settings"
+            android:title="@string/action_settings" />
+        <item
+            android:id="@id/nav_feedback"
+            android:title="@string/feedback" />
+        <item
+            android:id="@id/nav_imprint"
+            android:title="@string/imprint" />
+        <item
+            android:id="@id/nav_about"
+            android:title="@string/about" />
+    </group>
+</menu>

@@ -1,0 +1,195 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Naturblick" parent="Theme.MaterialComponents.Light">
+
+        <item name="colorPrimary">@color/primary_500</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
+        <item name="colorOnPrimary">@color/primary_on_medium</item>
+
+        <item name="colorSecondary">@color/secondary_200</item>
+        <item name="colorSecondaryVariant">@color/secondary_500</item>
+        <item name="colorOnSecondary">@color/primary_on_high</item>
+
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+
+        <item name="fontFamily">@font/lato</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/black</item>
+
+        <item name="materialButtonOutlinedStyle">@style/Widget.Naturblick.OutlinedButton</item>
+
+        <item name="textAppearanceHeadline2">
+            @style/TextAppearance.Naturblick.Headline2
+        </item>
+        <item name="textAppearanceHeadline3">
+            @style/TextAppearance.Naturblick.Headline3
+        </item>
+        <item name="textAppearanceHeadline4">
+            @style/TextAppearance.Naturblick.Headline4
+        </item>
+        <item name="textAppearanceHeadline6">
+            @style/TextAppearance.Naturblick.Headline6
+        </item>
+        <item name="textAppearanceSubtitle1">
+            @style/TextAppearance.Naturblick.Subtitle1
+        </item>
+        <item name="textAppearanceSubtitle2">
+            @style/TextAppearance.Naturblick.Subtitle2
+        </item>
+        <item name="textAppearanceSubtitle3">
+            @style/TextAppearance.Naturblick.Subtitle3
+        </item>
+        <item name="textAppearanceBody1">
+            @style/TextAppearance.Naturblick.Body1
+        </item>
+        <item name="textAppearanceBody2">
+            @style/TextAppearance.Naturblick.Body2
+        </item>
+        <item name="textAppearanceCaption">
+            @style/TextAppearance.Naturblick.Caption
+        </item>
+        <item name="textAppearanceButton">
+            @style/TextAppearance.Naturblick.Button
+        </item>
+        <item name="textAppearanceOverline">
+            @style/TextAppearance.Naturblick.Overline
+        </item>
+        <item name="homeAsUpIndicator">@drawable/ic_navigation_back</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.018</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Subtitle3" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.018</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.018</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">12sp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:letterSpacing">0.042</item>
+    </style>
+
+    <style name="TextAppearance.Naturblick.MenuItem" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">17sp</item>
+        <item name="fontWeight">900</item>
+    </style>
+
+    <style name="Theme.Naturblick.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="Theme.Naturblick.DarkBackgroundOverlay" parent="ThemeOverlay.MaterialComponents.Dark">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Theme.Naturblick.GroupsOverlay" parent="Theme.Naturblick.DarkBackgroundOverlay">
+        <item name="android:background">@color/primary_400</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Theme.Naturblick.FABOverlay">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="efab_color">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Naturblick.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <item name="android:background">?attr/colorPrimaryVariant</item>
+        <item name="itemIconTint">@color/navigation_item_color</item>
+        <item name="itemTextColor">@color/navigation_item_color</item>
+        <item name="itemTextAppearance">@style/TextAppearance.Naturblick.MenuItem</item>
+        <item name="itemShapeFillColor">@color/navigation_item_background_color</item>
+        <item name="itemShapeInsetStart">0dp</item>
+        <item name="itemShapeInsetTop">0dp</item>
+        <item name="itemShapeInsetEnd">0dp</item>
+        <item name="itemShapeInsetBottom">0dp</item>
+        <item name="itemShapeAppearance">@drawable/shape_rectangle</item>
+        <item name="itemMaxLines">2</item>
+    </style>
+
+    <style name="Widget.Naturblick.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/primary_100</item>
+    </style>
+
+    <style name="Widget.Naturblick.OutlinedErrorButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/error</item>
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="Naturblick.AlertTitleStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:maxLines">15</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="Naturblick.MaterialComponentns.Dialog.Alert" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="materialAlertDialogTitleTextStyle">@style/Naturblick.AlertTitleStyle</item>
+    </style>
+
+    <style name="Widget.Naturblick.SpinnerItem" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+</resources>

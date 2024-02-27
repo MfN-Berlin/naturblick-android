@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="behavior_inside">inside</string>
+    <string name="plant_behavior_losing_leafs">shedding leaves</string>
+    <string name="plant_behavior_blooming">blooming</string>
+    <string name="plant_behavior_carrying_fruits">bearing fruit</string>
+    <string name="plant_behavior_with_buds">budding</string>
+    <string name="plant_behavior_new_shoots">new shoots</string>
+    <string name="plant_behavior_withered">withered</string>
+    <string-array name="plant_behavior" translatable="false">
+        <item>@string/plant_behavior_losing_leafs</item>
+        <item>@string/plant_behavior_blooming</item>
+        <item>@string/plant_behavior_carrying_fruits</item>
+        <item>@string/behavior_inside</item>
+        <item>@string/plant_behavior_with_buds</item>
+        <item>@string/plant_behavior_new_shoots</item>
+        <item>@string/plant_behavior_withered</item>
+    </string-array>
+    <string name="animal_behavior_on_a_flower">on a flower</string>
+    <string name="animal_behavior_nest">burrow/nest</string>
+    <string name="animal_behavior_bite_marks">bite marks</string>
+    <string name="animal_behavior_shell">housing/shell</string>
+    <string name="animal_behavior_carcass">carcass (dead animal)</string>
+    <string name="animal_behavior_cocoon">cocoon</string>
+    <string name="animal_behavior_feces">feces</string>
+    <string name="animal_behavior_eggs">spawn/eggs</string>
+    <string name="animal_behavior_call">Singing/Call</string>
+    <string name="animal_behavior_track">track</string>
+    <string-array name="animal_behavior" translatable="false">
+        <item>@string/animal_behavior_on_a_flower</item>
+        <item>@string/animal_behavior_nest</item>
+        <item>@string/animal_behavior_bite_marks</item>
+        <item>@string/animal_behavior_shell</item>
+        <item>@string/behavior_inside</item>
+        <item>@string/animal_behavior_carcass</item>
+        <item>@string/animal_behavior_cocoon</item>
+        <item>@string/animal_behavior_feces</item>
+        <item>@string/animal_behavior_eggs</item>
+        <item>@string/animal_behavior_call</item>
+        <item>@string/animal_behavior_track</item>
+    </string-array>
+    <string-array name="animal_or_plant_behavior" translatable="false">
+        <item>@string/plant_behavior_losing_leafs</item>
+        <item>@string/plant_behavior_blooming</item>
+        <item>@string/plant_behavior_carrying_fruits</item>
+        <item>@string/plant_behavior_with_buds</item>
+        <item>@string/plant_behavior_new_shoots</item>
+        <item>@string/plant_behavior_withered</item>
+        <item>@string/animal_behavior_on_a_flower</item>
+        <item>@string/animal_behavior_nest</item>
+        <item>@string/animal_behavior_bite_marks</item>
+        <item>@string/animal_behavior_shell</item>
+        <item>@string/behavior_inside</item>
+        <item>@string/animal_behavior_carcass</item>
+        <item>@string/animal_behavior_cocoon</item>
+        <item>@string/animal_behavior_feces</item>
+        <item>@string/animal_behavior_eggs</item>
+        <item>@string/animal_behavior_call</item>
+        <item>@string/animal_behavior_track</item>
+    </string-array>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/nav_id_result">
+
+    <fragment
+        android:id="@+id/nav_id_result"
+        android:name="berlin.mfn.naturblick.ui.idresult.IdResultFragment"
+        android:label="@string/id_result">
+        <action
+            android:id="@+id/action_nav_id_result_to_nav_portrait"
+            app:destination="@id/nav_portrait" />
+    </fragment>
+    <activity
+        android:id="@+id/nav_portrait"
+        android:name="berlin.mfn.naturblick.ui.species.portrait.PortraitActivity">
+        <argument
+            android:name="species_id"
+            app:argType="berlin.mfn.naturblick.ui.species.portrait.SpeciesId" />
+        <argument
+            android:name="allow_selection"
+            app:argType="boolean" />
+    </activity>
+</navigation>

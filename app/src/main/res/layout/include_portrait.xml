@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="portrait"
+            type="berlin.mfn.naturblick.room.FullPortrait" />
+
+        <variable
+            name="species"
+            type="berlin.mfn.naturblick.room.Species" />
+
+        <variable
+            name="hasAudio"
+            type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:paddingBottom="@dimen/double_margin"
+            android:theme="@style/Theme.Naturblick.DarkBackgroundOverlay">
+            <ImageView
+                android:id="@+id/species_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:imageUrlSpeciesHeader="@{portrait}"
+                app:layout_constraintBottom_toTopOf="@id/sciname"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/oval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/oval"
+                app:layout_constraintBottom_toBottomOf="@id/species_image" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_description_cc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/half_margin"
+                android:padding="@dimen/small_margin"
+                android:src="@drawable/ic_baseline_copyright_24"
+                app:backgroundTint="#4C000000"
+                app:elevation="0dp"
+                app:hoveredFocusedTranslationZ="0dp"
+                app:layout_constraintEnd_toEndOf="@id/species_image"
+                app:layout_constraintTop_toTopOf="@id/species_image"
+                app:pressedTranslationZ="0dp"
+                app:fabCustomSize="@dimen/fab_micro_size"
+                app:maxImageSize="@dimen/fab_micro_max_icon_size"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_toggle_audio"
+                style="@style/Theme.Naturblick.FABOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/half_margin"
+                android:src="@drawable/ic_baseline_play_circle_outline_24"
+                android:visibility="@{hasAudio ? View.VISIBLE : View.GONE}"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toTopOf="@id/oval"
+                app:layout_constraintEnd_toEndOf="@id/species_image" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sciname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@{species.sciname}"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceOverline"
+                android:textColor="@color/sunset"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/species_image" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@{species.name}"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textAppearance="?attr/textAppearanceHeadline2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sciname" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clipChildren="false">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_margin"
+                android:elevation="@dimen/default_elevation"
+                android:src="@drawable/sheet" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_margin"
+                android:paddingBottom="@dimen/default_margin">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/description"
+                    android:textAppearance="?attr/textAppearanceHeadline4" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/default_margin"
+                    android:text="@{portrait.portrait.description}"
+                    android:textAppearance="?attr/textAppearanceBody1" />
+
+                <include
+                    android:id="@+id/species_features"
+                    layout="@layout/include_features"
+                    app:portrait="@{portrait}"
+                    app:species="@{species}" />
+
+                <include
+                    android:id="@+id/include_portrait_image_in_the_city"
+                    layout="@layout/include_portrait_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:visibility="@{portrait.inTheCity != null ? View.VISIBLE : View.GONE}"
+                    app:image="@{portrait.inTheCity}" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/in_the_city"
+                    android:textAppearance="?attr/textAppearanceHeadline4" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@{portrait.portrait.inTheCity}"
+                    android:textAppearance="?attr/textAppearanceBody1" />
+
+                <include
+                    android:id="@+id/include_portrait_image_good_to_know"
+                    layout="@layout/include_portrait_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:visibility="@{portrait.goodToKnow != null ? View.VISIBLE : View.GONE}"
+                    app:image="@{portrait.goodToKnow}" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/good_to_know"
+                    android:textAppearance="?attr/textAppearanceHeadline4"
+                    android:visibility="@{!portrait.goodToKnows.isEmpty() ? View.VISIBLE : View.GONE}" />
+
+                <berlin.mfn.naturblick.ui.species.portrait.GoodToKnowList
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:orientation="vertical"
+                    android:visibility="@{!portrait.goodToKnows.isEmpty() ? View.VISIBLE : View.GONE}"
+                    app:facts="@{portrait.goodToKnows}"
+                    app:species="@{species}" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/sources"
+                    android:textAppearance="?attr/textAppearanceHeadline4"
+                    android:visibility="@{portrait.portrait.sources != null? View.VISIBLE : View.GONE}" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/portrait_sources"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:autoLink="web"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:visibility="@{portrait.portrait.sources != null ? View.VISIBLE : View.GONE}"
+                    app:sources="@{portrait.portrait.sources}" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

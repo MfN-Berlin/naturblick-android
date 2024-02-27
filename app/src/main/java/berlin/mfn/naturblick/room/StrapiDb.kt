@@ -1,0 +1,57 @@
+package berlin.mfn.naturblick.room
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import berlin.mfn.naturblick.BuildConfig
+
+@Database(
+    version = BuildConfig.VERSION_CODE,
+    entities = [
+        Species::class,
+        Portrait::class,
+        PortraitImage::class,
+        PortraitImageSize::class,
+        SimilarSpecies::class,
+        Character::class,
+        CharacterValue::class,
+        CharacterValueSpecies::class,
+        UnambiguousFeature::class,
+        GoodToKnow::class,
+        SourcesImprint::class,
+        SourcesTranslations::class,
+        TimeZonePolygon::class,
+        TimeZoneVertex::class
+    ],
+    views = [
+        ImageWithSizes::class,
+        FullSimilarSpecies::class
+    ]
+)
+abstract class StrapiDb : RoomDatabase() {
+    abstract fun speciesDao(): SpeciesDao
+    abstract fun portraitDao(): PortraitDao
+    abstract fun characterDao(): CharacterDao
+    abstract fun sourcesImprintDao(): SourcesImprintDao
+    abstract fun sourcesTranslationsDao(): SourcesTranslationsDao
+    abstract fun timeZonePolygonDao(): TimeZonePolygonDao
+
+    companion object {
+        @Volatile
+        private var INSTANCE: StrapiDb? = null
+        fun getDb(applicationContext: Context): StrapiDb =
+            INSTANCE ?: synchronized(this) {
+                val it = Room.databaseBuilder(
+                    applicationContext,
+                    StrapiDb::class.java,
+                    "strapi"
+                )
+                    .createFromAsset("strapi-db.sqlite3")
+                    .fallbackToDestructiveMigration()
+                    .build()
+                INSTANCE = it
+                it
+            }
+    }
+}

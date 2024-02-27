@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <application
+        android:name="berlin.mfn.naturblick.NaturblickApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Naturblick"
+        android:localeConfig="@xml/locales_config">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.species.groups.GroupsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.character.CharacterActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.species.specieslist.SpeciesListActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.species.groups.GroupsActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".ui.species.portrait.PortraitActivity"
+            android:exported="true"
+            android:parentActivityName=".ui.species.specieslist.SpeciesListActivity"
+            android:screenOrientation="portrait">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- pathAdvancedPattern despite docs work only on API 31+ (and not 26+) -->
+                <!-- pathPattern only has . and * quantifier -->
+                <data
+                    android:host="naturblick.museumfuernaturkunde.berlin"
+                    android:pathPattern="/species/portrait.*/.*"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.fieldbook.fieldbook.FieldbookActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fieldbook.fieldbookmap.FieldbookMapActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.fieldbook.fieldbook.FieldbookActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fieldbook.observation.ObservationActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.fieldbook.fieldbook.FieldbookActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fieldbook.locationpicker.LocationPickerActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.fieldbook.observation.ObservationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="berlin.mfn.naturblick.ui.photo.ImageIdActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.fieldbook.observation.ObservationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:parentActivityName=".ui.photo.ImageIdActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat" />
+
+        <activity
+            android:name=".ui.sound.SoundIdActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.fieldbook.observation.ObservationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.idresult.IdResultActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="berlin.mfn.naturblick.ui.info.settings.SettingsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="berlin.mfn.naturblick.ui.info.feedback.FeedbackActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="berlin.mfn.naturblick.ui.info.imprint.ImprintActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="berlin.mfn.naturblick.ui.info.about.AboutActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="berlin.mfn.naturblick.ui.info.help.HelpActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="berlin.mfn.naturblick.ui.info.account.AccountActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="naturblick.museumfuernaturkunde.berlin"
+                    android:pathPattern="/account/activate/.*"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="naturblick.museumfuernaturkunde.berlin"
+                    android:pathPattern="/account/reset-password.*"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.fieldbook.fullscreen.FullscreenActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.fieldbook.observation.ObservationActivity"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
+
+</manifest>

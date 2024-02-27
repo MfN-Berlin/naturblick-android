@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/nav_account">
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="berlin.mfn.naturblick.ui.info.account.AccountFragment"
+        android:label="@string/account">
+        <action
+            android:id="@+id/action_nav_account_to_nav_sign_in"
+            app:destination="@id/nav_sign_in" />
+        <action
+            android:id="@+id/action_nav_account_to_nav_sign_up"
+            app:destination="@id/nav_sign_up" />
+        <action
+            android:id="@+id/action_nav_account_to_nav_reset_password"
+            app:destination="@id/nav_reset_password" />
+        <action
+            android:id="@+id/action_nav_account_to_nav_delete_account"
+            app:destination="@id/nav_delete_account" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_sign_in"
+        android:name="berlin.mfn.naturblick.ui.info.account.SignInFragment"
+        android:label="@string/sign_in" >
+        <argument
+            android:name="activated"
+            app:argType="boolean"
+            />
+        <action
+            android:id="@+id/action_nav_sign_in_to_nav_forgot_password"
+            app:destination="@id/nav_forgot_password"
+            />
+        <action
+            android:id="@+id/action_nav_sign_in_to_nav_start"
+            app:destination="@id/nav_start"
+            app:popUpTo="@id/nav_account"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_sign_up"
+        android:name="berlin.mfn.naturblick.ui.info.account.SignUpFragment"
+        android:label="@string/sign_up" >
+        <action
+            android:id="@+id/action_nav_sign_up_to_nav_sign_in"
+            app:destination="@id/nav_sign_in"
+            app:popUpTo="@id/nav_account"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_forgot_password"
+        android:name="berlin.mfn.naturblick.ui.info.account.ForgotPasswordFragment"
+        android:label="@string/forgot_password" >
+        <argument
+            android:name="in_delete_flow"
+            android:defaultValue="false"
+            app:argType="boolean"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_reset_password"
+        android:name="berlin.mfn.naturblick.ui.info.account.ResetPasswordFragment"
+        android:label="@string/reset_password" >
+        <argument
+            android:name="token"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_nav_reset_password_to_nav_sign_in"
+            app:destination="@id/nav_sign_in"
+            app:popUpTo="@id/nav_account"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_delete_account"
+        android:name="berlin.mfn.naturblick.ui.info.account.DeleteAccountFragment">
+        <action
+            android:id="@+id/action_nav_delete_account_to_nav_forgot_password"
+            app:destination="@id/nav_forgot_password"
+        />
+    </fragment>
+    <activity
+        android:id="@+id/nav_start"
+        android:name="berlin.mfn.naturblick.MainActivity">
+    </activity>
+</navigation>

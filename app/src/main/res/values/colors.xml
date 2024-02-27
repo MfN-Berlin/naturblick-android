@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#fff</color>
+    <color name="white_opacity_10">#1affffff</color>
+    <color name="white_opacity_60">#99FFFFFF</color>
+    <color name="black">#27313C</color>
+    <color name="on_surface">#000000</color>
+
+    <color name="primary_700">#0E3855</color>
+    <color name="primary_500">#12466a</color>
+    <color name="primary_400">#144D75</color>
+    <color name="primary_200">#75A3C2</color>
+    <color name="primary_100">#9BC8E7</color>
+    <color name="primary_50">#D8E9F2</color>
+
+    <color name="primary_on_high">#FFFFFF</color>
+    <color name="primary_on_medium">#BDFFFFFF</color>
+    <color name="primary_on_disabled">#FFFFFF</color>
+    <color name="secondary_500">#2F99C6</color>
+    <color name="secondary_500_opacity_10">#1A2F99C6</color>
+    <color name="secondary_200">#3BB4E7</color>
+
+    <color name="portrait_feature_opacity_50">#80B0DCEF</color>
+    <color name="gold_dark_green">#AEBB53</color>
+    <color name="sunset">#FFB546</color>
+    <color name="error">#CB4F4F</color>
+
+    <color name="hr">#14212121</color>
+    <color name="black_opacity_10">#4A000000</color>
+</resources>

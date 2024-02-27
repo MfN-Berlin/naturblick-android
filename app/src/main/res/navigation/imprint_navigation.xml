@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/nav_imprint">
+    <fragment
+        android:id="@+id/nav_imprint"
+        android:name="berlin.mfn.naturblick.ui.info.imprint.ImprintFragment"
+        android:label="@string/imprint">
+        <action
+            android:id="@+id/action_nav_imprint_to_nav_sources_imprint"
+            app:destination="@id/nav_sources_imprint" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_sources_imprint"
+        android:name="berlin.mfn.naturblick.ui.info.imprint.SourcesImprintFragment"
+        android:label="@string/more_sources">
+        >
+    </fragment>
+</navigation>

@@ -1,0 +1,36 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="default_elevation">8dp</dimen>
+    <dimen name="default_and_avatar_offset_margin">32dp</dimen>
+    <dimen name="default_margin">14dp</dimen>
+    <dimen name="half_margin">7dp</dimen>
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="character_bottom_sheet_size">70dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_height_and_margin">64dp</dimen>
+    <dimen name="fab_micro_size">25dp</dimen>
+    <dimen name="fab_micro_max_icon_size">15dp</dimen>
+    <dimen name="avatar_size">64dp</dimen>
+    <dimen name="avatar_text_offset">12dp</dimen>
+    <dimen name="double_margin">28dp</dimen>
+    <dimen name="hr_height">1dp</dimen>
+    <dimen name="selected_width">1dp</dimen>
+    <dimen name="not_selected_width">0dp</dimen>
+    <dimen name="checked_size">20dp</dimen>
+    <dimen name="small_corner_radius">4dp</dimen>
+    <dimen name="good_to_know_line_width">2dp</dimen>
+    <dimen name="crop_size">448px</dimen>
+    <dimen name="circular_progress_size">116dp</dimen>
+    <dimen name="observation_popup_size">224dp</dimen>
+    <dimen name="popup_offset">16dp</dimen>
+    <dimen name="map_pin">32dp</dimen>
+    <dimen name="observation_icon_size">24dp</dimen>
+    <dimen name="observation_icon_avatar_padding">20dp</dimen>
+    <dimen name="extra_icon_text_space">-7dp</dimen>
+    <dimen name="android_gesture_inset">40dp</dimen>
+    <dimen name="android_gesture_disable_max">200dp</dimen>
+</resources>

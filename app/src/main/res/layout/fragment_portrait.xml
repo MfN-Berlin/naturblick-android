@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/portrait_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:id="@+id/create_observation_efab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:efab_icon="@drawable/ic_add"
+            app:efab_orientation="portrait"
+            app:efab_size="mini"
+            style="@style/Theme.Naturblick.FABOverlay"/>
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/create_observation_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_square_logo"
+            app:label_text="@string/create_manual" />
+
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+</layout>
