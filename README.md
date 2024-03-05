@@ -79,18 +79,6 @@ operations that were sent to the backend, are passed to
 <executedOperations>)`. After this a `refreshObservations()` is used
 to update the snapshot.
 
-# Import a new time zone GeoJSON file
-
-Get the latest release from here: https://github.com/evansiroky/timezone-boundary-builder/releases
-
-Simplify the file using `ogr2ogr`:
-```
-ogr2ogr -simplify 0.05 strapi-db/src/main/resources/2023b_simplify_0_05.json combined-with-oceans.json
-```
-The filename `2023b_simplify_0_05.json` contains the release version (here `2023b`) and the simplification factor (in filename `_simplify_0_05`, describing `-simplify 0.05`). Please keep this pattern.
-
-Update `strapi-db/src/main/kotlin/berlin/mfn/naturblick/TimeZonePolygons.kt` with the new filename and the delete the old file.
-
 # Syncing strapi data during build time
 A large part of the content data is synced via ktor from Strapi during buildtime. If the schema has to change (species ie) one has to change it at all places accordingly (strapi, ktor, android, ios).
 
