@@ -25,6 +25,7 @@ jobs:
       - name: Build and sign
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
         run: ./gradlew bundleRelease
       - uses: actions/upload-artifact@v4
         with:
