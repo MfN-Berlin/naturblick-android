@@ -20,14 +20,15 @@ jobs:
           distribution: 'temurin'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-	with:
+        with:
           cmdline-tools-version: 11076708
       - name: Build and sign
         env:
-	  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-	run: ./gradlew bundleRelease
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+        run: ./gradlew bundleRelease
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ github.ref_name }}
           path: app/build/outputs/bundle/release/app-release.aab
-	  retention-days: 1
+          retention-days: 1
