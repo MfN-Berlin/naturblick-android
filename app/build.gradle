@@ -54,10 +54,10 @@ android {
         }
         getByName("debug") {
             applicationIdSuffix = ".debug"
-            def strapiBaseUrl = "https://staging.naturblick.net/strapi/"
+            def strapiBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/strapi/"
             syncDebugMedia.strapiBaseUrl = strapiBaseUrl
-            buildConfigField("String", "BACKEND_URL", "\"https://staging.naturblick.net/api/\"")
-            buildConfigField("String", "ANALYTICS_URL", "\"https://staging.naturblick.net/analytics/\"")
+            buildConfigField("String", "BACKEND_URL", "\"https://staging.naturblick.museumfuernaturkunde.berlin/api/\"")
+            buildConfigField("String", "ANALYTICS_URL", "\"https://staging.naturblick.museumfuernaturkunde.berlin/analytics/\"")
             buildConfigField("String", "STRAPI_URL", "\"$strapiBaseUrl\"")
         }
     }
