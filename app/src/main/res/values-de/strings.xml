@@ -124,7 +124,7 @@
     <string name="imprint_9">Förderung 2016-2021 durch Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit (BMU)</string>
     <string name="imprint_10">Weitere Informationen <a href="https://naturblick.museumfuernaturkunde.berlin/about?lang=de">hier</a>.</string>
     <string name="imprint_sources_title">Quellen</string>
-    <string name="imprint_sources">Die Quellen zu den Bild- und Tonmaterialien sind in den einzelnen Artportraits angegeben. Bild- und Tonmaterialien von Arten, die noch kein Artportrait haben oder aus anderen Kontexten der App wie z.B. Bestimmungshilfen sind unter weitere Quellen angeben. Deutsche und englische Namen stammen teilweise von GBIF.org (2022), GBIF Home Page. Available from: https://www.gbif.org [28 September 2022].</string>
+    <string name="imprint_sources">Die Quellen zu den Bild- und Tonmaterialien sind in den einzelnen Artportraits angegeben. Bild- und Tonmaterialien von Arten, die noch kein Artportrait haben oder aus anderen Kontexten der App wie z.B. Bestimmungshilfen sind unter weitere Quellen angeben. Deutsche und englische Namen stammen teilweise von GBIF.org (2022), GBIF Home Page. Verfügbar unter: <a href="https://www.gbif.org">https://www.gbif.org</a> [28 September 2022].</string>
     <string name="imprint_more_title">Weitere Bestimmungen</string>
     <string name="imprint_more_1">Copyright</string>
     <string name="imprint_more_2">Alle Inhalte, Bilder oder Grafiken sind urheberrechtlich geschützt und dürfen nur mit schriftlicher Genehmigung des jeweiligen Rechteinhabers verwendet werden.</string>
