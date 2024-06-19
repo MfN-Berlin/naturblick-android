@@ -19,26 +19,26 @@
         <item name="colorOnPrimaryMinimumEmphasis">@color/base_110</item>
         <item name="colorOnPrimaryDisabled">@color/sleep_200</item>
         <item name="colorOnPrimarySignalLow">@color/sleep_200</item>
-        <item name="colorOnPrimarySignalHigh">@color/signal.fun</item>
+        <item name="colorOnPrimarySignalHigh">@color/signal_fun</item>
         <item name="colorOnPrimaryButtonPrimary">@color/relax_200</item>
         <item name="colorOnPrimaryButtonSecondary">@color/sleep_700</item>
         <item name="colorOnPrimaryTag">@color/base_150</item>
-        <item name="colorOnPrimaryStableBright">@color/base_100/</item>
+        <item name="colorOnPrimaryStableBright">@color/base_100</item>
         <item name="colorOnPrimaryStableDark">@color/sleep_500</item>
 
         <item name="colorOnSecondaryHighEmphasis">@color/sleep_500</item>
         <item name="colorOnSecondaryMediumEmphasis">@color/sleep_300</item>
         <item name="colorOnSecondaryLowEmphasis">@color/sleep_200</item>
         <item name="colorOnSecondaryMinimumEmphasis">@color/sleep_50</item>
-        <item name="colorOnSecondaryDisabled">@color/base_200</item>
+        <item name="colorOnSecondaryDisabled">@color/base_500</item>
         <item name="colorOnSecondarySignalLow">@color/sleep_100</item>
-        <item name="colorOnSecondarySignalHigh">@color/signal.happy</item>
+        <item name="colorOnSecondarySignalHigh">@color/signal_happy</item>
         <item name="colorOnSecondaryButtonPrimary">@color/relax_200</item>
         <item name="colorOnSecondaryButtonSecondary">@color/sleep_300</item>
         <item name="colorOnSecondaryTag">@color/base_300</item>
         <item name="colorOnSecondaryWarning">@color/signal_pain</item>
         <item name="colorOnSecondarySignalMedium">@color/signal_peace</item>
-        <item name="colorOnSecondaryStableBright">@color/base_100/</item>
+        <item name="colorOnSecondaryStableBright">@color/base_100</item>
         <item name="colorOnSecondaryStableDark">@color/sleep_500</item>
 
         <item name="colorOnFeatureHighEmphasis">@color/sleep_600</item>
@@ -46,7 +46,7 @@
         <item name="colorOnFeatureLowEmphasis">@color/base_950</item>
         <item name="colorOnFeatureDisabled">@color/sleep_200</item>
         <item name="colorOnFeatureSignalLow">@color/sleep_100</item>
-        <item name="colorOnFeatureSignalHigh">@color/signal.fun</item>
+        <item name="colorOnFeatureSignalHigh">@color/signal_fun</item>
         <item name="colorOnFeatureButtonPrimary">@color/relax_200</item>
         <item name="colorOnFeatureButtonSecondary">@color/relax_900</item>
         <item name="colorOnFeatureTag">@color/base_150</item>>
