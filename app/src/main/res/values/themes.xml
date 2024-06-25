@@ -62,6 +62,8 @@
 
         <item name="materialButtonOutlinedStyle">@style/Widget.Naturblick.OutlinedButton</item>
 
+        <item name="materialButtonStyle">@style/Widget.Naturblick.Button</item>
+
         <item name="textAppearanceHeadline2">
             @style/TextAppearance.Naturblick.Headline2
         </item>
@@ -206,6 +208,12 @@
         <item name="itemShapeInsetBottom">0dp</item>
         <item name="itemShapeAppearance">@drawable/shape_rectangle</item>
         <item name="itemMaxLines">2</item>
+    </style>
+
+    <style name="Widget.Naturblick.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">?attr/colorOnSecondaryMinimumEmphasis</item>
+        <item name="iconTint">?attr/colorOnSecondaryMinimumEmphasis</item>
+        <item name="backgroundTint">?attr/colorOnSecondaryButtonPrimary</item>
     </style>
 
     <style name="Widget.Naturblick.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">

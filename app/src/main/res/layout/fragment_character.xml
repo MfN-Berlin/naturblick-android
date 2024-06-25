@@ -39,7 +39,8 @@
                 android:layout_marginHorizontal="@dimen/default_margin"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:enabled="@{model.numberOfResults > 0}"
-                android:text="@{@string/show_results(model.numberOfResults != null ? model.numberOfResults : 0)}" />
+                android:text="@{@string/show_results(model.numberOfResults != null ? model.numberOfResults : 0)}"
+                />
         </berlin.mfn.naturblick.ui.shared.BottomSheetView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
