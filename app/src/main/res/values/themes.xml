@@ -2,23 +2,25 @@
 
     <style name="Theme.Naturblick" parent="Theme.MaterialComponents.Light">
 
-        <item name="colorPrimary">@color/sleep_300</item>
+        <item name="colorPrimary">@color/sleep_500</item>
         <item name="colorPrimaryVariant">@color/primary_700</item>
-        <item name="colorOnPrimary">@color/base_150</item>
+        <item name="colorOnPrimary">?attr/colorOnPrimaryMediumEmphasis</item>
 
         <item name="colorSecondary">@color/base_100</item>
         <item name="colorSecondaryVariant">@color/secondary_500</item>
-        <item name="colorOnSecondary">@color/sleep_300</item>
+        <item name="colorOnSecondary">?attr/colorOnSecondaryMediumEmphasis</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/on_surface</item>
 
         <item name="colorTertiary">@color/base_300</item>
         <item name="colorFeature">@color/sleep_50</item>
         <item name="colorBackdrop">@color/base_950</item>
         <item name="colorOnPrimaryHighEmphasis">@color/base_100</item>
-        <item name="colorOnPrimaryMediumEmphasis">@color/base_150</item>
-        <item name="colorOnPrimaryLowEmphasis">@color/base_170</item>
-        <item name="colorOnPrimaryMinimumEmphasis">@color/base_110</item>
-        <item name="colorOnPrimaryDisabled">@color/sleep_200</item>
-        <item name="colorOnPrimarySignalLow">@color/sleep_200</item>
+        <item name="colorOnPrimaryMediumEmphasis">@color/base_110</item>
+        <item name="colorOnPrimaryLowEmphasis">@color/base_150</item>
+        <item name="colorOnPrimaryMinimumEmphasis">@color/base_170</item>
+        <item name="colorOnPrimaryDisabled">@color/base_150</item>
+        <item name="colorOnPrimarySignalLow">@color/sleep_100</item>
         <item name="colorOnPrimarySignalHigh">@color/signal_fun</item>
         <item name="colorOnPrimaryButtonPrimary">@color/relax_200</item>
         <item name="colorOnPrimaryButtonSecondary">@color/sleep_700</item>
@@ -26,34 +28,31 @@
         <item name="colorOnPrimaryStableBright">@color/base_100</item>
         <item name="colorOnPrimaryStableDark">@color/sleep_500</item>
 
-        <item name="colorOnSecondaryHighEmphasis">@color/sleep_500</item>
-        <item name="colorOnSecondaryMediumEmphasis">@color/sleep_300</item>
-        <item name="colorOnSecondaryLowEmphasis">@color/sleep_200</item>
+        <item name="colorOnSecondaryHighEmphasis">@color/sleep_600</item>
+        <item name="colorOnSecondaryMediumEmphasis">@color/sleep_500</item>
+        <item name="colorOnSecondaryLowEmphasis">@color/sleep_400</item>
         <item name="colorOnSecondaryMinimumEmphasis">@color/sleep_50</item>
-        <item name="colorOnSecondaryDisabled">@color/base_500</item>
-        <item name="colorOnSecondarySignalLow">@color/sleep_100</item>
+        <item name="colorOnSecondaryDisabled">@color/base_970</item>
+        <item name="colorOnSecondarySignalLow">@color/sleep_400</item>
         <item name="colorOnSecondarySignalHigh">@color/signal_happy</item>
         <item name="colorOnSecondaryButtonPrimary">@color/relax_200</item>
-        <item name="colorOnSecondaryButtonSecondary">@color/sleep_300</item>
-        <item name="colorOnSecondaryTag">@color/base_300</item>
+        <item name="colorOnSecondaryButtonSecondary">@color/relax_400</item>
+        <item name="colorOnSecondaryTag">@color/relax_200</item>
         <item name="colorOnSecondaryWarning">@color/signal_pain</item>
         <item name="colorOnSecondarySignalMedium">@color/signal_peace</item>
         <item name="colorOnSecondaryStableBright">@color/base_100</item>
         <item name="colorOnSecondaryStableDark">@color/sleep_500</item>
 
         <item name="colorOnFeatureHighEmphasis">@color/sleep_600</item>
-        <item name="colorOnFeatureMediumEmphasis">@color/base_970</item>
-        <item name="colorOnFeatureLowEmphasis">@color/base_950</item>
-        <item name="colorOnFeatureDisabled">@color/sleep_200</item>
-        <item name="colorOnFeatureSignalLow">@color/sleep_100</item>
-        <item name="colorOnFeatureSignalHigh">@color/signal_fun</item>
-        <item name="colorOnFeatureButtonPrimary">@color/relax_200</item>
-        <item name="colorOnFeatureButtonSecondary">@color/relax_900</item>
-        <item name="colorOnFeatureTag">@color/base_150</item>>
+        <item name="colorOnFeatureMediumEmphasis">@color/sleep_500</item>
+        <item name="colorOnFeatureLowEmphasis">@color/sleep_400</item>
+        <item name="colorOnFeatureDisabled">@color/base_970</item>
+        <item name="colorOnFeatureSignalHigh">@color/signal_happy</item>
+        <item name="colorOnFeatureSignalLow">@color/sleep_300</item>
+        <item name="colorOnFeatureButtonPrimary">@color/relax_300</item>
+        <item name="colorOnFeatureButtonSecondary">@color/base_800</item>
+        <item name="colorOnFeatureTag">@color/relax_200</item>>
 
-
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/on_surface</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
 
         <item name="fontFamily">@font/lato</item>

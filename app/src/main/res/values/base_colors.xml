@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="base_100">#ffffff</color>
-    <color name="base_110">#ffffff17</color>
-    <color name="base_150">#ffffff80</color>
-    <color name="base_170">#ffffffcc</color>
+    <color name="base_110">#ccffffff</color>
+    <color name="base_150">#b3ffffff</color>
+    <color name="base_170">#80ffffff</color>
     <color name="base_300">#F6F6F6</color>
     <color name="base_500">#e9eaeb</color>
     <color name="base_600">#a9a9a9</color>
@@ -13,19 +13,19 @@
     <color name="base_950">#3131318c</color>
     <color name="base_970">#27311cc2</color>
 
-    <color name="signal_pain">#cb4f4f</color>
-    <color name="signal_peace">#98bc00</color>
+    <color name="signal_pain">#ce3131</color>
+    <color name="signal_peace">#849200</color>
     <color name="signal_dark_sleep">#12466a</color>
-    <color name="signal_dark_fun">#dc9a35</color>
-    <color name="signal_fun">#ffb546</color>
+    <color name="signal_dark_fun">#FFBA52</color>
+    <color name="signal_fun">#fb9906</color>
     <color name="signal_stress">#ff7600</color>
-    <color name="signal_happy">#ffcf4a</color>
+    <color name="signal_happy">#C55300</color>
 
-    <color name="sleep_50">#d8e9f2</color>
-    <color name="sleep_100">#9bc8e7</color>
-    <color name="sleep_200">#75a3c2</color>
-    <color name="sleep_300">#16547f</color>
-    <color name="sleep_400">#144d75</color>
+    <color name="sleep_50">#D8E9F2</color>
+    <color name="sleep_100">#95D6FF</color>
+    <color name="sleep_200">#0289e4</color>
+    <color name="sleep_300">#007BC7</color>
+    <color name="sleep_400">#066BA9</color>
     <color name="sleep_500">#12466a</color>
     <color name="sleep_600">#103f5f</color>
     <color name="sleep_700">#0e3855</color>
@@ -33,12 +33,12 @@
     <color name="sleep_900">#0b2a40</color>
 
     <color name="relax_50">#e0eef1</color>
-    <color name="relax_100">#47c3ec</color>
-    <color name="relax_200">#3bb4e7</color>
-    <color name="relax_300">#37acdd</color>
+    <color name="relax_100">#2fa6eb</color>
+    <color name="relax_200">#007CC2</color>
+    <color name="relax_300">#006ba9</color>
     <color name="relax_400">#34a4d3</color>
-    <color name="relax_500">#2f99c6</color>
-    <color name="relax_600">#2a8ab2</color>
+    <color name="relax_500">#003b5d</color>
+    <color name="relax_600">#00273e</color>
     <color name="relax_700">#267a9e</color>
     <color name="relax_800">#216b8b</color>
     <color name="relax_900">#1c5c77</color>
