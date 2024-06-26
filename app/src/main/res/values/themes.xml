@@ -223,8 +223,8 @@
     </style>
 
     <style name="Widget.Naturblick.OutlinedErrorButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">@color/error</item>
-        <item name="android:textColor">@color/error</item>
+        <item name="strokeColor">?attr/colorOnSecondarySignalHigh</item>
+        <item name="android:textColor">?attr/colorOnSecondarySignalHigh</item>
     </style>
 
     <style name="Naturblick.AlertTitleStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
