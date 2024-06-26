@@ -28,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_square_logo"
-            app:label_text="@string/create_manual" />
+            app:label_text="@string/create_manual"
+            style="@style/Theme.Naturblick.FABOverlay"/>
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

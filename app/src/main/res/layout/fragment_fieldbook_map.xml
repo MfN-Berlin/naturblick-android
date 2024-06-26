@@ -41,21 +41,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_square_logo"
-            app:label_text="@string/create_manual" />
+            app:label_text="@string/create_manual"
+            style="@style/Theme.Naturblick.FABOverlay"/>
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/create_observation_photo_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_photo24"
-            app:label_text="@string/photograph_a_plant" />
+            app:label_text="@string/photograph_a_plant"
+            style="@style/Theme.Naturblick.FABOverlay"/>
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/create_observation_audio_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_audio24"
-            app:label_text="@string/record_a_bird" />
+            app:label_text="@string/record_a_bird"
+            style="@style/Theme.Naturblick.FABOverlay"/>
 
         <LinearLayout
             android:id="@+id/toggle_gps_container"
