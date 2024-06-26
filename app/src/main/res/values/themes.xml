@@ -219,7 +219,9 @@
     </style>
 
     <style name="Widget.Naturblick.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">@color/primary_100</item>
+        <item name="strokeColor">?attr/colorOnSecondarySignalLow</item>
+        <item name="android:textColor">?attr/colorOnSecondaryHighEmphasis</item>
+        <item name="iconTint">?attr/colorOnSecondaryHighEmphasis</item>
     </style>
 
     <style name="Widget.Naturblick.OutlinedErrorButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
