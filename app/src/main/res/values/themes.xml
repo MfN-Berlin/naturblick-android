@@ -51,7 +51,7 @@
         <item name="colorOnFeatureSignalLow">@color/sleep_300</item>
         <item name="colorOnFeatureButtonPrimary">@color/relax_300</item>
         <item name="colorOnFeatureButtonSecondary">@color/base_800</item>
-        <item name="colorOnFeatureTag">@color/relax_200</item>>
+        <item name="colorOnFeatureTag">@color/relax_200</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
 
@@ -232,6 +232,11 @@
         <item name="iconTint">?attr/colorOnSecondaryHighEmphasis</item>
     </style>
 
+    <style name="Widget.Naturblick.SpeciesOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">?attr/colorOnSecondaryLowEmphasis</item>
+        <item name="android:textColor">?attr/colorOnSecondaryButtonPrimary</item>
+    </style>
+
     <style name="Widget.Naturblick.OutlinedErrorButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="strokeColor">?attr/colorOnSecondarySignalHigh</item>
         <item name="android:textColor">?attr/colorOnSecondarySignalHigh</item>
@@ -253,4 +258,21 @@
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
+
+    <style name="Widget.Naturblick.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">?attr/colorOnSecondaryMinimumEmphasis</item>
+        <item name="startIconTint">?attr/colorOnSecondaryLowEmphasis</item>
+        <item name="hintTextColor">?attr/colorOnSecondarySignalLow</item>
+        <item name="android:textColor">?attr/colorOnSecondaryMediumEmphasis</item>
+        <item name="boxStrokeColor">?attr/colorOnSecondarySignalLow</item>
+    </style>
+
+    <style name="Widget.Naturblick.TextInputLayout.FilledBox.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">?attr/colorOnSecondaryMinimumEmphasis</item>
+        <item name="startIconTint">?attr/colorOnSecondaryLowEmphasis</item>
+        <item name="hintTextColor">?attr/colorOnSecondarySignalLow</item>
+        <item name="android:textColor">?attr/colorOnSecondaryMediumEmphasis</item>
+        <item name="boxStrokeColor">?attr/colorOnSecondarySignalLow</item>
+    </style>
+
 </resources>
