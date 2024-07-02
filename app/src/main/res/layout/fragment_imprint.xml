@@ -53,6 +53,7 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_4"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textColorLink="?attr/colorOnSecondarySignalLow"
                 app:autoLink="@{true}"/>
 
             <com.google.android.material.textview.MaterialTextView

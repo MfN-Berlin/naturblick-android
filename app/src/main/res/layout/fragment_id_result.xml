@@ -50,7 +50,7 @@
                 android:text="@{model.infoText}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                android:textColorLink="?attr/colorOnSecondaryMediumEmphasis"
+                android:textColorLink="?attr/colorOnSecondarySignalLow"
                 app:autoLink="@{true}"/>
 
             <berlin.mfn.naturblick.ui.idresult.IdResultListLayout

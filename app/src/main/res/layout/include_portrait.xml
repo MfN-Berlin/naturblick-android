@@ -222,7 +222,7 @@
                     android:autoLink="web"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                    android:textColorLink="?attr/colorOnSecondaryHighEmphasis"
+                    android:textColorLink="?attr/colorOnSecondarySignalLow"
                     android:visibility="@{portrait.portrait.sources != null ? View.VISIBLE : View.GONE}"
                     app:sources="@{portrait.portrait.sources}" />
             </LinearLayout>
