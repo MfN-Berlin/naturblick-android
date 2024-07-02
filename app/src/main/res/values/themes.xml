@@ -198,6 +198,14 @@
         <item name="iconTint">?attr/colorOnPrimaryHighEmphasis</item>
     </style>
 
+    <style name="Theme.Naturblick.OnPrimaryFABOverlay">
+        <item name="backgroundTint">?attr/colorOnPrimaryButtonPrimary</item>
+        <item name="fab_color">?attr/colorOnPrimaryButtonPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimaryHighEmphasis</item>
+        <item name="tint">?attr/colorOnPrimaryHighEmphasis</item>
+        <item name="iconTint">?attr/colorOnPrimaryHighEmphasis</item>
+    </style>
+
     <style name="Widget.Naturblick.NavigationView" parent="Widget.MaterialComponents.NavigationView">
         <item name="android:background">?attr/colorPrimaryVariant</item>
         <item name="itemIconTint">@color/navigation_item_color</item>
