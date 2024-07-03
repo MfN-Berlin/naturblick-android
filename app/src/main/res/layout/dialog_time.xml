@@ -20,14 +20,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
             android:text="@string/validate_time_message"
-            android:textAppearance="?attr/textAppearanceBody1" />
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
-            android:hint="@string/date">
+            android:hint="@string/date"
+            style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_date_input"
@@ -35,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
                 android:inputType="text"
-                android:text="@{model.createdDateStr}" />
+                android:text="@{model.createdDateStr}"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
-            android:hint="@string/time">
+            android:hint="@string/time"
+            style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_time_input"
@@ -52,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
                 android:inputType="text"
-                android:text="@{model.createdTimeStr}" />
+                android:text="@{model.createdTimeStr}"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,6 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
-            android:selectedItemPosition="@{model.createdTimeZonePosition}" />
+            android:selectedItemPosition="@{model.createdTimeZonePosition}"
+            android:textColor="?attr/colorOnSecondaryHighEmphasis"
+            />
     </LinearLayout>
 </layout>
