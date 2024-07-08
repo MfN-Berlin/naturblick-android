@@ -118,7 +118,7 @@ class IdResultFragment : Fragment() {
         if (!(dialog != null && dialog.isShowing)) {
             errorDialog = MaterialAlertDialogBuilder(
                 requireContext(),
-                R.style.Naturblick_MaterialComponentns_Dialog_Alert
+                R.style.Naturblick_MaterialComponents_Dialog_Alert
             ).apply {
                 setTitle(error.error)
                 setOnCancelListener {

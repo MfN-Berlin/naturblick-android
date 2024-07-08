@@ -7,6 +7,7 @@ import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat.is24HourFormat
@@ -16,7 +17,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +32,7 @@ import berlin.mfn.naturblick.ui.sound.CropAndIdentifySoundRequest
 import berlin.mfn.naturblick.ui.sound.CropAndIdentifySoundResult
 import berlin.mfn.naturblick.ui.species.PickSpecies
 import berlin.mfn.naturblick.utils.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.*
@@ -189,6 +190,24 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
                 else -> {}
             }
         }
+        viewModel.setChangeBehavior { behaviors, selected ->
+            val index = behaviors.indexOf(selected)
+            var behavior: Behavior? = null
+            MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
+                .setTitle(R.string.observation)
+                .setSingleChoiceItems(behaviors, index) { _: DialogInterface, i: Int ->
+                    if (i != -1) {
+                        behavior = Behavior.parse(requireContext(), behaviors[i])
+                    }
+                }
+                .setPositiveButton(R.string.save) { _, _ ->
+                    behavior?.let {
+                        viewModel.behaviorChanged(it.value)
+                    }
+                }
+                .setNeutralButton(R.string.cancel, null)
+                .show()
+        }
         viewModel.setChangeLocation {
             (requireActivity() as ObservationActivity).pickLocation.launch(it)
         }
@@ -252,7 +271,7 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
     }
 
     private fun timeDialog() {
-        val dialogBuild = AlertDialog.Builder(requireContext())
+        val dialogBuild = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
         val binding = DialogTimeBinding.inflate(requireActivity().layoutInflater)
         binding.model = viewModel
         binding.timeZoneSpinner.adapter = ArrayAdapter(
@@ -316,7 +335,7 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
     }
 
     private fun deleteDialog(done: () -> Unit) {
-        val dialogBuild = AlertDialog.Builder(requireContext())
+        val dialogBuild = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
 
         dialogBuild
             .setTitle(R.string.delete_question)

@@ -9,12 +9,14 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
             android:theme="@style/Theme.Naturblick.AppBarOverlay">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="?attr/colorOnPrimaryHighEmphasis"
                 />
 
         </com.google.android.material.appbar.AppBarLayout>

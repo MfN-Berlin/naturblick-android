@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Naturblick" parent="Theme.MaterialComponents.DayNight">
+
+        <item name="colorPrimary">@color/sleep_500</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
+        <item name="colorOnPrimary">?attr/colorOnPrimaryMediumEmphasis</item>
+
+        <item name="colorSecondary">@color/base_100</item>
+        <item name="colorSecondaryVariant">@color/secondary_500</item>
+        <item name="colorOnSecondary">?attr/colorOnSecondaryMediumEmphasis</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+
+        <item name="colorTertiary">@color/base_300</item>
+        <item name="colorFeature">@color/sleep_50</item>
+        <item name="colorBackdrop">@color/base_950</item>
+        <item name="colorOnPrimaryHighEmphasis">@color/base_100</item>
+        <item name="colorOnPrimaryMediumEmphasis">@color/base_110</item>
+        <item name="colorOnPrimaryLowEmphasis">@color/base_150</item>
+        <item name="colorOnPrimaryMinimumEmphasis">@color/base_170</item>
+        <item name="colorOnPrimaryDisabled">@color/base_150</item>
+        <item name="colorOnPrimarySignalLow">@color/sleep_100</item>
+        <item name="colorOnPrimarySignalHigh">@color/signal_fun</item>
+        <item name="colorOnPrimaryButtonPrimary">@color/relax_200</item>
+        <item name="colorOnPrimaryButtonSecondary">@color/sleep_700</item>
+        <item name="colorOnPrimaryTag">@color/base_150</item>
+        <item name="colorOnPrimaryStableBright">@color/base_100</item>
+        <item name="colorOnPrimaryStableDark">@color/sleep_500</item>
+
+        <item name="colorOnSecondaryHighEmphasis">@color/sleep_600</item>
+        <item name="colorOnSecondaryMediumEmphasis">@color/sleep_500</item>
+        <item name="colorOnSecondaryLowEmphasis">@color/sleep_400</item>
+        <item name="colorOnSecondaryMinimumEmphasis">@color/sleep_50</item>
+        <item name="colorOnSecondaryDisabled">@color/base_970</item>
+        <item name="colorOnSecondarySignalLow">@color/sleep_400</item>
+        <item name="colorOnSecondarySignalHigh">@color/signal_happy</item>
+        <item name="colorOnSecondaryButtonPrimary">@color/relax_200</item>
+        <item name="colorOnSecondaryButtonSecondary">@color/relax_400</item>
+        <item name="colorOnSecondaryTag">@color/relax_200</item>
+        <item name="colorOnSecondaryWarning">@color/signal_pain</item>
+        <item name="colorOnSecondarySignalMedium">@color/signal_peace</item>
+        <item name="colorOnSecondaryStableBright">@color/base_100</item>
+        <item name="colorOnSecondaryStableDark">@color/sleep_500</item>
+
+        <item name="colorOnFeatureHighEmphasis">@color/sleep_600</item>
+        <item name="colorOnFeatureMediumEmphasis">@color/sleep_500</item>
+        <item name="colorOnFeatureLowEmphasis">@color/sleep_400</item>
+        <item name="colorOnFeatureDisabled">@color/base_970</item>
+        <item name="colorOnFeatureSignalHigh">@color/signal_happy</item>
+        <item name="colorOnFeatureSignalLow">@color/sleep_300</item>
+        <item name="colorOnFeatureButtonPrimary">@color/relax_300</item>
+        <item name="colorOnFeatureButtonSecondary">@color/base_800</item>
+        <item name="colorOnFeatureTag">@color/relax_200</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="android:windowBackground">?attr/colorSecondary</item>
+        <item name="android:popupBackground">?attr/colorSecondary</item>
+        <item name="fontFamily">@font/lato</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Naturblick.OutlinedButton</item>
+
+        <item name="materialButtonStyle">@style/Widget.Naturblick.Button</item>
+
+        <item name="textAppearanceHeadline2">
+            @style/TextAppearance.Naturblick.Headline2
+        </item>
+        <item name="textAppearanceHeadline3">
+            @style/TextAppearance.Naturblick.Headline3
+        </item>
+        <item name="textAppearanceHeadline4">
+            @style/TextAppearance.Naturblick.Headline4
+        </item>
+        <item name="textAppearanceHeadline6">
+            @style/TextAppearance.Naturblick.Headline6
+        </item>
+        <item name="textAppearanceSubtitle1">
+            @style/TextAppearance.Naturblick.Subtitle1
+        </item>
+        <item name="textAppearanceSubtitle2">
+            @style/TextAppearance.Naturblick.Subtitle2
+        </item>
+        <item name="textAppearanceSubtitle3">
+            @style/TextAppearance.Naturblick.Subtitle3
+        </item>
+        <item name="textAppearanceBody1">
+            @style/TextAppearance.Naturblick.Body1
+        </item>
+        <item name="textAppearanceBody2">
+            @style/TextAppearance.Naturblick.Body2
+        </item>
+        <item name="textAppearanceCaption">
+            @style/TextAppearance.Naturblick.Caption
+        </item>
+        <item name="textAppearanceButton">
+            @style/TextAppearance.Naturblick.Button
+        </item>
+        <item name="textAppearanceOverline">
+            @style/TextAppearance.Naturblick.Overline
+        </item>
+        <item name="homeAsUpIndicator">@drawable/ic_navigation_back</item>
+    </style>
+</resources>
+
+

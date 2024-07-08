@@ -80,13 +80,16 @@
                 android:hint="@string/email"
                 app:endIconDrawable="@drawable/ic_baseline_edit_24"
                 app:endIconMode="custom"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,13 +98,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:hint="@string/password"
-                app:endIconMode="password_toggle">
+                app:endIconMode="password_toggle"
+                style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
