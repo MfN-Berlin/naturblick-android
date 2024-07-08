@@ -72,7 +72,7 @@
                             android:layout_marginTop="@dimen/avatar_text_offset"
                             android:text="@string/species"
                             android:textAppearance="?attr/textAppearanceCaption"
-                            android:textColor="@color/primary_200"
+                            android:textColor="?attr/colorOnSecondarySignalLow"
                             app:layout_constraintEnd_toStartOf="@id/button_select_species"
                             app:layout_constraintHorizontal_bias="0"
                             app:layout_constraintStart_toEndOf="@id/species_image"
@@ -87,6 +87,7 @@
                             android:layout_marginBottom="@dimen/avatar_text_offset"
                             android:text="@{model.currentObservationAndSpecies.species != null ? model.currentObservationAndSpecies.species.nameWithFallback : @string/no_species_selected}"
                             android:textAppearance="?attr/textAppearanceHeadline6"
+                            android:textColor="?attr/colorOnSecondaryHighEmphasis"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/button_select_species"
                             app:layout_constraintHorizontal_bias="0"
@@ -96,7 +97,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@id/button_select_species"
-                            style="?attr/materialButtonOutlinedStyle"
+                            style="@style/Widget.Naturblick.SpeciesOutlinedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/default_margin"
@@ -129,7 +130,8 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:startIconDrawable="@drawable/ic_place_24px">
+                            app:startIconDrawable="@drawable/ic_place_24px"
+                            style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
@@ -137,7 +139,10 @@
                                 android:focusableInTouchMode="false"
                                 android:inputType="text"
                                 android:onClick="@{() -> model.changeLocation(model.currentObservation.coordinatesState)}"
-                                android:text='@{model.currentObservation.coordinatesState != null ? @string/location_text(model.currentObservation.latitudeString, model.currentObservation.longitudeString) : fetchingLocation ? @string/fetching_location : @string/no_location}' />
+                                android:text='@{model.currentObservation.coordinatesState != null ? @string/location_text(model.currentObservation.latitudeString, model.currentObservation.longitudeString) : fetchingLocation ? @string/fetching_location : @string/no_location}'
+                                android:textAppearance="?attr/textAppearanceBody1"
+                                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                                />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,20 +158,23 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/location"
-                            app:startIconDrawable="@drawable/ic_amount">
+                            app:startIconDrawable="@drawable/ic_amount"
+                            style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:afterTextChanged="@{(e) -> model.individualsChanged(e.toString())}"
                                 android:inputType="number"
-                                android:text="@{model.currentObservation.individualsState.toString()}" />
+                                android:text="@{model.currentObservation.individualsState.toString()}"
+                                android:textAppearance="?attr/textAppearanceBody1"
+                                android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/behavior"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                            style="@style/Widget.Naturblick.TextInputLayout.FilledBox.ExposedDropdownMenu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/default_margin"
@@ -177,7 +185,9 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/quantity"
                             android:hint="@string/observation"
-                            app:startIconDrawable="@drawable/ic_place_24px">
+                            app:startIconDrawable="@drawable/ic_place_24px"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textColor="?attr/colorOnSecondaryMediumEmphasis">
 
                             <AutoCompleteTextView
                                 android:layout_width="match_parent"
@@ -187,6 +197,8 @@
                                 android:editable="false"
                                 android:text="@{model.currentObservation.behaviorState}"
                                 app:setAdapter="@{model.currentBehaviorList}"
+                                android:textAppearance="?attr/textAppearanceBody1"
+                                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -202,7 +214,8 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/behavior"
-                            app:startIconDrawable="@drawable/ic_details">
+                            app:startIconDrawable="@drawable/ic_details"
+                            style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/editText2"
@@ -210,7 +223,9 @@
                                 android:layout_height="wrap_content"
                                 android:afterTextChanged="@{(e) -> model.detailsChanged(e.toString())}"
                                 android:inputType="text|textMultiLine"
-                                android:text="@{model.currentObservation.detailsState}" />
+                                android:text="@{model.currentObservation.detailsState}"
+                                android:textAppearance="?attr/textAppearanceBody1"
+                                android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -238,7 +253,6 @@
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/save"
-                                style="@style/Widget.MaterialComponents.Button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/default_margin"

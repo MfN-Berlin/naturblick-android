@@ -60,6 +60,7 @@
                 android:padding="@dimen/small_margin"
                 android:src="@drawable/ic_baseline_copyright_24"
                 app:backgroundTint="#4C000000"
+                app:tint="?attr/colorOnPrimaryHighEmphasis"
                 app:elevation="0dp"
                 app:hoveredFocusedTranslationZ="0dp"
                 app:layout_constraintEnd_toEndOf="@id/species_image"
@@ -89,7 +90,7 @@
                 android:text="@{species.sciname}"
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceOverline"
-                android:textColor="@color/sunset"
+                android:textColor="?attr/colorOnPrimarySignalHigh"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/species_image" />
@@ -103,6 +104,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceHeadline2"
+                android:textColor="?attr/colorOnPrimaryHighEmphasis"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sciname" />
@@ -134,14 +136,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/description"
-                    android:textAppearance="?attr/textAppearanceHeadline4" />
+                    android:textAppearance="?attr/textAppearanceHeadline4"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/default_margin"
                     android:text="@{portrait.portrait.description}"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
                 <include
                     android:id="@+id/species_features"
@@ -163,13 +167,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/in_the_city"
-                    android:textAppearance="?attr/textAppearanceHeadline4" />
+                    android:textAppearance="?attr/textAppearanceHeadline4"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@{portrait.portrait.inTheCity}"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                     android:textAppearance="?attr/textAppearanceBody1" />
 
                 <include
@@ -187,6 +193,7 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/good_to_know"
                     android:textAppearance="?attr/textAppearanceHeadline4"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
                     android:visibility="@{!portrait.goodToKnows.isEmpty() ? View.VISIBLE : View.GONE}" />
 
                 <berlin.mfn.naturblick.ui.species.portrait.GoodToKnowList
@@ -204,6 +211,7 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/sources"
                     android:textAppearance="?attr/textAppearanceHeadline4"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
                     android:visibility="@{portrait.portrait.sources != null? View.VISIBLE : View.GONE}" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -213,6 +221,8 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:autoLink="web"
                     android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    android:textColorLink="?attr/colorOnSecondarySignalLow"
                     android:visibility="@{portrait.portrait.sources != null ? View.VISIBLE : View.GONE}"
                     app:sources="@{portrait.portrait.sources}" />
             </LinearLayout>
