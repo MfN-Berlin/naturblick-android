@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.room.*
-import androidx.room.OnConflictStrategy.REPLACE
 import berlin.mfn.naturblick.utils.Media
 import berlin.mfn.naturblick.utils.MediaType
 import com.bumptech.glide.Glide
@@ -218,6 +217,8 @@ interface OperationDao {
                         null
                     )
                 )
+                is UploadMediaOperation -> {}
+                is UploadThumbnailMediaOperation -> {}
             }
         }
     }
@@ -254,7 +255,7 @@ interface OperationDao {
     @Query("DELETE FROM backend_observation")
     suspend fun deleteAllBackendObservations()
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBackendObservations(observations: List<BackendObservation>)
 
     @Query("INSERT INTO observation SELECT * FROM backend_observation")
@@ -298,7 +299,7 @@ interface OperationDao {
     @Query("DELETE from observation WHERE occurence_id = :occurenceId")
     suspend fun deleteObservation(occurenceId: UUID)
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createObservation(observation: Observation)
 
     @Query("DELETE FROM operation")

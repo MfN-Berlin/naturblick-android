@@ -217,7 +217,7 @@ class SpectrogramCropperView(context: Context, attrs: AttributeSet?) :
     }
 
     @SuppressLint("DrawAllocation")
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         val edgeWidth = resources.getDimension(R.dimen.android_gesture_inset).toInt()
@@ -241,7 +241,7 @@ class SpectrogramCropperView(context: Context, attrs: AttributeSet?) :
                 )
             )
         )
-        canvas?.apply {
+        canvas.apply {
             val rect = RectF(
                 startPx + strokeWidth / 2f,
                 strokeWidth / 2f,

@@ -9,8 +9,6 @@ import berlin.mfn.naturblick.utils.GERMAN_ID
 
 @Dao
 interface SpeciesDao {
-    @Query("SELECT count(*) FROM species")
-    suspend fun getSpeciesCount(): Long
 
     @Query("SELECT * FROM species WHERE rowid = :id")
     suspend fun getSpecies(id: Int): Species
