@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package berlin.mfn.naturblick.ui.character
 
 import android.app.Application
 import androidx.lifecycle.*
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.utils.languageId
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.launch
@@ -27,7 +30,7 @@ class CharacterViewModel(group: String, application: Application) : AndroidViewM
             state.minus(
                 characterWithValues.flatMap {
                     it.requiresUnset(toggled)
-                }
+                }.toSet()
             ).run {
                 if (contains(toggled)) {
                     minus(toggled)

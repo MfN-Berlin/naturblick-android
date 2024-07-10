@@ -82,13 +82,13 @@ class ForgotPasswordFragment : Fragment() {
 
     private val startEmail =
         registerForActivityResult(object : ActivityResultContract<Unit, Unit>() {
-            override fun createIntent(context: Context, u: Unit) =
+            override fun createIntent(context: Context, input: Unit) =
                 Intent(Intent.ACTION_MAIN).apply {
                     addCategory(Intent.CATEGORY_APP_EMAIL)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
 
-            override fun parseResult(resultCode: Int, result: Intent?) {
+            override fun parseResult(resultCode: Int, intent: Intent?) {
             }
         }) {
             findNavController().navigateUp()

@@ -18,13 +18,13 @@ data class ManageObservationCreated(val occurenceId: UUID) : ManageObservationRe
 data class CreateObservationResult(val occurenceId: UUID) : Parcelable
 
 object ManageObservation : ActivityResultContract<ObservationAction, ManageObservationResult>() {
-    override fun createIntent(context: Context, o: ObservationAction) =
+    override fun createIntent(context: Context, input: ObservationAction) =
         Intent(context, ObservationActivity::class.java)
-            .putExtra(OBSERVATION_ACTION, o)
+            .putExtra(OBSERVATION_ACTION, input)
 
-    override fun parseResult(resultCode: Int, result: Intent?): ManageObservationResult =
+    override fun parseResult(resultCode: Int, intent: Intent?): ManageObservationResult =
         if (resultCode == Activity.RESULT_OK) {
-            result?.getParcelableExtra<CreateObservationResult>(CREATE_OBSERVATION_RESULT)?.let {
+            intent?.getParcelableExtra<CreateObservationResult>(CREATE_OBSERVATION_RESULT)?.let {
                 ManageObservationCreated(it.occurenceId)
             } ?: ManageObservationFinished
         } else ManageObservationCanceled

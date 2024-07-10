@@ -12,15 +12,15 @@ import kotlinx.parcelize.Parcelize
 data class PickSpeciesResult(val speciesId: Int) : Parcelable
 
 object PickSpecies : ActivityResultContract<Unit, PickSpeciesResult?>() {
-    override fun createIntent(context: Context, u: Unit) =
+    override fun createIntent(context: Context, input: Unit) =
         Intent(context, SpeciesListActivity::class.java)
             .putExtra(SPECIES_SELECTABLE, true)
 
-    override fun parseResult(resultCode: Int, result: Intent?): PickSpeciesResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): PickSpeciesResult? {
         if (resultCode != Activity.RESULT_OK) {
             return null
         }
-        return result?.getParcelableExtra(SELECTED_SPECIES)
+        return intent?.getParcelableExtra(SELECTED_SPECIES)
     }
     const val SPECIES_SELECTABLE = "selectable"
     const val SELECTED_SPECIES = "selected_species"

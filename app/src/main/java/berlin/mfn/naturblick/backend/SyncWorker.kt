@@ -32,7 +32,7 @@ class SyncWorker(appContext: Context, workerParams: WorkerParameters) :
                 throw e
             }
         } catch (e: IOException) {
-            Log.e(SyncWorker.TAG, "Failed to sync observations, will ask for retry", e)
+            Log.e(TAG, "Failed to sync observations, will ask for retry", e)
             Result.retry()
         }
     }

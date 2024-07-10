@@ -37,7 +37,7 @@ class FieldbookActivity : BaseActivity(
         super.onCreate(savedInstanceState)
         initializeNavigationViews()
 
-        val fieldbookViewModel: FieldbookViewModel by viewModels() {
+        val fieldbookViewModel: FieldbookViewModel by viewModels {
             FieldbookViewModelFactory(application)
         }
         val action = intent.getParcelableExtra<ObservationAction>(OBSERVATION_ACTION)
