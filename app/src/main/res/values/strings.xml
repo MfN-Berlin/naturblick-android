@@ -146,7 +146,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="imprint_1">Museum für Naturkunde\nLeibniz Institute for Evolution and Biodiversity Science\nInvalidenstraße 43\n10115 Berlin, Germany</string>
     <string name="imprint_2">Landesunmittelbare rechtsfähige Stiftung des öffentlichen Rechts</string>
     <string name="imprint_3">Telefon: +49 (0)30 2093-8591\nFax: +49 (0)30 2093-8561</string>
-    <string name="imprint_4">E-Mail: <a href="mailto:naturblick@mfn.berlin">naturblick(at)mfn.berlin</a>\nInternet: <a href="http://www.naturkundemuseum-berlin.de">http://www.naturkundemuseum-berlin.de</a></string>
+    <string name="imprint_4">E-Mail: <a href="mailto:info@mfn.berlin">info(at)mfn.berlin</a>\nInternet: <a href="https://www.museumfuernaturkunde.berlin">https://www.museumfuernaturkunde.berlin</a></string>
     <string name="imprint_5">Authorized representative person\nProf. Johannes Vogel, PhD (Director General),\nStephan Junker (Managing Director)</string>
     <string name="imprint_6">Controlling authority\nSenatsverwaltung für Wirtschaft, Technologie und Forschung\nMartin-Luther-Straße 105, 10825 Berlin</string>
     <string name="imprint_7">Content responsibility (German law § 55 Abs. 2 RStV)\nUlrike Sturm</string>
