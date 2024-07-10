@@ -88,13 +88,13 @@ object Settings {
             apply()
         }
         activity.runOnUiThread {
-            Toast.makeText(
+            makeText(
                 activity.applicationContext,
                 activity.applicationContext.resources.getString(
                     R.string.cc_by_was_set_to_default,
                     ccBy
                 ),
-                Toast.LENGTH_LONG
+                LENGTH_LONG
             ).show()
         }
     }

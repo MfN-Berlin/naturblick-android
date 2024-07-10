@@ -30,7 +30,7 @@ class ObservationActivity : BaseActivity(
         super.onCreate(savedInstanceState)
         initializeNavigationViews()
         val action = intent.getParcelableExtra<ObservationAction>(OBSERVATION_ACTION)!!
-        val viewModel: ObservationViewModel by viewModels() {
+        val viewModel: ObservationViewModel by viewModels {
             ObservationViewModelFactory(
                 action,
                 application

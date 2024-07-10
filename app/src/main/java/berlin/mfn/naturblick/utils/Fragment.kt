@@ -213,7 +213,7 @@ fun Fragment.showCcInfo(
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
     val text = "${textAndSourceAsLink(image.source, context)} " +
-        "${licenceToLink(image.license.trim())}" + image.owner
+            licenceToLink(image.license.trim()) + image.owner
 
     binding.ccInfoText.text = Html.fromHtml(text)
     binding.ccInfoText.movementMethod = LinkMovementMethod.getInstance()

@@ -22,15 +22,15 @@ data class CropAndIdentifySoundRequest(val media: Media, val segmStart: Int?, va
 
 object CropAndIdentifySound :
     ActivityResultContract<CropAndIdentifySoundRequest?, CropAndIdentifySoundResult?>() {
-    override fun createIntent(context: Context, media: CropAndIdentifySoundRequest?) =
+    override fun createIntent(context: Context, input: CropAndIdentifySoundRequest?) =
         Intent(context, SoundIdActivity::class.java)
-            .putExtra(MEDIA, media)
+            .putExtra(MEDIA, input)
 
-    override fun parseResult(resultCode: Int, result: Intent?): CropAndIdentifySoundResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): CropAndIdentifySoundResult? {
         return if (resultCode != Activity.RESULT_OK) {
             null
         } else {
-            result?.getParcelableExtra(CROP_AND_IDENTIFY_SOUND_RESULT)
+            intent?.getParcelableExtra(CROP_AND_IDENTIFY_SOUND_RESULT)
         }
     }
 

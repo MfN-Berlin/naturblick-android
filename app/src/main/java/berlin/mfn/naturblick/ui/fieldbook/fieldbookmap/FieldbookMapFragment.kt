@@ -64,7 +64,7 @@ class FieldbookMapFragment : MapFragment(), RequestedPermissionCallback {
     ): View {
         val popupOffset = resources.getDimension(R.dimen.popup_offset).roundToInt()
         val args: FieldbookMapFragmentArgs by navArgs()
-        val viewModel: FieldbookMapViewModel by viewModels() {
+        val viewModel: FieldbookMapViewModel by viewModels {
             FieldbookMapModelFactory(
                 args.occurenceId?.uuid,
                 requireActivity().application

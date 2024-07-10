@@ -43,7 +43,7 @@ class FullscreenFragment : Fragment(), RequestedPermissionCallback {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         media = requireActivity().intent.extras?.getParcelable(
             MEDIA
         )!!

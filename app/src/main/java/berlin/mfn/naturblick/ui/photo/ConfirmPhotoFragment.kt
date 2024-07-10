@@ -247,7 +247,7 @@ class ConfirmPhotoFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val request: CropAndIdentifyPhotoRequest = requireActivity().intent.extras?.getParcelable(
             CropAndIdentifyPhoto
                 .CROP_AND_IDENTIFY_REQUEST

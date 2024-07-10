@@ -54,15 +54,15 @@ data class IdentifySpeciesResult(
 object IdResultActivityContract :
     ActivityResultContract<IdentifySpecies, IdentifySpeciesResult?>() {
 
-    override fun createIntent(context: Context, identifySpecies: IdentifySpecies) =
+    override fun createIntent(context: Context, input: IdentifySpecies) =
         Intent(context, IdResultActivity::class.java)
-            .putExtra(ID_SPECIES, identifySpecies)
+            .putExtra(ID_SPECIES, input)
 
-    override fun parseResult(resultCode: Int, result: Intent?): IdentifySpeciesResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): IdentifySpeciesResult? {
         if (resultCode != Activity.RESULT_OK) {
             return null
         }
-        return result?.getParcelableExtra(ID_RESULT)
+        return intent?.getParcelableExtra(ID_RESULT)
     }
 
     const val ID_SPECIES = "id_species"

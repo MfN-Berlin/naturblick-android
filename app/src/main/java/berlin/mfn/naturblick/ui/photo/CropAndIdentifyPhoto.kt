@@ -29,15 +29,15 @@ data class CropAndIdentifyMediaRequest(val media: Media) : CropAndIdentifyPhotoR
 
 object CropAndIdentifyPhoto :
     ActivityResultContract<CropAndIdentifyPhotoRequest, CropAndIdentifyPhotoResult?>() {
-    override fun createIntent(context: Context, request: CropAndIdentifyPhotoRequest) =
+    override fun createIntent(context: Context, input: CropAndIdentifyPhotoRequest) =
         Intent(context, ImageIdActivity::class.java)
-            .putExtra(CROP_AND_IDENTIFY_REQUEST, request)
+            .putExtra(CROP_AND_IDENTIFY_REQUEST, input)
 
-    override fun parseResult(resultCode: Int, result: Intent?): CropAndIdentifyPhotoResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): CropAndIdentifyPhotoResult? {
         return if (resultCode != Activity.RESULT_OK) {
             null
         } else {
-            result?.getParcelableExtra(CROP_AND_IDENTIFY_RESULT)
+            intent?.getParcelableExtra(CROP_AND_IDENTIFY_RESULT)
         }
     }
 
