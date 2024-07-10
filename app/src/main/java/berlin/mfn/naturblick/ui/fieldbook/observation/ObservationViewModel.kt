@@ -29,10 +29,10 @@ data class MediaData(
 class ObservationViewModel(
     val action: ObservationAction,
     private val savedStateHandle: SavedStateHandle,
-    application: Application
-) : AndroidViewModel(application) {
-    private val operationDao = ObservationDb.getDb(application).operationDao()
-    private val speciesDao = StrapiDb.getDb(application).speciesDao()
+    private val app: Application
+) : AndroidViewModel(app) {
+    private val operationDao = ObservationDb.getDb(app).operationDao()
+    private val speciesDao = StrapiDb.getDb(app).speciesDao()
 
     private val _fetchingLocation = MutableLiveData(false)
     val fetchingLocation: LiveData<Boolean> = _fetchingLocation
@@ -87,6 +87,31 @@ class ObservationViewModel(
     fun changeLocation(c: Coordinates?) {
         _changeLocation?.let {
             it(c)
+        }
+    }
+
+
+    private fun getBehaviorList(): Array<String> =
+        currentObservationAndSpecies.value?.let { observation ->
+            observation.species?.group?.let { group ->
+                val isPlant = group == "herb" || group == "tree" || group == "conifer"
+                if (isPlant) {
+                    app.resources.getStringArray(R.array.plant_behavior)
+                } else {
+                    app.resources.getStringArray(R.array.animal_behavior)
+                }
+            }
+        } ?: app.resources.getStringArray(R.array.animal_or_plant_behavior)
+
+    private var _changeBehavior: ((Array<String>, String?) -> Unit)? = null
+
+    fun setChangeBehavior(changeBehavior: ((Array<String>, String?) -> Unit)) {
+        _changeBehavior = changeBehavior
+    }
+
+    fun changeBehavior(selected: String?) {
+        _changeBehavior?.let {
+            it(getBehaviorList(), selected)
         }
     }
 
@@ -309,29 +334,6 @@ class ObservationViewModel(
                 species
             )
         }.asLiveData()
-
-    val currentBehaviorList = currentObservationAndSpecies.map {
-        it.species?.group?.let { group ->
-            val isPlant = group == "herb" || group == "tree" || group == "conifer"
-            if (isPlant) {
-                BehaviorAdapter(
-                    application,
-                    R.layout.item_behavior,
-                    application.resources.getStringArray(R.array.plant_behavior)
-                )
-            } else {
-                BehaviorAdapter(
-                    application,
-                    R.layout.item_behavior,
-                    application.resources.getStringArray(R.array.animal_behavior)
-                )
-            }
-        } ?: BehaviorAdapter(
-            application,
-            R.layout.item_behavior,
-            application.resources.getStringArray(R.array.animal_or_plant_behavior)
-        )
-    }
 
     val createdTimeStr = currentObservation.map {
         it.createdState?.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))

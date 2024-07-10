@@ -152,7 +152,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
         val dialog = errorDialog
         if (!(dialog != null && dialog.isShowing)) {
             errorDialog = MaterialAlertDialogBuilder(
-                requireContext(), R.style.Naturblick_MaterialComponentns_Dialog_Alert
+                requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert
             ).apply {
                 setTitle(error.error)
                 setOnCancelListener {
@@ -181,7 +181,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
         view: SpectrogramCropperView,
         leave: (Boolean) -> Unit
     ) {
-        val dialogBuild = AlertDialog.Builder(requireContext())
+        val dialogBuild = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
         dialogBuild.setTitle(
             R.string.save_observation
         ).setMessage(

@@ -1,5 +1,6 @@
 package berlin.mfn.naturblick.utils
 
+import android.util.TypedValue
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,9 @@ fun dividerItemDecorationBinding(recyclerView: RecyclerView, active: Boolean) {
         val inset = recyclerView.context.resources.getDimension(R.dimen.avatar_size) +
             recyclerView.context.resources.getDimension(R.dimen.default_margin) * 2
         dividerItemDecoration.dividerInsetStart = inset.roundToInt()
+        val value = TypedValue()
+        recyclerView.context.theme.resolveAttribute(R.attr.colorOnSecondaryMinimumEmphasis, value, true)
+        dividerItemDecoration.dividerColor = value.data
         recyclerView.addItemDecoration(dividerItemDecoration, 0)
     } else {
         recyclerView.removeItemDecorationAt(0)

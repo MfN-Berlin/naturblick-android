@@ -12,6 +12,7 @@ import berlin.mfn.naturblick.ui.fieldbook.ManageObservation.CREATE_OBSERVATION_R
 import berlin.mfn.naturblick.ui.fieldbook.ManageObservation.OBSERVATION_ACTION
 import berlin.mfn.naturblick.ui.fieldbook.ObservationAction
 import berlin.mfn.naturblick.ui.fieldbook.PickLocation
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ObservationActivity : BaseActivity(
     R.navigation.observation_navigation
@@ -69,7 +70,7 @@ class ObservationActivity : BaseActivity(
         model.currentObservation.value.hasChanges()
 
     fun coordinatesDialog(fetchingLocation: Boolean, done: () -> Unit) {
-        AlertDialog.Builder(this).apply {
+        MaterialAlertDialogBuilder(this, R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
             setTitle(R.string.no_location)
             setMessage(
                 if (fetchingLocation)
@@ -93,7 +94,7 @@ class ObservationActivity : BaseActivity(
     }
 
     private fun saveDialog(isNew: Boolean, hasCoordinates: Boolean, done: (Boolean) -> Unit) {
-        val dialogBuild = AlertDialog.Builder(this)
+        val dialogBuild = MaterialAlertDialogBuilder(this, R.style.Naturblick_MaterialComponents_Dialog_Alert)
 
         dialogBuild
             .setTitle(
