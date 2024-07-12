@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.IntentCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import berlin.mfn.naturblick.databinding.FragmentFullscreenBinding
@@ -27,14 +28,14 @@ class FullscreenFragment : Fragment(), RequestedPermissionCallback {
                 { uri ->
                     binding.speciesImage.setImageURI(uri)
                 }, { error ->
-                requireActivity().setResult(Activity.RESULT_CANCELED)
-                requireActivity().finish()
-                Toast.makeText(
-                    requireContext(),
-                    error.error,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+                    requireActivity().setResult(Activity.RESULT_CANCELED)
+                    requireActivity().finish()
+                    Toast.makeText(
+                        requireContext(),
+                        error.error,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             )
         }
     }
@@ -44,8 +45,10 @@ class FullscreenFragment : Fragment(), RequestedPermissionCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        media = requireActivity().intent.extras?.getParcelable(
-            MEDIA
+        media = IntentCompat.getParcelableExtra(
+            requireActivity().intent,
+            MEDIA,
+            RemoteMedia::class.java
         )!!
 
         binding = FragmentFullscreenBinding.inflate(inflater, container, false)

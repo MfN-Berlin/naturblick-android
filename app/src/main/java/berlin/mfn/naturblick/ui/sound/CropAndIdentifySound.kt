@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.utils.Media
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import kotlinx.parcelize.Parcelize
@@ -30,7 +31,9 @@ object CropAndIdentifySound :
         return if (resultCode != Activity.RESULT_OK) {
             null
         } else {
-            intent?.getParcelableExtra(CROP_AND_IDENTIFY_SOUND_RESULT)
+            intent?.let {
+                IntentCompat.getParcelableExtra(it, CROP_AND_IDENTIFY_SOUND_RESULT, CropAndIdentifySoundResult::class.java)
+            }
         }
     }
 

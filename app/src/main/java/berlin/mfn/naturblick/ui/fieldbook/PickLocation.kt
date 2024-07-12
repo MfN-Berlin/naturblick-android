@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.backend.Coordinates
 import berlin.mfn.naturblick.ui.fieldbook.locationpicker.LocationPickerActivity
 import berlin.mfn.naturblick.ui.fieldbook.locationpicker.LocationPickerFragment.Companion.INITIAL_LOCATION
@@ -18,6 +19,8 @@ object PickLocation : ActivityResultContract<Coordinates?, Coordinates?>() {
         if (resultCode != Activity.RESULT_OK) {
             return null
         }
-        return intent?.getParcelableExtra(PICKED_LOCATION)
+        return intent?.let {
+            IntentCompat.getParcelableExtra(it,PICKED_LOCATION, Coordinates::class.java)
+        }
     }
 }

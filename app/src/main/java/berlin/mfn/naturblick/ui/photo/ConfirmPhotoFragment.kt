@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.IntentCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -248,10 +249,12 @@ class ConfirmPhotoFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val request: CropAndIdentifyPhotoRequest = requireActivity().intent.extras?.getParcelable(
-            CropAndIdentifyPhoto
-                .CROP_AND_IDENTIFY_REQUEST
-        )!!
+        val request =
+            IntentCompat.getParcelableExtra(
+                requireActivity().intent,
+                CropAndIdentifyPhoto.CROP_AND_IDENTIFY_REQUEST,
+                CropAndIdentifyPhotoRequest::class.java
+            )!!
         val imageIdModel by activityViewModels<ImageIdViewModel> {
             ImageIdViewModelFactory(
                 request,
