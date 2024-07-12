@@ -18,7 +18,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorFeature">
+        android:background="@drawable/round_corners"
+        android:backgroundTint="?attr/colorFeature">
 
         <ImageView
             android:id="@+id/species_image"
