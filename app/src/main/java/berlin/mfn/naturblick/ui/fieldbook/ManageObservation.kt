@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.ui.fieldbook.observation.ObservationActivity
 import java.util.*
 import kotlinx.parcelize.Parcelize
@@ -24,8 +25,13 @@ object ManageObservation : ActivityResultContract<ObservationAction, ManageObser
 
     override fun parseResult(resultCode: Int, intent: Intent?): ManageObservationResult =
         if (resultCode == Activity.RESULT_OK) {
-            intent?.getParcelableExtra<CreateObservationResult>(CREATE_OBSERVATION_RESULT)?.let {
-                ManageObservationCreated(it.occurenceId)
+            intent?.let {
+                IntentCompat.getParcelableExtra<CreateObservationResult>(
+                    it, CREATE_OBSERVATION_RESULT,
+                    CreateObservationResult::class.java
+                )?.let { result ->
+                    ManageObservationCreated(result.occurenceId)
+                }
             } ?: ManageObservationFinished
         } else ManageObservationCanceled
 
