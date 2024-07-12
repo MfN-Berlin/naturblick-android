@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -117,7 +118,7 @@ class DeleteAccountFragment : Fragment() {
         binding.deleteAccount.isEnabled = false
         binding.deleteAccount.showProgress {
             buttonTextRes = R.string.in_progress
-            progressColor = resources.getColor(R.color.white)
+            progressColor = ContextCompat.getColor(requireContext(), R.color.white)
         }
     }
 

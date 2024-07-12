@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,7 +43,7 @@ class SignUpFragment : Fragment() {
             binding.signUp.isEnabled = false
             binding.signUp.showProgress {
                 buttonTextRes = R.string.in_progress
-                progressColor = resources.getColor(R.color.white)
+                progressColor = ContextCompat.getColor(requireContext(), R.color.white)
             }
             lifecycleScope.launch {
                 NetworkResult.catchNetworkAndServerErrors(requireContext()) {

@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.scale
 import androidx.core.view.ViewCompat
 import berlin.mfn.naturblick.R
@@ -253,16 +254,16 @@ class SpectrogramCropperView(context: Context, attrs: AttributeSet?) :
             val startHandleX = startPx + touchSnap / 2f
             val endHandleX = endPx - touchSnap / 2f
             val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = resources.getColor(R.color.white_opacity_60)
+                color = ContextCompat.getColor(context, R.color.white_opacity_60)
                 style = Paint.Style.STROKE
                 strokeWidth = width * 0.01f
             }
             val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = resources.getColor(R.color.white_opacity_10)
+                color = ContextCompat.getColor(context, R.color.white_opacity_10)
                 style = Paint.Style.FILL
             }
             val grayPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = resources.getColor(R.color.black_opacity_10)
+                color = ContextCompat.getColor(context, R.color.black_opacity_10)
                 style = Paint.Style.FILL
             }
             drawRect(0f, 0f, startPx, height.toFloat(), grayPaint)
