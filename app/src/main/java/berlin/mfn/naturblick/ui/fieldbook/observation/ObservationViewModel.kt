@@ -77,7 +77,7 @@ class ObservationViewModel(
 
     var createFlowLaunched: Boolean
         get() = savedStateHandle["launched"] ?: false
-        set(value) {
+        set(_) {
             savedStateHandle["launched"] = true
         }
 

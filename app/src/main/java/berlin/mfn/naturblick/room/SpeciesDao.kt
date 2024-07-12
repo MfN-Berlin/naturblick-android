@@ -108,8 +108,8 @@ interface SpeciesDao {
         categories: Int,
         query: List<Pair<Int, Float>>
     ): PagingSource<Int, SpeciesWithGenus> {
-        val (query, args) = buildSpeciesByCharactersQuery(searchQuery, language, categories, query)
-        return filterSpeciesByCharactersInternal(SimpleSQLiteQuery(query, args))
+        val (queryString, args) = buildSpeciesByCharactersQuery(searchQuery, language, categories, query)
+        return filterSpeciesByCharactersInternal(SimpleSQLiteQuery(queryString, args))
     }
 
     @RawQuery(
@@ -128,7 +128,7 @@ interface SpeciesDao {
         query: List<Pair<Int, Float>>
     ): Int {
         if (query.isNotEmpty()) {
-            val (query, args) = buildSpeciesByCharactersQuery(
+            val (queryString, args) = buildSpeciesByCharactersQuery(
                 searchQuery,
                 language,
                 categories,
@@ -136,7 +136,7 @@ interface SpeciesDao {
             )
             return countSpeciesByCharactersInternal(
                 SimpleSQLiteQuery(
-                    "SELECT COUNT(*) FROM ($query)",
+                    "SELECT COUNT(*) FROM ($queryString)",
                     args
                 )
             )

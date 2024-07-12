@@ -296,6 +296,7 @@ class ConfirmPhotoFragment :
         )
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun saveAndFinish(
         crop: MediaThumbnail,
         cropRect: Rect,
