@@ -69,8 +69,10 @@ class FieldbookFragment : Fragment() {
         pagingAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 if (positionStart == 0) { // New observations are added on top
-                    // Scroll to new observation
-                    recyclerView.scrollToPosition(positionStart)
+                    activity?.runOnUiThread {
+                        // Scroll to new observation
+                        recyclerView.scrollToPosition(positionStart)
+                    }
                 }
             }
         })
