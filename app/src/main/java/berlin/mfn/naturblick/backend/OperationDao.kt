@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.room.*
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import berlin.mfn.naturblick.utils.Media
 import berlin.mfn.naturblick.utils.MediaType
 import com.bumptech.glide.Glide
@@ -218,6 +218,8 @@ interface OperationDao {
                         null
                     )
                 )
+                is UploadMediaOperation -> {}
+                is UploadThumbnailMediaOperation -> {}
             }
         }
     }

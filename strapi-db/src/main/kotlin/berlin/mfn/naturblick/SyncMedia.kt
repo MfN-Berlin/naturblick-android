@@ -113,11 +113,11 @@ open class SyncMedia : DefaultTask() {
                 )
                 it.image?.let { image ->
                     service.getFile(image.url).byteStream().use { svgStream ->
-                        val svgPath = Path.of(project.buildDir.path, "tmp", "${it.id}.svg")
+                        val svgPath: Path = Path.of(project.buildDir.path, "tmp", "${it.id}.svg")
                         project.mkdir(Path.of(project.buildDir.path, "tmp"))
                         Files.copy(svgStream, svgPath, StandardCopyOption.REPLACE_EXISTING)
                         imageFile.outputStream().use {
-                            Svg2Vector.parseSvgToXml(svgPath.toFile(), it)
+                            Svg2Vector.parseSvgToXml(svgPath, it)
                         }
                     }
                 }
