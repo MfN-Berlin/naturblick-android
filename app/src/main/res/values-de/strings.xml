@@ -238,4 +238,5 @@
     <string name="continue_str">Weiter</string>
     <string name="import_info_title">Hinweis Urheberschaft</string>
     <string name="observation">Beobachtung</string>
+    <string name="create_observation">Beobachtung hinzufügen</string>
 </resources>
