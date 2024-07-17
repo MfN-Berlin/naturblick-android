@@ -9,6 +9,7 @@ import android.view.Menu
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import androidx.activity.viewModels
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.NaturblickApplication
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.room.StrapiDb
@@ -28,7 +29,7 @@ class SpeciesListActivity : BaseActivity(R.navigation.species_list_navigation) {
 
         val speciesDao = StrapiDb.getDb(applicationContext).speciesDao()
 
-        val viewModel: SpeciesListViewModel by viewModels() {
+        val viewModel: SpeciesListViewModel by viewModels {
             SpeciesListViewModelFactory(speciesDao)
         }
         speciesListViewModel = viewModel
@@ -42,7 +43,9 @@ class SpeciesListActivity : BaseActivity(R.navigation.species_list_navigation) {
         }
 
         speciesListViewModel.setGroup(group)
-        val characters = intent?.extras?.getParcelable<CharacterQuery>(QUERY_CHARACTERS)
+        val characters = intent?.let {
+            IntentCompat.getParcelableExtra(it, QUERY_CHARACTERS, CharacterQuery::class.java)
+        }
         speciesListViewModel.setCharacters(characters)
         characters?.let {
             AnalyticsTracker.trackMKey(

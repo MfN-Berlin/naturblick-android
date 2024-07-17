@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.utils.Media
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import kotlinx.parcelize.Parcelize
@@ -22,15 +23,17 @@ data class CropAndIdentifySoundRequest(val media: Media, val segmStart: Int?, va
 
 object CropAndIdentifySound :
     ActivityResultContract<CropAndIdentifySoundRequest?, CropAndIdentifySoundResult?>() {
-    override fun createIntent(context: Context, media: CropAndIdentifySoundRequest?) =
+    override fun createIntent(context: Context, input: CropAndIdentifySoundRequest?) =
         Intent(context, SoundIdActivity::class.java)
-            .putExtra(MEDIA, media)
+            .putExtra(MEDIA, input)
 
-    override fun parseResult(resultCode: Int, result: Intent?): CropAndIdentifySoundResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): CropAndIdentifySoundResult? {
         return if (resultCode != Activity.RESULT_OK) {
             null
         } else {
-            result?.getParcelableExtra(CROP_AND_IDENTIFY_SOUND_RESULT)
+            intent?.let {
+                IntentCompat.getParcelableExtra(it, CROP_AND_IDENTIFY_SOUND_RESULT, CropAndIdentifySoundResult::class.java)
+            }
         }
     }
 

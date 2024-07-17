@@ -1,6 +1,9 @@
+@file:OptIn(ExperimentalSerializationApi::class)
+
 package berlin.mfn.naturblick.strapi
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -38,7 +41,7 @@ object StrapiApi {
         return retrofit.create(StrapiApiService::class.java)
     }
 
-    @OptIn(kotlin.ExperimentalStdlibApi::class)
+    @OptIn(ExperimentalStdlibApi::class)
     suspend fun <T> getAll(p: suspend (Int, Int) -> List<T>): List<T> {
         var page = 0
         return buildList {
