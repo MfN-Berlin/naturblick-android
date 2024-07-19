@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -28,7 +29,10 @@
         android:id="@+id/observation_property"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/default_margin">
+        android:padding="@dimen/default_margin"
+        android:screenReaderFocusable="true"
+        android:focusable="true"
+        tools:targetApi="p">
 
         <ImageView
             android:id="@+id/imageView"
@@ -40,7 +44,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0"
-            app:tint="?attr/colorOnSecondarySignalLow" />
+            app:tint="?attr/colorOnSecondarySignalLow"
+            android:focusable="false"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView"
@@ -55,7 +60,8 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="false"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView2"
@@ -64,6 +70,7 @@
             android:layout_marginHorizontal="@dimen/default_and_avatar_offset_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:text="@{text}"
+            android:contentDescription="@{text == null || text.isBlank ? @string/acc_none : text}"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="?attr/colorOnSecondaryMediumEmphasis"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -71,7 +78,8 @@
             app:layout_constraintVertical_bias="0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@id/materialTextView"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:focusable="false"/>
 
         <ImageView
             android:id="@+id/imageView2"
@@ -83,7 +91,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/materialTextView2"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primary_100" />
+            app:tint="@color/primary_100"
+            android:focusable="false"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

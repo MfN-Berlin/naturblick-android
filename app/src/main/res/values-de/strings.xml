@@ -239,4 +239,9 @@
     <string name="import_info_title">Hinweis Urheberschaft</string>
     <string name="observation">Beobachtung</string>
     <string name="create_observation">Beobachtung hinzufügen</string>
+    <string name="acc_view_observation">Vollbildansicht öffnen</string>
+    <string name="acc_play_obervation">Beobachtung anhören</string>
+    <string name="acc_scientific_name">Wissenschaftliche Name: %s</string>
+    <string name="acc_open_speciesportrait">Arteninformation öffnen</string>
+    <string name="acc_none">Keine</string>
 </resources>
