@@ -80,34 +80,8 @@
             app:features="@{portrait.unambiguousFeatures}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_or_name" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/similar_species"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:text="@string/similar_species"
-            android:textAppearance="?attr/textAppearanceHeadline3"
-            android:textColor="?attr/colorOnSecondaryHighEmphasis"
-            android:visibility="@{portrait.similarSpecies.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/feature_list" />
-
-        <berlin.mfn.naturblick.ui.species.portrait.SimilarSpeciesList
-            android:id="@+id/portrait_similar_species"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/default_margin"
-            android:paddingBottom="@dimen/default_margin"
-            android:visibility="@{portrait.similarSpecies.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/similar_species"
-            app:similarSpecies="@{portrait.similarSpecies}" />
+            app:layout_constraintTop_toBottomOf="@id/image_or_name"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
