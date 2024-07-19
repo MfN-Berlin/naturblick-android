@@ -274,6 +274,9 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="acc_scientific_name">Scientific name: %s</string>
     <string name="acc_open_speciesportrait">Open species information</string>
     <string name="acc_none">None</string>
+    <string name="acc_copyright">Image copyright</string>
+    <string name="acc_example_sound">Example sound</string>
+    <string name="acc_image_text">Image caption: %s</string>
     <string-array name="create_observation_options">
         <item>@string/create_manual</item>
         <item>@string/photograph_a_plant</item>
