@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/no_artportrait"
-            android:textAppearance="?attr/textAppearanceBody1" />
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
         <Button
             android:id="@+id/button_wikipedia"

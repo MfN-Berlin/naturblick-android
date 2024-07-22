@@ -2,6 +2,7 @@ package berlin.mfn.naturblick.ui.photo
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.ui.BaseActivity
 
@@ -12,9 +13,10 @@ class ImageIdActivity : BaseActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val request: CropAndIdentifyPhotoRequest = intent.extras?.getParcelable(
-            CropAndIdentifyPhoto
-                .CROP_AND_IDENTIFY_REQUEST
+        val request = IntentCompat.getParcelableExtra(
+            intent,
+            CropAndIdentifyPhoto.CROP_AND_IDENTIFY_REQUEST,
+            CropAndIdentifyPhotoRequest::class.java
         )!!
         val imageIdModel by viewModels<ImageIdViewModel> {
             ImageIdViewModelFactory(

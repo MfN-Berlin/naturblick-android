@@ -333,7 +333,7 @@ data class EmptyLocalMedia internal constructor(
                 val resolver = context.contentResolver
                 resolver.delete(uri, null, null)
             } catch (e: SecurityException) {
-                Log.i(Media.TAG, "Discarded security exception trying to delete failed media", e)
+                Log.i(TAG, "Discarded security exception trying to delete failed media", e)
             }
         }
     }

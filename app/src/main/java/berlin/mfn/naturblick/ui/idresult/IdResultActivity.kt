@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.ThumbnailRequest
 import berlin.mfn.naturblick.databinding.ActivityIdResultBinding
@@ -54,15 +55,17 @@ data class IdentifySpeciesResult(
 object IdResultActivityContract :
     ActivityResultContract<IdentifySpecies, IdentifySpeciesResult?>() {
 
-    override fun createIntent(context: Context, identifySpecies: IdentifySpecies) =
+    override fun createIntent(context: Context, input: IdentifySpecies) =
         Intent(context, IdResultActivity::class.java)
-            .putExtra(ID_SPECIES, identifySpecies)
+            .putExtra(ID_SPECIES, input)
 
-    override fun parseResult(resultCode: Int, result: Intent?): IdentifySpeciesResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): IdentifySpeciesResult? {
         if (resultCode != Activity.RESULT_OK) {
             return null
         }
-        return result?.getParcelableExtra(ID_RESULT)
+        return intent?.let {
+            IntentCompat.getParcelableExtra(it, ID_RESULT, IdentifySpeciesResult::class.java)
+        }
     }
 
     const val ID_SPECIES = "id_species"
@@ -76,9 +79,7 @@ class IdResultActivity : BaseActivity(
         super.onCreate(savedInstanceState)
 
         val identifySpecies =
-            intent.extras?.getParcelable<IdentifySpecies>(
-                ID_SPECIES
-            )!!
+            IntentCompat.getParcelableExtra(intent, ID_SPECIES, IdentifySpecies::class.java)!!
         val viewModel by viewModels<IdResultViewModel> {
             IdResultViewModelFactory(identifySpecies, application)
         }

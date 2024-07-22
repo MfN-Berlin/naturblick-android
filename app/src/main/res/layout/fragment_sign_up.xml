@@ -24,14 +24,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/sign_up_title"
-                android:textAppearance="?attr/textAppearanceSubtitle1" />
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/sign_up_text"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_layout"
@@ -41,7 +43,8 @@
                 android:hint="@string/email"
                 app:endIconDrawable="@drawable/ic_baseline_edit_24"
                 app:endIconMode="custom"
-                app:helperTextEnabled="true">
+                app:helperTextEnabled="true"
+                style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
@@ -49,7 +52,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:text="@={model.email}"
-                    app:onFocusChangeListener="@{(view, hasFocus) -> model.updateValidationStatus()}" />
+                    app:onFocusChangeListener="@{(view, hasFocus) -> model.updateValidationStatus()}"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                    android:textAppearance="?attr/textAppearanceBody1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +66,8 @@
                 android:hint="@string/password"
                 app:endIconMode="password_toggle"
                 app:helperText="@string/password_format"
-                app:helperTextEnabled="true">
+                app:helperTextEnabled="true"
+                style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
@@ -69,7 +75,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:text="@={model.password}"
-                    app:onFocusChangeListener="@{(view, hasFocus) -> model.updateValidationStatus()}" />
+                    app:onFocusChangeListener="@{(view, hasFocus) -> model.updateValidationStatus()}"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                    android:textAppearance="?attr/textAppearanceBody1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,34 +86,42 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/privacy_rules"
-                android:textAppearance="?attr/textAppearanceSubtitle2" />
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/privacy_rules_text1"
-                android:textAppearance="?attr/textAppearanceBody2" />
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/privacy_rules_text2"
-                android:textAppearance="?attr/textAppearanceBody2" />
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/privacy"
-                android:textAppearance="?attr/textAppearanceBody2" />
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="@={model.privacy}"
-                android:text="@string/data_protection_consent" />
+                android:text="@string/data_protection_consent"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/sign_up_error"
@@ -113,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="@color/error"
+                android:textColor="?attr/colorOnSecondaryWarning"
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton

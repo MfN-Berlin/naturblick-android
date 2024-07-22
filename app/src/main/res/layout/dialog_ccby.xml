@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
-        android:orientation="horizontal">
+        android:paddingHorizontal="?attr/dialogPreferredPadding"
+        android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cc_by_field"
-            android:textAppearance="?attr/textAppearanceBody1"
-            />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_cc_by"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:text="@string/cc_by_default" />
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/cc_by_field"
+            app:endIconDrawable="@drawable/ic_baseline_edit_24"
+            app:endIconMode="custom"
+            style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_cc_by"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cc_by_default"
+                android:inputType="textEmailAddress"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                android:textAppearance="?attr/textAppearanceBody1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 </layout>

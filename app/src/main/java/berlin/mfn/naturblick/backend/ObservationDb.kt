@@ -43,8 +43,8 @@ abstract class ObservationDb : RoomDatabase() {
 
     companion object {
         private val MIGRATION_6_7 = object : Migration(6, 7) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("DELETE FROM sync")
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("DELETE FROM sync")
             }
         }
 
