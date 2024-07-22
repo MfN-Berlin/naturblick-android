@@ -34,32 +34,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_square_logo"
-            app:label_text="@string/create_manual"
-            style="@style/Theme.Naturblick.FABOverlay"/>
+            app:label_text="@string/create_manual" />
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/create_observation_photo_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_photo24"
-            app:label_text="@string/photograph_a_plant"
-            style="@style/Theme.Naturblick.FABOverlay"/>
+            app:label_text="@string/photograph_a_plant" />
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/create_observation_audio_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_audio24"
-            app:label_text="@string/record_a_bird"
-            style="@style/Theme.Naturblick.FABOverlay"/>
+            app:label_text="@string/record_a_bird" />
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/create_observation_gallery_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_phone_action_image"
-            app:label_text="@string/add_image_from_gallery"
-            style="@style/Theme.Naturblick.FABOverlay"/>
+            app:label_text="@string/add_image_from_gallery" />
 
         <LinearLayout
             android:id="@+id/map_button_container"

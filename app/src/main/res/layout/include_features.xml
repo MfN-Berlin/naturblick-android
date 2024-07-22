@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorFeature">
+        android:background="@color/secondary_500_opacity_10">
 
         <ImageView
             android:id="@+id/species_image"
@@ -40,7 +40,7 @@
             android:layout_marginTop="@dimen/avatar_text_offset"
             android:text="@{species.sciname}"
             android:textAppearance="?attr/textAppearanceSubtitle3"
-            android:textColor="?attr/colorOnFeatureSignalHigh"
+            android:textColor="@color/sunset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
@@ -55,7 +55,7 @@
             android:layout_marginBottom="@dimen/avatar_text_offset"
             android:text="@{species.name}"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnFeatureHighEmphasis"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
@@ -89,7 +89,6 @@
             android:layout_marginBottom="@dimen/default_margin"
             android:text="@string/similar_species"
             android:textAppearance="?attr/textAppearanceHeadline3"
-            android:textColor="?attr/colorOnSecondaryHighEmphasis"
             android:visibility="@{portrait.similarSpecies.isEmpty() ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

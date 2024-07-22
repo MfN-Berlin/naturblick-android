@@ -39,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/default_margin"
                 android:text="@string/id_result"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
+                android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -49,8 +48,7 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@{model.infoText}"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                android:textColorLink="?attr/colorOnSecondarySignalLow"
+                android:textColor="?android:attr/textColorSecondary"
                 app:autoLink="@{true}"/>
 
             <berlin.mfn.naturblick.ui.idresult.IdResultListLayout
@@ -83,7 +81,6 @@
                     android:layout_marginStart="@dimen/default_margin"
                     android:text="@string/none_of_the_options"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/chevron"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -99,7 +96,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/colorOnSecondarySignalLow" />
+                    app:tint="@color/primary_100" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

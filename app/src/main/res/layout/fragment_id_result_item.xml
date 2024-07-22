@@ -35,7 +35,6 @@
             android:layout_marginTop="@dimen/avatar_text_offset"
             android:text="@{idResult.species.nameWithFallback}"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSecondaryHighEmphasis"
             app:layout_constraintEnd_toStartOf="@id/chevron"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
@@ -50,6 +49,7 @@
             android:layout_marginBottom="@dimen/avatar_text_offset"
             android:text="@{@string/score(idResult.scoreInt)}"
             android:textAppearance="?attr/textAppearanceSubtitle3"
+            android:textColor="@{ idResult.scoreInt > 50 ? @color/gold_dark_green : @color/secondary_500 }"
             app:layout_constraintEnd_toStartOf="@id/chevron"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
@@ -67,7 +67,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorOnSecondarySignalLow" />
+            app:tint="@color/primary_100" />
 
         <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier"

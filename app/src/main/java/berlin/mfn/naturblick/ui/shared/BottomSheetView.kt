@@ -19,7 +19,7 @@ class BottomSheetView(context: Context, attributeSet: AttributeSet) :
 
     init {
         orientation = VERTICAL
-        setBackgroundResource(R.drawable.bottom_sheet)
+        setBackgroundResource(R.drawable.sheet)
         val handle = ImageView(context)
         handle.setImageResource(R.drawable.ic_card_handle)
         handle.layoutParams = LayoutParams(

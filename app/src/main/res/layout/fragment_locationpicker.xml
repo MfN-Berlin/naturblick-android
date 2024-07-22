@@ -27,16 +27,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/default_margin"
-            android:text="@string/select_location"
-            style="@style/Theme.Naturblick.FABOverlay"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:text="@string/select_location" />
+         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/toggle_gps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="@dimen/default_margin"
             android:src="@{ model.track ? @drawable/ic_round_gps_fixed_24 : @drawable/ic_round_gps_not_fixed_24}"
-            style="@style/Theme.Naturblick.FABOverlay"
-            />
+             />
     </FrameLayout>
 </layout>

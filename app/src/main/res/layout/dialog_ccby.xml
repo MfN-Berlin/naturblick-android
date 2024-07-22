@@ -13,7 +13,6 @@
             android:layout_height="wrap_content"
             android:text="@string/cc_by_field"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="?attr/colorOnSecondaryHighEmphasis"
             />
 
         <com.google.android.material.textfield.TextInputEditText
