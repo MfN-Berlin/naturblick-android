@@ -146,7 +146,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="imprint_1">Museum für Naturkunde\nLeibniz Institute for Evolution and Biodiversity Science\nInvalidenstraße 43\n10115 Berlin, Germany</string>
     <string name="imprint_2">Landesunmittelbare rechtsfähige Stiftung des öffentlichen Rechts</string>
     <string name="imprint_3">Telefon: +49 (0)30 2093-8591\nFax: +49 (0)30 2093-8561</string>
-    <string name="imprint_4">E-Mail: <a href="mailto:info@mfn.berlin">info(at)mfn.berlin</a>\nInternet: <a href="https://www.museumfuernaturkunde.berlin">https://www.museumfuernaturkunde.berlin</a></string>
+    <string name="imprint_4">E-Mail: <a href="mailto:naturblick@mfn.berlin">naturblick(at)mfn.berlin</a>\nInternet: <a href="http://www.naturkundemuseum-berlin.de">http://www.naturkundemuseum-berlin.de</a></string>
     <string name="imprint_5">Authorized representative person\nProf. Johannes Vogel, PhD (Director General),\nStephan Junker (Managing Director)</string>
     <string name="imprint_6">Controlling authority\nSenatsverwaltung für Wirtschaft, Technologie und Forschung\nMartin-Luther-Straße 105, 10825 Berlin</string>
     <string name="imprint_7">Content responsibility (German law § 55 Abs. 2 RStV)\nUlrike Sturm</string>
@@ -154,7 +154,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="imprint_9">Funding 2016-2021: German Federal Ministry for the Environment, Nature Conservation and Nuclear Safety (BMU)</string>
     <string name="imprint_10">Further information <a href="https://naturblick.museumfuernaturkunde.berlin/about?lang=en">here</a>.</string>
     <string name="imprint_sources_title">Sources</string>
-    <string name="imprint_sources">The sources for the image and sound materials are indicated in the respective species portraits. Image and sound materials of species that do not yet have a species portrait or from other contexts of the app, such as identification tools, are given under other sources. German and English names taken in part from GBIF.org (2022), GBIF Home Page. Available from: <a href="https://www.gbif.org">https://www.gbif.org</a> [28 September 2022].</string>
+    <string name="imprint_sources">The sources for the image and sound materials are indicated in the respective species portraits. Image and sound materials of species that do not yet have a species portrait or from other contexts of the app, such as identification tools, are given under other sources. German and English names taken in part from GBIF.org (2022), GBIF Home Page. Available from: https://www.gbif.org [28 September 2022].</string>
     <string name="imprint_more_title">Additional Regulations</string>
     <string name="imprint_more_1">Copyright</string>
     <string name="imprint_more_2">All parts of the Website of the Museum für Naturkunde Berlin are copyrighted. You may not copy, reproduce, republish, download, post, broadcast, transmit, adapt or otherwise use any material on the Site other than for your own personal non-commercial use.</string>

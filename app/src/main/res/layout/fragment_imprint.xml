@@ -144,7 +144,7 @@
                 android:text="@string/imprint_sources"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                app:autoLink="@{true}"/>
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/to_sources"
