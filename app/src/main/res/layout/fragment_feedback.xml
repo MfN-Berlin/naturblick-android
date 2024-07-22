@@ -29,6 +29,15 @@
             />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/feedback_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/feedback_form"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="end"
+            />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/feedback_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
