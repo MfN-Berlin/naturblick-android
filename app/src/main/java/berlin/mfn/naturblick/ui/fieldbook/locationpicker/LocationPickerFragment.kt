@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.Coordinates
@@ -67,7 +66,7 @@ class LocationPickerFragment : MapFragment(), RequestedPermissionCallback {
     private fun dropPin(): ImageView {
         val dropPinView = ImageView(requireContext())
         dropPinView.setImageResource(R.drawable.ic_baseline_edit_location_24)
-        dropPinView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.secondary_200))
+        dropPinView.setColorFilter(requireContext().resources.getColor(R.color.secondary_200))
         val params = FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,

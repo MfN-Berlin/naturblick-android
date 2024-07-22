@@ -62,7 +62,7 @@
                 android:text="@{species.sciname}"
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceOverline"
-                android:textColor="?attr/colorOnFeatureSignalHigh"
+                android:textColor="@color/sunset"
                 android:visibility="@{species.name != null ? View.VISIBLE : View.GONE}" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -71,8 +71,7 @@
                 android:text="@{species.nameWithFallback}"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceHeadline2"
-                android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
+                android:textAppearance="?attr/textAppearanceHeadline2" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -80,13 +79,13 @@
                 android:text="@{species.synonym}"
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceCaption"
-                android:textColor="?attr/colorOnSecondaryLowEmphasis"
+                android:textColor="@color/primary_100"
                 android:visibility="@{species.synonym != null ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_species_portrait"
-            style="@style/Widget.Naturblick.OutlinedButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
@@ -98,6 +97,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_select_species"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/half_margin"

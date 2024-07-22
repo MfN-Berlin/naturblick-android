@@ -150,20 +150,7 @@ class ObservationViewFragment : Fragment(), RequestedPermissionCallback {
                     if (granted == null) { // We didn't ask for permission
                         requestRead.checkPermission(requireContext(), this)
                         viewModel.startAudioOnPermissionResult()
-                    } else { // We do not have permission, use server
-                        lifecycleScope.launch {
-                            media.fetchUri(false, requireContext()).fold({ uri ->
-                                player.start(uri, start = start?.toLong(), end = end?.toLong())
-                            }, { error ->
-                                Toast.makeText(
-                                    requireContext(),
-                                    error.error,
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            })
-                        }
                     }
-
                 })
             } else {
                 media.fetchUri(granted, requireContext()).fold({ uri ->

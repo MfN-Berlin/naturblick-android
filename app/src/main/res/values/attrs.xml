@@ -1,42 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="textAppearanceSubtitle3" format="reference"/>
-    <attr name="colorFeature" format="reference"/>
-    <attr name="colorBackdrop" format="reference"/>
-    <attr name="colorOnPrimaryHighEmphasis" format="reference"/>
-    <attr name="colorOnPrimaryMediumEmphasis" format="reference"/>
-    <attr name="colorOnPrimaryLowEmphasis" format="reference"/>
-    <attr name="colorOnPrimaryMinimumEmphasis" format="reference"/>
-    <attr name="colorOnPrimaryDisabled" format="reference"/>
-    <attr name="colorOnPrimarySignalLow" format="reference"/>
-    <attr name="colorOnPrimarySignalHigh" format="reference"/>
-    <attr name="colorOnPrimaryButtonPrimary" format="reference"/>
-    <attr name="colorOnPrimaryButtonSecondary" format="reference"/>
-    <attr name="colorOnPrimaryTag" format="reference"/>
-    <attr name="colorOnPrimaryStableBright" format="reference"/>
-    <attr name="colorOnPrimaryStableDark" format="reference"/>
-    <attr name="colorOnSecondaryHighEmphasis" format="reference"/>
-    <attr name="colorOnSecondaryMediumEmphasis" format="reference"/>
-    <attr name="colorOnSecondaryLowEmphasis" format="reference"/>
-    <attr name="colorOnSecondaryMinimumEmphasis" format="reference"/>
-    <attr name="colorOnSecondaryDisabled" format="reference"/>
-    <attr name="colorOnSecondarySignalLow" format="reference"/>
-    <attr name="colorOnSecondarySignalHigh" format="reference"/>
-    <attr name="colorOnSecondaryButtonPrimary" format="reference"/>
-    <attr name="colorOnSecondaryButtonSecondary" format="reference"/>
-    <attr name="colorOnSecondaryTag" format="reference"/>
-    <attr name="colorOnSecondaryWarning" format="reference"/>
-    <attr name="colorOnSecondarySignalMedium" format="reference"/>
-    <attr name="colorOnSecondaryStableBright" format="reference"/>
-    <attr name="colorOnSecondaryStableDark" format="reference"/>
-
-    <attr name="colorOnFeatureHighEmphasis" format="reference"/>
-    <attr name="colorOnFeatureMediumEmphasis" format="reference"/>
-    <attr name="colorOnFeatureLowEmphasis" format="reference"/>
-    <attr name="colorOnFeatureDisabled" format="reference"/>
-    <attr name="colorOnFeatureSignalLow" format="reference"/>
-    <attr name="colorOnFeatureSignalHigh" format="reference"/>
-    <attr name="colorOnFeatureButtonPrimary" format="reference"/>
-    <attr name="colorOnFeatureButtonSecondary" format="reference"/>
-    <attr name="colorOnFeatureTag" format="reference"/>
 </resources>

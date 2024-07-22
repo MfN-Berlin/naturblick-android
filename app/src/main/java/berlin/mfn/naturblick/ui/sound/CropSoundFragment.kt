@@ -70,7 +70,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentCropSpectrogramBinding.inflate(inflater, container, false)
         val viewModel by activityViewModels<CropSoundViewModel> {
             CropSoundViewModelFactory(requireActivity().application)
@@ -152,7 +152,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
         val dialog = errorDialog
         if (!(dialog != null && dialog.isShowing)) {
             errorDialog = MaterialAlertDialogBuilder(
-                requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert
+                requireContext(), R.style.Naturblick_MaterialComponentns_Dialog_Alert
             ).apply {
                 setTitle(error.error)
                 setOnCancelListener {
@@ -181,7 +181,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
         view: SpectrogramCropperView,
         leave: (Boolean) -> Unit
     ) {
-        val dialogBuild = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
+        val dialogBuild = AlertDialog.Builder(requireContext())
         dialogBuild.setTitle(
             R.string.save_observation
         ).setMessage(

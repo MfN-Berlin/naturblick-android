@@ -40,7 +40,6 @@
             android:text="@{group.name}"
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceCaption"
-            android:textColor="?attr/colorOnPrimaryHighEmphasis"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/group_image" />

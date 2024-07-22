@@ -78,7 +78,7 @@
                                 android:layout_marginTop="@dimen/avatar_text_offset"
                                 android:text="@string/species"
                                 android:textAppearance="?attr/textAppearanceCaption"
-                                android:textColor="?attr/colorOnSecondarySignalLow"
+                                android:textColor="@color/primary_200"
                                 app:layout_constraintEnd_toStartOf="@id/chevron"
                                 app:layout_constraintStart_toEndOf="@id/species_image"
                                 app:layout_constraintTop_toTopOf="@id/species_image" />
@@ -92,7 +92,6 @@
                                 android:layout_marginBottom="@dimen/avatar_text_offset"
                                 android:text="@{model.currentObservationAndSpecies.species != null ? model.currentObservationAndSpecies.species.nameWithFallback : @string/no_species_selected}"
                                 android:textAppearance="?attr/textAppearanceHeadline6"
-                                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/chevron"
                                 app:layout_constraintStart_toEndOf="@id/species_image"

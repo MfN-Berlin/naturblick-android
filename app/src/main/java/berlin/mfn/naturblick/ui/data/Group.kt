@@ -165,7 +165,7 @@ data class Group(
         private fun convertDrawableToBitmap(context: Context, sourceDrawable: Drawable?): Bitmap? {
             return sourceDrawable?.let { drawable ->
                 val constantState = drawable.constantState ?: return null
-                val mutableDrawable = constantState.newDrawable().mutate()
+                val drawable = constantState.newDrawable().mutate()
                 val mapPinSize = context.resources.getDimension(R.dimen.map_pin).roundToInt()
 
                 val bitmap: Bitmap = Bitmap.createBitmap(
@@ -173,8 +173,8 @@ data class Group(
                     Bitmap.Config.ARGB_8888
                 )
                 val canvas = Canvas(bitmap)
-                mutableDrawable.setBounds(0, 0, canvas.width, canvas.height)
-                mutableDrawable.draw(canvas)
+                drawable.setBounds(0, 0, canvas.width, canvas.height)
+                drawable.draw(canvas)
                 bitmap
             }
         }

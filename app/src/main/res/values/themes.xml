@@ -1,4 +1,64 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Naturblick" parent="Theme.MaterialComponents.Light">
+
+        <item name="colorPrimary">@color/primary_500</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
+        <item name="colorOnPrimary">@color/primary_on_medium</item>
+
+        <item name="colorSecondary">@color/secondary_200</item>
+        <item name="colorSecondaryVariant">@color/secondary_500</item>
+        <item name="colorOnSecondary">@color/primary_on_high</item>
+
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+
+        <item name="fontFamily">@font/lato</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/black</item>
+
+        <item name="materialButtonOutlinedStyle">@style/Widget.Naturblick.OutlinedButton</item>
+
+        <item name="textAppearanceHeadline2">
+            @style/TextAppearance.Naturblick.Headline2
+        </item>
+        <item name="textAppearanceHeadline3">
+            @style/TextAppearance.Naturblick.Headline3
+        </item>
+        <item name="textAppearanceHeadline4">
+            @style/TextAppearance.Naturblick.Headline4
+        </item>
+        <item name="textAppearanceHeadline6">
+            @style/TextAppearance.Naturblick.Headline6
+        </item>
+        <item name="textAppearanceSubtitle1">
+            @style/TextAppearance.Naturblick.Subtitle1
+        </item>
+        <item name="textAppearanceSubtitle2">
+            @style/TextAppearance.Naturblick.Subtitle2
+        </item>
+        <item name="textAppearanceSubtitle3">
+            @style/TextAppearance.Naturblick.Subtitle3
+        </item>
+        <item name="textAppearanceBody1">
+            @style/TextAppearance.Naturblick.Body1
+        </item>
+        <item name="textAppearanceBody2">
+            @style/TextAppearance.Naturblick.Body2
+        </item>
+        <item name="textAppearanceCaption">
+            @style/TextAppearance.Naturblick.Caption
+        </item>
+        <item name="textAppearanceButton">
+            @style/TextAppearance.Naturblick.Button
+        </item>
+        <item name="textAppearanceOverline">
+            @style/TextAppearance.Naturblick.Overline
+        </item>
+        <item name="homeAsUpIndicator">@drawable/ic_navigation_back</item>
+    </style>
 
     <style name="TextAppearance.Naturblick.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="android:textSize">30sp</item>
@@ -44,6 +104,7 @@
 
     <style name="TextAppearance.Naturblick.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
@@ -74,37 +135,22 @@
         <item name="fontWeight">900</item>
     </style>
 
-    <style name="Theme.Naturblick.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar">
-        <item name="colorControlNormal">?attr/colorOnPrimaryHighEmphasis</item>
-        <item name="android:editTextColor">?attr/colorOnPrimaryHighEmphasis</item>
-        <item name="android:textColorHint">?attr/colorOnPrimaryHighEmphasis</item>
-    </style>
+    <style name="Theme.Naturblick.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <style name="Theme.Naturblick.DarkBackgroundOverlay" parent="ThemeOverlay.MaterialComponents.Dark">
         <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:textColor">?attr/colorOnPrimaryHighEmphasis</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Theme.Naturblick.GroupsOverlay" parent="Theme.Naturblick.DarkBackgroundOverlay">
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:textColor">?attr/colorOnPrimaryHighEmphasis</item>
+        <item name="android:background">@color/primary_400</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Theme.Naturblick.FABOverlay">
-        <item name="backgroundTint">?attr/colorOnSecondaryButtonSecondary</item>
-        <item name="efab_color">?attr/colorOnSecondaryButtonSecondary</item>
-        <item name="fab_color">?attr/colorOnSecondaryButtonSecondary</item>
-        <item name="android:textColor">?attr/colorOnPrimaryHighEmphasis</item>
-        <item name="tint">?attr/colorOnPrimaryHighEmphasis</item>
-        <item name="iconTint">?attr/colorOnPrimaryHighEmphasis</item>
-    </style>
-
-    <style name="Theme.Naturblick.OnPrimaryFABOverlay">
-        <item name="backgroundTint">?attr/colorOnPrimaryButtonPrimary</item>
-        <item name="fab_color">?attr/colorOnPrimaryButtonPrimary</item>
-        <item name="android:textColor">?attr/colorOnPrimaryHighEmphasis</item>
-        <item name="tint">?attr/colorOnPrimaryHighEmphasis</item>
-        <item name="iconTint">?attr/colorOnPrimaryHighEmphasis</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="efab_color">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Widget.Naturblick.NavigationView" parent="Widget.MaterialComponents.NavigationView">
@@ -121,56 +167,22 @@
         <item name="itemMaxLines">2</item>
     </style>
 
-    <style name="Widget.Naturblick.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">?attr/colorOnSecondaryMinimumEmphasis</item>
-        <item name="iconTint">?attr/colorOnSecondaryMinimumEmphasis</item>
-        <item name="backgroundTint">?attr/colorOnSecondaryButtonPrimary</item>
-    </style>
-
     <style name="Widget.Naturblick.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">?attr/colorOnSecondarySignalLow</item>
-        <item name="android:textColor">?attr/colorOnSecondaryHighEmphasis</item>
-        <item name="iconTint">?attr/colorOnSecondaryHighEmphasis</item>
-    </style>
-
-    <style name="Widget.Naturblick.SpeciesOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">?attr/colorOnSecondaryLowEmphasis</item>
-        <item name="android:textColor">?attr/colorOnSecondaryButtonPrimary</item>
+        <item name="strokeColor">@color/primary_100</item>
     </style>
 
     <style name="Widget.Naturblick.OutlinedErrorButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">?attr/colorOnSecondarySignalHigh</item>
-        <item name="android:textColor">?attr/colorOnSecondarySignalHigh</item>
+        <item name="strokeColor">@color/error</item>
+        <item name="android:textColor">@color/error</item>
     </style>
 
     <style name="Naturblick.AlertTitleStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textColor">?attr/colorOnSecondaryHighEmphasis</item>
         <item name="android:maxLines">15</item>
         <item name="android:singleLine">false</item>
     </style>
 
-    <style name="Naturblick.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">?attr/colorOnSecondaryButtonPrimary</item>
-    </style>
-
-    <style name="Naturblick.Alert.Body" parent="@style/Widget.MaterialComponents.TextView">
-        <item name="android:textColor">?attr/colorOnSecondaryHighEmphasis</item>
-    </style>
-
-    <style name="Naturblick.Alert.CheckedTextView" parent="Widget.MaterialComponents.CheckedTextView">
-        <item name="android:textColor">?attr/colorOnSecondaryHighEmphasis</item>
-    </style>
-
-    <style name="Naturblick.MaterialComponents.Dialog.Alert" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <style name="Naturblick.MaterialComponentns.Dialog.Alert" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
         <item name="materialAlertDialogTitleTextStyle">@style/Naturblick.AlertTitleStyle</item>
-        <item name="colorSurface">?attr/colorSecondary</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Naturblick.Button.TextButton.Dialog</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Naturblick.Button.TextButton.Dialog</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Naturblick.Button.TextButton.Dialog</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/Naturblick.Alert.Body</item>
-        <item name="android:textColorAlertDialogListItem">?attr/colorOnSecondaryHighEmphasis</item>
-        <item name="android:checkedTextViewStyle">@style/Naturblick.Alert.CheckedTextView</item>
-        <item name="colorAccent">?attr/colorOnSecondaryHighEmphasis</item>
     </style>
 
     <style name="Widget.Naturblick.SpinnerItem" parent="Widget.AppCompat.TextView">
@@ -179,18 +191,5 @@
         <item name="android:letterSpacing">0</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">?attr/colorOnSecondaryMediumEmphasis</item>
     </style>
-
-    <style name="Widget.Naturblick.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="boxBackgroundColor">?attr/colorOnSecondaryMinimumEmphasis</item>
-        <item name="startIconTint">?attr/colorOnSecondaryLowEmphasis</item>
-        <item name="endIconTint">?attr/colorOnSecondaryLowEmphasis</item>
-        <item name="hintTextColor">?attr/colorOnSecondarySignalLow</item>
-        <item name="android:textColorHint">?attr/colorOnSecondarySignalLow</item>
-        <item name="android:textColor">?attr/colorOnSecondaryMediumEmphasis</item>
-        <item name="boxStrokeColor">?attr/colorOnSecondarySignalLow</item>
-        <item name="helperTextTextColor">?attr/colorOnSecondaryMediumEmphasis</item>
-    </style>
-
 </resources>

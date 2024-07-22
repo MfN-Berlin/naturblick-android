@@ -20,7 +20,7 @@
                 android:layout_height="24dp"
                 android:layout_marginTop="@dimen/default_margin"
                 android:layout_marginHorizontal="@dimen/default_margin"
-                app:tint="?attr/colorOnPrimarySignalHigh"
+                app:tint="@color/sunset"
                 android:layout_gravity="center"/>
 
             <com.google.android.material.textview.MaterialTextView
@@ -30,8 +30,7 @@
                 android:layout_marginHorizontal="@dimen/default_margin"
                 android:text="@string/choose_a_group"
                 android:textAlignment="center"
-                android:textAppearance="?attr/textAppearanceHeadline3"
-                android:textColor="?attr/colorOnPrimaryHighEmphasis"/>
+                android:textAppearance="?attr/textAppearanceHeadline3" />
 
             <berlin.mfn.naturblick.ui.species.groups.Groups
                 android:id="@+id/groups_grid"

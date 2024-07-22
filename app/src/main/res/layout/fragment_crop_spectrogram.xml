@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/prepare_pattern_matching"
-                android:textColor="?attr/colorOnPrimaryHighEmphasis"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -34,7 +33,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/prepare_pattern_matching_info"
-                android:textColor="?attr/colorOnPrimaryLowEmphasis"
                 android:textAppearance="?attr/textAppearanceBody1" />
         </LinearLayout>
 
@@ -67,8 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_baseline_play_circle_outline_24"
-                app:fabSize="mini"
-                style="@style/Theme.Naturblick.OnPrimaryFABOverlay"/>
+                app:fabSize="mini" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/time_view"
@@ -115,6 +112,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_confirm"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_margin"

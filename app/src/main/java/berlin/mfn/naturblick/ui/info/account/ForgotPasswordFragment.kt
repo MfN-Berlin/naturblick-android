@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -43,7 +42,7 @@ class ForgotPasswordFragment : Fragment() {
             binding.resetPassword.isEnabled = false
             binding.resetPassword.showProgress {
                 buttonTextRes = R.string.in_progress
-                progressColor = ContextCompat.getColor(requireContext(), R.color.white)
+                progressColor = resources.getColor(R.color.white)
             }
             lifecycleScope.launch {
                 model.email?.let { email ->
@@ -83,13 +82,13 @@ class ForgotPasswordFragment : Fragment() {
 
     private val startEmail =
         registerForActivityResult(object : ActivityResultContract<Unit, Unit>() {
-            override fun createIntent(context: Context, input: Unit) =
+            override fun createIntent(context: Context, u: Unit) =
                 Intent(Intent.ACTION_MAIN).apply {
                     addCategory(Intent.CATEGORY_APP_EMAIL)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
 
-            override fun parseResult(resultCode: Int, intent: Intent?) {
+            override fun parseResult(resultCode: Int, result: Intent?) {
             }
         }) {
             findNavController().navigateUp()
@@ -98,7 +97,7 @@ class ForgotPasswordFragment : Fragment() {
     private fun showDialog(inDeleteFlow: Boolean, done: () -> Unit) {
         MaterialAlertDialogBuilder(
             requireContext(),
-            R.style.Naturblick_MaterialComponents_Dialog_Alert
+            R.style.Naturblick_MaterialComponentns_Dialog_Alert
         ).apply {
             setTitle(R.string.reset_email_sent_title)
             setMessage(R.string.reset_email_sent_message)

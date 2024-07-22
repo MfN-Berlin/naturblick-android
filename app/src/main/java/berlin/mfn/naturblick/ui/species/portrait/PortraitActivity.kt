@@ -29,13 +29,13 @@ class PortraitActivity : BaseActivity(
             val args: PortraitFragmentArgs by navArgs()
             val speciesId = args.speciesId
 
-            speciesId?.value?.let { id ->
+            speciesId?.value?.let { speciesId ->
 
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(
                         Intent.EXTRA_TEXT,
-                        "https://naturblick.museumfuernaturkunde.berlin/species/portrait/$id"
+                        "https://naturblick.museumfuernaturkunde.berlin/species/portrait/$speciesId"
                     )
                     type = "text/plain"
                 }

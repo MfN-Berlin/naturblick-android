@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.IntentCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -60,10 +59,8 @@ class IdResultFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val identifySpecies =
-            IntentCompat.getParcelableExtra(
-                requireActivity().intent,
-                IdResultActivityContract.ID_SPECIES,
-                IdentifySpecies::class.java
+            requireActivity().intent.extras?.getParcelable<IdentifySpecies>(
+                IdResultActivityContract.ID_SPECIES
             )!!
         val viewModel by activityViewModels<IdResultViewModel> {
             IdResultViewModelFactory(
@@ -94,8 +91,8 @@ class IdResultFragment : Fragment() {
                                     )
                                 )
                             }, {
-                                finish(species.id)
-                            }
+                            finish(species.id)
+                        }
                         )
                     }
                 }
@@ -121,7 +118,7 @@ class IdResultFragment : Fragment() {
         if (!(dialog != null && dialog.isShowing)) {
             errorDialog = MaterialAlertDialogBuilder(
                 requireContext(),
-                R.style.Naturblick_MaterialComponents_Dialog_Alert
+                R.style.Naturblick_MaterialComponentns_Dialog_Alert
             ).apply {
                 setTitle(error.error)
                 setOnCancelListener {

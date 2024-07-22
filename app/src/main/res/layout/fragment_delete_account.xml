@@ -32,7 +32,6 @@
                 android:text="@string/loading_account_information"
                 android:layout_gravity="center_horizontal"
                 android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                 app:layout_constraintTop_toBottomOf="@id/loading_indicator"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -59,18 +58,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text='@string/delete_account_question'
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                />
+                android:textAppearance="?attr/textAppearanceBody1" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/delete_account_text_verify"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                />
+                android:textAppearance="?attr/textAppearanceBody1" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -80,16 +75,13 @@
                 android:hint="@string/email"
                 app:endIconDrawable="@drawable/ic_baseline_edit_24"
                 app:endIconMode="custom"
-                app:errorEnabled="true"
-                style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,16 +90,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:hint="@string/password"
-                app:endIconMode="password_toggle"
-                style="@style/Widget.Naturblick.TextInputLayout.FilledBox">
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +107,7 @@
                 android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/email_or_password_invalid"
                 android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="?attr/colorOnSecondaryWarning"
+                android:textColor="@color/error"
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton

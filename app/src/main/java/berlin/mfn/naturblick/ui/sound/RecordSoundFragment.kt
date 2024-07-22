@@ -154,7 +154,6 @@ class RecordSoundFragment : Fragment(), RequiredPermissionCallback {
             mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 MediaRecorder(requireContext())
             } else {
-                @Suppress("DEPRECATION")
                 MediaRecorder()
             }.apply {
                 setAudioSource(
