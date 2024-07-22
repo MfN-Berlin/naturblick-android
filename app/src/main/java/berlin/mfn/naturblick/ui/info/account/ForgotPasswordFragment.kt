@@ -97,7 +97,7 @@ class ForgotPasswordFragment : Fragment() {
     private fun showDialog(inDeleteFlow: Boolean, done: () -> Unit) {
         MaterialAlertDialogBuilder(
             requireContext(),
-            R.style.Naturblick_MaterialComponents_Dialog_Alert
+            R.style.Naturblick_MaterialComponentns_Dialog_Alert
         ).apply {
             setTitle(R.string.reset_email_sent_title)
             setMessage(R.string.reset_email_sent_message)

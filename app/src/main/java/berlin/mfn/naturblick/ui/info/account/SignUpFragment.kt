@@ -111,7 +111,7 @@ class SignUpFragment : Fragment() {
     private fun showValidateEmailDialog(done: () -> Unit) {
         MaterialAlertDialogBuilder(
             requireContext(),
-            R.style.Naturblick_MaterialComponents_Dialog_Alert
+            R.style.Naturblick_MaterialComponentns_Dialog_Alert
         ).apply {
             setTitle(R.string.validate_email_title)
             setMessage(R.string.validate_email_message)

@@ -31,7 +31,6 @@ import berlin.mfn.naturblick.ui.species.PickSpecies
 import berlin.mfn.naturblick.utils.*
 import berlin.mfn.naturblick.utils.Media.Companion.JPEG_QUALITY
 import com.canhub.cropper.CropImageView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 
@@ -309,7 +308,7 @@ class ConfirmPhotoFragment :
     }
 
     private fun showOnLeaveDialog(leave: (Boolean) -> Unit) {
-        val dialogBuild = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
+        val dialogBuild = AlertDialog.Builder(requireContext())
 
         dialogBuild
             .setTitle(

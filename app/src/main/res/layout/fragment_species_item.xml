@@ -49,7 +49,7 @@
             android:layout_marginStart="@dimen/default_margin"
             android:text="@{species.species.sciname}"
             android:textAppearance="?attr/textAppearanceSubtitle3"
-            android:textColor="?attr/colorOnSecondarySignalLow"
+            android:textColor="?attr/colorOnSecondaryButtonPrimary"
             android:visibility="@{species.species.name != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"

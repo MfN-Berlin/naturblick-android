@@ -62,8 +62,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:text="@={model.ccByName}"
-                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
-                    android:textAppearance="?attr/textAppearanceBody1"/>
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

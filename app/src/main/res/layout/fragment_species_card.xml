@@ -16,8 +16,7 @@
         android:id="@+id/species_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        app:cardBackgroundColor="?attr/colorSecondary">
+        android:layout_marginTop="@dimen/default_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

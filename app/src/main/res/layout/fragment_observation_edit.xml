@@ -174,6 +174,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/behavior"
+                            style="@style/Widget.Naturblick.TextInputLayout.FilledBox.ExposedDropdownMenu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/default_margin"
@@ -185,20 +186,19 @@
                             app:layout_constraintTop_toBottomOf="@+id/quantity"
                             android:hint="@string/observation"
                             app:startIconDrawable="@drawable/ic_place_24px"
-                            style="@style/Widget.Naturblick.TextInputLayout.FilledBox"
-                            android:onClick="@{() -> model.changeBehavior(model.currentObservation.behaviorState)}"
-                            >
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textColor="?attr/colorOnSecondaryMediumEmphasis">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <AutoCompleteTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:focusableInTouchMode="false"
-                                android:inputType="text"
+                                android:afterTextChanged="@{(e) -> model.behaviorChanged(e.toString())}"
+                                android:inputType="none"
                                 android:editable="false"
                                 android:text="@{model.currentObservation.behaviorState}"
+                                app:setAdapter="@{model.currentBehaviorList}"
                                 android:textAppearance="?attr/textAppearanceBody1"
                                 android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                                android:onClick="@{() -> model.changeBehavior(model.currentObservation.behaviorState)}"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -234,7 +234,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/sheet"
-                            android:backgroundTint="?attr/colorTertiary"
                             android:elevation="@dimen/default_elevation"
                             android:orientation="horizontal"
                             android:padding="@dimen/default_margin"

@@ -19,7 +19,6 @@ import berlin.mfn.naturblick.ui.fieldbook.*
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.utils.NetworkResult
 import berlin.mfn.naturblick.utils.setSingleClickListener
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 class FieldbookFragment : Fragment() {
@@ -103,7 +102,7 @@ class FieldbookFragment : Fragment() {
                     CreateImageFromGalleryObservation
                 )
             } else {
-                MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
+                AlertDialog.Builder(requireContext()).apply {
                     setTitle(R.string.import_info_title)
                     setMessage(R.string.import_info)
                     setPositiveButton(R.string.continue_str) { _, _ ->

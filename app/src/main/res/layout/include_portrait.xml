@@ -115,8 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:clipChildren="false"
-            >
+            android:clipChildren="false">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -127,8 +126,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical"
-                android:background="?attr/colorSecondary"
                 android:paddingHorizontal="@dimen/default_margin"
                 android:paddingBottom="@dimen/default_margin">
 

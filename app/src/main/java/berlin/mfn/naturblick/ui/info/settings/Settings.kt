@@ -16,7 +16,6 @@ import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.DialogCcbyBinding
 import berlin.mfn.naturblick.databinding.DialogPolicyBinding
 import berlin.mfn.naturblick.utils.AndroidDeviceId
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
@@ -248,7 +247,7 @@ object Settings {
         sp: SharedPreferences,
         success: () -> Unit
     ) {
-        val ccByDialogBuild = MaterialAlertDialogBuilder(activity, R.style.Naturblick_MaterialComponents_Dialog_Alert)
+        val ccByDialogBuild = AlertDialog.Builder(activity)
 
         val binding = DialogCcbyBinding.inflate(layoutInflater)
         val editText = binding.editCcBy
@@ -277,7 +276,7 @@ object Settings {
         failed: () -> Unit,
         success: () -> Unit
     ) {
-        val dialogBuilder = MaterialAlertDialogBuilder(context, R.style.Naturblick_MaterialComponents_Dialog_Alert)
+        val dialogBuilder = AlertDialog.Builder(context)
 
         val binding = DialogPolicyBinding.inflate(layoutInflater)
 
@@ -302,7 +301,7 @@ object Settings {
         goToSignUp: () -> Unit
     ) {
         seenAccountInfoPolicy(sp)
-        MaterialAlertDialogBuilder(context, R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
+        AlertDialog.Builder(context).apply {
             setTitle(R.string.set_up_an_account)
             setMessage(R.string.account_info)
             setPositiveButton(R.string.yes) { _, _ ->

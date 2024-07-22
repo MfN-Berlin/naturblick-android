@@ -54,7 +54,7 @@ fun <T : Any> Fragment.resolveWithErrorDialog(
     result.fold(success) { error ->
         MaterialAlertDialogBuilder(
             requireContext(),
-            R.style.Naturblick_MaterialComponents_Dialog_Alert
+            R.style.Naturblick_MaterialComponentns_Dialog_Alert
         )
             .setTitle(error.error)
             .setOnCancelListener {
@@ -75,7 +75,7 @@ fun Fragment.showSpeciesInfo(
     showSpeciesPortrait: () -> Unit,
     pick: () -> Unit
 ): AlertDialog {
-    val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
+    val dialogBuilder = AlertDialog.Builder(requireContext())
     val binding = DialogSpeciesInfoBinding.inflate(layoutInflater)
     binding.buttonSpeciesPortrait
     var audioPlayer: MediaPlayer? = null
@@ -209,7 +209,7 @@ fun Fragment.showCcInfo(
     image: PortraitImage,
     context: Context
 ): AlertDialog {
-    val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
+    val dialogBuilder = AlertDialog.Builder(requireContext())
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
     val text = "${textAndSourceAsLink(image.source, context)} " +

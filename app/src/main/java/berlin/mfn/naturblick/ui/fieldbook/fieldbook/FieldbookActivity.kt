@@ -12,7 +12,6 @@ import berlin.mfn.naturblick.ui.fieldbook.*
 import berlin.mfn.naturblick.ui.fieldbook.ManageObservation.OBSERVATION_ACTION
 import berlin.mfn.naturblick.ui.info.account.AccountActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FieldbookActivity : BaseActivity(
     R.navigation.fieldbook_navigation
@@ -51,7 +50,7 @@ class FieldbookActivity : BaseActivity(
     }
 
     fun onSignedOut() {
-        MaterialAlertDialogBuilder(this, R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
+        AlertDialog.Builder(this).apply {
             setMessage(R.string.error_signed_out)
             setPositiveButton(R.string.yes) { _, _ ->
                 startActivity(Intent(applicationContext, AccountActivity::class.java))
