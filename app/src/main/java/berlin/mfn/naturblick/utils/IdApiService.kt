@@ -1,11 +1,8 @@
-@file:OptIn(ExperimentalSerializationApi::class)
-
 package berlin.mfn.naturblick.utils
 
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.ui.idresult.BackendIdResult
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.ExperimentalSerializationApi
 import java.util.*
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
@@ -27,12 +24,10 @@ private val client = OkHttpClient.Builder()
     .addInterceptor(logging)
     .build()
 
-private val json = Json { ignoreUnknownKeys = true }
-
 private val retrofit = Retrofit.Builder()
     .client(client)
     .baseUrl(BuildConfig.BACKEND_URL)
-    .addConverterFactory(json.asConverterFactory(contentType))
+    .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(contentType))
     .build()
 
 internal interface IdApiServiceInterface {

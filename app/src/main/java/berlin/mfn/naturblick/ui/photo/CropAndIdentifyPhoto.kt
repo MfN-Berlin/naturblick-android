@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.utils.Media
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import kotlinx.parcelize.Parcelize
@@ -30,21 +29,15 @@ data class CropAndIdentifyMediaRequest(val media: Media) : CropAndIdentifyPhotoR
 
 object CropAndIdentifyPhoto :
     ActivityResultContract<CropAndIdentifyPhotoRequest, CropAndIdentifyPhotoResult?>() {
-    override fun createIntent(context: Context, input: CropAndIdentifyPhotoRequest) =
+    override fun createIntent(context: Context, request: CropAndIdentifyPhotoRequest) =
         Intent(context, ImageIdActivity::class.java)
-            .putExtra(CROP_AND_IDENTIFY_REQUEST, input)
+            .putExtra(CROP_AND_IDENTIFY_REQUEST, request)
 
-    override fun parseResult(resultCode: Int, intent: Intent?): CropAndIdentifyPhotoResult? {
+    override fun parseResult(resultCode: Int, result: Intent?): CropAndIdentifyPhotoResult? {
         return if (resultCode != Activity.RESULT_OK) {
             null
         } else {
-            intent?.let {
-                IntentCompat.getParcelableExtra(
-                    it,
-                    CROP_AND_IDENTIFY_RESULT,
-                    CropAndIdentifyPhotoResult::class.java
-                )
-            }
+            result?.getParcelableExtra(CROP_AND_IDENTIFY_RESULT)
         }
     }
 

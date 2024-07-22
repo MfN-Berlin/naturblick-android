@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package berlin.mfn.naturblick.ui.fieldbook.observation
 
 import android.app.Application
@@ -12,7 +10,6 @@ import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.fieldbook.*
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.utils.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -77,7 +74,7 @@ class ObservationViewModel(
 
     var createFlowLaunched: Boolean
         get() = savedStateHandle["launched"] ?: false
-        set(_) {
+        set(value) {
             savedStateHandle["launched"] = true
         }
 
@@ -442,7 +439,7 @@ class ObservationViewModelFactory(
 ) : AbstractSavedStateViewModelFactory() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(
+    override fun <T : ViewModel?> create(
         key: String,
         modelClass: Class<T>,
         handle: SavedStateHandle

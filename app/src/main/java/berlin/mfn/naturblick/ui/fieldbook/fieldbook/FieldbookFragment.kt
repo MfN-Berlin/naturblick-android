@@ -31,7 +31,7 @@ class FieldbookFragment : Fragment() {
     ): View {
         val navController = findNavController()
         val binding = FragmentFieldbookBinding.inflate(inflater, container, false)
-        val fieldbookViewModel: FieldbookViewModel by activityViewModels {
+        val fieldbookViewModel: FieldbookViewModel by activityViewModels() {
             FieldbookViewModelFactory(requireActivity().application)
         }
         binding.refreshFieldbook.setOnRefreshListener {

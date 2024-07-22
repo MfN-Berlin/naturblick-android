@@ -24,7 +24,7 @@ class CharacterFragment : Fragment() {
         val args: CharacterFragmentArgs by navArgs()
         (requireActivity() as CharacterActivity).supportActionBar?.title = args.groupName
         val binding = FragmentCharacterBinding.inflate(inflater, container, false)
-        val viewModel: CharacterViewModel by viewModels {
+        val viewModel: CharacterViewModel by viewModels() {
             CharacterViewModelFactory(
                 args.group,
                 requireActivity().application

@@ -10,7 +10,6 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import berlin.mfn.naturblick.BuildConfig
@@ -214,9 +213,9 @@ fun Fragment.showCcInfo(
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
     val text = "${textAndSourceAsLink(image.source, context)} " +
-            licenceToLink(image.license.trim()) + image.owner
+        "${licenceToLink(image.license.trim())}" + image.owner
 
-    binding.ccInfoText.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+    binding.ccInfoText.text = Html.fromHtml(text)
     binding.ccInfoText.movementMethod = LinkMovementMethod.getInstance()
 
     dialogBuilder

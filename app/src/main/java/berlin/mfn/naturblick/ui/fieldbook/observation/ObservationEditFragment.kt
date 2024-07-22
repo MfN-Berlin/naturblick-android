@@ -65,7 +65,7 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
 
     private fun <T> checkResult(result: T?, f: (result: T) -> Boolean) {
         if (result == null && viewModel.currentObservation.value.isEmpty()) {
-            requireActivity().setResult(RESULT_CANCELED)
+            requireActivity().setResult(Activity.RESULT_CANCELED)
             requireActivity().finish()
         } else {
             if (result != null) {

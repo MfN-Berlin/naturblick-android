@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.Coordinates
 import berlin.mfn.naturblick.ui.BaseActivity
@@ -30,12 +29,8 @@ class ObservationActivity : BaseActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeNavigationViews()
-        val action = IntentCompat.getParcelableExtra(
-            intent,
-            OBSERVATION_ACTION,
-            ObservationAction::class.java
-        )!!
-        val viewModel: ObservationViewModel by viewModels {
+        val action = intent.getParcelableExtra<ObservationAction>(OBSERVATION_ACTION)!!
+        val viewModel: ObservationViewModel by viewModels() {
             ObservationViewModelFactory(
                 action,
                 application
@@ -99,8 +94,7 @@ class ObservationActivity : BaseActivity(
     }
 
     private fun saveDialog(isNew: Boolean, hasCoordinates: Boolean, done: (Boolean) -> Unit) {
-        val dialogBuild =
-            MaterialAlertDialogBuilder(this, R.style.Naturblick_MaterialComponents_Dialog_Alert)
+        val dialogBuild = MaterialAlertDialogBuilder(this, R.style.Naturblick_MaterialComponents_Dialog_Alert)
 
         dialogBuild
             .setTitle(
