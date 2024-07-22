@@ -56,11 +56,7 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:windowBackground">?attr/colorSecondary</item>
-
-        <!-- Text selection and handles -->
-        <item name="android:colorAccent">?attr/colorOnSecondarySignalLow</item>
-        <item name="android:colorControlActivated">?attr/colorOnSecondarySignalLow</item>
-
+        <item name="android:popupBackground">?attr/colorSecondary</item>
         <item name="fontFamily">@font/lato</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
