@@ -4,6 +4,8 @@ import berlin.mfn.naturblick.strapi.KtorApi
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import java.io.File
@@ -18,13 +20,17 @@ open class SyncDb : DefaultTask() {
         File(project.buildDir, "assets/strapi-db.sqlite3")
     }
 
+    @Input
+    val ktorBaseUrl: Property<String> = project.objects.property(String::class.java)
+
     @TaskAction
     fun doAction() {
         val dbFile = speciesDbSql.get().asFile
         dbFile.delete()
 
         runBlocking {
-            val service = KtorApi.service("https://naturblick.museumfuernaturkunde.berlin/")
+            val baseUrl = ktorBaseUrl.get()
+            val service = KtorApi.service(baseUrl)
             try {
                 dbFile.writeBytes(service.getFile().bytes())
             } catch(e: Error) {
