@@ -18,7 +18,6 @@ dependencies {
   implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-  implementation("org.xerial:sqlite-jdbc:3.42.0.0")
   implementation("com.android.tools:sdk-common:31.5.0")
   testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.1")
 }
