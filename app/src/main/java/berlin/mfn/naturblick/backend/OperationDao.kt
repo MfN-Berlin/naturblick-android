@@ -9,6 +9,7 @@ import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import berlin.mfn.naturblick.utils.Media
 import berlin.mfn.naturblick.utils.MediaType
+import berlin.mfn.naturblick.utils.NetworkResult
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import java.io.File
@@ -105,32 +106,37 @@ interface OperationDao {
 
     private suspend fun jpegCopy(context: Context, local: Uri, upload: File): File? =
         withContext(Dispatchers.IO) {
-            Glide
-                .with(context)
-                .load(local)
-                .centerInside()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .submit(
-                    PublicBackendApiService.MAX_RESOLUTION,
-                    PublicBackendApiService.MAX_RESOLUTION
-                ).get()?.let { drawable ->
-                    val image = (drawable as BitmapDrawable).bitmap
-                    upload.outputStream().use { os ->
-                        image.compress(Bitmap.CompressFormat.JPEG, Media.JPEG_QUALITY, os)
+            NetworkResult.ioToFileException {
+                Glide
+                    .with(context)
+                    .load(local)
+                    .centerInside()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .submit(
+                        PublicBackendApiService.MAX_RESOLUTION,
+                        PublicBackendApiService.MAX_RESOLUTION
+                    ).get()?.let { drawable ->
+                        val image = (drawable as BitmapDrawable).bitmap
+
+                        upload.outputStream().use { os ->
+                            image.compress(Bitmap.CompressFormat.JPEG, Media.JPEG_QUALITY, os)
+                        }
+                        upload
                     }
-                    upload
-                }
+            }
         }
 
     private suspend fun mp4Copy(context: Context, local: Uri, upload: File): File? {
         return withContext(Dispatchers.IO) {
-            context.contentResolver.openInputStream(local)?.buffered()?.use {
-                val byteArray = it.readBytes()
-                upload.outputStream().use { os ->
-                    os.write(byteArray)
+            NetworkResult.ioToFileException {
+                context.contentResolver.openInputStream(local)?.buffered()?.use {
+                    val byteArray = it.readBytes()
+                    upload.outputStream().use { os ->
+                        os.write(byteArray)
+                    }
+                    upload
                 }
-                upload
             }
         }
     }
