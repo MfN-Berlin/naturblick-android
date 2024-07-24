@@ -212,7 +212,7 @@ sealed interface Media : Parcelable {
             }
             val uri =
                 resolver.insert(afterQContentUri(type), contentValues)
-                    ?: throw IOException("Failed to create MediaStore record for $name")
+                    ?: throw FileException("Failed to create MediaStore record for $name")
             return EmptyLocalMedia(type, id, uri)
         }
 

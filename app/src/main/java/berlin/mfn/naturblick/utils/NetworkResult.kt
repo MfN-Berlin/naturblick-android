@@ -101,5 +101,13 @@ data class NetworkResult<T : Any> internal constructor(
         }
 
         fun <T : Any> success(t: T): NetworkResult<T> = NetworkResult(t, null)
+
+        fun <T>ioToFileException(block: () -> T): T {
+            try {
+                return block()
+            } catch (ioe: IOException) {
+                throw FileException("IOException converted to FileException", ioe)
+            }
+        }
     }
 }

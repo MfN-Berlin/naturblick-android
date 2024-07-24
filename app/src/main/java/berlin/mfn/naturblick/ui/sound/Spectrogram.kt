@@ -22,13 +22,17 @@ object Spectrogram {
                         media.id,
                         context
                     )
-                    spectrogram.createNewFile()
-                    spectrogram.outputStream().use {
-                        it.write(bytes)
+                    NetworkResult.ioToFileException {
+                        spectrogram.createNewFile()
+                        spectrogram.outputStream().use {
+                            it.write(bytes)
+                        }
                     }
                 }
-                spectrogram.inputStream().use {
-                    BitmapFactory.decodeStream(it)
+                NetworkResult.ioToFileException {
+                    spectrogram.inputStream().use {
+                        BitmapFactory.decodeStream(it)
+                    }
                 }
             }
         }

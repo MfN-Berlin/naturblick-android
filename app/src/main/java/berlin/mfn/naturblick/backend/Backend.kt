@@ -7,6 +7,7 @@ import berlin.mfn.naturblick.backend.BackendApi.EmptyMedia
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.utils.AndroidDeviceId
 import berlin.mfn.naturblick.utils.MediaType
+import berlin.mfn.naturblick.utils.NetworkResult
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.io.File
 import java.util.*
@@ -23,6 +24,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.http.*
+import java.io.IOException
 
 private val contentType = "application/json".toMediaType()
 
@@ -163,11 +165,14 @@ data class Chunk(
         if (id == EmptyMedia) {
             return this
         } else {
-            val byteArray = File(context.filesDir, filename)
-                .inputStream()
-                .use {
-                    it.readBytes()
-                }
+            val byteArray = NetworkResult.ioToFileException {
+                File(context.filesDir, filename)
+                    .inputStream()
+                    .use {
+                        it.readBytes()
+                    }
+            }
+
             val body = MultipartBody.Part.createFormData(
                 id.toString(),
                 filename,
@@ -277,9 +282,11 @@ interface PublicBackendApiService {
             chunk.operations.map { it.operationId }
         )
 
-        // Delete local copies of all uploaded media files (not thumbnails)
-        chunk.operations.filterIsInstance<UploadMediaOperation>().forEach {
-            File(context.filesDir, it.filename).delete()
+        NetworkResult.ioToFileException {
+            // Delete local copies of all uploaded media files (not thumbnails)
+            chunk.operations.filterIsInstance<UploadMediaOperation>().forEach {
+                File(context.filesDir, it.filename).delete()
+            }
         }
 
         syncDao.newSync(observationResponse.syncId)
@@ -305,27 +312,31 @@ interface PublicBackendApiService {
             bearerToken = bearerToken
         ).byteStream().use { input ->
             withContext(Dispatchers.IO) {
-                try {
-                    file.createNewFile()
-                    file.outputStream().use { output ->
-                        input.copyTo(output)
-                        file
+                NetworkResult.ioToFileException {
+                    try {
+                        file.createNewFile()
+                        file.outputStream().use { output ->
+                            input.copyTo(output)
+                            file
+                        }
+                    } catch (e: Exception) {
+                        file.delete()
+                        throw e
                     }
-                } catch (e: Exception) {
-                    file.delete()
-                    throw e
                 }
             }
         }
     }
 
     suspend fun uploadMedia(context: Context, mediaId: UUID, file: File, mediaType: MediaType) {
-        val byteArray = file
-            .inputStream()
-            .buffered()
-            .use {
-                it.readBytes()
-            }
+        val byteArray = NetworkResult.ioToFileException {
+            file
+                .inputStream()
+                .buffered()
+                .use {
+                    it.readBytes()
+                }
+        }
         val body = MultipartBody.Part.createFormData(
             "file",
             file.name,
