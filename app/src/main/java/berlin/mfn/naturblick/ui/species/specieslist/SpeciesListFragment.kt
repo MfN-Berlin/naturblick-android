@@ -31,7 +31,7 @@ class SpeciesListFragment : Fragment() {
 
         val navController = findNavController()
         val speciesDao = StrapiDb.getDb(requireContext()).speciesDao()
-        val speciesListViewModel: SpeciesListViewModel by activityViewModels() {
+        val speciesListViewModel: SpeciesListViewModel by activityViewModels {
             SpeciesListViewModelFactory(
                 speciesDao
             )

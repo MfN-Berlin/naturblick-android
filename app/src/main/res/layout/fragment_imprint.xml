@@ -24,28 +24,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_title"
-                android:textAppearance="?attr/textAppearanceSubtitle1" />
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_1"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_2"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_3"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -53,6 +61,8 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_4"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                android:textColorLink="?attr/colorOnSecondarySignalLow"
                 app:autoLink="@{true}"/>
 
             <com.google.android.material.textview.MaterialTextView
@@ -60,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                 android:text="@string/imprint_5" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -67,21 +78,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_6"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_7"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_8"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -89,7 +106,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_9"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -97,26 +116,35 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_10"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                 app:autoLink="@{true}" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@{@string/app_version(BuildConfig.VERSION_NAME)}" />
+                android:text="@{@string/app_version(BuildConfig.VERSION_NAME)}"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_sources_title"
-                android:textAppearance="?attr/textAppearanceSubtitle1" />
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_sources" />
+                android:text="@string/imprint_sources"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                app:autoLink="@{true}"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/to_sources"
@@ -132,74 +160,109 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_more_title"
-                android:textAppearance="?attr/textAppearanceSubtitle1" />
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_1" />
+                android:text="@string/imprint_more_1"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_2" />
+                android:text="@string/imprint_more_2"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_3" />
+                android:text="@string/imprint_more_3"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_4" />
+                android:text="@string/imprint_more_4"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_5" />
+                android:text="@string/imprint_more_5"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_6" />
+                android:text="@string/imprint_more_6"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_7" />
+                android:text="@string/imprint_more_7"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_8" />
+                android:text="@string/imprint_more_8"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_9" />
+                android:text="@string/imprint_more_9"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_more_10"
-                app:autoLink="@{true}" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                app:autoLink="@{true}"
+                android:textColorLink="?attr/colorOnSecondarySignalLow"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_more_11" />
+                android:text="@string/imprint_more_11"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
 
         </LinearLayout>
     </ScrollView>

@@ -16,6 +16,7 @@ import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.DialogCcbyBinding
 import berlin.mfn.naturblick.databinding.DialogPolicyBinding
 import berlin.mfn.naturblick.utils.AndroidDeviceId
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
@@ -87,13 +88,13 @@ object Settings {
             apply()
         }
         activity.runOnUiThread {
-            Toast.makeText(
+            makeText(
                 activity.applicationContext,
                 activity.applicationContext.resources.getString(
                     R.string.cc_by_was_set_to_default,
                     ccBy
                 ),
-                Toast.LENGTH_LONG
+                LENGTH_LONG
             ).show()
         }
     }
@@ -247,7 +248,7 @@ object Settings {
         sp: SharedPreferences,
         success: () -> Unit
     ) {
-        val ccByDialogBuild = AlertDialog.Builder(activity)
+        val ccByDialogBuild = MaterialAlertDialogBuilder(activity, R.style.Naturblick_MaterialComponents_Dialog_Alert)
 
         val binding = DialogCcbyBinding.inflate(layoutInflater)
         val editText = binding.editCcBy
@@ -276,7 +277,7 @@ object Settings {
         failed: () -> Unit,
         success: () -> Unit
     ) {
-        val dialogBuilder = AlertDialog.Builder(context)
+        val dialogBuilder = MaterialAlertDialogBuilder(context, R.style.Naturblick_MaterialComponents_Dialog_Alert)
 
         val binding = DialogPolicyBinding.inflate(layoutInflater)
 
@@ -301,7 +302,7 @@ object Settings {
         goToSignUp: () -> Unit
     ) {
         seenAccountInfoPolicy(sp)
-        AlertDialog.Builder(context).apply {
+        MaterialAlertDialogBuilder(context, R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
             setTitle(R.string.set_up_an_account)
             setMessage(R.string.account_info)
             setPositiveButton(R.string.yes) { _, _ ->

@@ -17,6 +17,7 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill"
         android:layout_margin="@dimen/half_margin"
+        android:background="@color/white"
         app:strokeColor="?attr/colorPrimary"
         app:cardElevation="8dp"
         app:cardCornerRadius="@dimen/small_corner_radius">
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{value.name}"
                 android:textAppearance="?attr/textAppearanceCaption"
+                android:textColor="@color/sleep_700"
                 android:gravity="center"
                 android:visibility="@{value.hasImage ? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@id/states_examples"

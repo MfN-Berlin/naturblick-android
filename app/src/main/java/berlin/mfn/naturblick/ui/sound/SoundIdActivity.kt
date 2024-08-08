@@ -2,6 +2,7 @@ package berlin.mfn.naturblick.ui.sound
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.IntentCompat
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.ui.BaseActivity
 
@@ -12,9 +13,11 @@ class SoundIdActivity : BaseActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val request: CropAndIdentifySoundRequest? = intent.extras?.getParcelable(
+        val request = IntentCompat.getParcelableExtra(
+            intent,
             CropAndIdentifySound
-                .MEDIA
+                .MEDIA,
+            CropAndIdentifySoundRequest::class.java
         )
         val viewModel: CropSoundViewModel by viewModels {
             CropSoundViewModelFactory(application)

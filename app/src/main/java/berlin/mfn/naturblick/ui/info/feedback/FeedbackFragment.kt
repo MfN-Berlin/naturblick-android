@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import berlin.mfn.naturblick.databinding.FragmentFeedbackBinding
-import berlin.mfn.naturblick.ui.info.openFeedback
 import berlin.mfn.naturblick.utils.setSingleClickListener
 
 class FeedbackFragment : Fragment() {
@@ -18,9 +17,6 @@ class FeedbackFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentFeedbackBinding.inflate(inflater, container, false)
-        binding.feedbackForm.setSingleClickListener {
-            openFeedback()
-        }
         binding.feedbackEmail.setSingleClickListener {
             startActivity(
                 Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:naturblick@mfn.berlin"))

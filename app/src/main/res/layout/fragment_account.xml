@@ -27,7 +27,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/your_account"
-                android:textAppearance="?attr/textAppearanceSubtitle1" />
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,14 +42,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/account_text_sign_in_or_sign_up1"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/account_text_sign_in_or_sign_up2"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_in"
@@ -76,7 +82,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/your_account_text"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
@@ -84,6 +92,7 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@{@string/signed_in_as(model.email)}"
                     android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                     android:visibility="@{model.hasToken ? View.VISIBLE : View.GONE}" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -91,14 +100,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/delete_account_title"
-                    android:textAppearance="?attr/textAppearanceSubtitle1" />
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                    />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/delete_account_text"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/delete_account"
@@ -113,6 +126,7 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/delete_account_note_link"
                     android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
                     />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -121,6 +135,7 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/delete_account_note_link_text"
                     android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                     />
 
             </LinearLayout>
@@ -136,21 +151,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/signed_out"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/signed_out_new_password_title"
-                    android:textAppearance="?attr/textAppearanceSubtitle2" />
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                    />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/signed_out_new_password"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_in_again"
@@ -164,14 +185,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/signed_out_deleted_account_title"
-                    android:textAppearance="?attr/textAppearanceSubtitle2" />
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                    />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/signed_out_deleted_account"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_up_again"
@@ -200,7 +225,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_with_sign_in"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_in_after_register"
@@ -221,14 +248,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/activation_link_note_title"
-                    android:textAppearance="?attr/textAppearanceSubtitle2" />
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                    />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/activation_link_note"
-                    android:textAppearance="?attr/textAppearanceBody2" />
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

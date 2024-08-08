@@ -10,6 +10,7 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import berlin.mfn.naturblick.BuildConfig
@@ -54,7 +55,7 @@ fun <T : Any> Fragment.resolveWithErrorDialog(
     result.fold(success) { error ->
         MaterialAlertDialogBuilder(
             requireContext(),
-            R.style.Naturblick_MaterialComponentns_Dialog_Alert
+            R.style.Naturblick_MaterialComponents_Dialog_Alert
         )
             .setTitle(error.error)
             .setOnCancelListener {
@@ -75,7 +76,7 @@ fun Fragment.showSpeciesInfo(
     showSpeciesPortrait: () -> Unit,
     pick: () -> Unit
 ): AlertDialog {
-    val dialogBuilder = AlertDialog.Builder(requireContext())
+    val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
     val binding = DialogSpeciesInfoBinding.inflate(layoutInflater)
     binding.buttonSpeciesPortrait
     var audioPlayer: MediaPlayer? = null
@@ -209,13 +210,13 @@ fun Fragment.showCcInfo(
     image: PortraitImage,
     context: Context
 ): AlertDialog {
-    val dialogBuilder = AlertDialog.Builder(requireContext())
+    val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
     val text = "${textAndSourceAsLink(image.source, context)} " +
-        "${licenceToLink(image.license.trim())}" + image.owner
+            licenceToLink(image.license.trim()) + image.owner
 
-    binding.ccInfoText.text = Html.fromHtml(text)
+    binding.ccInfoText.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
     binding.ccInfoText.movementMethod = LinkMovementMethod.getInstance()
 
     dialogBuilder
