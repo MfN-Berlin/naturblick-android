@@ -98,7 +98,6 @@ class PortraitFragment : Fragment() {
                     }
                 }
                 portraitBinding
-                    .speciesFeatures
                     .portraitSimilarSpecies
                     .setNavigateToSpecies { speciesId ->
                         findNavController().navigate(

@@ -37,7 +37,7 @@
         <item name="colorOnSecondarySignalLow">@color/sleep_400</item>
         <item name="colorOnSecondarySignalHigh">@color/signal_happy</item>
         <item name="colorOnSecondaryButtonPrimary">@color/relax_200</item>
-        <item name="colorOnSecondaryButtonSecondary">@color/relax_400</item>
+        <item name="colorOnSecondaryButtonSecondary">@color/relax_200</item>
         <item name="colorOnSecondaryTag">@color/relax_200</item>
         <item name="colorOnSecondaryWarning">@color/signal_pain</item>
         <item name="colorOnSecondarySignalMedium">@color/signal_peace</item>
