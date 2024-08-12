@@ -84,6 +84,7 @@
             android:textColor="?attr/colorOnPrimaryHighEmphasis"
             android:textAlignment="center"
             android:textAllCaps="true"
+            android:contentDescription="@{model.currentObservationAndSpecies.species != null ? model.currentObservationAndSpecies.nameOrSciname : @string/no_species_selected}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sciname"
