@@ -144,7 +144,7 @@ class PortraitFragment : Fragment() {
                 binding.portraitContent.addView(miniPortraitBinding.root)
             }
             if (args.allowSelection) {
-                binding.createObservationEfab.visibility = View.VISIBLE
+                binding.createObservationAction.visibility = View.VISIBLE
                 binding.createObservationAction.setSingleClickListener { _ ->
                     findNavController().navigate(
                         PortraitFragmentDirections.navPortraitToNavFieldbookObservation(
@@ -153,7 +153,7 @@ class PortraitFragment : Fragment() {
                     )
                 }
             } else {
-                binding.createObservationEfab.visibility = View.GONE
+                binding.createObservationAction.visibility = View.GONE
             }
         }
 
