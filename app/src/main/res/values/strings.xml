@@ -278,6 +278,9 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="acc_example_sound">Example sound</string>
     <string name="acc_image_text">Image caption: %s</string>
     <string name="acc_change_species">Change species</string>
+    <string name="acc_stop_recording">Stop recording</string>
+    <string name="acc_play_selection">Play selection</string>
+    <string name="acc_enable_location_tracking">Enable location tracking</string>
     <string-array name="create_observation_options">
         <item>@string/create_manual</item>
         <item>@string/photograph_a_plant</item>

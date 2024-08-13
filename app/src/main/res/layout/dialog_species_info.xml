@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="@{hasAudio ? View.VISIBLE : View.GONE}"
                 android:src="@drawable/ic_baseline_play_circle_outline_24"
+                android:contentDescription="@string/acc_example_sound"
                 app:layout_constraintEnd_toEndOf="@id/species_image"
                 app:layout_constraintBottom_toBottomOf="@id/species_image"
                 app:fabSize="mini"

@@ -36,6 +36,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="@dimen/default_margin"
             android:src="@{ model.track ? @drawable/ic_round_gps_fixed_24 : @drawable/ic_round_gps_not_fixed_24}"
+            android:contentDescription="@string/acc_enable_location_tracking"
             style="@style/Theme.Naturblick.FABOverlay"
             />
     </FrameLayout>
