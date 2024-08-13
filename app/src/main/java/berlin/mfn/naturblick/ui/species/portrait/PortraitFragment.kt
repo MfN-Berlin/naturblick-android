@@ -2,6 +2,7 @@ package berlin.mfn.naturblick.ui.species.portrait
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -74,6 +75,18 @@ class PortraitFragment : Fragment() {
             )
         }
         val binding = FragmentPortraitBinding.inflate(inflater, container, false)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.portraitContent.setOnScrollChangeListener { _, _, _, _, _ ->
+                if (binding.portraitContent.scrollY < 1 && !binding.createObservationAction.isExtended) {
+                    binding.createObservationAction.extend()
+                } else if (binding.portraitContent.scrollY > 1 && binding.createObservationAction.isExtended) {
+                    binding.createObservationAction.shrink()
+                }
+            }
+        }
+
+        binding.createObservationAction.isExtended = true
 
         portraitViewModel.speciesAndPortrait.observe(viewLifecycleOwner) { (species, portrait) ->
             (requireActivity() as PortraitActivity).supportActionBar?.title = species.name
