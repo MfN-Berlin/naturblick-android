@@ -59,6 +59,7 @@
                 android:layout_margin="@dimen/half_margin"
                 android:padding="@dimen/small_margin"
                 android:src="@drawable/ic_baseline_copyright_24"
+                android:contentDescription="@string/acc_copyright"
                 app:backgroundTint="#4C000000"
                 app:tint="?attr/colorOnPrimaryHighEmphasis"
                 app:elevation="0dp"
@@ -78,6 +79,7 @@
                 android:layout_margin="@dimen/half_margin"
                 android:src="@drawable/ic_baseline_play_circle_outline_24"
                 android:visibility="@{hasAudio ? View.VISIBLE : View.GONE}"
+                android:contentDescription="@string/acc_example_sound"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toTopOf="@id/oval"
                 app:layout_constraintEnd_toEndOf="@id/species_image" />
@@ -105,6 +107,7 @@
                 android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceHeadline2"
                 android:textColor="?attr/colorOnPrimaryHighEmphasis"
+                android:contentDescription="@{species.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sciname" />

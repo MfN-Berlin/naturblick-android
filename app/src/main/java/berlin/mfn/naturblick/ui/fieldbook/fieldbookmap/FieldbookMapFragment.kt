@@ -18,12 +18,15 @@ import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.BaseActivity
 import berlin.mfn.naturblick.ui.data.Group.Companion.getMapIcon
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
+import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateManualObservation
 import berlin.mfn.naturblick.ui.fieldbook.OpenObservation
 import berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookActivity
 import berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookObservation
+import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.utils.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -141,27 +144,6 @@ class FieldbookMapFragment : MapFragment(), RequestedPermissionCallback {
         binding.listButton.setSingleClickListener { _ ->
             (requireActivity() as BaseActivity).supportNavigateUpTo(
                 Intent(requireContext(), FieldbookActivity::class.java)
-            )
-        }
-        binding.createObservationAction.setSingleClickListener { _ ->
-            navController.navigate(
-                FieldbookMapFragmentDirections.navFieldBookMapToNavFieldBookObservation(
-                    CreateManualObservation()
-                )
-            )
-        }
-        binding.createObservationPhotoAction.setSingleClickListener { _ ->
-            navController.navigate(
-                FieldbookMapFragmentDirections.navFieldBookMapToNavFieldBookObservation(
-                    CreateImageObservation
-                )
-            )
-        }
-        binding.createObservationAudioAction.setSingleClickListener { _ ->
-            navController.navigate(
-                FieldbookMapFragmentDirections.navFieldBookMapToNavFieldBookObservation(
-                    CreateAudioObservation
-                )
             )
         }
         binding.lifecycleOwner = viewLifecycleOwner

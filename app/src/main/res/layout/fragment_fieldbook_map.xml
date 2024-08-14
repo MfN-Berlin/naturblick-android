@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -11,7 +10,7 @@
             type="berlin.mfn.naturblick.utils.TrackingViewModel" />
     </data>
 
-    <com.nambimobile.widgets.efab.ExpandableFabLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,43 +21,6 @@
             mapbox:mapbox_cameraTargetLat="51.163375"
             mapbox:mapbox_cameraTargetLng="10.447683"
             mapbox:mapbox_cameraZoom="5.0" />
-
-        <com.nambimobile.widgets.efab.ExpandableFab
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_margin="@dimen/fab_margin"
-            app:efab_icon="@drawable/ic_add"
-            app:efab_orientation="portrait"
-            app:efab_size="mini"
-            app:layout_anchor="@id/toggle_gps_container"
-            app:layout_anchorGravity="top|end"
-            style="@style/Theme.Naturblick.FABOverlay"
-            />
-
-        <com.nambimobile.widgets.efab.FabOption
-            android:id="@+id/create_observation_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/ic_square_logo"
-            app:label_text="@string/create_manual"
-            style="@style/Theme.Naturblick.FABOverlay"/>
-
-        <com.nambimobile.widgets.efab.FabOption
-            android:id="@+id/create_observation_photo_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/ic_photo24"
-            app:label_text="@string/photograph_a_plant"
-            style="@style/Theme.Naturblick.FABOverlay"/>
-
-        <com.nambimobile.widgets.efab.FabOption
-            android:id="@+id/create_observation_audio_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/ic_audio24"
-            app:label_text="@string/record_a_bird"
-            style="@style/Theme.Naturblick.FABOverlay"/>
 
         <LinearLayout
             android:id="@+id/toggle_gps_container"
@@ -73,24 +35,24 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/toggle_gps"
+                style="@style/Theme.Naturblick.FABOverlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fabSize="mini"
+                android:contentDescription="@string/acc_enable_location_tracking"
                 android:src="@{ trackingModel.track ? @drawable/ic_round_gps_fixed_24 : @drawable/ic_round_gps_not_fixed_24}"
-                style="@style/Theme.Naturblick.FABOverlay"/>
+                app:fabSize="mini" />
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/list_button"
+            style="@style/Theme.Naturblick.FABOverlay"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/design_fab_size_mini"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:text="@string/observation_list"
-            app:icon="@drawable/ic_baseline_list_24"
-            style="@style/Theme.Naturblick.FABOverlay"/>
+            app:icon="@drawable/ic_baseline_list_24" />
 
-    </com.nambimobile.widgets.efab.ExpandableFabLayout>
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

@@ -20,7 +20,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipChildren="false">
+        android:clipChildren="false"
+        android:screenReaderFocusable="true"
+        android:focusable="true">
 
         <ImageButton
             android:id="@+id/button"
@@ -33,7 +35,9 @@
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="false"
+            android:importantForAccessibility="no"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
@@ -46,7 +50,8 @@
             android:textColor="?attr/colorOnPrimaryHighEmphasis"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            android:focusable="false"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

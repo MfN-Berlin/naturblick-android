@@ -82,38 +82,44 @@ class FieldbookFragment : Fragment() {
                 FieldbookFragmentDirections.navFieldBookListToNavFieldBookMap()
             )
         }
-        binding.createObservationAction.setSingleClickListener {
-            (requireActivity() as FieldbookActivity).manageObservation.launch(
-                CreateManualObservation()
-            )
-        }
-        binding.createObservationPhotoAction.setSingleClickListener { _ ->
-            (requireActivity() as FieldbookActivity).manageObservation.launch(
-                CreateImageObservation
-            )
-        }
-        binding.createObservationAudioAction.setSingleClickListener { _ ->
-            (requireActivity() as FieldbookActivity).manageObservation.launch(
-                CreateAudioObservation
-            )
-        }
-        binding.createObservationGalleryAction.setSingleClickListener { _ ->
-            if (Settings.hasSeenImportInfo(requireContext())) {
-                (requireActivity() as FieldbookActivity).manageObservation.launch(
-                    CreateImageFromGalleryObservation
-                )
-            } else {
-                MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
-                    setTitle(R.string.import_info_title)
-                    setMessage(R.string.import_info)
-                    setPositiveButton(R.string.continue_str) { _, _ ->
-                        launchImportFromGallery()
+        binding.createButton.setSingleClickListener {
+            MaterialAlertDialogBuilder(
+                requireContext(),
+                R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
+                setTitle(R.string.create_observation)
+                setItems(R.array.create_observation_options) { _, chosen ->
+                    when (chosen) {
+                        0 -> (requireActivity() as FieldbookActivity).manageObservation.launch(
+                            CreateManualObservation()
+                        )
+                        1 -> (requireActivity() as FieldbookActivity).manageObservation.launch(
+                            CreateImageObservation
+                        )
+                        2 ->  (requireActivity() as FieldbookActivity).manageObservation.launch(
+                            CreateAudioObservation
+                        )
+                        3 -> if (Settings.hasSeenImportInfo(requireContext())) {
+                            (requireActivity() as FieldbookActivity).manageObservation.launch(
+                                CreateImageFromGalleryObservation
+                            )
+                        } else {
+                            MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert).apply {
+                                setTitle(R.string.import_info_title)
+                                setMessage(R.string.import_info)
+                                setPositiveButton(R.string.continue_str) { _, _ ->
+                                    launchImportFromGallery()
+                                }
+                                setOnCancelListener {
+                                    launchImportFromGallery()
+                                }
+                            }.show()
+                        }
                     }
-                    setOnCancelListener {
-                        launchImportFromGallery()
-                    }
-                }.show()
-            }
+                }
+                setNeutralButton(R.string.cancel) { _, _ ->
+
+                }
+            }.show()
         }
         return binding.root
     }

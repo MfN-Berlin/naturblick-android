@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_baseline_play_circle_outline_24"
+                android:contentDescription="@string/acc_play_selection"
                 app:fabSize="mini"
                 style="@style/Theme.Naturblick.OnPrimaryFABOverlay"/>
 

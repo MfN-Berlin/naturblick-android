@@ -92,8 +92,6 @@
 
     <style name="Theme.Naturblick.FABOverlay">
         <item name="backgroundTint">?attr/colorOnSecondaryButtonSecondary</item>
-        <item name="efab_color">?attr/colorOnSecondaryButtonSecondary</item>
-        <item name="fab_color">?attr/colorOnSecondaryButtonSecondary</item>
         <item name="android:textColor">?attr/colorOnPrimaryHighEmphasis</item>
         <item name="tint">?attr/colorOnPrimaryHighEmphasis</item>
         <item name="iconTint">?attr/colorOnPrimaryHighEmphasis</item>
@@ -101,7 +99,6 @@
 
     <style name="Theme.Naturblick.OnPrimaryFABOverlay">
         <item name="backgroundTint">?attr/colorOnPrimaryButtonPrimary</item>
-        <item name="fab_color">?attr/colorOnPrimaryButtonPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimaryHighEmphasis</item>
         <item name="tint">?attr/colorOnPrimaryHighEmphasis</item>
         <item name="iconTint">?attr/colorOnPrimaryHighEmphasis</item>
