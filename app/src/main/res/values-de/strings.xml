@@ -245,7 +245,7 @@
     <string name="acc_open_speciesportrait">Arteninformation öffnen</string>
     <string name="acc_none">Keine</string>
     <string name="acc_copyright">Bildurheberrecht</string>
-    <string name="acc_example_sound">Beispielslaute</string>
+    <string name="acc_example_sound">Lautebeispiel</string>
     <string name="acc_image_text">Bildunterschrift: %s</string>
     <string name="acc_change_species">Art ändern</string>
     <string name="acc_stop_recording">Aufnahme beenden</string>
