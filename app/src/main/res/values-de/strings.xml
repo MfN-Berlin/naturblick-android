@@ -251,4 +251,5 @@
     <string name="acc_stop_recording">Aufnahme beenden</string>
     <string name="acc_play_selection">Ausschnitt anhören</string>
     <string name="acc_enable_location_tracking">Standortverfolgung aktivieren</string>
+    <string name="also">auch: %s</string>
 </resources>

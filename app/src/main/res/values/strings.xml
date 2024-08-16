@@ -287,4 +287,5 @@ If you want, you can attribute your authorship with a name. The material will th
         <item>@string/record_a_bird</item>
         <item>@string/add_image_from_gallery</item>
     </string-array>
+    <string name="also">also: %s</string>
 </resources>

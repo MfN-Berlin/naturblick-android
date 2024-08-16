@@ -110,7 +110,23 @@
                 android:contentDescription="@{species.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sciname" />
+                app:layout_constraintTop_toBottomOf="@id/sciname"
+                app:layout_constraintBottom_toTopOf="@id/synonyms"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/synonyms"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@{@string/also(species.synonym)}"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceCaption"
+                android:textColor="?attr/colorOnPrimarySignalLow"
+                android:visibility="@{species.synonym != null ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
