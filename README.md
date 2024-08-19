@@ -1,4 +1,13 @@
-# Release a new version
+# naturblick-android
+
+This project contains the code for the Android app naturblick. The project is hosted at the Museum für Naturkunde Berlin. 
+The code is licensed under MIT license (see LICENSE.txt for details). If you want to contribute please take a look at CODE_OF_CONDUCT.md and CONTRIBUTING.md.
+
+## Open Source
+
+We believe in the advantages of open source to foster transparency and accountability. Anyone interested can view and verify our work. While reusability of the code is not our primary goal, we welcome and appreciate any feedback on the security and quality of our code. Feel free to open up an issue or just contact us <naturblick@mfn.berlin>.
+
+## Release a new version
 
 * Checkout the `main` branch `git checkout main`
 * Sync the repo with origin `git pull`
@@ -11,7 +20,7 @@
 * The new version will now be built by the CI and the signed bundle will be available as a build artefact for the tag
 * Upload the bundle to the play console
 
-# Building
+## Building
 
 There are two possible ways to build this project. Either it can be
 opnened using [android studio](https://developer.android.com/studio)
@@ -19,7 +28,7 @@ or by manually installing the required build tools as described in
 [.gitlab-ci.yml](.gitlab-ci.yml) under the sections `before_script`
 and `variables`.
 
-## Mapbox download key
+### Mapbox download key
 
 As described
 [here](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials)
@@ -30,7 +39,7 @@ your home folder. You can find the token in the [Settings -> CI/CD
 menu](-/settings/ci_cd) under the Variables section of this project.
 
 
-## ktlint
+### ktlint
 
 [ktlint-gradle](https://github.com/JLLeitschuh/ktlint-gradle) is used
 to format and validate the code in this project. The formatting is
@@ -38,7 +47,7 @@ done according to [the Android Kotlin style
 guide](https://developer.android.com/kotlin/style-guide). It is
 validated by the CI.
 
-### Auto format from Android Studio
+#### Auto format from Android Studio
 
 If you want to run the ktlint formatter from Android studio it can be
 run by tapping `<ctrl>` (`<strg>`) twice and then entering `gradle
@@ -50,7 +59,7 @@ ktlintFormat`
 ./gradlew ktlintFormat
 ```
 
-# Synchronization
+## Synchronization
 
 Observations are kept in sync with the backend through the
 `OperationDao`. The latest "snapshot" of all observations are present
@@ -79,7 +88,7 @@ operations that were sent to the backend, are passed to
 <executedOperations>)`. After this a `refreshObservations()` is used
 to update the snapshot.
 
-# Syncing strapi data during build time
+## Syncing strapi data during build time
 A large part of the content data is synced via ktor from Strapi during buildtime. If the schema has to change (species ie) one has to change it at all places accordingly (strapi, ktor, android, ios).
 
 https://code.naturkundemuseum.berlin/stadtnatur/naturblick-ktor-strapi-db/-/blob/main/src/main/kotlin/naturblick/SyncDb.kt createSchema
