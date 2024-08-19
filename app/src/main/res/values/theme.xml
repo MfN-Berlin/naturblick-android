@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2024 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.Naturblick" parent="Theme.MaterialComponents.DayNight">

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2024 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
 <resources>
     <string name="help_how_to_use_title">Wie kann ich Naturblick nutzen?</string>
     <string name="help_how_to_use">Mache Fotos von Pflanzen und bestimme sie mit unserer automatischen Bilderkennung. Nimm Vogelstimmen auf und erkenne mit der automatischen Lauterkennung, welcher Vogel singt. Bestimme Tiere und Pflanzen anhand ausgewählter Merkmale mit unseren Bestimmungsschlüsseln. Speichere Beobachtungen und teile sie. Oder lerne mehr über Arten in den Artportraits.</string>

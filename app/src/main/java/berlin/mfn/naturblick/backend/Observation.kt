@@ -1,3 +1,8 @@
+/*
+ * Copyright © 2024 Museum für Naturkunde Berlin.
+ * This code is licensed under MIT license (see LICENSE.txt for details)
+ */
+
 @file:UseSerializers(UUIDSerializer::class, ZonedDateTimeSerializer::class)
 
 package berlin.mfn.naturblick.backend

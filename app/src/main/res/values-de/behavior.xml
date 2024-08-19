@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2024 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
 <resources>
     <string name="behavior_inside">in Gebäude</string>
     <string name="plant_behavior_losing_leafs">Blätter abwerfend</string>

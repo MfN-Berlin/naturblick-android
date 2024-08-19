@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2024 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
 <resources>
     <string name="help_how_to_use_title">How can I use Naturblick?</string>
     <string name="help_how_to_use">Take photos of plants and identify them with our automatic image recognition. Record bird sounds and identify which bird is singing with automatic sound recognition. Identify animals and plants by characteristics with our identification keys. Save and share your observations. Or learn more about species in the species portraits.</string>

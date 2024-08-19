@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2024 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
 <resources>
     <string name="new_tac_greeting">Wir freuen uns über dein Interesse, mehr über die Natur in deiner Umgebung zu erfahren.</string>
     <string name="new_tac_info">Hier geben wir dir einen Überblick über die Nutzungsbedingungen und Datenerhebung.</string>
