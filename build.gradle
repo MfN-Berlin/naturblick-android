@@ -1,4 +1,7 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+/*
+ * Copyright © 2024 Museum für Naturkunde Berlin.
+ * This code is licensed under MIT license (see LICENSE.txt for details)
+ */
 buildscript {
     repositories {
         google()

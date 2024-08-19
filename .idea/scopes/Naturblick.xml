@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Naturblick" pattern="file:*.kt||file:*.java||file:*xml&amp;&amp;!src[Naturblick.app.main]:drawable..*" />
+</component>
