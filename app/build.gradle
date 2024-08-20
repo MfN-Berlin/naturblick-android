@@ -49,7 +49,7 @@ android {
         release {
             keyAlias "upload"
             keyPassword System.env.KEYSTORE_PASSWORD
-            storeFile file("/keystore/upload-keystore.jks")
+            storeFile file("../upload-keystore.jks")
             storePassword System.env.KEYSTORE_PASSWORD
         }
     }
