@@ -1,4 +1,4 @@
-# naturblick-android
+# Naturblick Android
 
 This project contains the code for the [Android app
 Naturblick](https://play.google.com/store/apps/details?id=com.mfn_berlin_stadtnatur_entdecken.naturblick). The
