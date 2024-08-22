@@ -90,5 +90,3 @@ to update the snapshot.
 
 ## Syncing strapi data during build time
 A large part of the content data is synced via ktor from Strapi during buildtime. If the schema has to change (species ie) one has to change it at all places accordingly (strapi, ktor, android, ios).
-
-https://code.naturkundemuseum.berlin/stadtnatur/naturblick-ktor-strapi-db/-/blob/main/src/main/kotlin/naturblick/SyncDb.kt createSchema
