@@ -1,11 +1,20 @@
 # naturblick-android
 
-This project contains the code for the Android app naturblick. The project is hosted at the Museum für Naturkunde Berlin. 
-The code is licensed under MIT license (see LICENSE.txt for details). If you want to contribute please take a look at CODE_OF_CONDUCT.md and CONTRIBUTING.md.
+This project contains the code for the [Android app
+Naturblick](https://play.google.com/store/apps/details?id=com.mfn_berlin_stadtnatur_entdecken.naturblick). The
+project is hosted at the [Museum für Naturkunde
+Berlin](https://www.museumfuernaturkunde.berlin/en).  The code is
+licensed under MIT license (see [LICENSE.txt](LICENSE.txt) for details). If you want
+to contribute please take a look at [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) and
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Open Source
 
-We believe in the advantages of open source to foster transparency and accountability. Anyone interested can view and verify our work. While reusability of the code is not our primary goal, we welcome and appreciate any feedback on the security and quality of our code. Feel free to open up an issue or just contact us <naturblick@mfn.berlin>.
+We believe in the advantages of open source to foster transparency and
+accountability. Anyone interested can view and verify our work. While
+reusability of the code is not our primary goal, we welcome and
+appreciate any feedback on the security and quality of our code. Feel
+free to open up an issue or just contact us <naturblick@mfn.berlin>.
 
 ## Release a new version
 
@@ -23,10 +32,8 @@ We believe in the advantages of open source to foster transparency and accountab
 ## Building
 
 There are two possible ways to build this project. Either it can be
-opnened using [android studio](https://developer.android.com/studio)
-or by manually installing the required build tools as described in
-[.gitlab-ci.yml](.gitlab-ci.yml) under the sections `before_script`
-and `variables`.
+opened using [android studio](https://developer.android.com/studio)
+or using gradle by manually installing the required build tools.
 
 ### Mapbox download key
 
@@ -35,58 +42,4 @@ As described
 it is required to configure a mapbox download key to be able to
 compile the project with mapbox android SDK. The simplest way to
 achieve this is to put it into the `.gradle/gradle.properties` file of
-your home folder. You can find the token in the [Settings -> CI/CD
-menu](-/settings/ci_cd) under the Variables section of this project.
-
-
-### ktlint
-
-[ktlint-gradle](https://github.com/JLLeitschuh/ktlint-gradle) is used
-to format and validate the code in this project. The formatting is
-done according to [the Android Kotlin style
-guide](https://developer.android.com/kotlin/style-guide). It is
-validated by the CI.
-
-#### Auto format from Android Studio
-
-If you want to run the ktlint formatter from Android studio it can be
-run by tapping `<ctrl>` (`<strg>`) twice and then entering `gradle
-ktlintFormat`
-
-### Auto format from command line
-
-```
-./gradlew ktlintFormat
-```
-
-## Synchronization
-
-Observations are kept in sync with the backend through the
-`OperationDao`. The latest "snapshot" of all observations are present
-in the `observation` table, which can be accessed through
-`getObservationsPagingSource()` (for list adapters) and
-`getObservation(<occurenceId>)` (for a single observation). Since this
-table is just a snapshot of the state it can not be changed. Instead
-changes are "enqueued" as operations to the `operation` table. This is
-done by the `insertOperation(<observationOperation>)` which simply
-inserts a `CreateOperation`, `PatchOperation` or `DeleteOperation`
-into the `operation` table. To update the current snapshot the
-`refreshObservations()` can be called. It merges the latest
-observations received from the backend with the enqueued operations
-and the result ends up in the `observation` table (which automatically
-updates any result returned by `getObservationsPagingSource()` or
-`getObservation(<occurenceId>)`).
-
-At some point, the operations should be synced with the backend. This
-is done by first calling `getOperations()` which returns a list of all
-operations currently in the DB. This list is then sent to the backend
-which responds with a list of all observations for the given
-device. If the synchronization is successfull, the list with all
-observations received from the Backend together with the IDs of the
-operations that were sent to the backend, are passed to
-`updateBackendObservations(<observationsFromBackend>,
-<executedOperations>)`. After this a `refreshObservations()` is used
-to update the snapshot.
-
-## Syncing strapi data during build time
-A large part of the content data is synced via ktor from Strapi during buildtime. If the schema has to change (species ie) one has to change it at all places accordingly (strapi, ktor, android, ios).
+your home folder.
