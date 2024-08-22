@@ -35,7 +35,7 @@ android {
         buildConfigField("String", "BACKEND_URL", "\"https://naturblick.museumfuernaturkunde.berlin/api/\"")
         buildConfigField("String", "ANALYTICS_URL", "\"https://naturblick.museumfuernaturkunde.berlin/analytics\"")
         buildConfigField("String", "STYLE_URL", "\"mapbox://styles/stadtnaturentdecken/ckhg9nswa19dy19npe3nb5uia\"")
-        resValue("string", "mapbox_access_token", "pk.eyJ1Ijoic3RhZHRuYXR1cmVudGRlY2tlbiIsImEiOiJjaWZ6YnpiczkwMml0dDZtN2p0NzVxaDU2In0.8WTH7pApCP4fJ1HWSJlJIg")
+        resValue("string", "mapbox_access_token", providers.gradleProperty("MAPBOX_ACCESS_TOKEN").getOrElse(System.getenv("MAPBOX_ACCESS_TOKEN")))
         resourceConfigurations += ['en', 'de']
         javaCompileOptions {
             annotationProcessorOptions {
@@ -49,7 +49,7 @@ android {
         release {
             keyAlias "upload"
             keyPassword System.env.KEYSTORE_PASSWORD
-            storeFile file("/keystore/upload-keystore.jks")
+            storeFile file("../upload-keystore.jks")
             storePassword System.env.KEYSTORE_PASSWORD
         }
     }

@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: [ self-hosted ]
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -18,14 +18,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          cmdline-tools-version: 11076708
+      - name: Load keystore
+        env:
+          UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
+        run: echo $UPLOAD_KEYSTORE_BASE64 | base64 --decode > upload-keystore.jks
       - name: Build and sign
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
         run: ./gradlew bundleRelease
       - uses: actions/upload-artifact@v4
         with:
