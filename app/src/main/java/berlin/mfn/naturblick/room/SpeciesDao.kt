@@ -51,6 +51,15 @@ interface SpeciesDao {
     )
     fun filterSpecies(query: String?, language: Int): PagingSource<Int, SpeciesWithGenus>
 
+    @Query(
+        """SELECT rowid FROM species 
+        WHERE :query IS NULL 
+            OR ((:language = $GERMAN_ID AND (gername LIKE :query OR gersynonym LIKE :query)) 
+            OR (:language = $ENGLISH_ID AND (engname LIKE :query OR engsynonym LIKE :query)) OR sciname LIKE :query)
+        ORDER BY sciname"""
+    )
+    suspend fun filterSpeciesIds(query: String?, language: Int): List<Int>
+
     private fun buildSpeciesByCharactersQuery(
         searchQuery: String?,
         language: Int,

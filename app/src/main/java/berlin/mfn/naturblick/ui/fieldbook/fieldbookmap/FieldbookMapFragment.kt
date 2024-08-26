@@ -22,16 +22,10 @@ import berlin.mfn.naturblick.databinding.ViewObservationPopupBinding
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.BaseActivity
 import berlin.mfn.naturblick.ui.data.Group.Companion.getMapIcon
-import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
-import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
-import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
-import berlin.mfn.naturblick.ui.fieldbook.CreateManualObservation
 import berlin.mfn.naturblick.ui.fieldbook.OpenObservation
 import berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookActivity
 import berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookObservation
-import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.utils.*
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point

@@ -7,8 +7,8 @@ group = "berlin.mfn.naturblick"
 version = "1.0.0"
 
 plugins {
-  kotlin("jvm") version "1.9.20"
-  kotlin("plugin.serialization") version "1.9.20"
+  kotlin("jvm") version "1.9.25"
+  kotlin("plugin.serialization") version "1.9.25"
   id("java-gradle-plugin")
 }
 
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-  implementation(kotlin("stdlib", "1.8.20"))
+  implementation(kotlin("stdlib", "1.9.25"))
   implementation("com.squareup.retrofit2:retrofit:2.9.0")
   implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
