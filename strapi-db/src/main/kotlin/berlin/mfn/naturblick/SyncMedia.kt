@@ -5,6 +5,7 @@
 
 package berlin.mfn.naturblick
 
+import berlin.mfn.naturblick.strapi.KtorApi
 import berlin.mfn.naturblick.strapi.StrapiApi
 import com.android.ide.common.vectordrawable.Svg2Vector
 import kotlinx.coroutines.runBlocking
@@ -26,6 +27,9 @@ open class SyncMedia : DefaultTask() {
 
     @Input
     val strapiBaseUrl: Property<String> = project.objects.property(String::class.java)
+
+    @Input
+    val ktorBaseUrl: Property<String> = project.objects.property(String::class.java)
 
     @OutputDirectory
     val imageDirectory: DirectoryProperty = project.objects.directoryProperty()
@@ -105,19 +109,21 @@ open class SyncMedia : DefaultTask() {
     @TaskAction
     fun doAction() {
         val baseUrl = strapiBaseUrl.get()
-        val service = StrapiApi.service(baseUrl)
+        val strapiService = StrapiApi.service(baseUrl)
+
+        val ktorBaseUrl = ktorBaseUrl.get()
+        val ktorService = KtorApi.service(ktorBaseUrl)
 
         runBlocking {
-            val characterValues = StrapiApi.getAll { offset, limit ->
-                service.getCharacterValues(offset, limit)
-            }
+            val characterValues = ktorService.getCharacterValues()
+
             characterValues.forEach {
                 val imageFile = File(
                     imageDirectory.get().toString(),
                     "character_${it.id}.xml"
                 )
                 it.image?.let { image ->
-                    service.getFile(image.url).byteStream().use { svgStream ->
+                    strapiService.getFile(image).byteStream().use { svgStream ->
                         val svgPath: Path = Path.of(project.buildDir.path, "tmp", "${it.id}.svg")
                         project.mkdir(Path.of(project.buildDir.path, "tmp"))
                         Files.copy(svgStream, svgPath, StandardCopyOption.REPLACE_EXISTING)

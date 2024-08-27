@@ -26,12 +26,6 @@ private val client = OkHttpClient.Builder()
     .build()
 
 interface StrapiApiService {
-    @GET("character-values?_sort=id:DESC")
-    suspend fun getCharacterValues(
-        @Query("_start") offset: Int?,
-        @Query("_limit") limit: Int?
-    ): List<CharacterValue>
-
     @GET("{path}")
     suspend fun getFile(@Path("path") path: String): ResponseBody
 }
@@ -44,17 +38,5 @@ object StrapiApi {
             .client(client)
             .build()
         return retrofit.create(StrapiApiService::class.java)
-    }
-
-    @OptIn(ExperimentalStdlibApi::class)
-    suspend fun <T> getAll(p: suspend (Int, Int) -> List<T>): List<T> {
-        var page = 0
-        return buildList {
-            do {
-                val data = p(page * 1000, 1000)
-                addAll(data)
-                page++
-            } while (data.isNotEmpty())
-        }
     }
 }
