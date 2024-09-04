@@ -9,6 +9,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.room.*
 import androidx.room.OnConflictStrategy.Companion.REPLACE
@@ -55,16 +56,16 @@ interface OperationDao {
     }
 
     /**
-     * @return PagingSource for current observation snapshot
+     * @return LiveData for all observations
      */
     @Query("SELECT * FROM observation ORDER BY created DESC")
-    fun getObservationsPagingSource(): PagingSource<Int, Observation>
+    fun getAllObservations(): Flow<List<Observation>>
 
     /**
      * @return LiveData for all observations
      */
-    @Query("SELECT * FROM observation")
-    suspend fun getAllObservationsForMap(): List<Observation>
+    @Query("SELECT * FROM observation ORDER BY created DESC")
+    suspend fun getMapObservations(): List<Observation>
 
     /**
      * @return LiveData for an observation in the current snapshot

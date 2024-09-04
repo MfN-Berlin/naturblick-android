@@ -293,4 +293,6 @@ If you want, you can attribute your authorship with a name. The material will th
         <item>@string/add_image_from_gallery</item>
     </string-array>
     <string name="also">also: %s</string>
+    <string name="clear">Clear</string>
+    <string name="back">Back</string>
 </resources>

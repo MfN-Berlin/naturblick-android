@@ -6,16 +6,30 @@
 package berlin.mfn.naturblick.ui.fieldbook.fieldbook
 
 import android.app.Application
+import android.widget.Toast
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.*
-import androidx.paging.*
 import berlin.mfn.naturblick.backend.ObservationDb
+import berlin.mfn.naturblick.backend.PublicBackendApi
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.utils.MediaThumbnail
+import berlin.mfn.naturblick.utils.NetworkResult
+import berlin.mfn.naturblick.utils.languageId
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.launch
 
 class FieldbookViewModel(
-    private val savedStateHandle: SavedStateHandle,
-    application: Application
-) : ViewModel() {
+    application: Application,
+    private val savedStateHandle: SavedStateHandle
+) : AndroidViewModel(application) {
     private val operationDao = ObservationDb.getDb(application).operationDao()
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
     var launched: Boolean
@@ -24,11 +38,26 @@ class FieldbookViewModel(
             savedStateHandle["launched"] = value
         }
 
-    val pagingData =
-        Pager(PAGING_CONFIG) {
-            operationDao.getObservationsPagingSource()
-        }.liveData.cachedIn(this).map {
-            it.map {
+    var query by mutableStateOf("")
+       private set
+
+    fun updateQuery(input: String) {
+        query = input
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val observationsFlow =
+        snapshotFlow { query }.flowOn(Dispatchers.IO).flatMapLatest { query ->
+            operationDao.getAllObservations().map { observations ->
+                Pair(query, observations)
+            }
+        }.mapLatest { (query, observations) ->
+            if (query.isBlank())
+                observations
+            else {
+                val speciesSet = speciesDao.filterSpeciesIds("%$query%", languageId()).toHashSet()
+                observations.filter { speciesSet.contains(it.newSpeciesId) }
+            }.map {
                 if (it.newSpeciesId != null)
                     FieldbookObservation(
                         it.occurenceId,
@@ -52,8 +81,26 @@ class FieldbookViewModel(
             }
         }
 
-    companion object {
-        val PAGING_CONFIG = PagingConfig(50)
+    var refreshState by mutableStateOf(false)
+        private set
+    fun refresh() {
+        refreshState = true
+        viewModelScope.launch {
+            NetworkResult.catchNetworkAndServerErrors(getApplication()) {
+                PublicBackendApi.service.triggerSync(getApplication())
+            }.fold(
+                {
+                    refreshState = false
+                }, { error ->
+                    Toast.makeText(
+                        getApplication(),
+                        error.error,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    refreshState = false
+                }
+            )
+        }
     }
 }
 
@@ -68,8 +115,8 @@ class FieldbookViewModelFactory(
         handle: SavedStateHandle
     ): T {
         return FieldbookViewModel(
-            handle,
-            application
+            application,
+            handle
         ) as T
     }
 }

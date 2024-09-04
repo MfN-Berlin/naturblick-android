@@ -19,7 +19,7 @@ class FieldbookMapViewModel(occurenceId: UUID?, application: Application) :
     private val operationDao = ObservationDb.getDb(application).operationDao()
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
     val observations = liveData {
-        val all = operationDao.getAllObservationsForMap()
+        val all = operationDao.getMapObservations()
         val mapping = speciesDao.getGroups(all.mapNotNull { it.newSpeciesId }).map {
             Pair(it.id, it.group)
         }.toMap()

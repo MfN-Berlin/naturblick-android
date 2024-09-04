@@ -257,4 +257,6 @@
     <string name="acc_play_selection">Ausschnitt anhören</string>
     <string name="acc_enable_location_tracking">Standortverfolgung aktivieren</string>
     <string name="also">auch: %s</string>
+    <string name="clear">Leeren</string>
+    <string name="back">Zurück</string>
 </resources>
