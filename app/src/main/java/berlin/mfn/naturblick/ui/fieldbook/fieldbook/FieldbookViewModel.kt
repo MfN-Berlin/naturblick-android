@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.*
+import berlin.mfn.naturblick.backend.DeleteOperation
 import berlin.mfn.naturblick.backend.ObservationDb
 import berlin.mfn.naturblick.backend.PublicBackendApi
 import berlin.mfn.naturblick.room.StrapiDb
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class FieldbookViewModel(
     application: Application,
@@ -43,6 +45,15 @@ class FieldbookViewModel(
 
     fun updateQuery(input: String) {
         query = input
+    }
+
+    fun deleteObservations(selection: List<UUID>) {
+        viewModelScope.launch {
+            for (occurenceId in selection.toList()) {
+                operationDao.insertOperation(DeleteOperation(occurenceId = occurenceId))
+            }
+            operationDao.refreshObservations()
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
