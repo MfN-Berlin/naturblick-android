@@ -128,6 +128,7 @@ class FieldbookActivity : ComponentActivity() {
                     topBar = {
                         TopBar(
                             selectionCount = selection.size,
+                            observationCount = observations.size,
                             query = model.query,
                             updateQuery = {
                                 model.updateQuery(it)
@@ -361,6 +362,7 @@ class FieldbookActivity : ComponentActivity() {
     @Composable
     fun TopBar(
         selectionCount: Int,
+        observationCount: Int,
         query: String,
         updateQuery: (query: String) -> Unit,
         cancelSelection: () -> Unit,
@@ -421,7 +423,7 @@ class FieldbookActivity : ComponentActivity() {
                     Text("$selectionCount")
                 } else {
                     if (!search) {
-                        Text(stringResource(R.string.field_book))
+                        Text(stringResource(R.string.field_book_title, observationCount))
                     } else {
                         SearchField(stringResource(R.string.search_hint), query, updateQuery) {
                             search = false

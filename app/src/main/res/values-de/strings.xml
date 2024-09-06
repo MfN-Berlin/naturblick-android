@@ -261,4 +261,5 @@
     <string name="back">Zurück</string>
     <string name="delete_question_observations">Beobachtungen löschen?</string>
     <string name="delete_question_observations_message">Bist du sicher, dass du %1$d Beobachtungen löschen möchtest?</string>
+    <string name="field_book_title">Feldbuch (%d)</string>
 </resources>

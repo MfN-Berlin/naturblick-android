@@ -297,4 +297,5 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="back">Back</string>
     <string name="delete_question_observations">Delete observations?</string>
     <string name="delete_question_observations_message">Are you sure that you want to delete %1$d observations?</string>
+    <string name="field_book_title">Fieldbook (%d)</string>
 </resources>
