@@ -259,7 +259,16 @@
     <string name="also">auch: %s</string>
     <string name="clear">Leeren</string>
     <string name="back">Zurück</string>
-    <string name="delete_question_observations">Beobachtungen löschen?</string>
-    <string name="delete_question_observations_message">Bist du sicher, dass du %1$d Beobachtungen löschen möchtest?</string>
-    <string name="field_book_title">Feldbuch (%d)</string>
+    <plurals name="delete_question_observations">
+        <item quantity="one">Beobachtung löschen?</item>
+        <item quantity="other">Beobachtungen löschen?</item>
+    </plurals>
+    <plurals name="delete_question_observations_message">
+        <item quantity="one">Bist du sicher, dass du diese Beobachtung löschen möchtest?</item>
+        <item quantity="other">Bist du sicher, dass du %d Beobachtungen löschen möchtest?</item>
+    </plurals>
+    <plurals name="field_book_title">
+        <item quantity="one">%d Beobachtung</item>
+        <item quantity="other">%d Beobachtungen</item>
+    </plurals>
 </resources>

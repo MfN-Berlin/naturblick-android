@@ -295,7 +295,16 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="also">also: %s</string>
     <string name="clear">Clear</string>
     <string name="back">Back</string>
-    <string name="delete_question_observations">Delete observations?</string>
-    <string name="delete_question_observations_message">Are you sure that you want to delete %1$d observations?</string>
-    <string name="field_book_title">Fieldbook (%d)</string>
+    <plurals name="delete_question_observations">
+        <item quantity="one">Delete observation?</item>
+        <item quantity="other">Delete observations?</item>
+    </plurals>
+    <plurals name="delete_question_observations_message">
+        <item quantity="one">Are you sure that you want to delete this observation?</item>
+        <item quantity="other">Are you sure that you want to delete %d observations?</item>
+    </plurals>
+    <plurals name="field_book_title">
+        <item quantity="one">%d observation</item>
+        <item quantity="other">%d observations</item>
+    </plurals>
 </resources>
