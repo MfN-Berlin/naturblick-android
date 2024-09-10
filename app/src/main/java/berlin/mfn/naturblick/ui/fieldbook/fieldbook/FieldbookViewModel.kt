@@ -77,7 +77,8 @@ class FieldbookViewModel(
                             MediaThumbnail.remote(thumbnailId, it.obsIdent)
                         },
                         it.obsIdent,
-                        speciesDao.getSpecies(it.newSpeciesId)
+                        speciesDao.getSpecies(it.newSpeciesId),
+                        it.coords
                     )
                 else
                     FieldbookObservation(
@@ -87,7 +88,8 @@ class FieldbookViewModel(
                             MediaThumbnail.remote(thumbnailId, it.obsIdent)
                         },
                         it.obsIdent,
-                        null
+                        null,
+                        it.coords
                     )
             }
         }

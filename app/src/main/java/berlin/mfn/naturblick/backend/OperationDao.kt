@@ -56,16 +56,10 @@ interface OperationDao {
     }
 
     /**
-     * @return LiveData for all observations
+     * @return Flow for all observations
      */
     @Query("SELECT * FROM observation ORDER BY created DESC")
     fun getAllObservations(): Flow<List<Observation>>
-
-    /**
-     * @return LiveData for all observations
-     */
-    @Query("SELECT * FROM observation ORDER BY created DESC")
-    suspend fun getMapObservations(): List<Observation>
 
     /**
      * @return LiveData for an observation in the current snapshot

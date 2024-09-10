@@ -90,11 +90,6 @@
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.fieldbook.fieldbookmap.FieldbookMapActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.fieldbook.fieldbook.FieldbookActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.fieldbook.observation.ObservationActivity"
             android:exported="false"
             android:launchMode="singleTop"
