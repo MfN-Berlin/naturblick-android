@@ -73,19 +73,22 @@ class LocationPickerActivity : ComponentActivity() {
                 }, topBar = {
                     TopAppBar(
                         title = {
-                          Text(stringResource(R.string.location))
+                            Text(stringResource(R.string.location))
                         },
                         navigationIcon = {
-                        IconButton(onClick = {
-                            setResult(RESULT_CANCELED)
-                            finish()
-                        }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(R.string.back)
-                            )
-                        }
-                    })
+                            IconButton(onClick = {
+                                setResult(RESULT_CANCELED)
+                                finish()
+                            }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.back)
+                                )
+                            }
+                        },
+                        backgroundColor = NaturblickTheme.colors.primary,
+                        contentColor = NaturblickTheme.colors.onPrimary,
+                    )
                 }) {
                     Box {
                         NaturblickMap(
@@ -133,6 +136,7 @@ class LocationPickerActivity : ComponentActivity() {
             }
         }
     }
+
     private fun dropPin(): ImageView {
         val dropPinView = ImageView(this)
         dropPinView.setImageResource(R.drawable.ic_baseline_edit_location_24)
