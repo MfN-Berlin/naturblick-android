@@ -51,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
@@ -128,6 +129,7 @@ class FieldbookActivity : ComponentActivity() {
                     topBar = {
                         TopBar(
                             selectionCount = selection.size,
+                            observationCount = observations.size,
                             query = model.query,
                             updateQuery = {
                                 model.updateQuery(it)
@@ -211,8 +213,8 @@ class FieldbookActivity : ComponentActivity() {
     @Composable
     fun DeleteDialog(deletionCount: Int, onDismissRequest: () -> Unit, onConfirmation: () -> Unit) {
         SimpleAlertDialog(
-            title = stringResource(R.string.delete_question_observations),
-            text = stringResource(R.string.delete_question_observations_message, deletionCount),
+            title = pluralStringResource(R.plurals.delete_question_observations, deletionCount),
+            text = pluralStringResource(R.plurals.delete_question_observations_message, deletionCount, deletionCount),
             confirm = stringResource(R.string.delete),
             dismiss = stringResource(R.string.cancel),
             onDismissRequest = onDismissRequest,
@@ -361,6 +363,7 @@ class FieldbookActivity : ComponentActivity() {
     @Composable
     fun TopBar(
         selectionCount: Int,
+        observationCount: Int,
         query: String,
         updateQuery: (query: String) -> Unit,
         cancelSelection: () -> Unit,
@@ -421,7 +424,7 @@ class FieldbookActivity : ComponentActivity() {
                     Text("$selectionCount")
                 } else {
                     if (!search) {
-                        Text(stringResource(R.string.field_book))
+                        Text(pluralStringResource(R.plurals.field_book_title, observationCount, observationCount))
                     } else {
                         SearchField(stringResource(R.string.search_hint), query, updateQuery) {
                             search = false
