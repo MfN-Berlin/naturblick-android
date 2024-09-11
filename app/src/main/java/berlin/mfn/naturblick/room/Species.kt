@@ -28,7 +28,8 @@ data class Species(
     val engsynonym: String?,
     @ColumnInfo(name = "red_list_germany") val redListGermany: String?,
     @ColumnInfo(name = "iucn_category") val iucnCategory: String?,
-    @ColumnInfo(name = "old_species_id")val oldSpeciesId: String
+    @ColumnInfo(name = "old_species_id") val oldSpeciesId: String,
+    @ColumnInfo(name = "accepted") val accepted: Int?
 ) {
     val name
         get() = if (isGerman()) {
