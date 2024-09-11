@@ -7,6 +7,7 @@ package berlin.mfn.naturblick.ui.fieldbook.fieldbook
 
 import android.net.Uri
 import berlin.mfn.naturblick.BuildConfig
+import berlin.mfn.naturblick.backend.Coordinates
 import berlin.mfn.naturblick.backend.ThumbnailRequest
 import berlin.mfn.naturblick.room.Species
 import berlin.mfn.naturblick.utils.MediaThumbnail
@@ -20,7 +21,8 @@ data class FieldbookObservation(
     val created: ZonedDateTime,
     val thumbnail: MediaThumbnail?,
     val obsIdent: String?,
-    val species: Species?
+    val species: Species?,
+    val coords: Coordinates?
 ) {
     private val speciesUri: Uri?
         get() = if (species?.imageUrl != null)
