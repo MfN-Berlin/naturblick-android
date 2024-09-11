@@ -29,11 +29,15 @@ interface SpeciesDao {
     @RewriteQueriesToDropUnusedColumns
     @Query(
         """SELECT species.*, NULL as female FROM species INNER JOIN portrait ON portrait.species_id = species.rowid 
-        WHERE group_id = :group 
-        AND (:query IS NULL 
-            OR ((:language = $GERMAN_ID AND (gername LIKE :query OR gersynonym LIKE :query)) 
-            OR (:language = $ENGLISH_ID AND (engname LIKE :query OR engsynonym LIKE :query)) OR sciname LIKE :query))
-        AND portrait.language = :language 
+    WHERE species.rowid IN (
+        SELECT COALESCE(s1.rowid, s.rowid) 
+            FROM species AS s 
+            LEFT JOIN species AS s1 ON s1.rowid = s.accepted 
+        WHERE s.group_id = :group 
+            AND (:query IS NULL 
+            OR ((:language = $GERMAN_ID AND (s.gername LIKE :query OR s.gersynonym LIKE :query)) 
+            OR (:language = $ENGLISH_ID AND (s.engname LIKE :query OR s.engsynonym LIKE :query)) OR s.sciname LIKE :query))
+        ) AND portrait.language = :language 
         ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
     )
     fun filterSpeciesWithPortrait(
@@ -43,20 +47,26 @@ interface SpeciesDao {
     ): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
-        """SELECT species.*, NULL as female FROM species 
+        """
+            SELECT DISTINCT species.*, NULL AS female FROM species WHERE species.rowid IN (
+        SELECT COALESCE(s1.rowid, s.rowid) 
+            FROM species AS s 
+            LEFT JOIN species AS s1 ON s1.rowid = s.accepted 
         WHERE :query IS NULL 
-            OR ((:language = $GERMAN_ID AND (gername LIKE :query OR gersynonym LIKE :query)) 
-            OR (:language = $ENGLISH_ID AND (engname LIKE :query OR engsynonym LIKE :query)) OR sciname LIKE :query)
-        ORDER BY sciname"""
+            OR ((:language = $GERMAN_ID AND (s.gername LIKE :query OR s.gersynonym LIKE :query)) 
+            OR (:language = $ENGLISH_ID AND (s.engname LIKE :query OR s.engsynonym LIKE :query)) OR s.sciname LIKE :query)
+        ORDER BY s.sciname
+        )"""
     )
     fun filterSpecies(query: String?, language: Int): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
-        """SELECT rowid FROM species 
+        """SELECT COALESCE(s1.rowid, s.rowid)  FROM species AS s 
+            LEFT JOIN species AS s1 ON s1.rowid = s.accepted 
         WHERE :query IS NULL 
-            OR ((:language = $GERMAN_ID AND (gername LIKE :query OR gersynonym LIKE :query)) 
-            OR (:language = $ENGLISH_ID AND (engname LIKE :query OR engsynonym LIKE :query)) OR sciname LIKE :query)
-        ORDER BY sciname"""
+            OR ((:language = $GERMAN_ID AND (s.gername LIKE :query OR s.gersynonym LIKE :query)) 
+            OR (:language = $ENGLISH_ID AND (s.engname LIKE :query OR s.engsynonym LIKE :query)) OR s.sciname LIKE :query)
+        ORDER BY s.sciname"""
     )
     suspend fun filterSpeciesIds(query: String?, language: Int): List<Int>
 
