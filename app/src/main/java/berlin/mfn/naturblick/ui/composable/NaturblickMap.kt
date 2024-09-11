@@ -9,6 +9,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -101,7 +102,8 @@ fun NaturblickMap(
             center(Point.fromLngLat(10.447683, 51.163375))
             zoom(5.0)
         }
-    }) {
+    },
+        modifier = Modifier.fillMaxSize()) {
         content?.let {
             it()
         }

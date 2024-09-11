@@ -25,9 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import berlin.mfn.naturblick.R
@@ -36,17 +34,12 @@ import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.data.Group
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.extension.compose.DisposableMapEffect
+import com.mapbox.maps.extension.compose.annotation.IconImage
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
-import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroup
-import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
-import com.mapbox.maps.plugin.annotation.AnnotationConfig
-import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
-import com.mapbox.maps.plugin.annotation.ClusterOptions
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
 import com.mapbox.maps.viewannotation.annotationAnchor
@@ -136,40 +129,24 @@ fun ObservationMap(
             }
         }
 
-        PointAnnotationGroup(
-            annotations = observations.mapNotNull { observation ->
-                observation.coords?.let { coords ->
-                    PointAnnotationOptions()
-                        .withPoint(Point.fromLngLat(coords.lon, coords.lat))
-                        .withIconImage(
-                            Group.getMapIcon(
-                                LocalContext.current,
-                                observation.species?.group
-                            )
-                        )
-                        .withData(JsonPrimitive(observation.occurenceId.toString()))
-                }
-            }, annotationConfig = AnnotationConfig(
-                annotationSourceOptions = AnnotationSourceOptions(
-                    clusterOptions = ClusterOptions(
-                        circleRadiusExpression = literal(16),
-                        colorLevels = listOf(
-                            Pair(50, colorResource(R.color.sleep_900).toArgb()),
-                            Pair(10, colorResource(R.color.sleep_400).toArgb()),
-                            Pair(0, colorResource(R.color.sleep_100).toArgb())
+        val context = LocalContext.current
+        observations.map { observation ->
+            observation.coords?.let { coords ->
+                PointAnnotation(
+                    point = Point.fromLngLat(coords.lon, coords.lat),
+                    onClick = {
+                        select(observation.occurenceId)
+                        true
+                    }) {
+                    iconImage = IconImage(
+                        Group.getMapIcon(
+                            context,
+                            observation.species?.group
                         )
                     )
-                )
-            ),
-            onClick = { annotation ->
-                annotation.getData()?.asString?.let { occurenceIdString ->
-                    UUID.fromString(occurenceIdString)?.let { occurenceId ->
-                        select(occurenceId)
-                    }
                 }
-                true
             }
-        )
+        }
         DisposableMapEffect {
             it.mapboxMap.addOnMapClickListener(onClick)
             onDispose {
