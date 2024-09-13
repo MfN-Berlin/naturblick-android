@@ -29,7 +29,7 @@ android {
         def strapiBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
         syncReleaseMedia.strapiBaseUrl = strapiBaseUrl
         def ktorBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/"
-        syncDebugMedia.ktorBaseUrl = ktorBaseUrl
+        syncReleaseMedia.ktorBaseUrl = ktorBaseUrl
         syncReleaseDb.ktorBaseUrl = ktorBaseUrl
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "STRAPI_URL", "\"$strapiBaseUrl\"")
