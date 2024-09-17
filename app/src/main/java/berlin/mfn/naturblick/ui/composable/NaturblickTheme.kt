@@ -6,8 +6,6 @@
 package berlin.mfn.naturblick.ui.composable
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
@@ -153,16 +151,7 @@ object NaturblickTheme {
         ),
     )
 
-    val buttonColors: ButtonColors
-        @Composable
-        get() = ButtonDefaults.buttonColors(
-            colors.onSecondaryButtonPrimary,
-            colors.onSecondaryMinimumEmphasis,
-            colors.onSecondaryButtonPrimary,
-            colors.onSecondaryMinimumEmphasis
-        )
 }
-
 @Composable
 fun NaturblickTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -298,8 +287,8 @@ fun NaturblickTheme(
             content = content
         )
     }
-
 }
+
 
 val LocalColors: ProvidableCompositionLocal<NaturblickColors> = compositionLocalOf {
     throw NotImplementedError()
