@@ -19,6 +19,8 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
+import com.mapbox.maps.plugin.viewport.viewport
 
 abstract class MapFragment : Fragment() {
     protected lateinit var trackingModel: TrackingViewModel

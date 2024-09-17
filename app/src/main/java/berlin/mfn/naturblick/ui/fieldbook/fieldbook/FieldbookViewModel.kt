@@ -6,9 +6,11 @@
 package berlin.mfn.naturblick.ui.fieldbook.fieldbook
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.*
@@ -29,6 +31,7 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 
 class FieldbookViewModel(
+    occurenceId: UUID?,
     application: Application,
     private val savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
@@ -77,7 +80,8 @@ class FieldbookViewModel(
                             MediaThumbnail.remote(thumbnailId, it.obsIdent)
                         },
                         it.obsIdent,
-                        speciesDao.getSpecies(it.newSpeciesId)
+                        speciesDao.getSpecies(it.newSpeciesId),
+                        it.coords
                     )
                 else
                     FieldbookObservation(
@@ -87,7 +91,8 @@ class FieldbookViewModel(
                             MediaThumbnail.remote(thumbnailId, it.obsIdent)
                         },
                         it.obsIdent,
-                        null
+                        null,
+                        it.coords
                     )
             }
         }
@@ -113,10 +118,47 @@ class FieldbookViewModel(
             )
         }
     }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val observationAndSelected = observationsFlow.mapLatest { observations ->
+        val observation = observations.find { it.occurenceId == occurenceId }
+        Pair(observations, observation)
+    }
+
+    private var startTrackingListener: (() -> Unit)? = null
+
+    fun setStartTrackingListener(listener: () -> Unit) {
+        this.startTrackingListener = listener
+    }
+
+
+    private var stopTrackingListener: (() -> Unit)? = null
+
+    fun setStopTrackingListener(listener: () -> Unit) {
+        this.stopTrackingListener = listener
+    }
+
+    var locationEnabled by mutableStateOf(false)
+        private set
+
+    fun startTracking() {
+        locationEnabled = true
+        startTrackingListener?.let {
+            it()
+        }
+    }
+
+    fun stopTracking() {
+        locationEnabled = false
+        stopTrackingListener?.let {
+            it()
+        }
+    }
 }
 
 class FieldbookViewModelFactory(
-    private val application: Application
+    private val occurenceId: UUID?,
+    private val application: Application,
 ) : AbstractSavedStateViewModelFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -126,6 +168,7 @@ class FieldbookViewModelFactory(
         handle: SavedStateHandle
     ): T {
         return FieldbookViewModel(
+            occurenceId,
             application,
             handle
         ) as T
