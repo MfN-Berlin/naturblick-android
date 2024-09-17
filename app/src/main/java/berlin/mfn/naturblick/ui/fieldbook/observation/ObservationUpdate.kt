@@ -239,8 +239,7 @@ data class ObservationUpdate(
                 MediaThumbnail.remote(it, observation.obsIdent)
             },
             observation?.obsIdent,
-            species,
-            coordinatesState
+            species
         )
 
     val longitudeString: String?
