@@ -39,8 +39,8 @@
             app:argType="boolean" />
     </activity>
     <activity
-        android:id="@+id/nav_field_book_map"
-        android:name="berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookActivity">
+        android:id="@id/nav_field_book_map"
+        android:name="berlin.mfn.naturblick.ui.fieldbook.fieldbookmap.FieldbookMapActivity">
         <argument
             android:name="occurence_id"
             android:defaultValue="@null"

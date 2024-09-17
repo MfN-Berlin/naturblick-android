@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2024 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="trackingModel"
+            type="berlin.mfn.naturblick.utils.TrackingViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.mapbox.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            mapbox:mapbox_cameraTargetLat="51.163375"
+            mapbox:mapbox_cameraTargetLng="10.447683"
+            mapbox:mapbox_cameraZoom="5.0" />
+
+        <LinearLayout
+            android:id="@+id/toggle_gps_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/fab_margin"
+            android:paddingBottom="@dimen/fab_margin"
+            app:layout_anchor="@id/list_button"
+            app:layout_anchorGravity="top|end">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/toggle_gps"
+                style="@style/Theme.Naturblick.FABOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/acc_enable_location_tracking"
+                android:src="@{ trackingModel.track ? @drawable/ic_round_gps_fixed_24 : @drawable/ic_round_gps_not_fixed_24}"
+                app:fabSize="mini" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/list_button"
+            style="@style/Theme.Naturblick.FABOverlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:text="@string/observation_list"
+            app:icon="@drawable/ic_baseline_list_24" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

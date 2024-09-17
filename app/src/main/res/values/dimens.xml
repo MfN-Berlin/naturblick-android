@@ -32,7 +32,7 @@
     <dimen name="circular_progress_size">116dp</dimen>
     <dimen name="observation_popup_size">224dp</dimen>
     <dimen name="popup_offset">16dp</dimen>
-    <dimen name="map_pin">48dp</dimen>
+    <dimen name="map_pin">32dp</dimen>
     <dimen name="observation_icon_size">24dp</dimen>
     <dimen name="observation_icon_avatar_padding">20dp</dimen>
     <dimen name="extra_icon_text_space">-7dp</dimen>
