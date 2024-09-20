@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/nav_field_book_edit_observation"
         android:name="berlin.mfn.naturblick.ui.fieldbook.observation.ObservationEditFragment"
-        android:label="@string/field_book_observation"></fragment>
+        android:label="@string/field_book_observation" />
     <activity
         android:id="@+id/nav_portrait"
         android:name="berlin.mfn.naturblick.ui.species.portrait.PortraitActivity">
@@ -39,8 +39,8 @@
             app:argType="boolean" />
     </activity>
     <activity
-        android:id="@id/nav_field_book_map"
-        android:name="berlin.mfn.naturblick.ui.fieldbook.fieldbookmap.FieldbookMapActivity">
+        android:id="@+id/nav_field_book_map"
+        android:name="berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookActivity">
         <argument
             android:name="occurence_id"
             android:defaultValue="@null"
