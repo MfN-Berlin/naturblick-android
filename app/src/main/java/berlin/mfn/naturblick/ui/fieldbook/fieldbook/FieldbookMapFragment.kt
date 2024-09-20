@@ -92,16 +92,15 @@ class FieldbookMapFragment : Fragment() {
                     val annotations: List<PointAnnotationOptions> =
                         observations.mapNotNull { observation ->
                             observation.coords?.let { coords ->
-                                observation.species?.group?.let { group ->
-                                    getMapIcon(requireContext(), group).let { bitmap ->
-                                        PointAnnotationOptions()
-                                            .withPoint(Point.fromLngLat(coords.lon, coords.lat))
-                                            .withIconImage(bitmap)
-                                            .withIconAnchor(IconAnchor.BOTTOM)
-                                            .withData(
-                                                JsonPrimitive(observation.occurenceId.toString())
-                                            )
-                                    }
+                                val group = observation.species?.group
+                                getMapIcon(requireContext(), group).let { bitmap ->
+                                    PointAnnotationOptions()
+                                        .withPoint(Point.fromLngLat(coords.lon, coords.lat))
+                                        .withIconImage(bitmap)
+                                        .withIconAnchor(IconAnchor.BOTTOM)
+                                        .withData(
+                                            JsonPrimitive(observation.occurenceId.toString())
+                                        )
                                 }
                             }
                         }
