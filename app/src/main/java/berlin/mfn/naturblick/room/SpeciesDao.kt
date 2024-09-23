@@ -28,11 +28,12 @@ interface SpeciesDao {
 
     @RewriteQueriesToDropUnusedColumns
     @Query(
-        """SELECT species.*, NULL as female FROM species INNER JOIN portrait ON portrait.species_id = species.rowid 
+        """SELECT species_accepted.*, NULL as female FROM species_accepted INNER JOIN portrait ON portrait.species_id = species_accepted.rowid 
         WHERE group_id = :group 
         AND (:query IS NULL 
-            OR ((:language = $GERMAN_ID AND (gername LIKE :query OR gersynonym LIKE :query)) 
-            OR (:language = $ENGLISH_ID AND (engname LIKE :query OR engsynonym LIKE :query)) OR sciname LIKE :query))
+            OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query)) 
+            OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query)) 
+            OR sciname LIKE :query)
         AND portrait.language = :language 
         ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
     )
@@ -43,20 +44,22 @@ interface SpeciesDao {
     ): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
-        """SELECT species.*, NULL as female FROM species 
+        """SELECT species_accepted.*, NULL as female FROM species_accepted 
         WHERE :query IS NULL 
-            OR ((:language = $GERMAN_ID AND (gername LIKE :query OR gersynonym LIKE :query)) 
-            OR (:language = $ENGLISH_ID AND (engname LIKE :query OR engsynonym LIKE :query)) OR sciname LIKE :query)
-        ORDER BY sciname"""
+            OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query)) 
+            OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query)) 
+            OR sciname LIKE :query
+        ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
     )
     fun filterSpecies(query: String?, language: Int): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
-        """SELECT rowid FROM species 
+        """SELECT rowid FROM species_accepted 
         WHERE :query IS NULL 
-            OR ((:language = $GERMAN_ID AND (gername LIKE :query OR gersynonym LIKE :query)) 
-            OR (:language = $ENGLISH_ID AND (engname LIKE :query OR engsynonym LIKE :query)) OR sciname LIKE :query)
-        ORDER BY sciname"""
+            OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query))
+            OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query))
+            OR sciname LIKE :query
+        ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
     )
     suspend fun filterSpeciesIds(query: String?, language: Int): List<Int>
 

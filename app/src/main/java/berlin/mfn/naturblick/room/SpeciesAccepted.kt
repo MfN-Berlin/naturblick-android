@@ -8,14 +8,20 @@ package berlin.mfn.naturblick.room
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.utils.isGerman
 
 @Entity(
-    tableName = "species"
+    tableName = "species_accepted",
+    indices = [
+        Index(value = ["gername"], name = "idx_species_accepted_gername"),
+        Index(value = ["engname"], name = "idx_species_accepted_engname")
+    ]
 )
-data class Species(
+data class SpeciesAccepted(
     @PrimaryKey @ColumnInfo(name = "rowid") val id: Int,
     @ColumnInfo(name = "group_id") val group: String,
     val sciname: String,
@@ -29,7 +35,8 @@ data class Species(
     @ColumnInfo(name = "red_list_germany") val redListGermany: String?,
     @ColumnInfo(name = "iucn_category") val iucnCategory: String?,
     @ColumnInfo(name = "old_species_id")val oldSpeciesId: String,
-    @ColumnInfo(name = "accepted") val accepted: Int?
+    @ColumnInfo(name = "gersearchfield") val gersearchfield: String?,
+    @ColumnInfo(name = "engsearchfield") val engsearchfield: String?
 ) {
     val name
         get() = if (isGerman()) {
@@ -57,29 +64,3 @@ data class Species(
         }
 }
 
-data class SpeciesWithGenus(
-    @Embedded() val species: Species,
-    @ColumnInfo(name = "female") val female: Boolean?
-) {
-    val name: String
-        get() = species.nameWithFallback + if (female != null) {
-            if (female) {
-                " ♀"
-            } else {
-                " ♂"
-            }
-        } else {
-            ""
-        }
-
-    val avatarUrl: String?
-        get() {
-            val femaleAvatar = species.femaleAvatarUrl
-            return if (female != null && female && femaleAvatar != null)
-                femaleAvatar
-            else
-                species.avatarUrl
-        }
-}
-
-data class SpeciesWithGroup(val id: Int, val group: String)
