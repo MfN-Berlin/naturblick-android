@@ -28,13 +28,13 @@ interface SpeciesDao {
 
     @RewriteQueriesToDropUnusedColumns
     @Query(
-        """SELECT species_accepted.*, NULL as female FROM species_accepted INNER JOIN portrait ON portrait.species_id = species_accepted.rowid 
+        """SELECT species.*, NULL as female FROM species INNER JOIN portrait ON portrait.species_id = species.rowid 
         WHERE group_id = :group 
         AND (:query IS NULL 
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query)) 
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query)) 
             OR sciname LIKE :query)
-        AND portrait.language = :language 
+        AND portrait.language = :language AND gersearchfield IS NOT NULL
         ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
     )
     fun filterSpeciesWithPortrait(
@@ -44,21 +44,21 @@ interface SpeciesDao {
     ): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
-        """SELECT species_accepted.*, NULL as female FROM species_accepted 
-        WHERE :query IS NULL 
+        """SELECT species.*, NULL as female FROM species 
+        WHERE (:query IS NULL 
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query)) 
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query)) 
-            OR sciname LIKE :query
+            OR sciname LIKE :query) AND gersearchfield IS NOT NULL
         ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
     )
     fun filterSpecies(query: String?, language: Int): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
-        """SELECT rowid FROM species_accepted 
-        WHERE :query IS NULL 
+        """SELECT rowid FROM species 
+        WHERE (:query IS NULL 
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query))
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query))
-            OR sciname LIKE :query
+            OR sciname LIKE :query) AND gersearchfield IS NOT NULL
         ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
     )
     suspend fun filterSpeciesIds(query: String?, language: Int): List<Int>

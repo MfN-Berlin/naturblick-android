@@ -15,7 +15,6 @@ import berlin.mfn.naturblick.BuildConfig
     version = BuildConfig.VERSION_CODE,
     entities = [
         Species::class,
-        SpeciesAccepted::class,
         Portrait::class,
         PortraitImage::class,
         PortraitImageSize::class,

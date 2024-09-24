@@ -8,12 +8,17 @@ package berlin.mfn.naturblick.room
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.utils.isGerman
 
 @Entity(
-    tableName = "species"
+    tableName = "species",
+    indices = [
+        Index(value = ["gername"], name = "idx_species_gername"),
+        Index(value = ["engname"], name = "idx_species_engname")
+    ]
 )
 data class Species(
     @PrimaryKey @ColumnInfo(name = "rowid") val id: Int,
@@ -28,8 +33,9 @@ data class Species(
     val engsynonym: String?,
     @ColumnInfo(name = "red_list_germany") val redListGermany: String?,
     @ColumnInfo(name = "iucn_category") val iucnCategory: String?,
-    @ColumnInfo(name = "old_species_id")val oldSpeciesId: String,
-    @ColumnInfo(name = "accepted") val accepted: Int?
+    @ColumnInfo(name = "old_species_id") val oldSpeciesId: String,
+    @ColumnInfo(name = "gersearchfield") val gersearchfield: String?,
+    @ColumnInfo(name = "engsearchfield") val engsearchfield: String?
 ) {
     val name
         get() = if (isGerman()) {
