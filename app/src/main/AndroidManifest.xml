@@ -182,12 +182,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.fieldbook.fullscreen.FullscreenActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.fieldbook.observation.ObservationActivity"
-            android:screenOrientation="portrait" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

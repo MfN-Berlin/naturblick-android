@@ -5,16 +5,28 @@
 
 package berlin.mfn.naturblick.ui.fieldbook.observation
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelUuid
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.STATUS_BAR_HIDDEN
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentObservationViewBinding
 import berlin.mfn.naturblick.ui.species.portrait.SpeciesId
@@ -111,11 +123,30 @@ class ObservationViewFragment : Fragment(), RequestedPermissionCallback {
                         binding.include.buttonTogglePlay.hide()
                         binding.include.buttonFullscreen.show()
                         binding.include.buttonFullscreen.setOnClickListener {
-                            findNavController().navigate(
-                                ObservationViewFragmentDirections
-                                    .navFieldBookViewObservationToFullscreen(media)
-                            )
-                        }
+                                media.availableWithoutPermission(requireContext(), yes = {
+                                    openImageMedia(it)
+                                }, no = {
+                                    binding.include.progressDownloadMedia.visibility = VISIBLE
+                                    lifecycleScope.launch {
+                                        media.fetchUri(ContextCompat.checkSelfPermission(requireContext(),
+                                            Manifest.permission.READ_EXTERNAL_STORAGE
+                                        ) == PERMISSION_GRANTED, requireContext())
+                                            .fold({
+                                                binding.include.progressDownloadMedia.visibility =
+                                                    GONE
+                                                openImageMedia(it)
+                                            }, { error ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    error.error,
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                                binding.include.progressDownloadMedia.visibility =
+                                                    GONE
+                                            })
+                                    }
+                                })
+                            }
                     } else if (media.type == MediaType.MP4) {
                         binding.include.buttonTogglePlay.show()
                         binding.include.buttonFullscreen.hide()
@@ -182,6 +213,22 @@ class ObservationViewFragment : Fragment(), RequestedPermissionCallback {
                 })
             }
         }
+    }
+
+    private fun openImageMedia(uri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val contentUri = if(uri.scheme == "content") {
+            uri
+        } else {
+            FileProvider.getUriForFile(
+                requireContext(),
+                "${BuildConfig.APPLICATION_ID}.provider",
+                uri.toFile()
+            )
+        }
+        intent.setDataAndType(contentUri, "image/jpeg")
+        startActivity(intent)
     }
 
     override fun onStop() {

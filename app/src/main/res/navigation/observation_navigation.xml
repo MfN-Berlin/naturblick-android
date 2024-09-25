@@ -20,9 +20,6 @@
         <action
             android:id="@+id/nav_field_book_view_observation_to_field_book_map"
             app:destination="@id/nav_field_book_map" />
-        <action
-            android:id="@+id/nav_field_book_view_observation_to_fullscreen"
-            app:destination="@id/nav_fullscreen" />
     </fragment>
     <fragment
         android:id="@+id/nav_field_book_edit_observation"
@@ -46,12 +43,5 @@
             android:defaultValue="@null"
             app:argType="android.os.ParcelUuid"
             app:nullable="true" />
-    </activity>
-    <activity
-        android:id="@id/nav_fullscreen"
-        android:name="berlin.mfn.naturblick.ui.fieldbook.fullscreen.FullscreenActivity">
-        <argument
-            android:name="media"
-            app:argType="berlin.mfn.naturblick.utils.Media" />
     </activity>
 </navigation>
