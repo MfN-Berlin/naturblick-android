@@ -231,7 +231,7 @@
     <string name="to_delete_account">Zum Account Löschen</string>
     <string name="loading_account_information">Account-Informationen werden geladen.</string>
     <string name="go_back_to_delete_account">Zurück zum Account Löschen</string>
-    <string name="add_image_from_gallery">Foto von Pflanze bestimmen</string>
+    <string name="add_image_from_gallery">Pflanzenfoto aus der Galerie bestimmen</string>
     <string name="set_time">Zeit übernehmen</string>
     <string name="validate_time_message">Bitte bestätige den Zeitpunkt deiner Beobachtung. Prüfe ob der automatisch ausgewählte Zeitpunkt auch dem Zeitpunkt entspricht an dem du die Beobachtung gemacht hast. Wähle auch die richtige Zeitzone aus.</string>
     <string name="time_required">Du musst einen Zeitpunkt festlegen, um eine Beobachtung zu speichern.</string>

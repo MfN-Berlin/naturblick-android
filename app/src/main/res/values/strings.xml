@@ -261,7 +261,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="loading_account_information">Loading account information.</string>
     <string name="go_back_to_delete_account">Go back to delete account</string>
     <string name="continue_with_sign_in">Log into your account.</string>
-    <string name="add_image_from_gallery">Identify photo from a plant</string>
+    <string name="add_image_from_gallery">Plant photo identification from gallery</string>
     <string name="set_time">Set time</string>
     <string name="validate_time_message">Please confirm that the automatically selected time and date corresponds to when the observation was made. Also select the correct time zone.</string>
     <string name="time_required">You need to specify a time and a date to save an observation</string>
