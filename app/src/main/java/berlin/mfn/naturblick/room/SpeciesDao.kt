@@ -35,7 +35,13 @@ interface SpeciesDao {
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query)) 
             OR sciname LIKE :query)
         AND portrait.language = :language AND gersearchfield IS NOT NULL
-        ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
+        ORDER BY
+            CASE WHEN :language = $GERMAN_ID THEN gername IS NULL ELSE engname IS NULL END, 
+            CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END, 
+            CASE WHEN :language = $GERMAN_ID THEN gersynonym IS NULL ELSE engsynonym IS NULL END,
+            CASE WHEN :language = $GERMAN_ID THEN gersynonym ELSE engsynonym END,
+            sciname
+            """
     )
     fun filterSpeciesWithPortrait(
         group: String,
@@ -49,7 +55,13 @@ interface SpeciesDao {
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query)) 
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query)) 
             OR sciname LIKE :query) AND gersearchfield IS NOT NULL
-        ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
+        ORDER BY 
+            CASE WHEN :language = $GERMAN_ID THEN gername IS NULL ELSE engname IS NULL END, 
+            CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END, 
+            CASE WHEN :language = $GERMAN_ID THEN gersynonym IS NULL ELSE engsynonym IS NULL END,
+            CASE WHEN :language = $GERMAN_ID THEN gersynonym ELSE engsynonym END,
+            sciname
+            """
     )
     fun filterSpecies(query: String?, language: Int): PagingSource<Int, SpeciesWithGenus>
 
@@ -59,7 +71,13 @@ interface SpeciesDao {
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query))
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query))
             OR sciname LIKE :query) AND gersearchfield IS NOT NULL
-        ORDER BY CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END"""
+        ORDER BY 
+            CASE WHEN :language = $GERMAN_ID THEN gername IS NULL ELSE engname IS NULL END, 
+            CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END, 
+            CASE WHEN :language = $GERMAN_ID THEN gersynonym IS NULL ELSE engsynonym IS NULL END,
+            CASE WHEN :language = $GERMAN_ID THEN gersynonym ELSE engsynonym END,
+            sciname
+            """
     )
     suspend fun filterSpeciesIds(query: String?, language: Int): List<Int>
 
