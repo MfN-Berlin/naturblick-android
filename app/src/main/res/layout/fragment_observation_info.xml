@@ -62,6 +62,17 @@
             android:contentDescription="@string/acc_play_obervation"
             style="@style/Theme.Naturblick.OnPrimaryFABOverlay"/>
 
+        <ProgressBar
+            android:id="@+id/progress_download_media"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/species_image"
+            app:layout_constraintEnd_toEndOf="@id/species_image"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:elevation="16dp"
+            />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/sciname"
             android:layout_width="0dp"
