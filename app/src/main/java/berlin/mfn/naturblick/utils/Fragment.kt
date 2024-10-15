@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ import berlin.mfn.naturblick.room.PortraitImage
 import berlin.mfn.naturblick.room.Species
 import berlin.mfn.naturblick.room.StrapiDb
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import de.cketti.mailto.EmailIntentBuilder
 import kotlinx.coroutines.launch
 
 fun Fragment.cancel() {
@@ -230,4 +232,23 @@ fun Fragment.showCcInfo(
         }
         .setView(binding.root)
     return dialogBuilder.show()
+}
+fun Fragment.sendFeedback() {
+    EmailIntentBuilder.from(requireActivity())
+        .to("naturblick@mfn.berlin")
+        .subject(
+            requireContext().resources.getString(
+                R.string.feedback_subject,
+                BuildConfig.VERSION_NAME
+            )
+        )
+        .body(
+            requireContext().resources.getString(
+                R.string.feedback_body,
+                Build.MODEL,
+                Build.VERSION.RELEASE,
+                BuildConfig.VERSION_NAME
+            )
+        )
+        .start()
 }
