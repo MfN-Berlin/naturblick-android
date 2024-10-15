@@ -295,6 +295,8 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="also">also: %s</string>
     <string name="clear">Clear</string>
     <string name="back">Back</string>
+    <string name="feedback_subject">Naturblick %s feedback</string>
+    <string name="feedback_body">The following information about your device and the App helps us to understand your problem. Feel free to remove it if you do not want to share it with us.\nDevice: %1$s\nAPI: %2$s\nApp: %3$s\n\n</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Delete observation?</item>
         <item quantity="other">Delete observations?</item>

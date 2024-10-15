@@ -259,6 +259,8 @@
     <string name="also">auch: %s</string>
     <string name="clear">Leeren</string>
     <string name="back">Zurück</string>
+    <string name="feedback_subject">Naturblick %s Feedback</string>
+    <string name="feedback_body">Die folgenden Informationen über dein Gerät und die App helfen uns, dein Problem zu verstehen. Du kannst sie gerne entfernen, wenn du sie nicht mit uns teilen möchten.\nGerät: %1$s\nAPI: %2$s\nApp: %3$s\n\n</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Beobachtung löschen?</item>
         <item quantity="other">Beobachtungen löschen?</item>
