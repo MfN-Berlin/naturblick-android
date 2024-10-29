@@ -27,7 +27,8 @@ import berlin.mfn.naturblick.BuildConfig
         SourcesImprint::class,
         SourcesTranslations::class,
         TimeZonePolygon::class,
-        TimeZoneVertex::class
+        TimeZoneVertex::class,
+        CurrentVersion::class
     ],
     views = [
         ImageWithSizes::class,
@@ -41,6 +42,7 @@ abstract class StrapiDb : RoomDatabase() {
     abstract fun sourcesImprintDao(): SourcesImprintDao
     abstract fun sourcesTranslationsDao(): SourcesTranslationsDao
     abstract fun timeZonePolygonDao(): TimeZonePolygonDao
+    abstract fun currenVersionDao(): CurrentVersionDao
 
     companion object {
         @Volatile

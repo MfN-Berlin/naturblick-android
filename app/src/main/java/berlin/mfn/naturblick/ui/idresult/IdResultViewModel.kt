@@ -18,7 +18,9 @@ class IdResultViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    val speciesDao = StrapiDb.getDb(application).speciesDao()
+    val db = StrapiDb.getDb(application)
+    val speciesDao = db.speciesDao()
+    val currentVersionDao = db.currenVersionDao()
     val thumbnail: MediaThumbnail = identifySpecies.thumbnail
 
     val isImage =
@@ -66,26 +68,35 @@ class IdResultViewModel(
                                     identifySpecies.x,
                                     identifySpecies.y,
                                     identifySpecies.size,
-                                    identifySpecies.media
+                                    identifySpecies.media,
+                                    currentVersionDao.getCurrentVersion()
                                 )
                             }
                         }
+
                     is IdentifySpeciesSound ->
                         identifySpecies.media.upload(getApplication()).flatMap { remote ->
                             NetworkResult.catchNetworkAndServerErrors(getApplication()) {
                                 IdApi.service.soundId(
                                     remote,
                                     identifySpecies.segmStart,
-                                    identifySpecies.segmEnd
+                                    identifySpecies.segmEnd,
+                                    currentVersionDao.getCurrentVersion()
                                 )
                             }
                         }
+
                     is IdentifySpeciesImageThumbnail -> identifySpecies.thumbnail.upload(
                         getApplication()
                     ).flatMap { remote ->
                         NetworkResult.catchNetworkAndServerErrors(getApplication()) {
                             IdApi.service.imageId(
-                                remote, null, null, null, null
+                                remote,
+                                null,
+                                null,
+                                null,
+                                null,
+                                currentVersionDao.getCurrentVersion()
                             )
                         }
                     }
