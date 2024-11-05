@@ -74,7 +74,7 @@ import berlin.mfn.naturblick.ui.info.settings.Settings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.UUID
 
-class   FieldbookActivity : FragmentActivity() {
+class FieldbookActivity : FragmentActivity() {
     private val manageObservation = registerForActivityResult(ManageObservation) {
         when (it) {
             is ManageObservationCanceled -> {

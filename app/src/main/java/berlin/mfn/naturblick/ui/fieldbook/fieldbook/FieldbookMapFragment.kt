@@ -43,6 +43,7 @@ import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.viewport
+import com.mapbox.maps.toCameraOptions
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import kotlinx.coroutines.flow.collectLatest
 import java.util.*
@@ -137,11 +138,11 @@ class FieldbookMapFragment : Fragment() {
                         pointAnnotationManager.create(annotations)
                     }
             }
-            viewModel.selectedObservation.observe(viewLifecycleOwner) { pair ->
+            viewModel.setObservationSelectedListener { pair ->
                 mapView.viewAnnotationManager.removeAllViewAnnotations()
                 pair?.let { (observation, moveTo) ->
                     observation.coords?.toPoint()?.let { location ->
-                        if(moveTo) {
+                        if (moveTo) {
                             viewModel.stopTracking()
                             mapView.getMapboxMap().setCamera(
                                 CameraOptions.Builder().apply {
@@ -158,12 +159,14 @@ class FieldbookMapFragment : Fragment() {
                     }
                 }
             }
+            viewModel.cameraState?.let {
+                mapView.getMapboxMap().setCamera(it.toCameraOptions())
+            } ?: initialOccurenceId?.let {
+                viewModel.selectObservation(it, true)
+            }
             map.addOnMapClickListener {
                 viewModel.selectObservation(null)
                 false
-            }
-            initialOccurenceId?.let {
-                viewModel.selectObservation(it, true)
             }
         }
         binding.lifecycleOwner = viewLifecycleOwner
@@ -200,6 +203,12 @@ class FieldbookMapFragment : Fragment() {
                 offsetY(offset)
             }
         )
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        viewModel.selectObservation(null)
+        viewModel.setCameraState(mapView.getMapboxMap().cameraState)
     }
 
     companion object {

@@ -20,6 +20,7 @@ import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import berlin.mfn.naturblick.utils.NetworkResult
 import berlin.mfn.naturblick.utils.languageId
+import com.mapbox.maps.CameraState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
@@ -61,21 +62,19 @@ class FieldbookViewModel(
             )
     }
 
-    private val selectedOccurenceId = MutableLiveData<Pair<UUID, Boolean>?>(null)
-
-    fun selectObservation(occurenceId: UUID?, moveTo: Boolean = false) {
-        selectedOccurenceId.postValue(occurenceId?.let {
-            Pair(it, moveTo)
-        })
+    private var observationSelected: ((Pair<FieldbookObservation, Boolean>?) -> Unit)? = null
+    fun setObservationSelectedListener(observationSelected: (Pair<FieldbookObservation, Boolean>?) -> Unit) {
+        this.observationSelected = observationSelected
     }
 
-    val selectedObservation: LiveData<Pair<FieldbookObservation, Boolean>?> = selectedOccurenceId.switchMap { pair ->
-        liveData {
-            emit(pair?.let { (currentId, moveTo) ->
-                Pair(toFieldbookObservation(operationDao.getObservation(currentId)), moveTo)
+    fun selectObservation(occurenceId: UUID?, moveTo: Boolean = false) {
+        viewModelScope.launch {
+            observationSelected?.invoke(occurenceId?.let {
+                Pair(toFieldbookObservation(operationDao.getObservation(it)), moveTo)
             })
         }
     }
+
     var launched: Boolean
         get() = savedStateHandle["launched"] ?: false
         set(value) {
@@ -83,7 +82,7 @@ class FieldbookViewModel(
         }
 
     var query by mutableStateOf("")
-       private set
+        private set
 
     fun updateQuery(input: String) {
         query = input
@@ -105,23 +104,19 @@ class FieldbookViewModel(
                 Pair(query, observations)
             }
         }.mapLatest { (query, observations) ->
-            val filtered = if (query.isBlank())
+            if (query.isBlank())
                 observations
             else {
                 val speciesSet = speciesDao.filterSpeciesIds("%$query%", languageId()).toHashSet()
                 observations.filter { speciesSet.contains(it.newSpeciesId) }
-            }
-
-            if(!filtered.any { it.occurenceId == selectedOccurenceId.value?.first }) {
-                selectObservation(null, false)
-            }
-            filtered.map {
+            }.map {
                 toFieldbookObservation(it)
             }
         }
 
     var refreshState by mutableStateOf(false)
         private set
+
     fun refresh() {
         refreshState = true
         viewModelScope.launch {
@@ -170,6 +165,13 @@ class FieldbookViewModel(
         stopTrackingListener?.let {
             it()
         }
+    }
+
+    var cameraState: CameraState? = null
+        private set
+
+    fun setCameraState(cameraState: CameraState) {
+        this.cameraState = cameraState
     }
 }
 
