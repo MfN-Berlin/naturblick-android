@@ -68,76 +68,10 @@ class FieldbookMapFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val initialOccurenceId = IntentCompat.getParcelableExtra(
-            requireActivity().intent,
-            OCCURENCE_ID,
-            ParcelUuid::class.java
-        )?.uuid
         val model: FieldbookViewModel by activityViewModels {
-            FieldbookViewModelFactory(initialOccurenceId, requireActivity().application)
+            FieldbookViewModelFactory(requireActivity().application)
         }
         viewModel = model
-        val popupOffset = resources.getDimension(R.dimen.popup_offset).roundToInt()
-        lifecycleScope.launch {
-            viewModel.observationAndSelected.flowWithLifecycle(lifecycle)
-                .collectLatest { (observations, selected) ->
-                    val mapView = binding.mapView
-                    val map = mapView.getMapboxMap()
-                    map.addOnMapClickListener {
-                        mapView.viewAnnotationManager.removeAllViewAnnotations()
-                        false
-                    }
-                    pointAnnotationManager.deleteAll()
-                    mapView.viewAnnotationManager.removeAllViewAnnotations()
-                    val annotations: List<PointAnnotationOptions> =
-                        observations.mapNotNull { observation ->
-                            observation.coords?.let { coords ->
-                                val group = observation.species?.group
-                                getMapIcon(requireContext(), group).let { bitmap ->
-                                    PointAnnotationOptions()
-                                        .withPoint(Point.fromLngLat(coords.lon, coords.lat))
-                                        .withIconImage(bitmap)
-                                        .withIconAnchor(IconAnchor.BOTTOM)
-                                        .withData(
-                                            JsonPrimitive(observation.occurenceId.toString())
-                                        )
-                                }
-                            }
-                        }
-                    pointAnnotationManager.addClickListener { t ->
-                        t.getData()?.asString?.let { it ->
-                            val occurenceId = UUID.fromString(it)
-                            observations.find {
-                                it.occurenceId == occurenceId
-                            }?.let {
-                                popup(
-                                    t.point,
-                                    it,
-                                    popupOffset
-                                )
-                            }
-                        }
-                        true
-                    }
-                    pointAnnotationManager.create(annotations)
-                    selected?.coords?.toPoint()?.let { location ->
-                        if (initialOccurenceId == selected.occurenceId) {
-                            viewModel.stopTracking()
-                            mapView.getMapboxMap().setCamera(
-                                CameraOptions.Builder().apply {
-                                    center(location)
-                                    zoom(DEEP_ZOOM)
-                                }.build()
-                            )
-                            popup(
-                                location,
-                                selected,
-                                popupOffset
-                            )
-                        }
-                    }
-                }
-        }
     }
 
     override fun onCreateView(
@@ -145,10 +79,23 @@ class FieldbookMapFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val initialOccurenceId = IntentCompat.getParcelableExtra(
+            requireActivity().intent,
+            OCCURENCE_ID,
+            ParcelUuid::class.java
+        )?.uuid
         binding = FragmentFieldbookMapBinding.inflate(inflater, container, false)
         mapView = binding.mapView
         val map = mapView.getMapboxMap()
+        val popupOffset = resources.getDimension(R.dimen.popup_offset).roundToInt()
         pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+        pointAnnotationManager.addClickListener { t ->
+            t.getData()?.asString?.let { it ->
+                val occurenceId = UUID.fromString(it)
+                viewModel.selectObservation(occurenceId)
+            }
+            true
+        }
         map.loadStyleUri(
             BuildConfig.STYLE_URL
         ) {
@@ -167,6 +114,56 @@ class FieldbookMapFragment : Fragment() {
             viewModel.setStopTrackingListener {
                 mapView.location.enabled = false
                 mapView.viewport.idle()
+            }
+            lifecycleScope.launch {
+                viewModel.observationsFlow.flowWithLifecycle(lifecycle)
+                    .collectLatest { observations ->
+                        pointAnnotationManager.deleteAll()
+                        val annotations: List<PointAnnotationOptions> =
+                            observations.mapNotNull { observation ->
+                                observation.coords?.let { coords ->
+                                    val group = observation.species?.group
+                                    getMapIcon(requireContext(), group).let { bitmap ->
+                                        PointAnnotationOptions()
+                                            .withPoint(Point.fromLngLat(coords.lon, coords.lat))
+                                            .withIconImage(bitmap)
+                                            .withIconAnchor(IconAnchor.BOTTOM)
+                                            .withData(
+                                                JsonPrimitive(observation.occurenceId.toString())
+                                            )
+                                    }
+                                }
+                            }
+                        pointAnnotationManager.create(annotations)
+                    }
+            }
+            viewModel.selectedObservation.observe(viewLifecycleOwner) { pair ->
+                mapView.viewAnnotationManager.removeAllViewAnnotations()
+                pair?.let { (observation, moveTo) ->
+                    observation.coords?.toPoint()?.let { location ->
+                        if(moveTo) {
+                            viewModel.stopTracking()
+                            mapView.getMapboxMap().setCamera(
+                                CameraOptions.Builder().apply {
+                                    center(location)
+                                    zoom(DEEP_ZOOM)
+                                }.build()
+                            )
+                        }
+                        popup(
+                            location,
+                            observation,
+                            popupOffset
+                        )
+                    }
+                }
+            }
+            map.addOnMapClickListener {
+                viewModel.selectObservation(null)
+                false
+            }
+            initialOccurenceId?.let {
+                viewModel.selectObservation(it, true)
             }
         }
         binding.lifecycleOwner = viewLifecycleOwner

@@ -74,7 +74,7 @@ interface OperationDao {
     fun getObservationFlow(occurenceId: UUID?): Flow<Observation?>
 
     @Query("SELECT * FROM observation WHERE occurence_id = :occurenceId")
-    suspend fun getObservation(occurenceId: UUID?): Observation?
+    suspend fun getObservation(occurenceId: UUID): Observation
 
     @Query("SELECT * FROM upload_media_operation WHERE media_id = :mediaId")
     suspend fun getUploadOperation(mediaId: UUID): UploadMediaOperation?

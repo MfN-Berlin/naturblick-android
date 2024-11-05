@@ -6,15 +6,14 @@
 package berlin.mfn.naturblick.ui.fieldbook.fieldbook
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.*
 import berlin.mfn.naturblick.backend.DeleteOperation
+import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
 import berlin.mfn.naturblick.backend.PublicBackendApi
 import berlin.mfn.naturblick.room.StrapiDb
@@ -31,12 +30,52 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 
 class FieldbookViewModel(
-    occurenceId: UUID?,
     application: Application,
     private val savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
     private val operationDao = ObservationDb.getDb(application).operationDao()
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
+
+    private suspend fun toFieldbookObservation(observation: Observation): FieldbookObservation {
+        return if (observation.newSpeciesId != null)
+            FieldbookObservation(
+                observation.occurenceId,
+                observation.created,
+                observation.thumbnailId?.let { thumbnailId ->
+                    MediaThumbnail.remote(thumbnailId, observation.obsIdent)
+                },
+                observation.obsIdent,
+                speciesDao.getSpecies(observation.newSpeciesId),
+                observation.coords
+            )
+        else
+            FieldbookObservation(
+                observation.occurenceId,
+                observation.created,
+                observation.thumbnailId?.let { thumbnailId ->
+                    MediaThumbnail.remote(thumbnailId, observation.obsIdent)
+                },
+                observation.obsIdent,
+                null,
+                observation.coords
+            )
+    }
+
+    private val selectedOccurenceId = MutableLiveData<Pair<UUID, Boolean>?>(null)
+
+    fun selectObservation(occurenceId: UUID?, moveTo: Boolean = false) {
+        selectedOccurenceId.postValue(occurenceId?.let {
+            Pair(it, moveTo)
+        })
+    }
+
+    val selectedObservation: LiveData<Pair<FieldbookObservation, Boolean>?> = selectedOccurenceId.switchMap { pair ->
+        liveData {
+            emit(pair?.let { (currentId, moveTo) ->
+                Pair(toFieldbookObservation(operationDao.getObservation(currentId)), moveTo)
+            })
+        }
+    }
     var launched: Boolean
         get() = savedStateHandle["launched"] ?: false
         set(value) {
@@ -66,34 +105,18 @@ class FieldbookViewModel(
                 Pair(query, observations)
             }
         }.mapLatest { (query, observations) ->
-            if (query.isBlank())
+            val filtered = if (query.isBlank())
                 observations
             else {
                 val speciesSet = speciesDao.filterSpeciesIds("%$query%", languageId()).toHashSet()
                 observations.filter { speciesSet.contains(it.newSpeciesId) }
-            }.map {
-                if (it.newSpeciesId != null)
-                    FieldbookObservation(
-                        it.occurenceId,
-                        it.created,
-                        it.thumbnailId?.let { thumbnailId ->
-                            MediaThumbnail.remote(thumbnailId, it.obsIdent)
-                        },
-                        it.obsIdent,
-                        speciesDao.getSpecies(it.newSpeciesId),
-                        it.coords
-                    )
-                else
-                    FieldbookObservation(
-                        it.occurenceId,
-                        it.created,
-                        it.thumbnailId?.let { thumbnailId ->
-                            MediaThumbnail.remote(thumbnailId, it.obsIdent)
-                        },
-                        it.obsIdent,
-                        null,
-                        it.coords
-                    )
+            }
+
+            if(!filtered.any { it.occurenceId == selectedOccurenceId.value?.first }) {
+                selectObservation(null, false)
+            }
+            filtered.map {
+                toFieldbookObservation(it)
             }
         }
 
@@ -117,12 +140,6 @@ class FieldbookViewModel(
                 }
             )
         }
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val observationAndSelected = observationsFlow.mapLatest { observations ->
-        val observation = observations.find { it.occurenceId == occurenceId }
-        Pair(observations, observation)
     }
 
     private var startTrackingListener: (() -> Unit)? = null
@@ -157,7 +174,6 @@ class FieldbookViewModel(
 }
 
 class FieldbookViewModelFactory(
-    private val occurenceId: UUID?,
     private val application: Application,
 ) : AbstractSavedStateViewModelFactory() {
 
@@ -168,7 +184,6 @@ class FieldbookViewModelFactory(
         handle: SavedStateHandle
     ): T {
         return FieldbookViewModel(
-            occurenceId,
             application,
             handle
         ) as T

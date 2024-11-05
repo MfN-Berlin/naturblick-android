@@ -48,6 +48,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.compose.AndroidFragment
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
 import berlin.mfn.naturblick.databinding.FragmentContainerMapBinding
@@ -169,7 +170,7 @@ class   FieldbookActivity : FragmentActivity() {
         val initialObservation =
             IntentCompat.getParcelableExtra(intent, OCCURENCE_ID, ParcelUuid::class.java)?.uuid
         val model: FieldbookViewModel by viewModels {
-            FieldbookViewModelFactory(initialObservation, application)
+            FieldbookViewModelFactory(application)
         }
         val action = IntentCompat.getParcelableExtra(
             intent,
@@ -267,8 +268,7 @@ class   FieldbookActivity : FragmentActivity() {
                                 modifier = Modifier.align(Alignment.TopCenter)
                             )
                         } else {
-                            AndroidViewBinding(FragmentContainerMapBinding::inflate) {
-                            }
+                            AndroidFragment<FieldbookMapFragment>()
                         }
                     }
                     when {
