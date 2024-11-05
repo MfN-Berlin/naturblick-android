@@ -37,30 +37,17 @@ class FieldbookViewModel(
     private val operationDao = ObservationDb.getDb(application).operationDao()
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
 
-    private suspend fun toFieldbookObservation(observation: Observation): FieldbookObservation {
-        return if (observation.newSpeciesId != null)
-            FieldbookObservation(
-                observation.occurenceId,
-                observation.created,
-                observation.thumbnailId?.let { thumbnailId ->
-                    MediaThumbnail.remote(thumbnailId, observation.obsIdent)
-                },
-                observation.obsIdent,
-                speciesDao.getSpecies(observation.newSpeciesId),
-                observation.coords
-            )
-        else
-            FieldbookObservation(
-                observation.occurenceId,
-                observation.created,
-                observation.thumbnailId?.let { thumbnailId ->
-                    MediaThumbnail.remote(thumbnailId, observation.obsIdent)
-                },
-                observation.obsIdent,
-                null,
-                observation.coords
-            )
-    }
+    private suspend fun toFieldbookObservation(observation: Observation): FieldbookObservation =
+        FieldbookObservation(
+            observation.occurenceId,
+            observation.created,
+            observation.thumbnailId?.let { thumbnailId ->
+                MediaThumbnail.remote(thumbnailId, observation.obsIdent)
+            },
+            observation.obsIdent,
+            observation.newSpeciesId?.let { speciesDao.getSpecies(it) },
+            observation.coords
+        )
 
     private var observationSelected: ((Pair<FieldbookObservation, Boolean>?) -> Unit)? = null
     fun setObservationSelectedListener(observationSelected: (Pair<FieldbookObservation, Boolean>?) -> Unit) {
