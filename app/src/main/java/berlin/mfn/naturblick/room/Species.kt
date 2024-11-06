@@ -5,12 +5,14 @@
 
 package berlin.mfn.naturblick.room
 
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import berlin.mfn.naturblick.BuildConfig
+import berlin.mfn.naturblick.utils.Wikipedia
 import berlin.mfn.naturblick.utils.isGerman
 
 @Entity(
@@ -61,6 +63,10 @@ data class Species(
         get() = femaleImageUrl?.let {
             "${BuildConfig.STRAPI_URL}$it"
         }
+
+    val wikipediaUri: Uri?
+        get() = Wikipedia.uri(this)
+
 }
 
 data class SpeciesWithGenus(

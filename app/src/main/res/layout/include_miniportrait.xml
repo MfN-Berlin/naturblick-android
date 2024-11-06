@@ -10,7 +10,6 @@
     <data>
 
         <import type="android.view.View" />
-
         <variable
             name="species"
             type="berlin.mfn.naturblick.room.Species" />
@@ -35,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
             android:text="@string/link_to_wikipedia"
-            android:visibility="@{species.wikipedia != null ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{species.wikipediaUri != null ? View.VISIBLE : View.GONE}" />
 
     </LinearLayout>
 </layout>

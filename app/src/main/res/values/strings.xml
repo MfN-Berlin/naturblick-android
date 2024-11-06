@@ -72,7 +72,7 @@
     <string name="select_species">Browse species</string>
     <string name="save">Save</string>
     <string name="no_artportrait">For this species there is no species portrait yet.</string>
-    <string name="link_to_wikipedia">Visit wikipedia article</string>
+    <string name="link_to_wikipedia">Look it up on Wikipedia</string>
     <string name="cancel">Cancel</string>
     <string name="authorship">Authorship</string>
     <string name="cc_by_field">Name (Synonym)</string>
