@@ -11,7 +11,6 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
-import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -83,7 +82,10 @@ fun Fragment.showSpeciesInfo(
     showSpeciesPortrait: () -> Unit,
     pick: () -> Unit
 ): AlertDialog {
-    val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
+    val dialogBuilder = MaterialAlertDialogBuilder(
+        requireContext(),
+        R.style.Naturblick_MaterialComponents_Dialog_Alert
+    )
     val binding = DialogSpeciesInfoBinding.inflate(layoutInflater)
     binding.buttonSpeciesPortrait
     var audioPlayer: MediaPlayer? = null
@@ -91,13 +93,12 @@ fun Fragment.showSpeciesInfo(
         val portrait = StrapiDb.getDb(requireContext()).portraitDao()
             .getMinimalPortrait(species.id, languageId())
         if (portrait == null) {
-            if (species.wikipedia != null) {
-                binding.buttonSpeciesPortrait.setText(R.string.link_to_wikipedia)
-                binding.buttonSpeciesPortrait.setSingleClickListener {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(species.wikipedia)))
-                }
-                binding.buttonSpeciesPortrait.visibility = View.VISIBLE
+            val uri = species.wikipediaUri
+            binding.buttonSpeciesPortrait.setText(R.string.link_to_wikipedia)
+            binding.buttonSpeciesPortrait.setSingleClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
+            binding.buttonSpeciesPortrait.visibility = if (uri == null) { View.GONE } else { View.VISIBLE}
         } else {
             binding.buttonSpeciesPortrait.setText(R.string.to_species_portrait)
             binding.buttonSpeciesPortrait.setSingleClickListener {
@@ -188,7 +189,7 @@ private fun licenceToLink(licence: String): String {
         "(<a href='https://creativecommons.org/publicdomain/zero/1.0'>$licence</a>) "
     else if (l.contains("cc") && l.contains("by"))
         "(<a href='https://creativecommons.org/licenses/by${sa(l)}/${version(l)}'>" +
-            "$licence</a>) "
+                "$licence</a>) "
     else
         "($licence) "
 }
@@ -217,7 +218,10 @@ fun Fragment.showCcInfo(
     image: PortraitImage,
     context: Context
 ): AlertDialog {
-    val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Naturblick_MaterialComponents_Dialog_Alert)
+    val dialogBuilder = MaterialAlertDialogBuilder(
+        requireContext(),
+        R.style.Naturblick_MaterialComponents_Dialog_Alert
+    )
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
     val text = "${textAndSourceAsLink(image.source, context)} " +
@@ -233,6 +237,7 @@ fun Fragment.showCcInfo(
         .setView(binding.root)
     return dialogBuilder.show()
 }
+
 fun Fragment.sendFeedback() {
     EmailIntentBuilder.from(requireActivity())
         .to("naturblick@mfn.berlin")

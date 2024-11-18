@@ -73,7 +73,7 @@
     <string name="select_species">Art auswählen</string>
     <string name="save">Speichern</string>
     <string name="no_artportrait">Für diese Art gibt es noch kein Artportrait.</string>
-    <string name="link_to_wikipedia">Besuch den Wikipedia-Artikel</string>
+    <string name="link_to_wikipedia">Schaue in Wikipedia nach</string>
     <string name="cancel">Abbrechen</string>
     <string name="authorship">Autorenschaft eintragen</string>
     <string name="cc_by_msg">Alle Aufnahmen, die mit Naturblick gemacht werden, bekommen die Lizenz CC BY-SA 4.0, d.h. sie dürfen weitergegeben und verwendet werden. Wenn du möchtest, kannst du deine Autorenschaft mit einem Namen kennzeichnen. Die Aufnahmen werden dann zusammen mit diesem Namen veröffentlicht. Alle Aufnahmen, denen kein Autorenname zugeordnet wurde, werden unter MfN_Naturblick veröffentlicht.</string>
