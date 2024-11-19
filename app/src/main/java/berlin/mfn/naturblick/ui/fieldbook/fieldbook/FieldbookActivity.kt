@@ -45,13 +45,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
-import berlin.mfn.naturblick.databinding.FragmentContainerMapBinding
 import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.FloatingActionButton
 import berlin.mfn.naturblick.ui.composable.NaturblickTheme
