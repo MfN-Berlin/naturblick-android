@@ -274,4 +274,5 @@
         <item quantity="one">%d Beobachtung</item>
         <item quantity="other">%d Beobachtungen</item>
     </plurals>
+    <string name="privacy_notice">Datenshutz</string>
 </resources>
