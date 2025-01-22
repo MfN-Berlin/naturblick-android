@@ -178,7 +178,7 @@
     <string name="password_no_digits">Muss Zahlen enthalten</string>
     <string name="password_too_short">Muss aus mindestens 9 Zeichen bestehen</string>
     <string name="user_already_exists">Diese E-Mail-Adresse existiert bereits</string>
-    <string name="privacy">Wir nehmen Datenschutz sehr wichtig. Weitere Informationen zum Datenschutz findest du im Impressum der App.</string>
+    <string name="privacy">Wir nehmen Datenschutz sehr wichtig. Weitere Informationen zum Datenschutz findest du unter Datenschutz im Menu.</string>
     <string name="account_text">Mit einem Naturblick-Account kannst du deine Beobachtungen über mehrere mobile Geräte hinweg sichern und anzeigen lassen.</string>
     <string name="account_text_sign_in_or_sign_up1">Mit einem Naturblick-Account kannst du deine Beobachtungen bei einem Handywechsel über mehrere mobile Geräte hinweg sichern und auf allen verbundenen Handys anzeigen lassen.</string>
     <string name="account_text_sign_in_or_sign_up2">Du kannst Naturblick aber natürlich auch ohne Account wie bisher verwenden.</string>
