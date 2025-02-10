@@ -69,7 +69,7 @@
     <string name="seconds">seconds</string>
     <string name="stop_recording">Stop</string>
     <string name="record_permission_missing">To record birds the app needs the permission to record audio</string>
-    <string name="select_species">Browse species</string>
+    <string name="select_species">Select species</string>
     <string name="save">Save</string>
     <string name="no_artportrait">For this species there is no species portrait yet.</string>
     <string name="link_to_wikipedia">Look it up on Wikipedia</string>
@@ -112,7 +112,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="show_results">Show %s results</string>
     <string name="score" translatable="false">Score: %d%%</string>
     <string name="none_of_the_options">None of the above</string>
-    <string name="other_identification">Do you want to identify the species in another way?</string>
+    <string name="other_identification">What do you want to do?</string>
     <string name="crop_again">Use another part of the image</string>
     <string name="crop_sound_again">Use another part of the recording</string>
     <string-array name="new_photo_options" translatable="false">
@@ -297,6 +297,8 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="back">Back</string>
     <string name="feedback_subject">Naturblick %s feedback</string>
     <string name="feedback_body">The following information about your device and the App helps us to understand your problem:\nDevice: %1$s\nAPI: %2$s\nApp: %3$s\n\nFeel free to remove this information if you do not want to share it with us.\n\n Your message:\n</string>
+    <string name="no_species_found">We were unable to identify any plants.</string>
+    <string name="no_species_found_description">This may be because no plant is visible in the image or because this plant is not part of the selection of species trained for identification.</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Delete observation?</item>
         <item quantity="other">Delete observations?</item>
