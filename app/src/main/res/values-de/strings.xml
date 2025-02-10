@@ -70,7 +70,7 @@
     <string name="seconds">Sekunden</string>
     <string name="stop_recording">Stoppen</string>
     <string name="record_permission_missing">Um Vogelstimmen aufzunehmen, benötigt die App die Berechtigung Audios aufzunehmen.</string>
-    <string name="select_species">Art auswählen</string>
+    <string name="select_species">Art eintragen</string>
     <string name="save">Speichern</string>
     <string name="no_artportrait">Für diese Art gibt es noch kein Artportrait.</string>
     <string name="link_to_wikipedia">Schaue in Wikipedia nach</string>
@@ -109,7 +109,7 @@
     <string name="change">ändern</string>
     <string name="show_results">%s Ergebnisse anzeigen</string>
     <string name="none_of_the_options">Keiner der Vorschläge</string>
-    <string name="other_identification">Du willst die Art anders bestimmen?</string>
+    <string name="other_identification">Was möchtest du tun?</string>
     <string name="crop_again">Bild neu zuschneiden</string>
     <string name="crop_sound_again">Einen anderen Zeitabschnitt auswählen</string>
     <string name="try_again">Nochmal probieren</string>
@@ -261,6 +261,8 @@
     <string name="back">Zurück</string>
     <string name="feedback_subject">Naturblick %s Feedback</string>
     <string name="feedback_body">Die folgenden Informationen über dein Gerät und die App helfen uns, dein Problem zu verstehen:\nGerät: %1$s\nAPI: %2$s\nApp: %3$s\n\nDu kannst diese Informationen gerne einfach entfernen, wenn du sie nicht mit uns teilen möchtest.\n\nDeine Nachricht:\n</string>
+    <string name="no_species_found">Wir konnten keine Pflanze identifizieren.</string>
+    <string name="no_species_found_description">Das kann daran liegen, dass auf dem Bild keine Pflanze zu sehen ist oder diese Pflanze nicht Teil der für die Bestimmung trainierten Auswahl von Arten ist.</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Beobachtung löschen?</item>
         <item quantity="other">Beobachtungen löschen?</item>
