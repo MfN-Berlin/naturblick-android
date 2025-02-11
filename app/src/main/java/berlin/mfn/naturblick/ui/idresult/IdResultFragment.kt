@@ -173,6 +173,8 @@ class IdResultFragment : Fragment() {
         val result = model.idResults.value
         if (result == null && error != null) {
             showErrorDialog(error)
+        } else if(result != null && result.isEmpty()) {
+            noSpeciesFound()
         }
     }
 
