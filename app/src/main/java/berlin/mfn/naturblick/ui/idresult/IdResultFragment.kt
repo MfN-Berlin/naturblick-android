@@ -58,6 +58,27 @@ class IdResultFragment : Fragment() {
             }
             .show()
     }
+    private fun noSpeciesFound() {
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setTitle(R.string.no_species_found)
+            setPositiveButton(if(model.isImage) R.string.crop_again else R.string.crop_sound_again) { _, _ ->
+                cancel()
+            }
+            setNegativeButton(R.string.select_species) { _, _ ->
+                findSpeciesResult.launch(Unit)
+            }
+            if(model.isNew) {
+                setNeutralButton(R.string.save_without_species) { _, _ ->
+                    finish(null)
+                }
+            }
+            setMessage(R.string.no_species_found_description)
+            setOnCancelListener {
+                cancel()
+            }
+        }.show()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,34 +103,37 @@ class IdResultFragment : Fragment() {
         binding.model = model
 
         model.idResults.observe(viewLifecycleOwner) { result ->
-            binding.idResultListLayout.setIdResultList(
-                result.map { (species, backendIdResult) ->
-                    IdResultWithSpecies(
-                        species,
-                        backendIdResult.score
-                    ) {
-                        showSpeciesDialog = showSpeciesInfo(
-                            inflater,
+            if (result.isNotEmpty()) {
+                binding.idResultListLayout.setIdResultList(
+                    result.map { (species, backendIdResult) ->
+                        IdResultWithSpecies(
                             species,
-                            {
-                                findNavController().navigate(
-                                    IdResultFragmentDirections.actionNavIdResultToNavPortrait(
-                                        SpeciesId(species.id),
-                                        false
+                            backendIdResult.score
+                        ) {
+                            showSpeciesDialog = showSpeciesInfo(
+                                inflater,
+                                species,
+                                {
+                                    findNavController().navigate(
+                                        IdResultFragmentDirections.actionNavIdResultToNavPortrait(
+                                            SpeciesId(species.id),
+                                            false
+                                        )
                                     )
-                                )
-                            }, {
-                                finish(species.id)
-                            }
-                        )
-                    }
+                                }, {
+                                    finish(species.id)
+                                }
+                            )
+                        }
+                    })
+                binding.speciesLink.setSingleClickListener {
+                    selectSpecies()
                 }
-            )
-            binding.speciesLink.setSingleClickListener {
-                selectSpecies()
+                binding.loading.visibility = View.GONE
+                binding.result.visibility = View.VISIBLE
+            } else {
+                noSpeciesFound()
             }
-            binding.loading.visibility = View.GONE
-            binding.result.visibility = View.VISIBLE
         }
 
         model.recoverableError.observe(viewLifecycleOwner) { error ->
@@ -149,6 +173,8 @@ class IdResultFragment : Fragment() {
         val result = model.idResults.value
         if (result == null && error != null) {
             showErrorDialog(error)
+        } else if(result != null && result.isEmpty()) {
+            noSpeciesFound()
         }
     }
 
