@@ -7,20 +7,15 @@ package berlin.mfn.naturblick.room
 
 import androidx.room.*
 
-@DatabaseView(
-    "SELECT * FROM portrait_image INNER JOIN portrait_image_size ON portrait_image_id = rowid"
-)
-data class ImageWithSizes(
-    @Embedded val image: PortraitImage,
-    @Relation(parentColumn = "rowid", entityColumn = "portrait_image_id")
-    val sizes: List<PortraitImageSize>
-) {
-    val sorted: List<PortraitImageSize> get() = sizes.sortedBy {
-        it.width
-    }
-    val ratio: String get() = sorted.lastOrNull()?.let {
-        "H,${it.width}:${it.height}"
-    } ?: "H,1:1"
+data class ImageWithSizes(val image: PortraitImage, val sizes: List<PortraitImageSize>) {
+    val sorted: List<PortraitImageSize>
+        get() = sizes.sortedBy {
+            it.width
+        }
+    val ratio: String
+        get() = sorted.lastOrNull()?.let {
+            "H,${it.width}:${it.height}"
+        } ?: "H,1:1"
 
     fun widerThanFocusPoint(landscape: Boolean): Boolean = sorted.lastOrNull()?.let {
         if (landscape) {

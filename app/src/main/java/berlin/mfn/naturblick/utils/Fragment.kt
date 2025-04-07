@@ -91,7 +91,7 @@ fun Fragment.showSpeciesInfo(
     var audioPlayer: MediaPlayer? = null
     lifecycleScope.launch {
         val portrait = StrapiDb.getDb(requireContext()).portraitDao()
-            .getMinimalPortrait(species.id, languageId())
+            .getPortrait(species.id, languageId())
         if (portrait == null) {
             val uri = species.wikipediaUri
             binding.buttonSpeciesPortrait.setText(R.string.link_to_wikipedia)
