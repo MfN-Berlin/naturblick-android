@@ -7,10 +7,9 @@ package berlin.mfn.naturblick.room
 
 import androidx.room.*
 
-@DatabaseView("SELECT * FROM similar_species INNER JOIN species ON similar_to_id = rowid")
 data class FullSimilarSpecies(
-    @Embedded() val species: Species,
-    @ColumnInfo(name = "portrait_id") val portraitId: Int,
+    val species: Species,
+    val portraitId: Int,
     val differences: String
 )
 

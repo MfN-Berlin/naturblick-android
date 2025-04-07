@@ -8,52 +8,39 @@ package berlin.mfn.naturblick.room
 import androidx.room.*
 
 data class FullPortrait(
-    @Embedded() val portrait: Portrait,
-    @Relation(parentColumn = "description_image_id", entityColumn = "rowid")
+    val portrait: Portrait,
     val description: ImageWithSizes?,
-    @Relation(parentColumn = "in_the_city_image_id", entityColumn = "rowid")
     val inTheCity: ImageWithSizes?,
-    @Relation(parentColumn = "good_to_know_image_id", entityColumn = "rowid")
     val goodToKnow: ImageWithSizes?,
-    @Relation(parentColumn = "rowid", entityColumn = "portrait_id")
     val similarSpecies: List<FullSimilarSpecies>,
-    @Relation(parentColumn = "rowid", entityColumn = "portrait_id")
     val unambiguousFeatures: List<UnambiguousFeature>,
-    @Relation(parentColumn = "rowid", entityColumn = "portrait_id")
     val goodToKnows: List<GoodToKnow>
 ) {
     val goodToKnowStrings: List<String> get() = goodToKnows.map { it.fact }
 }
 
 @Entity(
-    tableName = "portrait",
-    indices = [Index("species_id")],
-    foreignKeys = [
-        ForeignKey(
-            entity = Species::class,
-            parentColumns = ["rowid"],
-            childColumns = ["species_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = PortraitImage::class,
-            parentColumns = ["rowid"],
-            childColumns = ["description_image_id"],
-            onDelete = ForeignKey.SET_NULL
-        ),
-        ForeignKey(
-            entity = PortraitImage::class,
-            parentColumns = ["rowid"],
-            childColumns = ["in_the_city_image_id"],
-            onDelete = ForeignKey.SET_NULL
-        ),
-        ForeignKey(
-            entity = PortraitImage::class,
-            parentColumns = ["rowid"],
-            childColumns = ["good_to_know_image_id"],
-            onDelete = ForeignKey.SET_NULL
-        )
-    ]
+    tableName = "portrait", indices = [Index("species_id")], foreignKeys = [ForeignKey(
+        entity = Species::class,
+        parentColumns = ["rowid"],
+        childColumns = ["species_id"],
+        onDelete = ForeignKey.CASCADE
+    ), ForeignKey(
+        entity = PortraitImage::class,
+        parentColumns = ["rowid"],
+        childColumns = ["description_image_id"],
+        onDelete = ForeignKey.SET_NULL
+    ), ForeignKey(
+        entity = PortraitImage::class,
+        parentColumns = ["rowid"],
+        childColumns = ["in_the_city_image_id"],
+        onDelete = ForeignKey.SET_NULL
+    ), ForeignKey(
+        entity = PortraitImage::class,
+        parentColumns = ["rowid"],
+        childColumns = ["good_to_know_image_id"],
+        onDelete = ForeignKey.SET_NULL
+    )]
 )
 data class Portrait(
     @PrimaryKey @ColumnInfo(name = "rowid") val id: Int,
