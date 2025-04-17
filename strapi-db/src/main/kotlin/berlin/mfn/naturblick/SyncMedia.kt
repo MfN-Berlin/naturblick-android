@@ -5,7 +5,7 @@
 
 package berlin.mfn.naturblick
 
-import berlin.mfn.naturblick.strapi.KtorApi
+import berlin.mfn.naturblick.strapi.DjangoApi
 import berlin.mfn.naturblick.strapi.StrapiApi
 import com.android.ide.common.vectordrawable.Svg2Vector
 import kotlinx.coroutines.runBlocking
@@ -29,7 +29,7 @@ open class SyncMedia : DefaultTask() {
     val strapiBaseUrl: Property<String> = project.objects.property(String::class.java)
 
     @Input
-    val ktorBaseUrl: Property<String> = project.objects.property(String::class.java)
+    val djangoBaseUrl: Property<String> = project.objects.property(String::class.java)
 
     @OutputDirectory
     val imageDirectory: DirectoryProperty = project.objects.directoryProperty()
@@ -111,11 +111,11 @@ open class SyncMedia : DefaultTask() {
         val baseUrl = strapiBaseUrl.get()
         val strapiService = StrapiApi.service(baseUrl)
 
-        val ktorBaseUrl = ktorBaseUrl.get()
-        val ktorService = KtorApi.service(ktorBaseUrl)
+        val djangoBaseUrl = djangoBaseUrl.get()
+        val djangoService = DjangoApi.service(djangoBaseUrl)
 
         runBlocking {
-            val characterValues = ktorService.getCharacterValues()
+            val characterValues = djangoService.getCharacterValues()
 
             characterValues.forEach {
                 val imageFile = File(

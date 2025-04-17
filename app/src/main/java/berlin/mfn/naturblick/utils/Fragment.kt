@@ -117,7 +117,7 @@ fun Fragment.showSpeciesInfo(
                     MediaPlayer().apply {
                         setDataSource(
                             requireContext(),
-                            Uri.parse("${BuildConfig.STRAPI_URL}$url")
+                            Uri.parse("${BuildConfig.DJANGO_URL}$url")
                         )
                         setOnPreparedListener {
                             start()

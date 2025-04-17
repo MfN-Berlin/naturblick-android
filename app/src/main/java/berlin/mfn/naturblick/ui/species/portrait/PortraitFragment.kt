@@ -186,7 +186,7 @@ class PortraitFragment : Fragment() {
             url,
             species
         )
-        audioPlayer.toggle(Uri.parse("${BuildConfig.STRAPI_URL}$url"))
+        audioPlayer.toggle(Uri.parse("${BuildConfig.DJANGO_URL}$url"))
     }
 
     override fun onStop() {

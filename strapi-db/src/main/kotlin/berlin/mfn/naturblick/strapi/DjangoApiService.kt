@@ -20,7 +20,7 @@ private val client = OkHttpClient.Builder()
     .readTimeout(90, TimeUnit.SECONDS)
     .build()
 
-interface KtorApiService {
+interface DjangoApiService {
 
     @GET("app-content/db")
     suspend fun getFile(): ResponseBody
@@ -29,13 +29,13 @@ interface KtorApiService {
     suspend fun getCharacterValues(): List<CharacterValue>
 }
 
-object KtorApi {
-    fun service(baseUrl: String): KtorApiService {
+object DjangoApi {
+    fun service(baseUrl: String): DjangoApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(contentType))
             .client(client)
             .build()
-        return retrofit.create(KtorApiService::class.java)
+        return retrofit.create(DjangoApiService::class.java)
     }
 }

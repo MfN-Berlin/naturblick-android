@@ -26,7 +26,7 @@ data class FieldbookObservation(
 ) {
     private val speciesUri: Uri?
         get() = if (species?.imageUrl != null)
-            Uri.parse(BuildConfig.STRAPI_URL + species.imageUrl)
+            Uri.parse(BuildConfig.DJANGO_URL + species.imageUrl)
         else
             null
 

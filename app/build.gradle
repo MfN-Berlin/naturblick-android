@@ -28,11 +28,12 @@ android {
         versionName version.getProperty("version.name")
         def strapiBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
         syncReleaseMedia.strapiBaseUrl = strapiBaseUrl
-        def ktorBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/"
-        syncReleaseMedia.ktorBaseUrl = ktorBaseUrl
-        syncReleaseDb.ktorBaseUrl = ktorBaseUrl
+        def djangoBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/django/"
+        syncReleaseMedia.djangoBaseUrl = djangoBaseUrl
+        syncReleaseDb.djangoBaseUrl = djangoBaseUrl
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "STRAPI_URL", "\"$strapiBaseUrl\"")
+        buildConfigField("String", "DJANGO_URL", "\"$djangoBaseUrl\"")
         buildConfigField("String", "BACKEND_URL", "\"https://naturblick.museumfuernaturkunde.berlin/api/\"")
         buildConfigField("String", "ANALYTICS_URL", "\"https://naturblick.museumfuernaturkunde.berlin/analytics\"")
         buildConfigField("String", "STYLE_URL", "\"mapbox://styles/stadtnaturentdecken/ckhg9nswa19dy19npe3nb5uia\"")
@@ -64,12 +65,13 @@ android {
             applicationIdSuffix = ".debug"
             def strapiBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/strapi/"
             syncDebugMedia.strapiBaseUrl = strapiBaseUrl
-            def ktorBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/"
-            syncDebugMedia.ktorBaseUrl = ktorBaseUrl
-            syncDebugDb.ktorBaseUrl = ktorBaseUrl
+            def djangoBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/django/"
+            syncDebugMedia.djangoBaseUrl = djangoBaseUrl
+            syncDebugDb.djangoBaseUrl = djangoBaseUrl
             buildConfigField("String", "BACKEND_URL", "\"https://staging.naturblick.museumfuernaturkunde.berlin/api/\"")
             buildConfigField("String", "ANALYTICS_URL", "\"https://staging.naturblick.museumfuernaturkunde.berlin/analytics/\"")
             buildConfigField("String", "STRAPI_URL", "\"$strapiBaseUrl\"")
+            buildConfigField("String", "DJANGO_URL", "\"$djangoBaseUrl\"")
         }
     }
     compileOptions {
