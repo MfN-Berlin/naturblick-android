@@ -28,7 +28,7 @@ class ImageWithSizesLoader(
         }
         val optimal = sorted.find { it.width > width }
         val chosen = optimal ?: model.sizes.last()
-        val url = GlideUrl(BuildConfig.STRAPI_URL + chosen.url)
+        val url = GlideUrl(BuildConfig.DJANGO_URL + chosen.url)
         return glideUrlLoader.buildLoadData(url, width, height, options)
     }
 
