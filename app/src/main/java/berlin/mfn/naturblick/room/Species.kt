@@ -56,12 +56,12 @@ data class Species(
 
     val avatarUrl: String?
         get() = imageUrl?.let {
-            "${BuildConfig.STRAPI_URL}$it"
+            "${BuildConfig.DJANGO_URL}$it"
         }
 
     val femaleAvatarUrl: String?
         get() = femaleImageUrl?.let {
-            "${BuildConfig.STRAPI_URL}$it"
+            "${BuildConfig.DJANGO_URL}$it"
         }
 
     val wikipediaUri: Uri?

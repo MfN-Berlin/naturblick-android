@@ -5,7 +5,7 @@
 
 package berlin.mfn.naturblick
 
-import berlin.mfn.naturblick.strapi.KtorApi
+import berlin.mfn.naturblick.strapi.DjangoApi
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
@@ -26,7 +26,7 @@ open class SyncDb : DefaultTask() {
     }
 
     @Input
-    val ktorBaseUrl: Property<String> = project.objects.property(String::class.java)
+    val djangoBaseUrl: Property<String> = project.objects.property(String::class.java)
 
     @TaskAction
     fun doAction() {
@@ -34,12 +34,12 @@ open class SyncDb : DefaultTask() {
         dbFile.delete()
 
         runBlocking {
-            val baseUrl = ktorBaseUrl.get()
-            val service = KtorApi.service(baseUrl)
+            val baseUrl = djangoBaseUrl.get()
+            val service = DjangoApi.service(baseUrl)
             try {
                 dbFile.writeBytes(service.getFile().bytes())
             } catch(e: Error) {
-                logger.error("Error during call to => ktor <= best you consider to look there as well", e)
+                logger.error("Error during call to => django <= best you consider to look there as well", e)
             }
         }
     }
