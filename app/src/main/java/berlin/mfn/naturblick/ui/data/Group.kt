@@ -68,8 +68,8 @@ data class Group(
             ),
             Group(
                 "tree",
-                "Laubbäume & Gingko",
-                "Deciduous trees & gingko",
+                "Laubbäume & Ginkgo",
+                "Deciduous trees & ginkgo",
                 R.drawable.group_tree,
                 GroupType.FLORA
             ),
