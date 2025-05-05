@@ -22,7 +22,7 @@ open class SyncDb : DefaultTask() {
 
     @OutputFile
     val speciesDbSql: RegularFileProperty = project.objects.fileProperty().convention {
-        File(project.buildDir, "assets/strapi-db.sqlite3")
+        File(project.buildDir, "assets/django-db.sqlite3")
     }
 
     @Input

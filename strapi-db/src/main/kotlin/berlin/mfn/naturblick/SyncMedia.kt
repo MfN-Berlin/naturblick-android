@@ -64,10 +64,12 @@ open class SyncMedia : DefaultTask() {
         <path ${stroke(colors[1])} android:pathData="M25.0072 63.6636C34.4 63.6636 42.0144 56.0493 42.0144 46.6564C42.0144 37.2636 34.4 29.6492 25.0072 29.6492C15.6144 29.6492 8 37.2636 8 46.6564C8 56.0493 15.6144 63.6636 25.0072 63.6636Z" android:fillColor="${colors[1]}"/>
         <path ${stroke(colors[2])} android:pathData="M48.9928 63.6636C58.3856 63.6636 66 56.0493 66 46.6564C66 37.2636 58.3856 29.6492 48.9928 29.6492C39.6 29.6492 31.9856 37.2636 31.9856 46.6564C31.9856 56.0493 39.6 63.6636 48.9928 63.6636Z" android:fillColor="${colors[2]}"/>
         """.trimIndent()
+
         2 -> """
         <path ${stroke(colors[0])} android:pathData="M26.0072 54.0144C35.4 54.0144 43.0144 46.4 43.0144 37.0072C43.0144 27.6144 35.4 20 26.0072 20C16.6144 20 9 27.6144 9 37.0072C9 46.4 16.6144 54.0144 26.0072 54.0144Z" android:fillColor="${colors[0]}"/>
         <path ${stroke(colors[1])} android:pathData="M49.9928 54.0144C59.3856 54.0144 67 46.4 67 37.0072C67 27.6144 59.3856 20 49.9928 20C40.6 20 32.9856 27.6144 32.9856 37.0072C32.9856 46.4 40.6 54.0144 49.9928 54.0144Z" android:fillColor="${colors[1]}"/>
         """.trimIndent()
+
         else -> """
         <path ${stroke(colors[0])} android:pathData="M37.0072 54.0144C46.4 54.0144 54.0144 46.4 54.0144 37.0072C54.0144 27.6144 46.4 20 37.0072 20C27.6144 20 20 27.6144 20 37.0072C20 46.4 27.6144 54.0144 37.0072 54.0144Z" android:fillColor="${colors[0]}"/>
         """.trimIndent()
@@ -87,6 +89,7 @@ open class SyncMedia : DefaultTask() {
             <path android:pathData="M40.5 20C41.8807 20 43 18.8807 43 17.5C43 16.1193 41.8807 15 40.5 15C39.1193 15 38 16.1193 38 17.5C38 18.8807 39.1193 20 40.5 20Z" android:fillColor="$dots"/>
             <path android:pathData="M39.5 28C40.8807 28 42 26.8807 42 25.5C42 24.1193 40.8807 23 39.5 23C38.1193 23 37 24.1193 37 25.5C37 26.8807 38.1193 28 39.5 28Z" android:fillColor="$dots"/>
             """.trimIndent()
+
             2 -> """
             <path android:pathData="M27.5 47C28.8807 47 30 45.8807 30 44.5C30 43.1193 28.8807 42 27.5 42C26.1193 42 25 43.1193 25 44.5C25 45.8807 26.1193 47 27.5 47Z" android:fillColor="$dots"/>
             <path android:pathData="M17.5 39C18.8807 39 20 37.8807 20 36.5C20 35.1193 18.8807 34 17.5 34C16.1193 34 15 35.1193 15 36.5C15 37.8807 16.1193 39 17.5 39Z" android:fillColor="$dots"/>
@@ -96,6 +99,7 @@ open class SyncMedia : DefaultTask() {
             <path android:pathData="M43.5 39C44.8807 39 46 37.8807 46 36.5C46 35.1193 44.8807 34 43.5 34C42.1193 34 41 35.1193 41 36.5C41 37.8807 42.1193 39 43.5 39Z" android:fillColor="$dots"/>
             <path android:pathData="M61.5 38C62.8807 38 64 36.8807 64 35.5C64 34.1193 62.8807 33 61.5 33C60.1193 33 59 34.1193 59 35.5C59 36.8807 60.1193 38 61.5 38Z" android:fillColor="$dots"/>
             """.trimIndent()
+
             else -> """
             """.trimIndent()
         }
@@ -133,9 +137,9 @@ open class SyncMedia : DefaultTask() {
                     }
                 }
                 it.colors?.let { c ->
-                    if(c.isNotBlank()) {
+                    if (c.isNotBlank()) {
                         val cs = c.split(',')
-                        val dots = if(it.dots != null && it.dots.isBlank()) {
+                        val dots = if (it.dots != null && it.dots.isBlank()) {
                             null
                         } else {
                             it.dots
