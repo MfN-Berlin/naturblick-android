@@ -17,12 +17,12 @@ import java.io.File
 
 open class SyncDb : DefaultTask() {
     init {
-        description = "Downloads some strapi data and creates a SQL db file"
+        description = "Downloads some django data and creates a SQL db file"
     }
 
     @OutputFile
     val speciesDbSql: RegularFileProperty = project.objects.fileProperty().convention {
-        File(project.buildDir, "assets/strapi-db.sqlite3")
+        File(project.buildDir, "assets/django-db.sqlite3")
     }
 
     @Input

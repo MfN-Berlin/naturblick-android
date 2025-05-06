@@ -48,9 +48,9 @@ abstract class StrapiDb : RoomDatabase() {
                 val it = Room.databaseBuilder(
                     applicationContext,
                     StrapiDb::class.java,
-                    "strapi"
+                    "django"
                 )
-                    .createFromAsset("strapi-db.sqlite3")
+                    .createFromAsset("django-db.sqlite3")
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = it
