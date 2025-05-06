@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
@@ -63,19 +64,17 @@ class ConfirmPhotoFragment :
     private val requestRead = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { granted ->
-        val readGranted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            granted.getOrDefault(
-                Manifest.permission.READ_MEDIA_IMAGES,
-                false
-            )
-        } else {
+        val readGranted =
             granted.getOrDefault(
                 Manifest.permission.READ_EXTERNAL_STORAGE, false
             )
-        }
+        readPermissionResult(readGranted)
+    }
+
+    private fun readPermissionResult(readGranted: Boolean) {
         if (model.launchGallery()) {
             if (readGranted) {
-                launchPicKVisualMedia.launch(arrayOf(MediaType.JPG.mime))
+                launchPicKVisualMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -119,12 +118,7 @@ class ConfirmPhotoFragment :
 
     private fun requestReadPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestRead.launch(
-                arrayOf(
-                    Manifest.permission.READ_MEDIA_IMAGES,
-                    Manifest.permission.ACCESS_MEDIA_LOCATION
-                )
-            )
+            readPermissionResult(true)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             requestRead.launch(
                 arrayOf(
@@ -138,7 +132,7 @@ class ConfirmPhotoFragment :
     }
 
     private val launchPicKVisualMedia =
-        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
                 lifecycleScope.launch {
                     model.gallerySuccessful(uri)
