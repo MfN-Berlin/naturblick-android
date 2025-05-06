@@ -28,9 +28,9 @@ android {
         versionName version.getProperty("version.name")
         def strapiBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
         syncReleaseMedia.strapiBaseUrl = strapiBaseUrl
-        def djangoBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/django/"
-        syncReleaseMedia.djangoBaseUrl = djangoBaseUrl
-        syncReleaseDb.djangoBaseUrl = djangoBaseUrl
+        def djangoBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/"
+        syncReleaseMedia.djangoBaseUrl = djangoBaseUrl + "django/"
+        syncReleaseDb.djangoBaseUrl = djangoBaseUrl + "django/"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "STRAPI_URL", "\"$strapiBaseUrl\"")
         buildConfigField("String", "DJANGO_URL", "\"$djangoBaseUrl\"")
@@ -65,9 +65,9 @@ android {
             applicationIdSuffix = ".debug"
             def strapiBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/strapi/"
             syncDebugMedia.strapiBaseUrl = strapiBaseUrl
-            def djangoBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/django/"
-            syncDebugMedia.djangoBaseUrl = djangoBaseUrl
-            syncDebugDb.djangoBaseUrl = djangoBaseUrl
+            def djangoBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/"
+            syncDebugMedia.djangoBaseUrl = djangoBaseUrl + "django/"
+            syncDebugDb.djangoBaseUrl = djangoBaseUrl + "django/"
             buildConfigField("String", "BACKEND_URL", "\"https://staging.naturblick.museumfuernaturkunde.berlin/api/\"")
             buildConfigField("String", "ANALYTICS_URL", "\"https://staging.naturblick.museumfuernaturkunde.berlin/analytics/\"")
             buildConfigField("String", "STRAPI_URL", "\"$strapiBaseUrl\"")
