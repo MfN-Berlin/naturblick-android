@@ -28,7 +28,7 @@
     <dimen name="checked_size">20dp</dimen>
     <dimen name="small_corner_radius">4dp</dimen>
     <dimen name="good_to_know_line_width">2dp</dimen>
-    <dimen name="crop_size">896px</dimen>
+    <dimen name="crop_size">448px</dimen>
     <dimen name="circular_progress_size">116dp</dimen>
     <dimen name="observation_popup_size">224dp</dimen>
     <dimen name="popup_offset">16dp</dimen>
