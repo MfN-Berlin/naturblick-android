@@ -51,6 +51,7 @@ class IdResultViewModel(
             R.array.sound_options
         }
     }
+    val isNew = identifySpecies.isNew
 
     private val _idResults = savedStateHandle.getLiveData<List<BackendIdResult>>("result")
     private val _recoverableError = savedStateHandle.getLiveData<RecoverableError>("error")
