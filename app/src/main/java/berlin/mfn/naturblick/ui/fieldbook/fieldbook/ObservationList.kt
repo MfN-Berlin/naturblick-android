@@ -111,7 +111,7 @@ fun ObservationItem(
             }
             Text(
                 observation.localDateTimeString,
-                style = NaturblickTheme.typography.subtitle3,
+                style = NaturblickTheme.typography.synonym,
                 color = NaturblickTheme.colors.onSecondaryHighEmphasis
             )
         }

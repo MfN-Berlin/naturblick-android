@@ -6,6 +6,7 @@
 
 <resources>
     <attr name="textAppearanceSubtitle3" format="reference"/>
+    <attr name="textAppearanceSynonym" format="reference"/>
     <attr name="colorFeature" format="reference"/>
     <attr name="colorBackdrop" format="reference"/>
     <attr name="colorOnPrimaryHighEmphasis" format="reference"/>

@@ -87,6 +87,7 @@ data class NaturblickTypography(
     val subtitle1: TextStyle,
     val subtitle2: TextStyle,
     val subtitle3: TextStyle,
+    val synonym: TextStyle,
     val body1: TextStyle,
     val body2: TextStyle,
     val button: TextStyle,
@@ -126,6 +127,12 @@ object NaturblickTheme {
             lineHeight = 22.sp,
             fontWeight = FontWeight.Medium,
             fontStyle = FontStyle.Italic,
+            letterSpacing = 0.25.sp
+        ),
+        synonym = TextStyle(
+            fontSize = 14.sp,
+            lineHeight = 22.sp,
+            fontWeight = FontWeight.Medium,
             letterSpacing = 0.25.sp
         ),
         body1 = TextStyle(fontSize = 16.sp, lineHeight = 24.sp, fontWeight = FontWeight.Normal),
