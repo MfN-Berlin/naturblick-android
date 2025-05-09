@@ -298,7 +298,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="feedback_subject">Naturblick %s feedback</string>
     <string name="feedback_body">The following information about your device and the App helps us to understand your problem:\nDevice: %1$s\nAPI: %2$s\nApp: %3$s\n\nFeel free to remove this information if you do not want to share it with us.\n\n Your message:\n</string>
     <string name="no_species_found">We were unable to identify any plants.</string>
-    <string name="no_species_found_description">This may be because no plant is visible in the image or because this plant is not part of the selection of species trained for identification.</string>
+    <string name="no_species_found_description">This may be because no plant is visible in the image or because this plant is not part of the <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=en">selection of species</a> trained for identification.</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Delete observation?</item>
         <item quantity="other">Delete observations?</item>
