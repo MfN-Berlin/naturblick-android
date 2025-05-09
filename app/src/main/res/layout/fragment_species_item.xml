@@ -69,7 +69,7 @@
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginBottom="@dimen/avatar_text_offset"
             android:text="@{species.species.synonym}"
-            android:textAppearance="?attr/textAppearanceSubtitle3"
+            android:textAppearance="?attr/textAppearanceSynonym"
             android:textColor="?attr/colorOnSecondaryHighEmphasis"
             android:visibility="@{species.species.synonym != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
