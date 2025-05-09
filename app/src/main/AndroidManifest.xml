@@ -140,6 +140,12 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name="berlin.mfn.naturblick.ui.info.privacy.GeneralPrivacyNoticeActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="berlin.mfn.naturblick.ui.info.about.AboutActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
