@@ -234,7 +234,6 @@
     <string name="add_image_from_gallery">Pflanzenfoto aus der Galerie bestimmen</string>
     <string name="set_time">Zeit übernehmen</string>
     <string name="validate_time_message">Bitte bestätige den Zeitpunkt deiner Beobachtung. Prüfe ob der automatisch ausgewählte Zeitpunkt auch dem Zeitpunkt entspricht an dem du die Beobachtung gemacht hast. Wähle auch die richtige Zeitzone aus.</string>
-    <string name="time_required">Du musst einen Zeitpunkt festlegen, um eine Beobachtung zu speichern.</string>
     <string name="time">Zeit</string>
     <string name="date">Datum</string>
     <string name="read_media_required_to_import">Naturblick benötigt die Berechtigung auf Bildern aus der Galerie zugreifen zu dürfen.</string>

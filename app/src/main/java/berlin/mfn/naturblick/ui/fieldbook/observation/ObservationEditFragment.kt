@@ -326,14 +326,10 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
             }.show()
         }
         dialogBuild
+            .setCancelable(false)
             .setTitle(R.string.validate_time)
             .setView(binding.root)
             .setPositiveButton(R.string.set_time) { _, _ ->
-            }
-            .setOnCancelListener {
-                Toast.makeText(requireContext(), R.string.time_required, Toast.LENGTH_SHORT).show()
-                requireActivity().setResult(RESULT_CANCELED)
-                requireActivity().finish()
             }
         binding.lifecycleOwner = viewLifecycleOwner
         dialogBuild.show()

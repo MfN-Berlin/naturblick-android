@@ -264,7 +264,6 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="add_image_from_gallery">Plant photo identification from gallery</string>
     <string name="set_time">Set time</string>
     <string name="validate_time_message">Please confirm that the automatically selected time and date corresponds to when the observation was made. Also select the correct time zone.</string>
-    <string name="time_required">You need to specify a time and a date to save an observation</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
     <string name="read_media_required_to_import">Naturblick needs permission to read media to import images</string>
