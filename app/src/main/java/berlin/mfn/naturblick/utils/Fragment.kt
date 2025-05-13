@@ -257,3 +257,9 @@ fun Fragment.sendFeedback() {
         )
         .start()
 }
+
+fun Fragment.sendAccessibilityFeedback() {
+    EmailIntentBuilder.from(requireActivity())
+        .to("naturblick@mfn.berlin")
+        .start()
+}

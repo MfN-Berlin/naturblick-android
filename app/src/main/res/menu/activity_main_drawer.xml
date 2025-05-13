@@ -44,6 +44,9 @@
             android:id="@id/nav_imprint"
             android:title="@string/imprint" />
         <item
+            android:id="@id/nav_accessibility"
+            android:title="@string/accessibility" />
+        <item
             android:id="@id/nav_about"
             android:title="@string/about" />
     </group>

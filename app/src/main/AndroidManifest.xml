@@ -152,6 +152,12 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name="berlin.mfn.naturblick.ui.info.accessibility.AccessibilityActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="berlin.mfn.naturblick.ui.info.account.AccountActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"

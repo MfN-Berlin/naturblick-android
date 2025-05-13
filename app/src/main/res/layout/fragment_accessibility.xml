@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2025 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.species.groups.GroupsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/default_margin">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility_timestamp"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility_statement"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility_report_problem"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/feedback_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/feedback_email"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="end"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility_complete_report"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                app:autoLink="@{true}"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility_german_sign_language"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility_timestamp"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/accessibility_german_sign_language_info"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
+                />
+        </LinearLayout>
+    </ScrollView>
+</layout>
