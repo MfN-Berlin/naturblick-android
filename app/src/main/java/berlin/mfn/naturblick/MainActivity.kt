@@ -26,6 +26,7 @@ import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
 import berlin.mfn.naturblick.ui.fieldbook.ManageObservation
 import berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookActivity
 import berlin.mfn.naturblick.ui.info.about.AboutActivity
+import berlin.mfn.naturblick.ui.info.accessibility.AccessibilityActivity
 import berlin.mfn.naturblick.ui.info.account.AccountActivity
 import berlin.mfn.naturblick.ui.info.account.AccountActivity.Companion.CLOSE_ON_FINISHED
 import berlin.mfn.naturblick.ui.info.feedback.FeedbackActivity
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_imprint -> Intent(this, ImprintActivity::class.java)
             R.id.nav_about -> Intent(this, AboutActivity::class.java)
             R.id.nav_help -> Intent(this, HelpActivity::class.java)
+            R.id.nav_accessibility -> Intent(this, AccessibilityActivity::class.java)
             else -> {
                 throw IllegalStateException("Unknown navigation ID ${it.itemId}")
             }

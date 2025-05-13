@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2025 Museum für Naturkunde Berlin.
+  ~ This code is licensed under MIT license (see LICENSE.txt for details)
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/nav_accessibility">
+    <fragment
+        android:id="@+id/nav_accessibility"
+        android:name="berlin.mfn.naturblick.ui.info.accessibility.AccessibilityFragment"
+        android:label="@string/accessibility">
+    </fragment>
+</navigation>
