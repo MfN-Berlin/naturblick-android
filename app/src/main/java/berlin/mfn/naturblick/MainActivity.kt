@@ -32,6 +32,7 @@ import berlin.mfn.naturblick.ui.info.account.AccountActivity.Companion.CLOSE_ON_
 import berlin.mfn.naturblick.ui.info.feedback.FeedbackActivity
 import berlin.mfn.naturblick.ui.info.help.HelpActivity
 import berlin.mfn.naturblick.ui.info.imprint.ImprintActivity
+import berlin.mfn.naturblick.ui.info.privacy.GeneralPrivacyNoticeActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.ui.info.settings.SettingsActivity
 import com.google.android.material.navigation.NavigationView
@@ -108,6 +109,7 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_settings -> Intent(this, SettingsActivity::class.java)
             R.id.nav_feedback -> Intent(this, FeedbackActivity::class.java)
             R.id.nav_imprint -> Intent(this, ImprintActivity::class.java)
+            R.id.nav_privacy -> Intent(this, GeneralPrivacyNoticeActivity::class.java)
             R.id.nav_about -> Intent(this, AboutActivity::class.java)
             R.id.nav_help -> Intent(this, HelpActivity::class.java)
             R.id.nav_accessibility -> Intent(this, AccessibilityActivity::class.java)
