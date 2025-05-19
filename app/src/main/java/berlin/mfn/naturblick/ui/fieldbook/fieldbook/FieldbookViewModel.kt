@@ -45,7 +45,7 @@ class FieldbookViewModel(
                 MediaThumbnail.remote(thumbnailId, observation.obsIdent)
             },
             observation.obsIdent,
-            observation.newSpeciesId?.let { speciesDao.getSpecies(it) },
+            observation.newSpeciesId?.let { speciesDao.getAcceptedSpecies(it) },
             observation.coords
         )
 

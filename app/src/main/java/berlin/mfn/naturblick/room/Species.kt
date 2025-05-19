@@ -36,6 +36,7 @@ data class Species(
     @ColumnInfo(name = "red_list_germany") val redListGermany: String?,
     @ColumnInfo(name = "iucn_category") val iucnCategory: String?,
     @ColumnInfo(name = "old_species_id") val oldSpeciesId: String,
+    @ColumnInfo(name = "accepted") val accepted: Int?,
     @ColumnInfo(name = "gersearchfield") val gersearchfield: String?,
     @ColumnInfo(name = "engsearchfield") val engsearchfield: String?
 ) {
