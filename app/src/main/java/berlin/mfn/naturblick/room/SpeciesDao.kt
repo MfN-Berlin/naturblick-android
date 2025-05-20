@@ -20,7 +20,10 @@ interface SpeciesDao {
     @Query("SELECT * FROM species WHERE rowid = :id")
     suspend fun getSpecies(id: Int): Species
 
-    @Query("SELECT * FROM species WHERE old_species_id = :oldSpeciesId")
+    @Query("SELECT * FROM species WHERE rowid = (SELECT COALESCE(s2.rowid, s1.rowid) FROM species AS s1 LEFT JOIN species AS s2 ON s1.accepted = s2.rowid WHERE s1.rowid = :id)")
+    suspend fun getAcceptedSpecies(id: Int): Species
+
+    @Query("SELECT * FROM species WHERE rowid = (SELECT COALESCE(s2.rowid, s1.rowid) FROM species AS s1 LEFT JOIN species AS s2 ON s1.accepted = s2.rowid WHERE s1.old_species_id = :oldSpeciesId)")
     suspend fun getSpecies(oldSpeciesId: String): Species
 
     @Query("SELECT rowid AS id, group_id AS `group` FROM species WHERE rowid in (:ids)")

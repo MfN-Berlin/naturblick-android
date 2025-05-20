@@ -334,7 +334,7 @@ class ObservationViewModel(
             val speciesId = observation.speciesIdState
 
             val species = speciesId?.let {
-                speciesDao.getSpecies(it)
+                speciesDao.getAcceptedSpecies(it)
             }
 
             observation.toFieldbookObservation(

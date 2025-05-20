@@ -23,7 +23,7 @@ class PortraitViewModel(
 
     private suspend fun getFullSimilarSpecies(similarSpecies: SimilarSpecies): FullSimilarSpecies {
         return FullSimilarSpecies(
-            strapiDb.speciesDao().getSpecies(similarSpecies.similarToId),
+            strapiDb.speciesDao().getAcceptedSpecies(similarSpecies.similarToId),
             similarSpecies.portraitId,
             similarSpecies.differences
         )
@@ -68,12 +68,12 @@ class PortraitViewModel(
         emit(
             if (speciesIdPathFragment != null) {
                 try {
-                    speciesData(strapiDb.speciesDao().getSpecies(speciesIdPathFragment.toInt()))
+                    speciesData(strapiDb.speciesDao().getAcceptedSpecies(speciesIdPathFragment.toInt()))
                 } catch (_: java.lang.NumberFormatException) {
                     speciesData(strapiDb.speciesDao().getSpecies(speciesIdPathFragment))
                 }
             } else {
-                speciesData(strapiDb.speciesDao().getSpecies(speciesId?.value!!))
+                speciesData(strapiDb.speciesDao().getAcceptedSpecies(speciesId?.value!!))
             }
         )
     }
