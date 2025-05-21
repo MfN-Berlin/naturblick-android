@@ -18,9 +18,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentCropSpectrogramBinding
-import berlin.mfn.naturblick.ui.idresult.IdResultActivityContract
+import berlin.mfn.naturblick.ui.idresult.CancelableIdResultActivityContract
 import berlin.mfn.naturblick.ui.idresult.IdentifySpecies
 import berlin.mfn.naturblick.ui.idresult.IdentifySpeciesSound
+import berlin.mfn.naturblick.ui.idresult.Result
 import berlin.mfn.naturblick.ui.sound.CropAndIdentifySound.CROP_AND_IDENTIFY_SOUND_RESULT
 import berlin.mfn.naturblick.ui.species.PickSpecies
 import berlin.mfn.naturblick.utils.*
@@ -42,10 +43,12 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
 
     private val idResultLauncher: ActivityResultLauncher<IdentifySpecies> =
         registerForActivityResult(
-            IdResultActivityContract
-        ) { result ->
-            if (result != null) {
-                save(result.speciesId, result.thumbnail)
+            CancelableIdResultActivityContract
+        ) { (result, soundResult) ->
+            if (result == Result.OK && soundResult != null) {
+                save(soundResult.speciesId, soundResult.thumbnail)
+            } else if(result == Result.CANCELED) {
+                cancel()
             }
         }
 
@@ -176,6 +179,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
                         }
                         1 -> findSpeciesResult.launch(Unit)
                         2 -> save(null)
+                        3 -> cancel()
                     }
                 }
             }.show()

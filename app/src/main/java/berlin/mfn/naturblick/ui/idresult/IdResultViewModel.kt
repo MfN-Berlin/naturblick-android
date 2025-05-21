@@ -52,7 +52,11 @@ class IdResultViewModel(
         }
     }
     val isNew = identifySpecies.isNew
-
+    val stopWaitingItems: Int = if(isNew) {
+        R.array.stop_waiting_new
+    } else {
+        R.array.stop_waiting
+    }
     private val _idResults = savedStateHandle.getLiveData<List<BackendIdResult>>("result")
     private val _recoverableError = savedStateHandle.getLiveData<RecoverableError>("error")
     val recoverableError: LiveData<RecoverableError> = _recoverableError

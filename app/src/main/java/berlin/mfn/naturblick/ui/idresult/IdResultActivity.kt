@@ -17,7 +17,7 @@ import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.ThumbnailRequest
 import berlin.mfn.naturblick.databinding.ActivityIdResultBinding
 import berlin.mfn.naturblick.ui.BaseActivity
-import berlin.mfn.naturblick.ui.idresult.IdResultActivityContract.ID_SPECIES
+import berlin.mfn.naturblick.ui.idresult.IdResultActivityContractBase.Companion.ID_SPECIES
 import berlin.mfn.naturblick.utils.*
 import kotlinx.parcelize.Parcelize
 
@@ -57,12 +57,21 @@ data class IdentifySpeciesResult(
     val thumbnail: MediaThumbnail
 ) : Parcelable
 
-object IdResultActivityContract :
-    ActivityResultContract<IdentifySpecies, IdentifySpeciesResult?>() {
+
+abstract class IdResultActivityContractBase<T>:
+    ActivityResultContract<IdentifySpecies, T>() {
 
     override fun createIntent(context: Context, input: IdentifySpecies) =
         Intent(context, IdResultActivity::class.java)
             .putExtra(ID_SPECIES, input)
+
+    companion object {
+        const val ID_SPECIES = "id_species"
+        const val ID_RESULT = "id_result"
+    }
+}
+
+object IdResultActivityContract : IdResultActivityContractBase<IdentifySpeciesResult?>() {
 
     override fun parseResult(resultCode: Int, intent: Intent?): IdentifySpeciesResult? {
         if (resultCode != Activity.RESULT_OK) {
@@ -72,9 +81,26 @@ object IdResultActivityContract :
             IntentCompat.getParcelableExtra(it, ID_RESULT, IdentifySpeciesResult::class.java)
         }
     }
+}
 
-    const val ID_SPECIES = "id_species"
-    const val ID_RESULT = "id_result"
+enum class Result {
+    OK, RETRY, CANCELED
+}
+
+object CancelableIdResultActivityContract : IdResultActivityContractBase<Pair<Result, IdentifySpeciesResult?>>() {
+
+    override fun parseResult(resultCode: Int, intent: Intent?): Pair<Result, IdentifySpeciesResult?> {
+        if (resultCode == Activity.RESULT_OK) {
+            return Pair(Result.OK, intent?.let {
+                IntentCompat.getParcelableExtra(it, ID_RESULT, IdentifySpeciesResult::class.java)
+            })
+        } else if (resultCode == Activity.RESULT_FIRST_USER) {
+            return Pair(Result.CANCELED, null)
+        } else {
+            return Pair(Result.RETRY, null)
+        }
+
+    }
 }
 
 class IdResultActivity : BaseActivity(
