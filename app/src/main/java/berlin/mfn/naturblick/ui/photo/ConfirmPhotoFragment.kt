@@ -21,16 +21,16 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentConfirmPhotoBinding
-import berlin.mfn.naturblick.ui.idresult.IdResultActivityContract
+import berlin.mfn.naturblick.ui.idresult.CancelableIdResultActivityContract
 import berlin.mfn.naturblick.ui.idresult.IdentifySpecies
 import berlin.mfn.naturblick.ui.idresult.IdentifySpeciesImage
+import berlin.mfn.naturblick.ui.idresult.Result
 import berlin.mfn.naturblick.ui.info.account.AccountActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.ui.photo.CropAndIdentifyPhoto.CROP_AND_IDENTIFY_RESULT
@@ -173,14 +173,16 @@ class ConfirmPhotoFragment :
 
     private val idResultLauncher: ActivityResultLauncher<IdentifySpecies> =
         registerForActivityResult(
-            IdResultActivityContract
-        ) { result ->
-            if (result != null) {
+            CancelableIdResultActivityContract
+        ) { (result, photoResult) ->
+            if (result == Result.OK && photoResult != null) {
                 finishWithResult(
                     model.createCropAndIdentifyPhotoResult(
-                        result.speciesId
+                        photoResult.speciesId
                     )
                 )
+            } else if(result == Result.DISCARD) {
+                cancel()
             }
         }
 
