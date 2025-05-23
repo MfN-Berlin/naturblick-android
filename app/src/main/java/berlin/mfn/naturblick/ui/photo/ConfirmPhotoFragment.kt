@@ -181,7 +181,7 @@ class ConfirmPhotoFragment :
                         photoResult.speciesId
                     )
                 )
-            } else if(result == Result.CANCELED) {
+            } else if(result == Result.DISCARD) {
                 cancel()
             }
         }

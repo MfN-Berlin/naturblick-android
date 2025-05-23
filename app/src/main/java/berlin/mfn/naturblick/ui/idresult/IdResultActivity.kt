@@ -68,6 +68,7 @@ abstract class IdResultActivityContractBase<T>:
     companion object {
         const val ID_SPECIES = "id_species"
         const val ID_RESULT = "id_result"
+        const val RESULT_DISCARD = Activity.RESULT_FIRST_USER
     }
 }
 
@@ -84,7 +85,7 @@ object IdResultActivityContract : IdResultActivityContractBase<IdentifySpeciesRe
 }
 
 enum class Result {
-    OK, RETRY, CANCELED
+    OK, RETRY, DISCARD
 }
 
 object CancelableIdResultActivityContract : IdResultActivityContractBase<Pair<Result, IdentifySpeciesResult?>>() {
@@ -94,8 +95,8 @@ object CancelableIdResultActivityContract : IdResultActivityContractBase<Pair<Re
             return Pair(Result.OK, intent?.let {
                 IntentCompat.getParcelableExtra(it, ID_RESULT, IdentifySpeciesResult::class.java)
             })
-        } else if (resultCode == Activity.RESULT_FIRST_USER) {
-            return Pair(Result.CANCELED, null)
+        } else if (resultCode == Companion.RESULT_DISCARD) {
+            return Pair(Result.DISCARD, null)
         } else {
             return Pair(Result.RETRY, null)
         }

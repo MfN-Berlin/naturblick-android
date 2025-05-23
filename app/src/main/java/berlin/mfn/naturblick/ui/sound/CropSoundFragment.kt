@@ -47,7 +47,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
         ) { (result, soundResult) ->
             if (result == Result.OK && soundResult != null) {
                 save(soundResult.speciesId, soundResult.thumbnail)
-            } else if(result == Result.CANCELED) {
+            } else if(result == Result.DISCARD) {
                 cancel()
             }
         }
