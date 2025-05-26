@@ -142,17 +142,6 @@ If you want, you can attribute your authorship with a name. The material will th
         <item>@string/cancel</item>
         <item>@string/back</item>
     </string-array>
-    <string-array name="stop_waiting" translatable="false">
-        <item>@string/select_species</item>
-        <item>@string/cancel</item>
-        <item>@string/continue_waiting</item>
-    </string-array>
-    <string-array name="stop_waiting_new" translatable="false">
-        <item>@string/save_without_species</item>
-        <item>@string/select_species</item>
-        <item>@string/exit_without_saving_observation</item>
-        <item>@string/continue_waiting</item>
-    </string-array>
     <string name="try_again">Try again</string>
     <string name="to_species_portrait">View species portrait</string>
     <string name="select_this_species">Select this species</string>
@@ -320,8 +309,6 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="feedback_body">The following information about your device and the App helps us to understand your problem:\nDevice: %1$s\nAPI: %2$s\nApp: %3$s\n\nFeel free to remove this information if you do not want to share it with us.\n\n Your message:\n</string>
     <string name="no_species_found">We were unable to identify any plants.</string>
     <string name="no_species_found_description">This may be because no plant is visible in the image or because this plant is not part of the <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=en">selection of species</a> trained for identification.</string>
-    <string name="other_options">Other options</string>
-    <string name="continue_waiting">Keep waiting</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Delete observation?</item>
         <item quantity="other">Delete observations?</item>

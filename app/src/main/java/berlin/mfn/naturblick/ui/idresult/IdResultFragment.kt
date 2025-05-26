@@ -77,32 +77,6 @@ class IdResultFragment : Fragment() {
             .show()
     }
 
-    private fun stopWaiting() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.other_identification)
-            .apply {
-                if(model.isNew) {
-                    setItems(R.array.stop_waiting_new) { _, chosen ->
-                        when (chosen) {
-                            0 -> finish(null)
-                            1 -> findSpeciesResult.launch(Unit)
-                            2 -> discard()
-                            3 -> {} // Closes dialog
-                        }
-                    }
-                } else {
-                    setItems(R.array.stop_waiting) { _, chosen ->
-                        when (chosen) {
-                            0 -> findSpeciesResult.launch(Unit)
-                            1 -> discard()
-                            3 -> {} // Closes dialog
-                        }
-                    }
-                }
-            }
-            .show()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -125,15 +99,8 @@ class IdResultFragment : Fragment() {
         val binding = FragmentIdResultBinding.inflate(inflater, container, false)
         binding.model = model
 
-        binding.speciesLink.setSingleClickListener {
-            stopWaiting()
-        }
-
         model.idResults.observe(viewLifecycleOwner) { result ->
             if (result.isNotEmpty()) {
-                binding.speciesLink.setSingleClickListener {
-                    selectSpecies()
-                }
                 binding.idResultListLayout.setIdResultList(
                     result.map { (species, backendIdResult) ->
                         IdResultWithSpecies(
@@ -156,39 +123,37 @@ class IdResultFragment : Fragment() {
                             )
                         }
                     })
+                binding.speciesLink.setSingleClickListener {
+                    selectSpecies()
+                }
                 binding.loading.visibility = View.GONE
                 binding.result.visibility = View.VISIBLE
                 binding.name.setText(R.string.none_of_the_options)
             } else {
-                if (model.isNew) {
-                    binding.name.setText(R.string.select_species)
-                    binding.speciesLink.setSingleClickListener {
-                        findSpeciesResult.launch(Unit)
-                    }
-                } else {
-                    binding.name.setText(R.string.cancel)
-                    binding.speciesLink.setSingleClickListener {
-                        discard()
-                    }
-                }
                 binding.imageCropAgain.setSingleClickListener {
                     cancel()
                 }
                 if (model.isNew) {
+                    binding.saveAsUnknown.visibility = View.VISIBLE
+                    binding.saveAsUnknown.setSingleClickListener {
+                        finish(null)
+                    }
                     binding.discardName.setText(R.string.exit_without_saving_observation)
                     binding.discard.setSingleClickListener {
                         discard()
+                    }
+                    binding.selectSpeciesName.setText(R.string.select_species)
+                    binding.selectSpecies.setSingleClickListener {
+                        findSpeciesResult.launch(Unit)
                     }
                 } else {
                     binding.discardName.setText(R.string.select_species)
                     binding.discard.setSingleClickListener {
                         findSpeciesResult.launch(Unit)
                     }
-                }
-                if(model.isNew) {
-                    binding.saveAsUnknown.visibility = View.VISIBLE
-                    binding.saveAsUnknown.setSingleClickListener {
-                        finish(null)
+                    binding.selectSpeciesName.setText(R.string.cancel)
+                    binding.selectSpecies.setSingleClickListener {
+                        discard()
                     }
                 }
                 binding.loading.visibility = View.GONE
