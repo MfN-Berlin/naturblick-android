@@ -38,25 +38,8 @@ class IdResultViewModel(
         R.string.sound_autoid_infotext
     }
 
-    val selectSpeciesItems: Int = if (identifySpecies.isNew) {
-        if (isImage) {
-            R.array.new_photo_options
-        } else {
-            R.array.new_sound_options
-        }
-    } else {
-        if (isImage) {
-            R.array.photo_options
-        } else {
-            R.array.sound_options
-        }
-    }
     val isNew = identifySpecies.isNew
-    val stopWaitingItems: Int = if(isNew) {
-        R.array.stop_waiting_new
-    } else {
-        R.array.stop_waiting
-    }
+
     private val _idResults = savedStateHandle.getLiveData<List<BackendIdResult>>("result")
     private val _recoverableError = savedStateHandle.getLiveData<RecoverableError>("error")
     val recoverableError: LiveData<RecoverableError> = _recoverableError

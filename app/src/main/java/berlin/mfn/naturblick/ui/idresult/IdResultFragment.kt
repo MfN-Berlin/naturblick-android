@@ -49,30 +49,29 @@ class IdResultFragment : Fragment() {
         requireActivity().finish()
     }
 
-    private fun destructiveOptions() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.other_identification)
-            .setItems(R.array.autoid_destructive_options) { _, chosen ->
-                when (chosen) {
-                    0 -> discard()
-                }
-            }
-            .show()
-    }
-
     private fun selectSpecies() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.other_identification)
-            .setItems(model.selectSpeciesItems) { _, chosen ->
-                when (chosen) {
-                    0 -> cancel()
-                    1 -> findSpeciesResult.launch(Unit)
-                    2 -> if(model.isNew) {
-                        finish(null)
-                    } else {
-                        discard()
+            .apply {
+                if (model.isNew) {
+                    setItems(if (model.isImage) R.array.new_photo_options else R.array.new_sound_options) { _, chosen ->
+                        when (chosen) {
+                            0 -> finish(null)
+                            1 -> cancel()
+                            2 -> findSpeciesResult.launch(Unit)
+                            3 -> discard()
+                            4 -> {} // Closes dialog
+                        }
                     }
-                    3 -> discard()
+                } else {
+                    setItems(if (model.isImage) R.array.photo_options else R.array.sound_options) { _, chosen ->
+                        when (chosen) {
+                            0 -> cancel()
+                            1 -> findSpeciesResult.launch(Unit)
+                            2 -> discard()
+                            3 -> {} // Closes dialog
+                        }
+                    }
                 }
             }
             .show()
@@ -81,15 +80,24 @@ class IdResultFragment : Fragment() {
     private fun stopWaiting() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.other_identification)
-            .setItems(model.stopWaitingItems) { _, chosen ->
-                when (chosen) {
-                    0 -> findSpeciesResult.launch(Unit)
-                    1 -> if(model.isNew) {
-                        finish(null)
-                    } else {
-                        discard()
+            .apply {
+                if(model.isNew) {
+                    setItems(R.array.stop_waiting_new) { _, chosen ->
+                        when (chosen) {
+                            0 -> finish(null)
+                            1 -> findSpeciesResult.launch(Unit)
+                            2 -> discard()
+                            3 -> {} // Closes dialog
+                        }
                     }
-                    2 -> discard()
+                } else {
+                    setItems(R.array.stop_waiting) { _, chosen ->
+                        when (chosen) {
+                            0 -> findSpeciesResult.launch(Unit)
+                            1 -> discard()
+                            3 -> {} // Closes dialog
+                        }
+                    }
                 }
             }
             .show()
@@ -152,14 +160,30 @@ class IdResultFragment : Fragment() {
                 binding.result.visibility = View.VISIBLE
                 binding.name.setText(R.string.none_of_the_options)
             } else {
-                binding.speciesLink.setSingleClickListener {
-                    destructiveOptions()
+                if (model.isNew) {
+                    binding.name.setText(R.string.select_species)
+                    binding.speciesLink.setSingleClickListener {
+                        findSpeciesResult.launch(Unit)
+                    }
+                } else {
+                    binding.name.setText(R.string.cancel)
+                    binding.speciesLink.setSingleClickListener {
+                        discard()
+                    }
                 }
                 binding.imageCropAgain.setSingleClickListener {
                     cancel()
                 }
-                binding.selectSpecies.setSingleClickListener {
-                    findSpeciesResult.launch(Unit)
+                if (model.isNew) {
+                    binding.discardName.setText(R.string.exit_without_saving_observation)
+                    binding.discard.setSingleClickListener {
+                        discard()
+                    }
+                } else {
+                    binding.discardName.setText(R.string.select_species)
+                    binding.discard.setSingleClickListener {
+                        findSpeciesResult.launch(Unit)
+                    }
                 }
                 if(model.isNew) {
                     binding.saveAsUnknown.visibility = View.VISIBLE

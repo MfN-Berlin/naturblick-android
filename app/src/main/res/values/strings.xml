@@ -115,39 +115,42 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="other_identification">What do you want to do?</string>
     <string name="crop_again">Use another part of the image</string>
     <string name="crop_sound_again">Use another part of the recording</string>
-    <string-array name="autoid_destructive_options">
-        <item>@string/exit_without_saving_observation</item>
-    </string-array>
     <string-array name="new_photo_options" translatable="false">
+        <item>@string/save_without_species</item>
         <item>@string/crop_again</item>
         <item>@string/select_species</item>
-        <item>@string/save_without_species</item>
         <item>@string/exit_without_saving_observation</item>
+        <item>@string/back</item>
+    </string-array>
+    <string-array name="new_sound_options" translatable="false">
+        <item>@string/save_without_species</item>
+        <item>@string/crop_sound_again</item>
+        <item>@string/select_species</item>
+        <item>@string/exit_without_saving_observation</item>
+        <item>@string/back</item>
     </string-array>
     <string-array name="photo_options" translatable="false">
         <item>@string/crop_again</item>
         <item>@string/select_species</item>
         <item>@string/cancel</item>
-    </string-array>
-    <string-array name="new_sound_options" translatable="false">
-        <item>@string/crop_sound_again</item>
-        <item>@string/select_species</item>
-        <item>@string/save_without_species</item>
-        <item>@string/exit_without_saving_observation</item>
+        <item>@string/back</item>
     </string-array>
     <string-array name="sound_options" translatable="false">
         <item>@string/crop_sound_again</item>
         <item>@string/select_species</item>
         <item>@string/cancel</item>
+        <item>@string/back</item>
     </string-array>
     <string-array name="stop_waiting" translatable="false">
         <item>@string/select_species</item>
         <item>@string/cancel</item>
+        <item>@string/continue_waiting</item>
     </string-array>
     <string-array name="stop_waiting_new" translatable="false">
-        <item>@string/select_species</item>
         <item>@string/save_without_species</item>
+        <item>@string/select_species</item>
         <item>@string/exit_without_saving_observation</item>
+        <item>@string/continue_waiting</item>
     </string-array>
     <string name="try_again">Try again</string>
     <string name="to_species_portrait">View species portrait</string>
@@ -317,6 +320,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="no_species_found">We were unable to identify any plants.</string>
     <string name="no_species_found_description">This may be because no plant is visible in the image or because this plant is not part of the <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=en">selection of species</a> trained for identification.</string>
     <string name="other_options">Other options</string>
+    <string name="continue_waiting">Keep waiting</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Delete observation?</item>
         <item quantity="other">Delete observations?</item>
