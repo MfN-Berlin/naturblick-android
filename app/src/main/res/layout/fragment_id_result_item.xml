@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginBottom="@dimen/avatar_text_offset"
-            android:text="@{@string/score(idResult.scoreInt)}"
+            android:text="@{ idResult.scoreInt &lt; 1.0 ? @string/score_below_1 : @string/score(idResult.scoreInt)}"
             android:textAppearance="?attr/textAppearanceSubtitle3"
             app:layout_constraintEnd_toStartOf="@id/chevron"
             app:layout_constraintHorizontal_bias="0"

@@ -111,6 +111,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="change">change</string>
     <string name="show_results">Show %s results</string>
     <string name="score" translatable="false">Score: %d%%</string>
+    <string name="score_below_1" translatable="false">Score: &lt;1%</string>
     <string name="none_of_the_options">None of the above</string>
     <string name="other_identification">What do you want to do?</string>
     <string name="crop_again">Use another part of the image</string>
