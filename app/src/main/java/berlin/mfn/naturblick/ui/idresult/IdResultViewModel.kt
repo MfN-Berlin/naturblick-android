@@ -38,19 +38,6 @@ class IdResultViewModel(
         R.string.sound_autoid_infotext
     }
 
-    val selectSpeciesItems: Int = if (identifySpecies.isNew) {
-        if (isImage) {
-            R.array.new_photo_options
-        } else {
-            R.array.new_sound_options
-        }
-    } else {
-        if (isImage) {
-            R.array.photo_options
-        } else {
-            R.array.sound_options
-        }
-    }
     val isNew = identifySpecies.isNew
 
     private val _idResults = savedStateHandle.getLiveData<List<BackendIdResult>>("result")

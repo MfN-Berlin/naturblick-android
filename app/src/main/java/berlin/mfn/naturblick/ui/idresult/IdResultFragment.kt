@@ -8,11 +8,9 @@ package berlin.mfn.naturblick.ui.idresult
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.Fragment
@@ -20,7 +18,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentIdResultBinding
-import berlin.mfn.naturblick.ui.idresult.IdResultActivityContract.ID_RESULT
+import berlin.mfn.naturblick.ui.idresult.IdResultActivityContractBase.Companion.ID_RESULT
 import berlin.mfn.naturblick.ui.species.PickSpecies
 import berlin.mfn.naturblick.ui.species.portrait.SpeciesId
 import berlin.mfn.naturblick.utils.*
@@ -46,44 +44,38 @@ class IdResultFragment : Fragment() {
         requireActivity().finish()
     }
 
+    private fun discard() {
+        requireActivity().setResult(Activity.RESULT_FIRST_USER)
+        requireActivity().finish()
+    }
+
     private fun selectSpecies() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.other_identification)
-            .setItems(model.selectSpeciesItems) { _, chosen ->
-                when (chosen) {
-                    0 -> cancel()
-                    1 -> findSpeciesResult.launch(Unit)
-                    2 -> {
-                        finish(null)
+            .apply {
+                if (model.isNew) {
+                    setItems(if (model.isImage) R.array.new_photo_options else R.array.new_sound_options) { _, chosen ->
+                        when (chosen) {
+                            0 -> finish(null)
+                            1 -> cancel()
+                            2 -> findSpeciesResult.launch(Unit)
+                            3 -> discard()
+                            4 -> {} // Closes dialog
+                        }
+                    }
+                } else {
+                    setItems(if (model.isImage) R.array.photo_options else R.array.sound_options) { _, chosen ->
+                        when (chosen) {
+                            0 -> cancel()
+                            1 -> findSpeciesResult.launch(Unit)
+                            2 -> discard()
+                            3 -> {} // Closes dialog
+                        }
                     }
                 }
             }
             .show()
     }
-    private fun noSpeciesFound() {
-        MaterialAlertDialogBuilder(requireContext()).apply {
-            setTitle(R.string.no_species_found)
-            setPositiveButton(if(model.isImage) R.string.crop_again else R.string.crop_sound_again) { _, _ ->
-                cancel()
-            }
-            setNegativeButton(R.string.select_species) { _, _ ->
-                findSpeciesResult.launch(Unit)
-            }
-            if(model.isNew) {
-                setNeutralButton(R.string.save_without_species) { _, _ ->
-                    finish(null)
-                }
-            }
-            setMessage(R.string.no_species_found_description)
-            setOnCancelListener {
-                cancel()
-            }
-        }
-            .show()
-            // Make links clickable
-            .findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -93,7 +85,7 @@ class IdResultFragment : Fragment() {
         val identifySpecies =
             IntentCompat.getParcelableExtra(
                 requireActivity().intent,
-                IdResultActivityContract.ID_SPECIES,
+                IdResultActivityContractBase.Companion.ID_SPECIES,
                 IdentifySpecies::class.java
             )!!
         val viewModel by activityViewModels<IdResultViewModel> {
@@ -136,8 +128,36 @@ class IdResultFragment : Fragment() {
                 }
                 binding.loading.visibility = View.GONE
                 binding.result.visibility = View.VISIBLE
+                binding.name.setText(R.string.none_of_the_options)
             } else {
-                noSpeciesFound()
+                binding.imageCropAgain.setSingleClickListener {
+                    cancel()
+                }
+                if (model.isNew) {
+                    binding.saveAsUnknown.visibility = View.VISIBLE
+                    binding.saveAsUnknown.setSingleClickListener {
+                        finish(null)
+                    }
+                    binding.discardName.setText(R.string.exit_without_saving_observation)
+                    binding.discard.setSingleClickListener {
+                        discard()
+                    }
+                    binding.selectSpeciesName.setText(R.string.select_species)
+                    binding.selectSpecies.setSingleClickListener {
+                        findSpeciesResult.launch(Unit)
+                    }
+                } else {
+                    binding.discardName.setText(R.string.select_species)
+                    binding.discard.setSingleClickListener {
+                        findSpeciesResult.launch(Unit)
+                    }
+                    binding.selectSpeciesName.setText(R.string.cancel)
+                    binding.selectSpecies.setSingleClickListener {
+                        discard()
+                    }
+                }
+                binding.loading.visibility = View.GONE
+                binding.noResult.visibility = View.VISIBLE
             }
         }
 
@@ -158,14 +178,17 @@ class IdResultFragment : Fragment() {
                 R.style.Naturblick_MaterialComponents_Dialog_Alert
             ).apply {
                 setTitle(error.error)
-                setOnCancelListener {
-                    cancel()
-                }
+                setCancelable(false)
                 setItems(model.errorOptions) { _, chosen ->
                     when (chosen) {
                         0 -> model.identify()
                         1 -> findSpeciesResult.launch(Unit)
-                        2 -> finish(null)
+                        2 -> if(model.isNew) {
+                            finish(null)
+                        } else {
+                            discard()
+                        }
+                        3 -> discard()
                     }
                 }
             }.show()
@@ -178,8 +201,6 @@ class IdResultFragment : Fragment() {
         val result = model.idResults.value
         if (result == null && error != null) {
             showErrorDialog(error)
-        } else if(result != null && result.isEmpty()) {
-            noSpeciesFound()
         }
     }
 
