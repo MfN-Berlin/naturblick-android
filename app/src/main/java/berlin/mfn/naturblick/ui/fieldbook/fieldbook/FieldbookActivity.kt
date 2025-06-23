@@ -162,6 +162,56 @@ class FieldbookActivity : FragmentActivity() {
         }.show()
     }
 
+    private fun filter(model: FieldbookViewModel) {
+
+
+        MaterialAlertDialogBuilder(
+            this,
+            R.style.Naturblick_MaterialComponents_Dialog_Alert
+        ).apply {
+            setTitle(R.string.create_observation)
+            setItems(R.array.create_observation_options) { _, chosen ->
+                when (chosen) {
+                    0 -> manageObservation.launch(
+                        CreateManualObservation()
+                    )
+
+                    1 -> manageObservation.launch(
+                        CreateImageObservation
+                    )
+
+                    2 -> manageObservation.launch(
+                        CreateAudioObservation
+                    )
+
+                    3 -> if (Settings.hasSeenImportInfo(this@FieldbookActivity)) {
+                        manageObservation.launch(
+                            CreateImageFromGalleryObservation
+                        )
+                    } else {
+                        MaterialAlertDialogBuilder(
+                            this@FieldbookActivity,
+                            R.style.Naturblick_MaterialComponents_Dialog_Alert
+                        ).apply {
+                            setTitle(R.string.import_info_title)
+                            setMessage(R.string.import_info)
+                            setPositiveButton(R.string.continue_str) { _, _ ->
+                                Settings.didSeeImportInfo(this@FieldbookActivity)
+                                manageObservation.launch(
+                                    CreateImageFromGalleryObservation
+                                )
+                            }
+                            setOnCancelListener {
+                            }
+                        }.show()
+                    }
+                }
+            }
+            setNeutralButton(R.string.cancel) { _, _ ->
+            }
+        }.show()
+    }
+
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -188,6 +238,7 @@ class FieldbookActivity : FragmentActivity() {
             }
             var openDeleteDialog by remember { mutableStateOf(false) }
             var isMapView by remember { mutableStateOf(initialObservation != null) }
+            var isFiltered by remember { mutableStateOf(false) }
             NaturblickTheme {
                 Scaffold(
                     topBar = {
@@ -210,6 +261,9 @@ class FieldbookActivity : FragmentActivity() {
                                 if(!isMapView) {
                                     model.stopTracking()
                                 }
+                            },
+                            filter = {
+                                filter(model)
                             })
                     },
                     floatingActionButton = {
@@ -318,6 +372,23 @@ class FieldbookActivity : FragmentActivity() {
     }
 
     @Composable
+    fun FilterAction(isFiltered: Boolean, onClick: () -> Unit) {
+        IconButton(onClick) {
+            if (isFiltered) {
+                Icon(
+                    painter = painterResource(R.drawable.filter_alt_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
+                    contentDescription = stringResource(id = R.string.filter)
+                )
+            } else {
+                Icon(
+                    painter = painterResource(R.drawable.filter_alt_off_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
+                    contentDescription = stringResource(id = R.string.filter)
+                )
+            }
+        }
+    }
+
+    @Composable
     fun MapAction(isMapView: Boolean, onClick: () -> Unit) {
         IconButton(onClick) {
             if (isMapView)
@@ -342,7 +413,8 @@ class FieldbookActivity : FragmentActivity() {
         updateQuery: (query: String) -> Unit,
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
-        toggleMapView: () -> Unit
+        toggleMapView: () -> Unit,
+        filter: () -> Unit
     ) {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
@@ -376,6 +448,9 @@ class FieldbookActivity : FragmentActivity() {
                         }
                         MapAction(isMapView) {
                             toggleMapView()
+                        }
+                        FilterAction {
+                            Unit
                         }
                     } else if (isInSelectionMode) {
                         IconButton(onClick = {
