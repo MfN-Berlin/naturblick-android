@@ -11,7 +11,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.lifecycle.*
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import berlin.mfn.naturblick.backend.DeleteOperation
 import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
@@ -23,6 +27,7 @@ import berlin.mfn.naturblick.utils.languageId
 import com.mapbox.maps.CameraState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -75,6 +80,13 @@ class FieldbookViewModel(
         query = input
     }
 
+    var group: String by mutableStateOf(ALL_GROUPS)
+        private set
+
+    fun updateGroup(group: String) {
+        this.group = group
+    }
+
     fun deleteObservations(selection: List<UUID>) {
         viewModelScope.launch {
             for (occurenceId in selection.toList()) {
@@ -84,21 +96,60 @@ class FieldbookViewModel(
         }
     }
 
+    val queryFlow = snapshotFlow { query }.flowOn(Dispatchers.IO)
+    val groupFlow = snapshotFlow { group }.flowOn(Dispatchers.IO)
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val observationsFlow =
-        snapshotFlow { query }.flowOn(Dispatchers.IO).flatMapLatest { query ->
+        queryFlow.combine(groupFlow) { query, group ->
+            Pair(query, group)
+        }.flatMapLatest { queryAndGroup ->
             operationDao.getAllObservations().map { observations ->
-                Pair(query, observations)
+                Pair(queryAndGroup, observations)
             }
-        }.mapLatest { (query, observations) ->
-            if (query.isBlank())
-                observations
-            else {
-                val speciesSet = speciesDao.filterSpeciesIds("%$query%", languageId()).toHashSet()
-                observations.filter { speciesSet.contains(it.newSpeciesId) }
-            }.map {
-                toFieldbookObservation(it)
+        }.mapLatest { (queryAndGroup, observations) ->
+            val (query, group) = queryAndGroup
+            val speciesSet = when (group) {
+                OTHERS_GROUPS -> speciesDao.filterOthersSpeciesIds("%$query%", availableGroups, languageId()).toHashSet()
+                ALL_GROUPS -> speciesDao.filterSpeciesIds("%$query%", null, languageId()).toHashSet()
+                else -> speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
             }
+
+            observations.filter { speciesSet.contains(it.newSpeciesId) }
+                .map { toFieldbookObservation(it) }
+        }
+
+    val availableGroups = listOf(
+        "arachnid",
+        "truebug",
+        "heteroptera",
+        "dragonfly",
+        "grasshopper",
+        "diptera",
+        "gastropoda",
+        "bug",
+        "fungi",
+        "amphibian",
+        "reptile",
+        "hymenoptera",
+        "conifer",
+        "mammal",
+        "butterfly",
+        "tree",
+        "herb",
+        "bird"
+    )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val groupsFlow =
+        operationDao.getAllObservations().mapLatest { obervations ->
+            obervations
+                .map { toFieldbookObservation(it) }
+                .mapNotNull { it.species?.group }
+                .filter {
+                    availableGroups.contains(it)
+                }
+                .distinct()
         }
 
     var refreshState by mutableStateOf(false)

@@ -109,7 +109,8 @@ data class Group(
                 GroupType.FAUNA
             )
         )
-        private val groupMapIcons: Map<String, Int> = mapOf(
+
+        val groupMapIcons: Map<String, Int> = mapOf(
             Pair("acarida", R.drawable.ic_spiders),
             Pair("actinopterygii", R.drawable.ic_fish),
             Pair("amphibian", R.drawable.ic_amphibian),
@@ -162,6 +163,135 @@ data class Group(
             Pair("trichoptera", R.drawable.ic_insects),
             Pair("truebug", R.drawable.ic_insects),
             Pair("zygentoma", R.drawable.ic_insects)
+        )
+
+        val fieldbookFilterGroups = listOf(
+            Group(
+                "amphibian",
+                "Amphibien",
+                "Amphibians",
+                groupMapIcons.get("amphibian")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "hymenoptera",
+                "Bienen, Wespen & Co",
+                "Bees, wasps & co",
+                groupMapIcons.get("hymenoptera")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "conifer",
+                "Nadelbäume",
+                "Evergreens",
+                groupMapIcons.get("conifer")!!,
+                GroupType.FLORA
+            ),
+            Group(
+                "herb",
+                "Kräuter & Wildblumen",
+                "Herbs & Wild Flowers",
+                groupMapIcons.get("tree")!!,
+                GroupType.FLORA
+            ),
+            Group(
+                "tree",
+                "Laubbäume & Ginkgo",
+                "Deciduous trees & ginkgo",
+                groupMapIcons.get("tree")!!,
+                GroupType.FLORA
+            ),
+            Group(
+                "reptile",
+                "Reptilien",
+                "Reptiles",
+                groupMapIcons.get("reptile")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "butterfly",
+                "Schmetterlinge",
+                "Butterflies",
+                groupMapIcons.get("butterfly")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "gastropoda",
+                "Schnecken",
+                "Slugs",
+                groupMapIcons.get("gastropoda")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "mammal",
+                "Säugetiere",
+                "Mammals",
+                groupMapIcons.get("mammal")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "bird",
+                "Vögel",
+                "Birds",
+                groupMapIcons.get("bird")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "arachnid",
+                "Spinnentiere",
+                "Arachnid",
+                groupMapIcons.get("arachnid")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "truebug",
+                "Schnabelkerfen",
+                "True bug",
+                groupMapIcons.get("truebug")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "heteroptera",
+                "Wanzen",
+                "Heteroptera",
+                groupMapIcons.get("heteroptera")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "dragonfly",
+                "Libellen",
+                "Dragonfly",
+                groupMapIcons.get("dragonfly")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "grasshopper",
+                "Heuschrecken",
+                "Grasshopper",
+                groupMapIcons.get("grasshopper")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "diptera",
+                "Zweiflügler",
+                "Diptera",
+                groupMapIcons.get("diptera")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "bug",
+                "Käfer",
+                "Bug",
+                groupMapIcons.get("bug")!!,
+                GroupType.FAUNA
+            ),
+            Group(
+                "fungi",
+                "Pilze",
+                "Fungi",
+                0,
+                GroupType.FAUNA
+            )
         )
 
         private fun bitmapFromDrawableRes(context: Context, @DrawableRes resourceId: Int) =
