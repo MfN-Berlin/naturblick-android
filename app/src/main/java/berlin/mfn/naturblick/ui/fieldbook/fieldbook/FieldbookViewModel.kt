@@ -11,7 +11,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.lifecycle.*
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import berlin.mfn.naturblick.backend.DeleteOperation
 import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
@@ -92,7 +96,6 @@ class FieldbookViewModel(
         }
     }
 
-
     val queryFlow = snapshotFlow { query }.flowOn(Dispatchers.IO)
     val groupFlow = snapshotFlow { group }.flowOn(Dispatchers.IO)
 
@@ -106,12 +109,12 @@ class FieldbookViewModel(
             }
         }.mapLatest { (queryAndGroup, observations) ->
             val (query, group) = queryAndGroup
-            val speciesSet = speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
+            val speciesSet =
+                speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
             observations.filter { speciesSet.contains(it.newSpeciesId) }
-            }.map {
-                toFieldbookObservation(it)
-            }
+                .map { toFieldbookObservation(it) }
         }
+
 
     var refreshState by mutableStateOf(false)
         private set

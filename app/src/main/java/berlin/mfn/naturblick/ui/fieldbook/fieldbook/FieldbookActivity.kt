@@ -114,47 +114,17 @@ class FieldbookActivity : FragmentActivity() {
         )
     }
 
-    private fun createObservation() {
+    private fun groupFiltering(updateGroup: (value: String?) -> Unit) {
         MaterialAlertDialogBuilder(
             this,
             R.style.Naturblick_MaterialComponents_Dialog_Alert
         ).apply {
-            setTitle(R.string.create_observation)
-            setItems(R.array.create_observation_options) { _, chosen ->
+            setTitle(R.string.filter)
+            setItems(arrayOf("All", "Bird", "Herb")) { _, chosen ->
                 when (chosen) {
-                    0 -> manageObservation.launch(
-                        CreateManualObservation()
-                    )
-
-                    1 -> manageObservation.launch(
-                        CreateImageObservation
-                    )
-
-                    2 -> manageObservation.launch(
-                        CreateAudioObservation
-                    )
-
-                    3 -> if (Settings.hasSeenImportInfo(this@FieldbookActivity)) {
-                        manageObservation.launch(
-                            CreateImageFromGalleryObservation
-                        )
-                    } else {
-                        MaterialAlertDialogBuilder(
-                            this@FieldbookActivity,
-                            R.style.Naturblick_MaterialComponents_Dialog_Alert
-                        ).apply {
-                            setTitle(R.string.import_info_title)
-                            setMessage(R.string.import_info)
-                            setPositiveButton(R.string.continue_str) { _, _ ->
-                                Settings.didSeeImportInfo(this@FieldbookActivity)
-                                manageObservation.launch(
-                                    CreateImageFromGalleryObservation
-                                )
-                            }
-                            setOnCancelListener {
-                            }
-                        }.show()
-                    }
+                    0 -> updateGroup(null)
+                    1 -> updateGroup("bird")
+                    2 -> updateGroup("herb")
                 }
             }
             setNeutralButton(R.string.cancel) { _, _ ->
@@ -162,9 +132,7 @@ class FieldbookActivity : FragmentActivity() {
         }.show()
     }
 
-    private fun filter(model: FieldbookViewModel) {
-
-
+    private fun createObservation() {
         MaterialAlertDialogBuilder(
             this,
             R.style.Naturblick_MaterialComponents_Dialog_Alert
@@ -246,9 +214,13 @@ class FieldbookActivity : FragmentActivity() {
                             selectionCount = selection.size,
                             observationCount = observations.size,
                             query = model.query,
+                            group = model.group,
                             isMapView = isMapView,
                             updateQuery = {
                                 model.updateQuery(it)
+                            },
+                            updateGroup = {
+                                model.updateGroup(it)
                             },
                             cancelSelection = {
                                 selection.clear()
@@ -261,9 +233,6 @@ class FieldbookActivity : FragmentActivity() {
                                 if(!isMapView) {
                                     model.stopTracking()
                                 }
-                            },
-                            filter = {
-                                filter(model)
                             })
                     },
                     floatingActionButton = {
@@ -371,9 +340,12 @@ class FieldbookActivity : FragmentActivity() {
         }
     }
 
+
     @Composable
-    fun FilterAction(isFiltered: Boolean, onClick: () -> Unit) {
-        IconButton(onClick) {
+    fun FilterAction(isFiltered: Boolean, updateGroup: (query: String?) -> Unit) {
+        IconButton(onClick = {
+            groupFiltering(updateGroup)
+        }) {
             if (isFiltered) {
                 Icon(
                     painter = painterResource(R.drawable.filter_alt_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
@@ -410,13 +382,15 @@ class FieldbookActivity : FragmentActivity() {
         observationCount: Int,
         isMapView: Boolean,
         query: String,
+        group: String?,
         updateQuery: (query: String) -> Unit,
+        updateGroup: (query: String?) -> Unit,
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
-        toggleMapView: () -> Unit,
-        filter: () -> Unit
+        toggleMapView: () -> Unit
     ) {
         var search by remember { mutableStateOf(false) }
+//        var groupFiltered by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
         TopAppBar(
             navigationIcon = {
@@ -449,9 +423,7 @@ class FieldbookActivity : FragmentActivity() {
                         MapAction(isMapView) {
                             toggleMapView()
                         }
-                        FilterAction {
-                            Unit
-                        }
+                        FilterAction(group != null, updateGroup)
                     } else if (isInSelectionMode) {
                         IconButton(onClick = {
                             deleteSelection()
