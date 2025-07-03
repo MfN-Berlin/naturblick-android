@@ -115,21 +115,39 @@ class FieldbookActivity : FragmentActivity() {
     }
 
     private fun groupFiltering(updateGroup: (value: String?) -> Unit) {
-        MaterialAlertDialogBuilder(
-            this,
-            R.style.Naturblick_MaterialComponents_Dialog_Alert
-        ).apply {
-            setTitle(R.string.filter)
-            setItems(arrayOf("All", "Bird", "Herb")) { _, chosen ->
-                when (chosen) {
-                    0 -> updateGroup(null)
-                    1 -> updateGroup("bird")
-                    2 -> updateGroup("herb")
+        var group: String? = null
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.filter))
+            .setNeutralButton(resources.getString(R.string.cancel)) { _, _ ->
+            }
+            .setPositiveButton(resources.getString(R.string.filter_ok)) { dialog, which ->
+                updateGroup(group)
+            }
+            .setSingleChoiceItems(arrayOf("All", "Bird", "Herb"), 0) { _, which ->
+                    when (which) {
+                        0 -> group = null
+                        1 -> group = "bird"
+                        2 -> group = "herb"
                 }
             }
-            setNeutralButton(R.string.cancel) { _, _ ->
-            }
-        }.show()
+            .show()
+
+
+//        MaterialAlertDialogBuilder(
+//            this,
+//            R.style.Naturblick_MaterialComponents_Dialog_Alert
+//        ).apply {
+//            setTitle(R.string.filter)
+//            setNeutralButton(R.string.cancel) { _, _ ->
+//            },
+//            setSingleChoiceItems(arrayOf("All", "Bird", "Herb"), 0) {_, chosen ->
+//                when (chosen) {
+//                    0 -> updateGroup(null)
+//                    1 -> updateGroup("bird")
+//                    2 -> updateGroup("herb")
+//                }
+//            }
+//        }.show()
     }
 
     private fun createObservation() {

@@ -275,4 +275,5 @@
         <item quantity="other">%d Beobachtungen</item>
     </plurals>
     <string name="filter">Filtern</string>
+    <string name="filter_ok">Auswahl übernehmen</string>
 </resources>
