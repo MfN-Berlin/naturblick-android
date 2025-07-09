@@ -109,7 +109,7 @@ data class Group(
                 GroupType.FAUNA
             )
         )
-        private val groupMapIcons: Map<String, Int> = mapOf(
+        val groupMapIcons: Map<String, Int> = mapOf(
             Pair("acarida", R.drawable.ic_spiders),
             Pair("actinopterygii", R.drawable.ic_fish),
             Pair("amphibian", R.drawable.ic_amphibian),

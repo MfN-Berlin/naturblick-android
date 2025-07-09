@@ -80,10 +80,10 @@ class FieldbookViewModel(
         query = input
     }
 
-    var group: String? by mutableStateOf(null)
+    var group: String by mutableStateOf(ALL_GROUPS)
         private set
 
-    fun updateGroup(group: String?) {
+    fun updateGroup(group: String) {
         this.group = group
     }
 
@@ -109,8 +109,12 @@ class FieldbookViewModel(
             }
         }.mapLatest { (queryAndGroup, observations) ->
             val (query, group) = queryAndGroup
-            val speciesSet =
-                speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
+            val speciesSet = when (group) {
+                OTHERS_GROUPS -> speciesDao.filterOthersSpeciesIds("%$query%", availableGroups, languageId()).toHashSet()
+                ALL_GROUPS -> speciesDao.filterSpeciesIds("%$query%", null, languageId()).toHashSet()
+                else -> speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
+            }
+
             observations.filter { speciesSet.contains(it.newSpeciesId) }
                 .map { toFieldbookObservation(it) }
         }

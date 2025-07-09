@@ -58,10 +58,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
-import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.FloatingActionButton
 import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.composable.SearchField
+import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
@@ -79,6 +79,9 @@ import berlin.mfn.naturblick.ui.info.account.AccountActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.UUID
+
+const val ALL_GROUPS = "all"
+const val OTHERS_GROUPS = "others"
 
 class FieldbookActivity : FragmentActivity() {
     private val manageObservation = registerForActivityResult(ManageObservation) {
@@ -120,41 +123,6 @@ class FieldbookActivity : FragmentActivity() {
                 OpenObservation(occurenceId)
             )
         )
-    }
-
-    private fun groupFiltering(groups: List<String>, updateGroup: (value: String?) -> Unit) {
-        var group: String? = null
-        MaterialAlertDialogBuilder(this)
-            .setTitle(resources.getString(R.string.filter))
-            .setNeutralButton(resources.getString(R.string.cancel)) { _, _ ->
-            }
-            .setPositiveButton(resources.getString(R.string.filter_ok)) { dialog, which ->
-                updateGroup(group)
-            }
-            .setSingleChoiceItems((listOf("All") + groups + "others").toTypedArray(), 0) { _, which ->
-                    when (which) {
-                        0 -> group = null
-                        else -> group = groups[which - 1]
-                }
-            }
-            .show()
-
-
-//        MaterialAlertDialogBuilder(
-//            this,
-//            R.style.Naturblick_MaterialComponents_Dialog_Alert
-//        ).apply {
-//            setTitle(R.string.filter)
-//            setNeutralButton(R.string.cancel) { _, _ ->
-//            },
-//            setSingleChoiceItems(arrayOf("All", "Bird", "Herb"), 0) {_, chosen ->
-//                when (chosen) {
-//                    0 -> updateGroup(null)
-//                    1 -> updateGroup("bird")
-//                    2 -> updateGroup("herb")
-//                }
-//            }
-//        }.show()
     }
 
     private fun createObservation() {
@@ -232,6 +200,8 @@ class FieldbookActivity : FragmentActivity() {
             }
             var openDeleteDialog by remember { mutableStateOf(false) }
             var isMapView by remember { mutableStateOf(initialObservation != null) }
+            var openGroupsDialog by remember { mutableStateOf(false) }
+
             NaturblickTheme {
                 Scaffold(
                     topBar = {
@@ -239,13 +209,9 @@ class FieldbookActivity : FragmentActivity() {
                             selectionCount = selection.size,
                             observationCount = observations.size,
                             query = model.query,
-                            group = model.group,
                             isMapView = isMapView,
                             updateQuery = {
                                 model.updateQuery(it)
-                            },
-                            updateGroup = {
-                                model.updateGroup(it)
                             },
                             cancelSelection = {
                                 selection.clear()
@@ -255,15 +221,18 @@ class FieldbookActivity : FragmentActivity() {
                             },
                             toggleMapView = {
                                 isMapView = !isMapView
-                                if(!isMapView) {
+                                if (!isMapView) {
                                     model.stopTracking()
                                 }
                             },
-                            groups = groups)
+                            groups = groups,
+                            updateOpenGroupsDialog = { openGroupsDialog = !openGroupsDialog },
+                            group = model.group
+                        )
                     },
                     floatingActionButton = {
                         Column {
-                            if(isMapView) {
+                            if (isMapView) {
                                 ToggleGPSFab(
                                     model.locationEnabled, modifier = Modifier.padding(
                                         bottom = dimensionResource(
@@ -271,7 +240,7 @@ class FieldbookActivity : FragmentActivity() {
                                         )
                                     )
                                 ) {
-                                    if(it) {
+                                    if (it) {
                                         model.startTracking()
                                     } else {
                                         model.stopTracking()
@@ -332,6 +301,12 @@ class FieldbookActivity : FragmentActivity() {
                                 }
                             )
                     }
+                    if (openGroupsDialog) {
+                        GroupFilterDialog(groups, model.group, onDismiss = { openGroupsDialog = !openGroupsDialog }, onConfirm = { selectedGroup ->
+                            model.updateGroup(selectedGroup)
+                            openGroupsDialog = !openGroupsDialog
+                        })
+                    }
                 }
             }
         }
@@ -368,9 +343,12 @@ class FieldbookActivity : FragmentActivity() {
 
 
     @Composable
-    fun FilterAction(isFiltered: Boolean, groups: List<String>, updateGroup: (query: String?) -> Unit) {
+    fun FilterAction(
+        isFiltered: Boolean,
+        updateOpenGroupsDialog: () -> Unit
+    ) {
         IconButton(onClick = {
-            groupFiltering(groups, updateGroup)
+            updateOpenGroupsDialog()
         }) {
             if (isFiltered) {
                 Icon(
@@ -408,13 +386,13 @@ class FieldbookActivity : FragmentActivity() {
         observationCount: Int,
         isMapView: Boolean,
         query: String,
-        group: String?,
         updateQuery: (query: String) -> Unit,
-        updateGroup: (query: String?) -> Unit,
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
         toggleMapView: () -> Unit,
-        groups: List<String>
+        groups: List<String>,
+        updateOpenGroupsDialog: () -> Unit,
+        group: String?
     ) {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
@@ -449,7 +427,11 @@ class FieldbookActivity : FragmentActivity() {
                         MapAction(isMapView) {
                             toggleMapView()
                         }
-                        if (groups.size > 1) FilterAction(group != null, groups = groups, updateGroup) else null
+                        if (groups.size > 1) FilterAction(
+                            group != ALL_GROUPS,
+                            updateOpenGroupsDialog = updateOpenGroupsDialog
+                        )
+                        else null
                     } else if (isInSelectionMode) {
                         IconButton(onClick = {
                             deleteSelection()
@@ -501,18 +483,16 @@ class FieldbookActivity : FragmentActivity() {
 
     @Composable
     fun GroupFilterDialog(
-        groups: List<String>,
-        onDismiss: () -> Unit,
-        onConfirm: (selectedGroup: String?) -> Unit
+        groups: List<String>, group: String, onDismiss: () -> Unit, onConfirm: (selectedGroup: String) -> Unit
     ) {
-        val allGroups = listOf("All") + groups + "others"
+        val allGroups = listOf(ALL_GROUPS) + groups + OTHERS_GROUPS
         /*val icons = listOf(
             Icons.Default.List, // icon for "All"
             *Array(groups.size) { Icons.Default.Group }, // icons for each group
             Icons.Default.MoreHoriz // icon for "others"
         )*/
 
-        var selectedIndex by remember { mutableStateOf(0) }
+        var selectedIndex by remember { mutableStateOf(allGroups.indexOf(group)) }
 
         AlertDialog(
             onDismissRequest = onDismiss,
@@ -522,18 +502,18 @@ class FieldbookActivity : FragmentActivity() {
             confirmButton = {
                 TextButton(onClick = {
                     val selectedGroup = when (selectedIndex) {
-                        0 -> null
-                        allGroups.size - 1 -> "others"
+                        0 -> ALL_GROUPS
+                        allGroups.size - 1 -> OTHERS_GROUPS
                         else -> groups[selectedIndex - 1]
                     }
                     onConfirm(selectedGroup)
                 }) {
-                    Text("OK") // or use stringResource(R.string.filter_ok)
+                    Text(stringResource(R.string.filter_ok))
                 }
             },
             dismissButton = {
                 TextButton(onClick = onDismiss) {
-                    Text("Cancel") // or use stringResource(R.string.cancel)
+                    Text(stringResource(R.string.cancel))
                 }
             },
             text = {
@@ -554,13 +534,13 @@ class FieldbookActivity : FragmentActivity() {
                                 selected = selectedIndex == index,
                                 onClick = null // handled by Row
                             )
-                           /* Icon(
-                                imageVector = icons[index],
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .size(20.dp)
-                            )*/
+//                            Icon(
+//                                 imageVector = ImageVector.vectorResource(R.drawable.ic_bird),  //  icons[index]
+//                                 contentDescription = null,
+//                                 modifier = Modifier
+//                                     .padding(start = 8.dp)
+//                                     .size(20.dp)
+//                             )
                             Text(
                                 text = label,
                                 modifier = Modifier.padding(start = 8.dp)
