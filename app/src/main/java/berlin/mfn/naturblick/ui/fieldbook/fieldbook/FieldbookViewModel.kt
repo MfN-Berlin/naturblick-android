@@ -115,6 +115,37 @@ class FieldbookViewModel(
                 .map { toFieldbookObservation(it) }
         }
 
+    val availableGroups = listOf(
+        "arachnid",
+        "truebug",
+        "heteroptera",
+        "dragonfly",
+        "grasshopper",
+        "diptera",
+        "gastropoda",
+        "bug",
+        "fungi",
+        "amphibian",
+        "reptile",
+        "hymenoptera",
+        "conifer",
+        "mammal",
+        "butterfly",
+        "tree",
+        "herb",
+        "bird"
+    )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val groupsFlow =
+        operationDao.getAllObservations().mapLatest { obervations ->
+            obervations
+                .map { toFieldbookObservation(it) }
+                .mapNotNull { it.species?.group }
+                .filter {
+                    availableGroups.contains(it)
+                }
+        }
 
     var refreshState by mutableStateOf(false)
         private set

@@ -13,14 +13,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.RadioButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -45,6 +51,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
@@ -114,7 +122,7 @@ class FieldbookActivity : FragmentActivity() {
         )
     }
 
-    private fun groupFiltering(updateGroup: (value: String?) -> Unit) {
+    private fun groupFiltering(groups: List<String>, updateGroup: (value: String?) -> Unit) {
         var group: String? = null
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.filter))
@@ -123,11 +131,10 @@ class FieldbookActivity : FragmentActivity() {
             .setPositiveButton(resources.getString(R.string.filter_ok)) { dialog, which ->
                 updateGroup(group)
             }
-            .setSingleChoiceItems(arrayOf("All", "Bird", "Herb"), 0) { _, which ->
+            .setSingleChoiceItems((listOf("All") + groups + "others").toTypedArray(), 0) { _, which ->
                     when (which) {
                         0 -> group = null
-                        1 -> group = "bird"
-                        2 -> group = "herb"
+                        else -> group = groups[which - 1]
                 }
             }
             .show()
@@ -219,12 +226,12 @@ class FieldbookActivity : FragmentActivity() {
         }
         setContent {
             val observations by model.observationsFlow.collectAsState(emptyList())
+            val groups by model.groupsFlow.collectAsState(emptyList())
             val selection = remember {
                 mutableStateListOf<UUID>()
             }
             var openDeleteDialog by remember { mutableStateOf(false) }
             var isMapView by remember { mutableStateOf(initialObservation != null) }
-            var isFiltered by remember { mutableStateOf(false) }
             NaturblickTheme {
                 Scaffold(
                     topBar = {
@@ -251,7 +258,8 @@ class FieldbookActivity : FragmentActivity() {
                                 if(!isMapView) {
                                     model.stopTracking()
                                 }
-                            })
+                            },
+                            groups = groups)
                     },
                     floatingActionButton = {
                         Column {
@@ -360,9 +368,9 @@ class FieldbookActivity : FragmentActivity() {
 
 
     @Composable
-    fun FilterAction(isFiltered: Boolean, updateGroup: (query: String?) -> Unit) {
+    fun FilterAction(isFiltered: Boolean, groups: List<String>, updateGroup: (query: String?) -> Unit) {
         IconButton(onClick = {
-            groupFiltering(updateGroup)
+            groupFiltering(groups, updateGroup)
         }) {
             if (isFiltered) {
                 Icon(
@@ -405,10 +413,10 @@ class FieldbookActivity : FragmentActivity() {
         updateGroup: (query: String?) -> Unit,
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
-        toggleMapView: () -> Unit
+        toggleMapView: () -> Unit,
+        groups: List<String>
     ) {
         var search by remember { mutableStateOf(false) }
-//        var groupFiltered by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
         TopAppBar(
             navigationIcon = {
@@ -441,7 +449,7 @@ class FieldbookActivity : FragmentActivity() {
                         MapAction(isMapView) {
                             toggleMapView()
                         }
-                        FilterAction(group != null, updateGroup)
+                        if (groups.size > 1) FilterAction(group != null, groups = groups, updateGroup) else null
                     } else if (isInSelectionMode) {
                         IconButton(onClick = {
                             deleteSelection()
@@ -490,6 +498,79 @@ class FieldbookActivity : FragmentActivity() {
         )
     }
 
+
+    @Composable
+    fun GroupFilterDialog(
+        groups: List<String>,
+        onDismiss: () -> Unit,
+        onConfirm: (selectedGroup: String?) -> Unit
+    ) {
+        val allGroups = listOf("All") + groups + "others"
+        /*val icons = listOf(
+            Icons.Default.List, // icon for "All"
+            *Array(groups.size) { Icons.Default.Group }, // icons for each group
+            Icons.Default.MoreHoriz // icon for "others"
+        )*/
+
+        var selectedIndex by remember { mutableStateOf(0) }
+
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = {
+                Text(text = "Filter") // or use stringResource(R.string.filter)
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    val selectedGroup = when (selectedIndex) {
+                        0 -> null
+                        allGroups.size - 1 -> "others"
+                        else -> groups[selectedIndex - 1]
+                    }
+                    onConfirm(selectedGroup)
+                }) {
+                    Text("OK") // or use stringResource(R.string.filter_ok)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismiss) {
+                    Text("Cancel") // or use stringResource(R.string.cancel)
+                }
+            },
+            text = {
+                Column {
+                    allGroups.forEachIndexed { index, label ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .selectable(
+                                    selected = selectedIndex == index,
+                                    onClick = { selectedIndex = index },
+                                    role = Role.RadioButton
+                                )
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = selectedIndex == index,
+                                onClick = null // handled by Row
+                            )
+                           /* Icon(
+                                imageVector = icons[index],
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .size(20.dp)
+                            )*/
+                            Text(
+                                text = label,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        )
+    }
 
     companion object {
         const val OCCURENCE_ID = "occurence_id"
