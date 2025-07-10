@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.ExperimentalMaterialApi
@@ -47,10 +48,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
@@ -63,6 +66,8 @@ import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.composable.SearchField
 import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
+import berlin.mfn.naturblick.ui.data.Group
+import berlin.mfn.naturblick.ui.data.GroupType
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
@@ -77,6 +82,8 @@ import berlin.mfn.naturblick.ui.fieldbook.OpenObservation
 import berlin.mfn.naturblick.ui.fieldbook.observation.ObservationActivity
 import berlin.mfn.naturblick.ui.info.account.AccountActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
+import berlin.mfn.naturblick.utils.GERMAN_ID
+import berlin.mfn.naturblick.utils.languageId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.UUID
 
@@ -486,18 +493,12 @@ class FieldbookActivity : FragmentActivity() {
         groups: List<String>, group: String, onDismiss: () -> Unit, onConfirm: (selectedGroup: String) -> Unit
     ) {
         val allGroups = listOf(ALL_GROUPS) + groups + OTHERS_GROUPS
-        /*val icons = listOf(
-            Icons.Default.List, // icon for "All"
-            *Array(groups.size) { Icons.Default.Group }, // icons for each group
-            Icons.Default.MoreHoriz // icon for "others"
-        )*/
-
         var selectedIndex by remember { mutableStateOf(allGroups.indexOf(group)) }
 
         AlertDialog(
             onDismissRequest = onDismiss,
             title = {
-                Text(text = "Filter") // or use stringResource(R.string.filter)
+                Text(stringResource(R.string.filter))
             },
             confirmButton = {
                 TextButton(onClick = {
@@ -534,15 +535,24 @@ class FieldbookActivity : FragmentActivity() {
                                 selected = selectedIndex == index,
                                 onClick = null // handled by Row
                             )
-//                            Icon(
-//                                 imageVector = ImageVector.vectorResource(R.drawable.ic_bird),  //  icons[index]
-//                                 contentDescription = null,
-//                                 modifier = Modifier
-//                                     .padding(start = 8.dp)
-//                                     .size(20.dp)
-//                             )
+                            val g = when(label) {
+                                ALL_GROUPS -> Group(ALL_GROUPS, stringResource(R.string.all), stringResource(R.string.all), 0, GroupType.FLORA)
+                                OTHERS_GROUPS -> Group(OTHERS_GROUPS, stringResource(R.string.others), stringResource(R.string.others), 0, GroupType.FLORA)
+                                else -> Group.fieldbookFilterGroups.first { it.id ==  label}
+                            }
+
+//                            if (g.image != 0) {
+//                                Icon(
+//                                    imageVector = ImageVector.vectorResource(g.image),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .padding(start = 8.dp)
+//                                        .size(20.dp)
+//                                )
+//                            }
+
                             Text(
-                                text = label,
+                                text = if (languageId() == GERMAN_ID) g.gername else g.engname,
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
