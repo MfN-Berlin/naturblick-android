@@ -11,20 +11,22 @@ import android.os.Bundle
 import android.os.ParcelUuid
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -48,12 +50,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
@@ -309,10 +309,14 @@ class FieldbookActivity : FragmentActivity() {
                             )
                     }
                     if (openGroupsDialog) {
-                        GroupFilterDialog(groups, model.group, onDismiss = { openGroupsDialog = !openGroupsDialog }, onConfirm = { selectedGroup ->
-                            model.updateGroup(selectedGroup)
-                            openGroupsDialog = !openGroupsDialog
-                        })
+                        GroupFilterDialog(
+                            groups,
+                            model.group,
+                            onDismiss = { openGroupsDialog = !openGroupsDialog },
+                            onConfirm = { selectedGroup ->
+                                model.updateGroup(selectedGroup)
+                                openGroupsDialog = !openGroupsDialog
+                            })
                     }
                 }
             }
@@ -490,7 +494,10 @@ class FieldbookActivity : FragmentActivity() {
 
     @Composable
     fun GroupFilterDialog(
-        groups: List<String>, group: String, onDismiss: () -> Unit, onConfirm: (selectedGroup: String) -> Unit
+        groups: List<String>,
+        group: String,
+        onDismiss: () -> Unit,
+        onConfirm: (selectedGroup: String) -> Unit
     ) {
         val allGroups = listOf(ALL_GROUPS) + groups + OTHERS_GROUPS
         var selectedIndex by remember { mutableStateOf(allGroups.indexOf(group)) }
@@ -533,23 +540,31 @@ class FieldbookActivity : FragmentActivity() {
                         ) {
                             RadioButton(
                                 selected = selectedIndex == index,
-                                onClick = null // handled by Row
+                                onClick = null, // see R ow
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = NaturblickTheme.colors.primary,
+                                    unselectedColor = MaterialTheme.colors.primary
+                                )
                             )
-                            val g = when(label) {
-                                ALL_GROUPS -> Group(ALL_GROUPS, stringResource(R.string.all), stringResource(R.string.all), 0, GroupType.FLORA)
-                                OTHERS_GROUPS -> Group(OTHERS_GROUPS, stringResource(R.string.others), stringResource(R.string.others), 0, GroupType.FLORA)
-                                else -> Group.fieldbookFilterGroups.first { it.id ==  label}
-                            }
+                            val g = when (label) {
+                                ALL_GROUPS -> Group(
+                                    ALL_GROUPS,
+                                    stringResource(R.string.all),
+                                    stringResource(R.string.all),
+                                    0,
+                                    GroupType.FLORA
+                                )
 
-//                            if (g.image != 0) {
-//                                Icon(
-//                                    imageVector = ImageVector.vectorResource(g.image),
-//                                    contentDescription = null,
-//                                    modifier = Modifier
-//                                        .padding(start = 8.dp)
-//                                        .size(20.dp)
-//                                )
-//                            }
+                                OTHERS_GROUPS -> Group(
+                                    OTHERS_GROUPS,
+                                    stringResource(R.string.others),
+                                    stringResource(R.string.others),
+                                    0,
+                                    GroupType.FLORA
+                                )
+
+                                else -> Group.fieldbookFilterGroups.first { it.id == label }
+                            }
 
                             Text(
                                 text = if (languageId() == GERMAN_ID) g.gername else g.engname,
