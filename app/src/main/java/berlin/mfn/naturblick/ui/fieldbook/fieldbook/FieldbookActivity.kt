@@ -435,14 +435,13 @@ class FieldbookActivity : FragmentActivity() {
                                 contentDescription = stringResource(R.string.search)
                             )
                         }
-                        MapAction(isMapView) {
-                            toggleMapView()
-                        }
                         if (groups.size > 1) FilterAction(
                             group != ALL_GROUPS,
                             updateOpenGroupsDialog = updateOpenGroupsDialog
                         )
-                        else null
+                        MapAction(isMapView) {
+                            toggleMapView()
+                        }
                     } else if (isInSelectionMode) {
                         IconButton(onClick = {
                             deleteSelection()
@@ -461,6 +460,10 @@ class FieldbookActivity : FragmentActivity() {
                             )
                         }
                     } else {
+                        if (groups.size > 1) FilterAction(
+                            group != ALL_GROUPS,
+                            updateOpenGroupsDialog = updateOpenGroupsDialog
+                        )
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -563,7 +566,7 @@ class FieldbookActivity : FragmentActivity() {
                                     GroupType.FLORA
                                 )
 
-                                else -> Group.fieldbookFilterGroups.first { it.id == label }
+                                else -> Group.groups.first { it.id == label }
                             }
 
                             Text(

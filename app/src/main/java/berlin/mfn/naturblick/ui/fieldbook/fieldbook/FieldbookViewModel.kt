@@ -21,6 +21,7 @@ import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
 import berlin.mfn.naturblick.backend.PublicBackendApi
 import berlin.mfn.naturblick.room.StrapiDb
+import berlin.mfn.naturblick.ui.data.Group
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import berlin.mfn.naturblick.utils.NetworkResult
 import berlin.mfn.naturblick.utils.languageId
@@ -110,8 +111,15 @@ class FieldbookViewModel(
         }.mapLatest { (queryAndGroup, observations) ->
             val (query, group) = queryAndGroup
             val speciesSet = when (group) {
-                OTHERS_GROUPS -> speciesDao.filterOthersSpeciesIds("%$query%", availableGroups, languageId()).toHashSet()
-                ALL_GROUPS -> speciesDao.filterSpeciesIds("%$query%", null, languageId()).toHashSet()
+                OTHERS_GROUPS -> speciesDao.filterOthersSpeciesIds(
+                    "%$query%",
+                    Group.fieldbookFilterGroupIds,
+                    languageId()
+                ).toHashSet()
+
+                ALL_GROUPS -> speciesDao.filterSpeciesIds("%$query%", null, languageId())
+                    .toHashSet()
+
                 else -> speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
             }
 
@@ -119,26 +127,6 @@ class FieldbookViewModel(
                 .map { toFieldbookObservation(it) }
         }
 
-    val availableGroups = listOf(
-        "arachnid",
-        "truebug",
-        "heteroptera",
-        "dragonfly",
-        "grasshopper",
-        "diptera",
-        "gastropoda",
-        "bug",
-        "fungi",
-        "amphibian",
-        "reptile",
-        "hymenoptera",
-        "conifer",
-        "mammal",
-        "butterfly",
-        "tree",
-        "herb",
-        "bird"
-    )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val groupsFlow =
@@ -147,7 +135,7 @@ class FieldbookViewModel(
                 .map { toFieldbookObservation(it) }
                 .mapNotNull { it.species?.group }
                 .filter {
-                    availableGroups.contains(it)
+                    Group.fieldbookFilterGroupIds.contains(it)
                 }
                 .distinct()
         }
