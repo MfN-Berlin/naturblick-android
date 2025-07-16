@@ -22,6 +22,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.IntentCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -270,6 +273,13 @@ class ConfirmPhotoFragment :
         binding.cropImageView.setMinCropResultSize(cropSize, cropSize)
         permissionChecker.requirePermission(requireContext(), this)
         model.setShowOnLeaveDialog(::showOnLeaveDialog)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonSheet) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(bottom = insets.bottom)
+            windowInsets
+        }
+
         return binding.root
     }
 
