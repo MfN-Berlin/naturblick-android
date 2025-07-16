@@ -18,12 +18,12 @@ def version = new Properties()
 file("../version.properties").withInputStream { version.load(it) }
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.mfn_berlin_stadtnatur_entdecken.naturblick"
         minSdk 21
-        targetSdk 34
+        targetSdk 35
         versionCode Integer.parseInt(version.getProperty("version.code"))
         versionName version.getProperty("version.name")
         def strapiBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
