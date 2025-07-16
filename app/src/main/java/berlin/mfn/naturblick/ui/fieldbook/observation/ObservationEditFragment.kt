@@ -124,15 +124,9 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
 
         binding.bottomSheet.setUpRootAndTopSheet(
             binding.root,
-            binding.include.root,
-            handleInsets = false
+            binding.include.root
         )
-        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonSheet) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(bottom = insets.bottom)
-            windowInsets
-        }
-
+        binding.buttonSheet.setupBottomInset()
         binding.fetchingLocation = viewModel.fetchingLocation
 
         lifecycleScope.launch {

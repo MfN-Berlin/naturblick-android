@@ -85,7 +85,7 @@ class IdResultFragment : Fragment() {
         val identifySpecies =
             IntentCompat.getParcelableExtra(
                 requireActivity().intent,
-                IdResultActivityContractBase.Companion.ID_SPECIES,
+                IdResultActivityContractBase.ID_SPECIES,
                 IdentifySpecies::class.java
             )!!
         val viewModel by activityViewModels<IdResultViewModel> {
@@ -99,6 +99,7 @@ class IdResultFragment : Fragment() {
         val binding = FragmentIdResultBinding.inflate(inflater, container, false)
         binding.model = model
 
+        binding.root.setupBottomInset()
         model.idResults.observe(viewLifecycleOwner) { result ->
             if (result.isNotEmpty()) {
                 binding.idResultListLayout.setIdResultList(

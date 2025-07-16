@@ -7,16 +7,10 @@ package berlin.mfn.naturblick.ui.shared
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.setPadding
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import berlin.mfn.naturblick.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
@@ -47,8 +41,7 @@ class BottomSheetView(context: Context, attributeSet: AttributeSet) :
 
     fun setUpRootAndTopSheet(
         root: View,
-        topSheet: View,
-        handleInsets: Boolean = true
+        topSheet: View
     ) {
         topSheet.viewTreeObserver.addOnGlobalLayoutListener {
             val behavior = BottomSheetBehavior.from(this)
@@ -59,16 +52,6 @@ class BottomSheetView(context: Context, attributeSet: AttributeSet) :
                 (padding + height).roundToInt()
             )
             behavior.setPeekHeight(offset, false)
-        }
-        if(handleInsets) {
-            ViewCompat.setOnApplyWindowInsetsListener(this) { view, windowInsets ->
-                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-                view.updatePadding(bottom = insets.bottom)
-                val behavior = BottomSheetBehavior.from(this)
-                val padding = margin * 2
-                behavior.peekHeight = (padding + root.height).roundToInt() + insets.bottom
-                windowInsets
-            }
         }
     }
 

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <berlin.mfn.naturblick.ui.shared.BottomInsetLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -74,6 +74,6 @@
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                />
-        </LinearLayout>
+        </berlin.mfn.naturblick.ui.shared.BottomInsetLinearLayout>
     </ScrollView>
 </layout>

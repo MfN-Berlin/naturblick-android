@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <berlin.mfn.naturblick.ui.shared.BottomInsetLinearLayout
             android:id="@+id/settings_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +102,6 @@
                 android:orientation="vertical"
                 />
 
-        </LinearLayout>
+        </berlin.mfn.naturblick.ui.shared.BottomInsetLinearLayout>
     </ScrollView>
 </layout>
