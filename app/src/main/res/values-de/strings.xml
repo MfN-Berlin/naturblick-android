@@ -108,6 +108,7 @@
     <string name="edit">Bearbeiten</string>
     <string name="change">ändern</string>
     <string name="show_results">%s Ergebnisse anzeigen</string>
+    <string name="show_no_results">Keine Ergebnisse</string>
     <string name="none_of_the_options">Keiner der Vorschläge</string>
     <string name="other_identification">Was möchtest du tun?</string>
     <string name="crop_again">Bild neu zuschneiden</string>
