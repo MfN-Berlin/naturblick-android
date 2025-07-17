@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.AlertDialog
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -411,7 +412,7 @@ class FieldbookActivity : FragmentActivity() {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
         TopAppBar(
-            windowInsets = WindowInsets.systemBars,
+            windowInsets = WindowInsets.statusBars,
             navigationIcon = {
                 NavigationIcon {
                     if (!search && !isInSelectionMode) {

@@ -12,6 +12,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -35,6 +38,7 @@ import berlin.mfn.naturblick.ui.info.imprint.ImprintActivity
 import berlin.mfn.naturblick.ui.info.privacy.GeneralPrivacyNoticeActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.ui.info.settings.SettingsActivity
+import berlin.mfn.naturblick.utils.setupBottomInset
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +54,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.appBar) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(top = insets.top)
+            windowInsets
+        }
+        binding.drawerLayout.setupBottomInset()
         val root = binding.root
         setContentView(root)
         setSupportActionBar(root.findViewById<View>(R.id.app_bar).findViewById(R.id.toolbar))
