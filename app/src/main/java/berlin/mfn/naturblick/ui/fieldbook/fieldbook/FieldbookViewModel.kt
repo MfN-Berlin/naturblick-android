@@ -123,7 +123,10 @@ class FieldbookViewModel(
                 else -> speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
             }
 
-            observations.filter { speciesSet.contains(it.newSpeciesId) }
+            observations.filter {
+                speciesSet.contains(it.newSpeciesId) || (it.newSpeciesId == null
+                        && group == ALL_GROUPS)
+            }
                 .map { toFieldbookObservation(it) }
         }
 
