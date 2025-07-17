@@ -113,6 +113,7 @@ class RecordSoundFragment : Fragment(), RequiredPermissionCallback {
         }
         cropModel = cropViewModel
         binding = FragmentRecordSoundBinding.inflate(inflater, container, false)
+        binding.buttonSheet.setupBottomInset()
         binding.lifecycleOwner = viewLifecycleOwner
         permissionChecker.requirePermission(requireContext(), this)
         binding.root.keepScreenOn = true

@@ -15,11 +15,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.AlertDialog
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -211,6 +214,7 @@ class FieldbookActivity : FragmentActivity() {
 
             NaturblickTheme {
                 Scaffold(
+                    contentWindowInsets = WindowInsets.systemBars,
                     topBar = {
                         TopBar(
                             selectionCount = selection.size,
@@ -408,6 +412,7 @@ class FieldbookActivity : FragmentActivity() {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
         TopAppBar(
+            windowInsets = WindowInsets.statusBars,
             navigationIcon = {
                 NavigationIcon {
                     if (!search && !isInSelectionMode) {

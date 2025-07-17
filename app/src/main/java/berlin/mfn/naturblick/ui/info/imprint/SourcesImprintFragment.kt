@@ -19,6 +19,7 @@ import berlin.mfn.naturblick.room.SourcesImprint
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.species.portrait.sourcesBinding
 import berlin.mfn.naturblick.utils.isGerman
+import berlin.mfn.naturblick.utils.setupBottomInset
 import kotlinx.coroutines.launch
 
 class SourcesAdapter(
@@ -61,7 +62,7 @@ class SourcesImprintFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentSourcesImprintBinding.inflate(inflater, container, false)
-
+        binding.rvSources.setupBottomInset()
         viewLifecycleOwner.lifecycleScope.launch {
             val dbSources =
                 StrapiDb.getDb(requireContext()).sourcesImprintDao().getSourcesImprint()

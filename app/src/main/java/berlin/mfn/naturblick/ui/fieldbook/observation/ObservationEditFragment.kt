@@ -7,7 +7,6 @@ package berlin.mfn.naturblick.ui.fieldbook.observation
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
@@ -123,7 +122,7 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
             binding.root,
             binding.include.root
         )
-
+        binding.buttonSheet.setupBottomInset()
         binding.fetchingLocation = viewModel.fetchingLocation
 
         lifecycleScope.launch {

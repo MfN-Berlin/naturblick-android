@@ -83,6 +83,8 @@ class ObservationViewFragment : Fragment(), RequestedPermissionCallback {
 
         this.viewModel = viewModel
         binding = FragmentObservationViewBinding.inflate(inflater, container, false)
+        binding.bottomSheet.setupBottomInset()
+        binding.editButton.setupBottomInsetMargin()
         binding.model = viewModel
         binding.include.model = viewModel
 

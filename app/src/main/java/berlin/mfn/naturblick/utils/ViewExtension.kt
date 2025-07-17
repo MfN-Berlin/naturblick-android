@@ -7,6 +7,12 @@ package berlin.mfn.naturblick.utils
 
 import android.os.SystemClock
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 
 class SingleClickListener(
     private var defaultInterval: Int = 1500,
@@ -27,4 +33,24 @@ fun View.setSingleClickListener(onSingleClick: (View) -> Unit) {
         onSingleClick(it)
     }
     setOnClickListener(singleClickListener)
+}
+
+fun View.setupBottomInset() {
+    val originalPadding = paddingBottom
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, windowInsets ->
+        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updatePadding(bottom = insets.bottom + originalPadding)
+        windowInsets
+    }
+}
+
+fun View.setupBottomInsetMargin() {
+    val originalMargin = marginBottom
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, windowInsets ->
+        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updateLayoutParams<MarginLayoutParams> {
+            bottomMargin = insets.bottom + originalMargin
+        }
+        windowInsets
+    }
 }

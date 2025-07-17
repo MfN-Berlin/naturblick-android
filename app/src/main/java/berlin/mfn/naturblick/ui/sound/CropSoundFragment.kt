@@ -80,6 +80,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCropSpectrogramBinding.inflate(inflater, container, false)
+        binding.buttonSheet.setupBottomInset()
         val viewModel by activityViewModels<CropSoundViewModel> {
             CropSoundViewModelFactory(requireActivity().application)
         }

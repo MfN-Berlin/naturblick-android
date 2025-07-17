@@ -29,8 +29,8 @@ import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.fieldbook.CreateManualObservation
 import berlin.mfn.naturblick.utils.AnalyticsTracker
 import berlin.mfn.naturblick.utils.SingleTrackPlayer
-import berlin.mfn.naturblick.utils.Wikipedia
 import berlin.mfn.naturblick.utils.setSingleClickListener
+import berlin.mfn.naturblick.utils.setupBottomInsetMargin
 import berlin.mfn.naturblick.utils.showCcInfo
 import kotlinx.parcelize.Parcelize
 
@@ -93,7 +93,7 @@ class PortraitFragment : Fragment() {
         }
 
         binding.createObservationAction.isExtended = true
-
+        binding.createObservationAction.setupBottomInsetMargin()
         portraitViewModel.speciesAndPortrait.observe(viewLifecycleOwner) { (species, portrait) ->
             (requireActivity() as PortraitActivity).supportActionBar?.title = species.name
 

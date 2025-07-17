@@ -7,7 +7,12 @@ package berlin.mfn.naturblick.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -33,7 +38,8 @@ open class BaseActivity(
     ) {
         val root = existingRoot ?: ActivityDefaultBinding.inflate(layoutInflater).root
         setContentView(root)
-        setSupportActionBar(root.findViewById<View>(R.id.app_bar).findViewById(R.id.toolbar))
+        val appBar = root.findViewById<View>(R.id.app_bar)
+        setSupportActionBar(appBar.findViewById(R.id.toolbar))
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -60,6 +66,11 @@ open class BaseActivity(
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
+        ViewCompat.setOnApplyWindowInsetsListener(appBar) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(top = insets.top)
+            windowInsets
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

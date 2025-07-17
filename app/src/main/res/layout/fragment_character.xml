@@ -30,24 +30,16 @@
                 />
         </ScrollView>
 
-        <berlin.mfn.naturblick.ui.shared.BottomSheetView
-            android:id="@+id/bottom_sheet"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="@dimen/default_elevation"
-            app:layout_behavior="berlin.mfn.naturblick.utils.StartClosedBehavior"
-            android:backgroundTint="?attr/colorTertiary"
-            >
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/search_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin"
-                android:layout_marginBottom="@dimen/default_margin"
-                android:enabled="@{model.numberOfResults > 0}"
-                android:text="@{@string/show_results(model.numberOfResults != null ? model.numberOfResults : 0)}"
-                />
-        </berlin.mfn.naturblick.ui.shared.BottomSheetView>
+            app:icon="@drawable/outline_close_24"
+            android:visibility="gone"
+            android:text="@string/show_no_results"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            style="@style/Theme.Naturblick.FABOverlay"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

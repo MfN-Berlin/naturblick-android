@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:theme="@style/Theme.Naturblick.GroupsOverlay">
 
-        <LinearLayout
+        <berlin.mfn.naturblick.ui.shared.BottomInsetLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -47,6 +47,6 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/default_margin"
                 android:paddingBottom="@dimen/default_margin"/>
-        </LinearLayout>
+        </berlin.mfn.naturblick.ui.shared.BottomInsetLinearLayout>
     </ScrollView>
 </layout>
