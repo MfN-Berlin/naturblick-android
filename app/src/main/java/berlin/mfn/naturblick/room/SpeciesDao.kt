@@ -70,11 +70,10 @@ interface SpeciesDao {
 
     @Query(
         """SELECT rowid FROM species 
-        WHERE ((:query IS NULL 
+        WHERE (:query IS NULL 
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query))
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query))
-            OR sciname LIKE :query) AND gersearchfield IS NOT NULL) 
-            AND group_id NOT IN (:groups)
+            OR sciname LIKE :query) AND gersearchfield IS NOT NULL
         ORDER BY 
             CASE WHEN :language = $GERMAN_ID THEN gername IS NULL ELSE engname IS NULL END, 
             CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END, 
@@ -83,24 +82,7 @@ interface SpeciesDao {
             sciname
             """
     )
-    suspend fun filterOthersSpeciesIds(query: String?, groups: List<String>, language: Int): List<Int>
-
-    @Query(
-        """SELECT rowid FROM species 
-        WHERE ((:query IS NULL 
-            OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query))
-            OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query))
-            OR sciname LIKE :query) AND gersearchfield IS NOT NULL) 
-            AND (:group IS NULL OR group_id = :group)
-        ORDER BY 
-            CASE WHEN :language = $GERMAN_ID THEN gername IS NULL ELSE engname IS NULL END, 
-            CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END, 
-            CASE WHEN :language = $GERMAN_ID THEN gersynonym IS NULL ELSE engsynonym IS NULL END,
-            CASE WHEN :language = $GERMAN_ID THEN gersynonym ELSE engsynonym END,
-            sciname
-            """
-    )
-    suspend fun filterSpeciesIds(query: String?, group: String?, language: Int): List<Int>
+    suspend fun filterSpeciesIds(query: String?, language: Int): List<Int>
 
     private fun buildSpeciesByCharactersQuery(
         searchQuery: String?,
