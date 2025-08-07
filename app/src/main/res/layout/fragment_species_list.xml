@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             app:dividerItemDecoration="@{true}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:clipToPadding="false"
             >
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>

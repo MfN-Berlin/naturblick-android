@@ -12,6 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -71,6 +74,12 @@ class SpeciesListFragment : Fragment() {
         recyclerView.adapter = pagingAdapter
         speciesListViewModel.pagingData.observe(viewLifecycleOwner) { pagingData ->
             pagingAdapter.submitData(lifecycle, pagingData)
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rvSpeciesList) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(bottom = insets.bottom)
+            windowInsets
         }
 
         return binding.root
