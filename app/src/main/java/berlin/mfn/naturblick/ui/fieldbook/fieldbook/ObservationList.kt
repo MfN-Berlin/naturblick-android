@@ -137,7 +137,7 @@ fun ObservationList(
         contentPadding = WindowInsets.navigationBars.asPaddingValues()
     ) {
         itemsIndexed(observations, key = { _, o -> o.occurenceId }) { _, observation ->
-            Column(modifier = Modifier.animateItemPlacement()) {
+            Column(modifier = Modifier.animateItem()) {
                 ObservationItem(
                     selection.isNotEmpty(),
                     selection.contains(observation.occurenceId),
