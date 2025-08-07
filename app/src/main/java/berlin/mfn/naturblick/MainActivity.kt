@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         ViewCompat.setOnApplyWindowInsetsListener(binding.appBar) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(top = insets.top)
+            view.updatePadding(top = insets.top, bottom = insets.bottom)
             windowInsets
         }
         binding.drawerLayout.setupBottomInset()
