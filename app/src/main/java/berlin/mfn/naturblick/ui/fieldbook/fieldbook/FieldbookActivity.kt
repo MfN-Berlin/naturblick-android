@@ -11,28 +11,18 @@ import android.os.Bundle
 import android.os.ParcelUuid
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.AlertDialog
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.RadioButton
-import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -57,20 +47,16 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
+import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.FloatingActionButton
 import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.composable.SearchField
-import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
-import berlin.mfn.naturblick.ui.data.Group
-import berlin.mfn.naturblick.ui.data.GroupType
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
@@ -85,13 +71,8 @@ import berlin.mfn.naturblick.ui.fieldbook.OpenObservation
 import berlin.mfn.naturblick.ui.fieldbook.observation.ObservationActivity
 import berlin.mfn.naturblick.ui.info.account.AccountActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
-import berlin.mfn.naturblick.utils.GERMAN_ID
-import berlin.mfn.naturblick.utils.languageId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.UUID
-
-const val ALL_GROUPS = "all"
-const val OTHERS_GROUPS = "others"
 
 class FieldbookActivity : FragmentActivity() {
     private val manageObservation = registerForActivityResult(ManageObservation) {
@@ -204,14 +185,11 @@ class FieldbookActivity : FragmentActivity() {
         }
         setContent {
             val observations by model.observationsFlow.collectAsState(emptyList())
-            val groups by model.groupsFlow.collectAsState(emptyList())
             val selection = remember {
                 mutableStateListOf<UUID>()
             }
             var openDeleteDialog by remember { mutableStateOf(false) }
             var isMapView by remember { mutableStateOf(initialObservation != null) }
-            var openGroupsDialog by remember { mutableStateOf(false) }
-
             NaturblickTheme {
                 Scaffold(
                     contentWindowInsets = WindowInsets.systemBars,
@@ -232,18 +210,14 @@ class FieldbookActivity : FragmentActivity() {
                             },
                             toggleMapView = {
                                 isMapView = !isMapView
-                                if (!isMapView) {
+                                if(!isMapView) {
                                     model.stopTracking()
                                 }
-                            },
-                            groups = groups,
-                            updateOpenGroupsDialog = { openGroupsDialog = !openGroupsDialog },
-                            group = model.group
-                        )
+                            })
                     },
                     floatingActionButton = {
                         Column {
-                            if (isMapView) {
+                            if(isMapView) {
                                 ToggleGPSFab(
                                     model.locationEnabled, modifier = Modifier.padding(
                                         bottom = dimensionResource(
@@ -251,7 +225,7 @@ class FieldbookActivity : FragmentActivity() {
                                         )
                                     )
                                 ) {
-                                    if (it) {
+                                    if(it) {
                                         model.startTracking()
                                     } else {
                                         model.stopTracking()
@@ -312,16 +286,6 @@ class FieldbookActivity : FragmentActivity() {
                                 }
                             )
                     }
-                    if (openGroupsDialog) {
-                        GroupFilterDialog(
-                            groups,
-                            model.group,
-                            onDismiss = { openGroupsDialog = !openGroupsDialog },
-                            onConfirm = { selectedGroup ->
-                                model.updateGroup(selectedGroup)
-                                openGroupsDialog = !openGroupsDialog
-                            })
-                    }
                 }
             }
         }
@@ -356,29 +320,6 @@ class FieldbookActivity : FragmentActivity() {
         }
     }
 
-
-    @Composable
-    fun FilterAction(
-        isFiltered: Boolean,
-        updateOpenGroupsDialog: () -> Unit
-    ) {
-        IconButton(onClick = {
-            updateOpenGroupsDialog()
-        }) {
-            if (isFiltered) {
-                Icon(
-                    painter = painterResource(R.drawable.filter_alt_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
-                    contentDescription = stringResource(id = R.string.filter)
-                )
-            } else {
-                Icon(
-                    painter = painterResource(R.drawable.filter_alt_off_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
-                    contentDescription = stringResource(id = R.string.filter)
-                )
-            }
-        }
-    }
-
     @Composable
     fun MapAction(isMapView: Boolean, onClick: () -> Unit) {
         IconButton(onClick) {
@@ -404,10 +345,7 @@ class FieldbookActivity : FragmentActivity() {
         updateQuery: (query: String) -> Unit,
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
-        toggleMapView: () -> Unit,
-        groups: List<String>,
-        updateOpenGroupsDialog: () -> Unit,
-        group: String?
+        toggleMapView: () -> Unit
     ) {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
@@ -440,10 +378,6 @@ class FieldbookActivity : FragmentActivity() {
                                 contentDescription = stringResource(R.string.search)
                             )
                         }
-                        if (groups.size > 1) FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -465,10 +399,6 @@ class FieldbookActivity : FragmentActivity() {
                             )
                         }
                     } else {
-                        if (groups.size > 1) FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -499,91 +429,6 @@ class FieldbookActivity : FragmentActivity() {
         )
     }
 
-
-    @Composable
-    fun GroupFilterDialog(
-        groups: List<String>,
-        group: String,
-        onDismiss: () -> Unit,
-        onConfirm: (selectedGroup: String) -> Unit
-    ) {
-        val allGroups = listOf(ALL_GROUPS) + groups + OTHERS_GROUPS
-        var selectedIndex by remember { mutableStateOf(allGroups.indexOf(group)) }
-
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            title = {
-                Text(stringResource(R.string.filter))
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    val selectedGroup = when (selectedIndex) {
-                        0 -> ALL_GROUPS
-                        allGroups.size - 1 -> OTHERS_GROUPS
-                        else -> groups[selectedIndex - 1]
-                    }
-                    onConfirm(selectedGroup)
-                }) {
-                    Text(stringResource(R.string.filter_ok))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = onDismiss) {
-                    Text(stringResource(R.string.cancel))
-                }
-            },
-            text = {
-                Column {
-                    allGroups.forEachIndexed { index, label ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .selectable(
-                                    selected = selectedIndex == index,
-                                    onClick = { selectedIndex = index },
-                                    role = Role.RadioButton
-                                )
-                                .padding(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = selectedIndex == index,
-                                onClick = null, // see R ow
-                                colors = RadioButtonDefaults.colors(
-                                    selectedColor = NaturblickTheme.colors.primary,
-                                    unselectedColor = MaterialTheme.colors.primary
-                                )
-                            )
-                            val g = when (label) {
-                                ALL_GROUPS -> Group(
-                                    ALL_GROUPS,
-                                    stringResource(R.string.all),
-                                    stringResource(R.string.all),
-                                    0,
-                                    GroupType.FLORA
-                                )
-
-                                OTHERS_GROUPS -> Group(
-                                    OTHERS_GROUPS,
-                                    stringResource(R.string.others),
-                                    stringResource(R.string.others),
-                                    0,
-                                    GroupType.FLORA
-                                )
-
-                                else -> Group.groups.first { it.id == label }
-                            }
-
-                            Text(
-                                text = if (languageId() == GERMAN_ID) g.gername else g.engname,
-                                modifier = Modifier.padding(start = 8.dp)
-                            )
-                        }
-                    }
-                }
-            }
-        )
-    }
 
     companion object {
         const val OCCURENCE_ID = "occurence_id"
