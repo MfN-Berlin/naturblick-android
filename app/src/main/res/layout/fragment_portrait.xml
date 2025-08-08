@@ -15,6 +15,7 @@
             android:id="@+id/portrait_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="@dimen/fab_bottom_margin"
             android:clipToPadding="false"/>
 
 
