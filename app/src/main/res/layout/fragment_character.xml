@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/character_bottom_sheet_size"
+                android:paddingBottom="@dimen/fab_bottom_margin"
                 />
         </ScrollView>
 
