@@ -45,10 +45,6 @@ internal interface IdApiServiceInterface {
     @GET("androidimageid?")
     suspend fun imageId(
         @Query("mediaId") mediaId: UUID,
-        @Query("x") x: Float?,
-        @Query("y") y: Float?,
-        @Query("size") size: Float?,
-        @Query("original") original: UUID?,
         @Query("speciesVersion") speciesVersion: Int
     ): List<BackendIdResult>
 
@@ -64,15 +60,9 @@ internal interface IdApiServiceInterface {
 class IdApiService internal constructor(private val service: IdApiServiceInterface) {
     suspend fun imageId(
         thumbnail: RemoteMediaThumbnail,
-        x: Float?,
-        y: Float?,
-        size: Float?,
-        // The media is not required to already be available to the server
-        // There is no FK-constraint on this id column
-        original: Media?,
         speciesVersion: Int
     ): List<BackendIdResult> =
-        service.imageId(thumbnail.id, x, y, size, original?.id, speciesVersion)
+        service.imageId(thumbnail.id, speciesVersion)
 
     suspend fun soundId(
         media: RemoteMedia,

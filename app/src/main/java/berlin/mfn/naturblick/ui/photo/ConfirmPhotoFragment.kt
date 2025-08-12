@@ -285,24 +285,18 @@ class ConfirmPhotoFragment :
 
     override fun onCropImageComplete(view: CropImageView, result: CropImageView.CropResult) {
         Settings.checkCcBy(requireActivity(), layoutInflater) {
-            model.cropSuccessful(result.cropRect!!, result.wholeImageRect!!)
+            model.cropSuccessful()
         }
     }
 
     private fun saveAndProceed(
         crop: MediaThumbnail,
-        cropRect: Rect,
-        full: Media,
-        wholeImageRect: Rect
+        full: Media
     ) {
         idResultLauncher.launch(
             IdentifySpeciesImage(
                 crop,
-                !model.isExisting,
-                cropRect.left.toFloat() / wholeImageRect.width(),
-                cropRect.top.toFloat() / wholeImageRect.height(),
-                cropRect.width().toFloat() / wholeImageRect.width(),
-                full
+                !model.isExisting
             )
         )
     }
@@ -310,9 +304,7 @@ class ConfirmPhotoFragment :
     @Suppress("UNUSED_PARAMETER")
     private fun saveAndFinish(
         crop: MediaThumbnail,
-        cropRect: Rect,
-        full: Media,
-        wholeImageRect: Rect
+        full: Media
     ) {
         finishWithResult(
             CropAndIdentifyPhotoResult(

@@ -56,19 +56,19 @@ class ImageIdViewModel(
     }
 
     private var afterCropAction:
-        ((MediaThumbnail, Rect, Media, Rect) -> Unit)? = null
+        ((MediaThumbnail, Media) -> Unit)? = null
 
     fun setAfterCropAction(
-        afterCropAction: (MediaThumbnail, Rect, Media, Rect) -> Unit
+        afterCropAction: (MediaThumbnail, Media) -> Unit
     ) {
         this.afterCropAction = afterCropAction
     }
 
-    fun cropSuccessful(cropRect: Rect, wholeImageRect: Rect) {
+    fun cropSuccessful() {
         crop = emptyCrop?.externallySuccessfullyCreated()
         emptyCrop = null
         afterCropAction?.let {
-            it(crop!!, cropRect, _full!!, wholeImageRect)
+            it(crop!!, _full!!)
         }
     }
 

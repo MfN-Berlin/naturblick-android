@@ -30,10 +30,6 @@ sealed interface IdentifySpecies : Parcelable {
 data class IdentifySpeciesImage(
     override val thumbnail: MediaThumbnail,
     override val isNew: Boolean,
-    val x: Float,
-    val y: Float,
-    val size: Float,
-    val media: Media
 ) : IdentifySpecies
 
 @Parcelize
@@ -43,12 +39,6 @@ data class IdentifySpeciesSound(
     val media: Media,
     val segmStart: Int,
     val segmEnd: Int
-) : IdentifySpecies
-
-@Parcelize
-data class IdentifySpeciesImageThumbnail(
-    override val thumbnail: MediaThumbnail,
-    override val isNew: Boolean = false
 ) : IdentifySpecies
 
 @Parcelize

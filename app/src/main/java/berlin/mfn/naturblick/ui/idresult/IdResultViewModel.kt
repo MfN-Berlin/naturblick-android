@@ -24,7 +24,7 @@ class IdResultViewModel(
     val thumbnail: MediaThumbnail = identifySpecies.thumbnail
 
     val isImage =
-        identifySpecies is IdentifySpeciesImage || identifySpecies is IdentifySpeciesImageThumbnail
+        identifySpecies is IdentifySpeciesImage
 
     val errorOptions: Int = if (identifySpecies.isNew) {
         R.array.autoid_error_options
@@ -53,10 +53,6 @@ class IdResultViewModel(
                             NetworkResult.catchNetworkAndServerErrors(getApplication()) {
                                 IdApi.service.imageId(
                                     remote,
-                                    identifySpecies.x,
-                                    identifySpecies.y,
-                                    identifySpecies.size,
-                                    identifySpecies.media,
                                     currentVersionDao.getCurrentVersion()
                                 )
                             }
@@ -73,21 +69,6 @@ class IdResultViewModel(
                                 )
                             }
                         }
-
-                    is IdentifySpeciesImageThumbnail -> identifySpecies.thumbnail.upload(
-                        getApplication()
-                    ).flatMap { remote ->
-                        NetworkResult.catchNetworkAndServerErrors(getApplication()) {
-                            IdApi.service.imageId(
-                                remote,
-                                null,
-                                null,
-                                null,
-                                null,
-                                currentVersionDao.getCurrentVersion()
-                            )
-                        }
-                    }
                 }.fold({ results ->
                     _idResults.value = results
                 }, { error ->

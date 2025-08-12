@@ -29,7 +29,7 @@ import berlin.mfn.naturblick.databinding.DialogTimeBinding
 import berlin.mfn.naturblick.databinding.FragmentObservationEditBinding
 import berlin.mfn.naturblick.ui.fieldbook.*
 import berlin.mfn.naturblick.ui.idresult.IdResultActivityContract
-import berlin.mfn.naturblick.ui.idresult.IdentifySpeciesImageThumbnail
+import berlin.mfn.naturblick.ui.idresult.IdentifySpeciesImage
 import berlin.mfn.naturblick.ui.photo.*
 import berlin.mfn.naturblick.ui.sound.CropAndIdentifySound
 import berlin.mfn.naturblick.ui.sound.CropAndIdentifySoundRequest
@@ -224,7 +224,7 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
             } else {
                 thumbnail?.let {
                     thumbnailImageId.launch(
-                        IdentifySpeciesImageThumbnail(it)
+                        IdentifySpeciesImage(it, isNew = false)
                     )
                 }
             }
