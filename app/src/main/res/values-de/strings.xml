@@ -275,4 +275,9 @@
         <item quantity="one">%d Beobachtung</item>
         <item quantity="other">%d Beobachtungen</item>
     </plurals>
+    <string name="filter">Filtern</string>
+    <string name="filter_ok">Auswahl übernehmen</string>
+    <string name="all">Kein Filter</string>
+    <string name="others">Sonstige</string>
+    <string name="unknown">Unbekannte</string>
 </resources>
