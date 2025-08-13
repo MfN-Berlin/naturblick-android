@@ -12,7 +12,9 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version "2.0.21"
     id 'org.jlleitschuh.gradle.ktlint' version '10.2.1'
     id 'berlin.mfn.naturblick.strapidbgenerator' version '1.0.0'
-     id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.0.21"
+    id 'androidx.room' version "2.7.2"
+    id 'com.google.devtools.ksp' version '2.0.21-1.0.27'
 }
 
 def version = new Properties()
@@ -40,13 +42,9 @@ android {
         buildConfigField("String", "STYLE_URL", "\"mapbox://styles/stadtnaturentdecken/ckhg9nswa19dy19npe3nb5uia\"")
         resValue("string", "mapbox_access_token", providers.gradleProperty("MAPBOX_ACCESS_TOKEN").getOrElse(System.getenv("MAPBOX_ACCESS_TOKEN")))
         resourceConfigurations += ['en', 'de']
-        javaCompileOptions {
-            annotationProcessorOptions {
-                 arguments += ["room.schemaLocation":
-                             "$projectDir/schemas".toString()]
-            }
+        room {
+            schemaDirectory "$projectDir/schemas"
         }
-
     }
     signingConfigs {
         release {
@@ -175,7 +173,7 @@ dependencies {
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.5"
 
     kapt 'com.github.bumptech.glide:compiler:4.16.0'
-    kapt "androidx.room:room-compiler:2.7.2"
+    ksp "androidx.room:room-compiler:2.7.2"
 
     implementation 'com.github.wendykierp:JTransforms:3.1'
 }
