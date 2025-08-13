@@ -149,8 +149,6 @@ dependencies {
     implementation "androidx.room:room-paging:2.7.2"
     implementation("androidx.work:work-runtime-ktx:2.10.3")
 
-
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.mapbox.maps:android-ndk27:10.19.0'
     implementation 'com.github.CanHub:Android-Image-Cropper:4.4.0'
     implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
@@ -175,5 +173,4 @@ dependencies {
     ksp 'com.github.bumptech.glide:ksp:4.16.0'
     ksp "androidx.room:room-compiler:2.7.2"
 
-    implementation 'com.github.wendykierp:JTransforms:3.1'
 }
