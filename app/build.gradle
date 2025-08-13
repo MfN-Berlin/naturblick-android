@@ -151,7 +151,7 @@ dependencies {
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.mapbox.maps:android:10.18.4'
+    implementation 'com.mapbox.maps:android-ndk27:10.19.0'
     implementation 'com.github.CanHub:Android-Image-Cropper:4.4.0'
     implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
     implementation "androidx.exifinterface:exifinterface:1.4.1"
