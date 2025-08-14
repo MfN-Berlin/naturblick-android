@@ -322,4 +322,9 @@ If you want, you can attribute your authorship with a name. The material will th
         <item quantity="one">%d observation</item>
         <item quantity="other">%d observations</item>
     </plurals>
+    <string name="filter">Filter</string>
+    <string name="filter_ok">Accept selection</string>
+    <string name="all">No filter</string>
+    <string name="others">Others</string>
+    <string name="unknown">Unknown</string>
 </resources>

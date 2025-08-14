@@ -10,9 +10,9 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun SimpleAlertDialog(
+fun NaturblickAlertDialog(
     title: String,
-    text: String,
+    text: @Composable (() -> Unit)?,
     confirm: String,
     dismiss: String,
     onDismissRequest: () -> Unit,
@@ -26,13 +26,7 @@ fun SimpleAlertDialog(
                 color = NaturblickTheme.colors.onSecondaryHighEmphasis
             )
         },
-        text = {
-            Text(
-                text,
-                style = NaturblickTheme.typography.body2,
-                color = NaturblickTheme.colors.onSecondaryMediumEmphasis
-            )
-        },
+        text = text,
         onDismissRequest = {
             onDismissRequest()
         },
@@ -43,7 +37,7 @@ fun SimpleAlertDialog(
                 }
             ) {
                 Text(
-                    confirm,
+                    confirm.uppercase(),
                     style = NaturblickTheme.typography.button,
                     color = NaturblickTheme.colors.onSecondaryButtonPrimary
                 )
@@ -56,11 +50,39 @@ fun SimpleAlertDialog(
                 }
             ) {
                 Text(
-                    dismiss,
+                    dismiss.uppercase(),
                     style = NaturblickTheme.typography.button,
                     color = NaturblickTheme.colors.onSecondaryButtonPrimary
                 )
             }
-        }
+        },
+        backgroundColor = NaturblickTheme.colors.secondary,
+        contentColor = NaturblickTheme.colors.onSecondaryHighEmphasis
     )
+}
+
+@Composable
+fun SimpleAlertDialog(
+    title: String,
+    text: String,
+    confirm: String,
+    dismiss: String,
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit
+) {
+    NaturblickAlertDialog(
+        title,
+        text = {
+            Text(
+                text,
+                style = NaturblickTheme.typography.body1,
+                color = NaturblickTheme.colors.onSecondaryHighEmphasis
+            )
+        },
+        confirm,
+        dismiss,
+        onDismissRequest,
+        onConfirmation
+    )
+
 }
