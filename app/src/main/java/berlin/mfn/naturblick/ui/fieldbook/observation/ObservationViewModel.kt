@@ -351,10 +351,10 @@ class ObservationViewModel(
         it.createdState?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
     }.asLiveData()
 
-    val createdTimeZonePosition = currentObservation.map {
+    val createdTimeZonePosition: LiveData<Int> = currentObservation.map {
         it.createdState?.let { created ->
             TimeZone.getAvailableIDs().indexOf(created.zone.id)
-        }
+        } ?: TimeZone.getAvailableIDs().indexOf("Europe/Berlin")
     }.asLiveData()
 
     private var _requestReadPermission: (() -> Unit)? = null
