@@ -365,12 +365,12 @@ class FieldbookActivity : FragmentActivity() {
         }) {
             if (isFiltered) {
                 Icon(
-                    painter = painterResource(R.drawable.filter_alt_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
+                    painter = painterResource(R.drawable.filter_alt_off_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
                     contentDescription = stringResource(id = R.string.filter)
                 )
             } else {
                 Icon(
-                    painter = painterResource(R.drawable.filter_alt_off_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
+                    painter = painterResource(R.drawable.filter_alt_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
                     contentDescription = stringResource(id = R.string.filter)
                 )
             }
