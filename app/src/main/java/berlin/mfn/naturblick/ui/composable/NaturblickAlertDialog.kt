@@ -39,7 +39,7 @@ fun NaturblickAlertDialog(
                 Text(
                     confirm.uppercase(),
                     style = NaturblickTheme.typography.button,
-                    color = NaturblickTheme.colors.onSecondaryHighEmphasis
+                    color = NaturblickTheme.colors.onSecondaryButtonPrimary
                 )
             }
         },
@@ -52,7 +52,7 @@ fun NaturblickAlertDialog(
                 Text(
                     dismiss.uppercase(),
                     style = NaturblickTheme.typography.button,
-                    color = NaturblickTheme.colors.onSecondaryHighEmphasis
+                    color = NaturblickTheme.colors.onSecondaryButtonPrimary
                 )
             }
         },
@@ -75,8 +75,8 @@ fun SimpleAlertDialog(
         text = {
             Text(
                 text,
-                style = NaturblickTheme.typography.body2,
-                color = NaturblickTheme.colors.onSecondaryMediumEmphasis
+                style = NaturblickTheme.typography.body1,
+                color = NaturblickTheme.colors.onSecondaryHighEmphasis
             )
         },
         confirm,

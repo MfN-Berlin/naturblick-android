@@ -518,16 +518,15 @@ class FieldbookActivity : FragmentActivity() {
                                     selected = group == selectableGroups[index],
                                     onClick = { newSelectedGroup = selectableGroups[index] },
                                     role = Role.RadioButton
-                                )
-                                .padding(8.dp),
+                                ),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
                                 selected = newSelectedGroup == selectableGroups[index],
                                 onClick = { newSelectedGroup = selectableGroups[index] },
                                 colors = RadioButtonDefaults.colors(
-                                    selectedColor = NaturblickTheme.colors.primary,
-                                    unselectedColor = MaterialTheme.colors.primary
+                                    selectedColor = NaturblickTheme.colors.onSecondaryHighEmphasis,
+                                    unselectedColor = NaturblickTheme.colors.onSecondaryMediumEmphasis
                                 )
                             )
                             val g = when (label) {
@@ -560,9 +559,8 @@ class FieldbookActivity : FragmentActivity() {
 
                             Text(
                                 text = if (languageId() == GERMAN_ID) g.gername else g.engname,
-//                                modifier = Modifier.padding(start = 8.dp),
-                                style = NaturblickTheme.typography.body2,
-                                color = NaturblickTheme.colors.onSecondaryMediumEmphasis
+                                style = NaturblickTheme.typography.body1,
+                                color = NaturblickTheme.colors.onSecondaryHighEmphasis
                             )
                         }
                     }
