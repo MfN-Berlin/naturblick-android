@@ -5,7 +5,11 @@
 
 package berlin.mfn.naturblick.room
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
 data class FullPortrait(
     val portrait: Portrait,
@@ -20,7 +24,11 @@ data class FullPortrait(
 }
 
 @Entity(
-    tableName = "portrait", indices = [Index("species_id")], foreignKeys = [ForeignKey(
+    tableName = "portrait", indices = [Index("species_id"),
+        Index("description_image_id"),
+        Index("in_the_city_image_id"),
+        Index("good_to_know_image_id")
+    ], foreignKeys = [ForeignKey(
         entity = Species::class,
         parentColumns = ["rowid"],
         childColumns = ["species_id"],

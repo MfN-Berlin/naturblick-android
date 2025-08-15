@@ -296,6 +296,7 @@ sealed interface Media : Parcelable {
     }
 }
 
+@ConsistentCopyVisibility
 @Parcelize
 data class EmptyLocalMedia internal constructor(
     val type: MediaType,

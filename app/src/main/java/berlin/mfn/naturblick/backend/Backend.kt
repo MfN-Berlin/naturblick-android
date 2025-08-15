@@ -42,10 +42,13 @@ private val client = OkHttpClient.Builder()
     .readTimeout(15, TimeUnit.SECONDS)
     .build()
 
+private val jsonFormat =
+    Json { ignoreUnknownKeys = true }
+
 private val retrofit = Retrofit.Builder()
     .client(client)
     .baseUrl(BuildConfig.BACKEND_URL)
-    .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(contentType))
+    .addConverterFactory(jsonFormat.asConverterFactory(contentType))
     .build()
 
 interface BackendApiService {
