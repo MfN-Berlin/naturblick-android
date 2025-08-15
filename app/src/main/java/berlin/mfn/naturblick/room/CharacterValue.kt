@@ -8,6 +8,7 @@ package berlin.mfn.naturblick.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import berlin.mfn.naturblick.utils.isGerman
 
@@ -20,7 +21,8 @@ import berlin.mfn.naturblick.utils.isGerman
             childColumns = ["character_id"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index("character_id")]
 )
 class CharacterValue(
     @PrimaryKey @ColumnInfo(name = "rowid") val id: Int,

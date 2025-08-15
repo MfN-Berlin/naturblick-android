@@ -18,6 +18,7 @@ import retrofit2.HttpException
 @Parcelize
 data class RecoverableError(val error: Int, val isSignedOut: Boolean = false) : Parcelable
 
+@ConsistentCopyVisibility
 data class NetworkResult<T : Any> internal constructor(
     val success: T?,
     val error: RecoverableError?,

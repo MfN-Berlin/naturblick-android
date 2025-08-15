@@ -6,6 +6,7 @@
 package berlin.mfn.naturblick.strapi
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -30,10 +31,15 @@ interface DjangoApiService {
 }
 
 object DjangoApi {
+
+    private val jsonFormat =
+        Json { ignoreUnknownKeys = true }
+
+    @OptIn(ExperimentalSerializationApi::class)
     fun service(baseUrl: String): DjangoApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(contentType))
+            .addConverterFactory(jsonFormat.asConverterFactory(contentType))
             .client(client)
             .build()
         return retrofit.create(DjangoApiService::class.java)

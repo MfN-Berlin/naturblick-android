@@ -51,7 +51,7 @@ abstract class StrapiDb : RoomDatabase() {
                     "django"
                 )
                     .createFromAsset("django-db.sqlite3")
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(false)
                     .build()
                 INSTANCE = it
                 it

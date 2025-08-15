@@ -16,7 +16,6 @@ import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 private val contentType = MediaType.get("application/json")
@@ -31,10 +30,13 @@ interface StrapiApiService {
 }
 
 object StrapiApi {
+    private val jsonFormat =
+        Json { ignoreUnknownKeys = true }
+
     fun service(baseUrl: String): StrapiApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(contentType))
+            .addConverterFactory(jsonFormat.asConverterFactory(contentType))
             .client(client)
             .build()
         return retrofit.create(StrapiApiService::class.java)

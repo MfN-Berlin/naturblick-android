@@ -61,6 +61,7 @@ sealed interface MediaThumbnail : Parcelable {
     }
 }
 
+@ConsistentCopyVisibility
 @Parcelize
 data class EmptyLocalMediaThumbnail internal constructor(val id: UUID, val file: File) :
     Parcelable {

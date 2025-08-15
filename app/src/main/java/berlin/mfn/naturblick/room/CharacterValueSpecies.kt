@@ -8,6 +8,7 @@ package berlin.mfn.naturblick.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -25,7 +26,8 @@ import androidx.room.PrimaryKey
             childColumns = ["species_id"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index("character_value_id"), Index("species_id")]
 )
 class CharacterValueSpecies(
     @PrimaryKey @ColumnInfo(name = "rowid") val id: Int,

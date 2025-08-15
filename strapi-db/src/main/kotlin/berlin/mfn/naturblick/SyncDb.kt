@@ -21,9 +21,9 @@ open class SyncDb : DefaultTask() {
     }
 
     @OutputFile
-    val speciesDbSql: RegularFileProperty = project.objects.fileProperty().convention {
-        File(project.buildDir, "assets/django-db.sqlite3")
-    }
+    val speciesDbSql: RegularFileProperty = project.objects.fileProperty().convention(
+        project.layout.buildDirectory.file("assets/django-db.sqlite3")
+    )
 
     @Input
     val djangoBaseUrl: Property<String> = project.objects.property(String::class.java)

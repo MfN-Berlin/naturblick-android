@@ -106,6 +106,8 @@ open class SyncMedia : DefaultTask() {
         vectorStart + circles(colors) + dots(colors, dots) + vectorEnd
 
 
+    // supresses ide warning: Call requires API level 26 (current min is 21) for copy / toPath / ... we can use that, because it's executed by gradle build
+    @Suppress("NewApi")
     @TaskAction
     fun doAction() {
         val baseUrl = strapiBaseUrl.get()
@@ -124,8 +126,10 @@ open class SyncMedia : DefaultTask() {
                 )
                 it.image?.let { image ->
                     strapiService.getFile(image).byteStream().use { svgStream ->
-                        val svgPath: Path = Path.of(project.buildDir.path, "tmp", "${it.id}.svg")
-                        project.mkdir(Path.of(project.buildDir.path, "tmp"))
+                        val tmpDir = project.layout.buildDirectory.dir("tmp").get().asFile
+                        val svgPath: Path = tmpDir.toPath().resolve("${it.id}.svg")
+                        project.mkdir(tmpDir)
+
                         Files.copy(svgStream, svgPath, StandardCopyOption.REPLACE_EXISTING)
                         imageFile.outputStream().use {
                             Svg2Vector.parseSvgToXml(svgPath, it)

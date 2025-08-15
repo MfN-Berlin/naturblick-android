@@ -7,9 +7,11 @@ package berlin.mfn.naturblick.room
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 
 @Dao
 interface CharacterDao {
     @Query("SELECT * FROM character WHERE `group` = :group")
+    @Transaction
     suspend fun getCharacters(group: String): List<CharacterWithValues>
 }
