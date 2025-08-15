@@ -95,13 +95,18 @@ android {
     namespace 'berlin.mfn.naturblick'
     applicationVariants.all { variant ->
         tasks["merge${variant.name.capitalize()}Assets"]
-            .dependsOn(tasks["sync${variant.name.capitalize()}Db"])
+                .dependsOn(tasks["sync${variant.name.capitalize()}Db"])
         tasks["generate${variant.name.capitalize()}ResValues"]
-            .dependsOn(tasks["sync${variant.name.capitalize()}Media"])
+                .dependsOn(tasks["sync${variant.name.capitalize()}Media"])
         tasks["map${variant.name.capitalize()}SourceSetPaths"].dependsOn(tasks["merge${variant.name.capitalize()}Resources"])
         tasks["sync${variant.name.capitalize()}Media"].imageDirectory = file("$buildDir/generated/res/drawable")
     }
 }
+
+tasks.matching { it.name.toLowerCase().contains("lint") }
+        .configureEach {
+            dependsOn tasks.named("syncReleaseDb")
+        }
 
 ktlint {
     android.set(true)
