@@ -6,11 +6,21 @@
 package berlin.mfn.naturblick.ui.idresult
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.room.Species
 import berlin.mfn.naturblick.room.StrapiDb
-import berlin.mfn.naturblick.utils.*
+import berlin.mfn.naturblick.utils.IdApi
+import berlin.mfn.naturblick.utils.MediaThumbnail
+import berlin.mfn.naturblick.utils.NetworkResult
+import berlin.mfn.naturblick.utils.RecoverableError
 import kotlinx.coroutines.launch
 
 class IdResultViewModel(
@@ -18,13 +28,16 @@ class IdResultViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    val db = StrapiDb.getDb(application)
-    val speciesDao = db.speciesDao()
-    val currentVersionDao = db.currenVersionDao()
+    private val db = StrapiDb.getDb(application)
+    private val speciesDao = db.speciesDao()
+    private val currentVersionDao = db.currenVersionDao()
     val thumbnail: MediaThumbnail = identifySpecies.thumbnail
 
     val isImage =
         identifySpecies is IdentifySpeciesImage
+
+    val isSound =
+        identifySpecies is IdentifySpeciesSound
 
     val errorOptions: Int = if (identifySpecies.isNew) {
         R.array.autoid_error_options
