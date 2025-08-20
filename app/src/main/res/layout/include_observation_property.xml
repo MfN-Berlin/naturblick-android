@@ -96,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/materialTextView2"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primary_100"
+            app:tint="?attr/colorOnSecondarySignalLow"
             android:focusable="false"
             />
 

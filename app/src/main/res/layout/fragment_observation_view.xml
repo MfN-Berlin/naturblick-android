@@ -123,7 +123,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:tint="@color/primary_100"
+                                app:tint="?attr/colorOnSecondarySignalLow"
                                 android:focusable="false"/>
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
