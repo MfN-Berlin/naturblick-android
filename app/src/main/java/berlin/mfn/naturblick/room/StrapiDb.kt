@@ -28,7 +28,8 @@ import berlin.mfn.naturblick.BuildConfig
         SourcesTranslations::class,
         TimeZonePolygon::class,
         TimeZoneVertex::class,
-        CurrentVersion::class
+        CurrentVersion::class,
+        Group::class
     ]
 )
 abstract class StrapiDb : RoomDatabase() {

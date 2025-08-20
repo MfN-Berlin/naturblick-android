@@ -9,6 +9,7 @@ import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import berlin.mfn.naturblick.BuildConfig
@@ -20,6 +21,13 @@ import berlin.mfn.naturblick.utils.isGerman
     indices = [
         Index(value = ["gername"], name = "idx_species_gername"),
         Index(value = ["engname"], name = "idx_species_engname")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = Group::class,
+            parentColumns = ["name"],
+            childColumns = ["group_id"]
+        )
     ]
 )
 data class Species(
