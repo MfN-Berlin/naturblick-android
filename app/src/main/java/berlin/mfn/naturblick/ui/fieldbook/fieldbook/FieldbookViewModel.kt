@@ -21,7 +21,8 @@ import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
 import berlin.mfn.naturblick.backend.PublicBackendApi
 import berlin.mfn.naturblick.room.StrapiDb
-import berlin.mfn.naturblick.ui.data.Group
+import berlin.mfn.naturblick.ui.data.UiGroup
+import berlin.mfn.naturblick.ui.data.GroupRepo
 import berlin.mfn.naturblick.utils.ENGLISH_ID
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import berlin.mfn.naturblick.utils.NetworkResult
@@ -43,6 +44,15 @@ class FieldbookViewModel(
 ) : AndroidViewModel(application) {
     private val operationDao = ObservationDb.getDb(application).operationDao()
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
+
+    var groups by mutableStateOf<List< UiGroup>>(emptyList())
+        private set
+
+    init {
+        viewModelScope.launch {
+            groups = GroupRepo.getFieldbookFilterGroups(application)
+        }
+    }
 
     private suspend fun toFieldbookObservation(observation: Observation): FieldbookObservation =
         FieldbookObservation(
@@ -119,7 +129,7 @@ class FieldbookViewModel(
                 val speciesSet = when (group) {
                     OTHERS_GROUPS -> speciesDao.filterOthersSpeciesIds(
                         "%$query%",
-                        Group.fieldbookFilterGroupIds,
+                        GroupRepo.getFieldbookFilterGroupIds(application),
                         languageId()
                     ).toHashSet()
 
@@ -141,6 +151,8 @@ class FieldbookViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val selectableGroupsFlow =
         operationDao.getAllObservations().mapLatest { obervations ->
+            val fieldbookFilterGroupIds = GroupRepo.getFieldbookFilterGroupIds(application)
+            val fieldbookFilterGroups = GroupRepo.getFieldbookFilterGroups(application)
             val obsGroups = obervations
                 .map { toFieldbookObservation(it) }
                 .mapNotNull { it.species?.group }
@@ -149,18 +161,22 @@ class FieldbookViewModel(
             val withUnknown = obervations
                 .map { toFieldbookObservation(it) }.any { it.species == null }
 
-            val withOthers = !Group.fieldbookFilterGroupIds.containsAll(obsGroups)
+            val withOthers = !fieldbookFilterGroupIds.containsAll(obsGroups)
 
             val selectableGroups = mutableListOf(ALL_GROUPS)
 
+            if (withUnknown) {
+                selectableGroups.add(UNKNOWN_GROUPS)
+            }
+
             selectableGroups.addAll(
                 obsGroups.filter {
-                    Group.fieldbookFilterGroupIds.contains(it)
+                    fieldbookFilterGroupIds.contains(it)
                 }.sortedBy { sg ->
                     if (languageId() == ENGLISH_ID) {
-                        Group.groups.first { it.id == sg }.engname
+                        fieldbookFilterGroups.first { it.id == sg }.engname
                     } else {
-                        Group.groups.first { it.id == sg }.gername
+                        fieldbookFilterGroups.first { it.id == sg }.gername
                     }
                 })
 
@@ -168,9 +184,6 @@ class FieldbookViewModel(
                 selectableGroups.add(OTHERS_GROUPS)
             }
 
-            if (withUnknown) {
-                selectableGroups.add(UNKNOWN_GROUPS)
-            }
             selectableGroups
         }
 

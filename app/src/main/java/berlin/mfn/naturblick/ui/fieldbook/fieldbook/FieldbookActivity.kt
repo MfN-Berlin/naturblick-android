@@ -20,12 +20,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
@@ -47,6 +47,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,10 +56,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
+import androidx.lifecycle.lifecycleScope
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
 import berlin.mfn.naturblick.ui.composable.FloatingActionButton
@@ -67,8 +68,9 @@ import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.composable.SearchField
 import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
-import berlin.mfn.naturblick.ui.data.Group
+import berlin.mfn.naturblick.ui.data.GroupRepo
 import berlin.mfn.naturblick.ui.data.GroupType
+import berlin.mfn.naturblick.ui.data.UiGroup
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
@@ -86,6 +88,7 @@ import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.utils.GERMAN_ID
 import berlin.mfn.naturblick.utils.languageId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 const val ALL_GROUPS = "all"
@@ -201,6 +204,7 @@ class FieldbookActivity : FragmentActivity() {
         } else {
             SyncWorker.triggerBackgroundSync(applicationContext, ::onSignedOut)
         }
+
         setContent {
             val observations by model.observationsFlow.collectAsState(emptyList())
             val selectableGroups by model.selectableGroupsFlow.collectAsState(emptyList())
@@ -311,9 +315,11 @@ class FieldbookActivity : FragmentActivity() {
                             )
                     }
                     if (openGroupsDialog) {
+
                         GroupFilterDialog(
                             selectableGroups,
                             model.group,
+                            model.groups,
                             onDismiss = { openGroupsDialog = !openGroupsDialog },
                             onConfirm = { selectedGroup ->
                                 model.updateGroup(selectedGroup)
@@ -501,6 +507,7 @@ class FieldbookActivity : FragmentActivity() {
     fun GroupFilterDialog(
         selectableGroups: List<String>,
         group: String,
+        groups: List<UiGroup>,
         onDismiss: () -> Unit,
         onConfirm: (selectedGroup: String) -> Unit
     ) {
@@ -530,7 +537,7 @@ class FieldbookActivity : FragmentActivity() {
                                 )
                             )
                             val g = when (label) {
-                                ALL_GROUPS -> Group(
+                                ALL_GROUPS -> UiGroup(
                                     ALL_GROUPS,
                                     stringResource(R.string.all),
                                     stringResource(R.string.all),
@@ -538,7 +545,7 @@ class FieldbookActivity : FragmentActivity() {
                                     GroupType.FLORA
                                 )
 
-                                OTHERS_GROUPS -> Group(
+                                OTHERS_GROUPS -> UiGroup(
                                     OTHERS_GROUPS,
                                     stringResource(R.string.others),
                                     stringResource(R.string.others),
@@ -546,7 +553,7 @@ class FieldbookActivity : FragmentActivity() {
                                     GroupType.FLORA
                                 )
 
-                                UNKNOWN_GROUPS -> Group(
+                                UNKNOWN_GROUPS -> UiGroup(
                                     UNKNOWN_GROUPS,
                                     stringResource(R.string.unknown),
                                     stringResource(R.string.unknown),
@@ -554,7 +561,8 @@ class FieldbookActivity : FragmentActivity() {
                                     GroupType.FLORA
                                 )
 
-                                else -> Group.groups.first { it.id == label }
+                                else ->
+                                    groups.first { it.id == label }
                             }
 
                             Text(

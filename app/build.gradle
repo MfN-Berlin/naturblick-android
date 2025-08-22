@@ -100,6 +100,7 @@ android {
                 .dependsOn(tasks["sync${variant.name.capitalize()}Media"])
         tasks["map${variant.name.capitalize()}SourceSetPaths"].dependsOn(tasks["merge${variant.name.capitalize()}Resources"])
         tasks["sync${variant.name.capitalize()}Media"].imageDirectory = file("$buildDir/generated/res/drawable")
+        tasks["sync${variant.name.capitalize()}Media"].nodpiDirectory = file("$buildDir/generated/res/drawable-nodpi")
     }
 }
 

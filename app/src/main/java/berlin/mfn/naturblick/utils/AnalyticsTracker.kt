@@ -11,7 +11,7 @@ import android.view.WindowManager
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.NaturblickApplication
 import berlin.mfn.naturblick.room.Species
-import berlin.mfn.naturblick.ui.data.Group
+import berlin.mfn.naturblick.ui.data.UiGroup
 import berlin.mfn.naturblick.ui.species.CharacterQuery
 import com.snowplowanalytics.snowplow.Snowplow
 import com.snowplowanalytics.snowplow.configuration.EmitterConfiguration
@@ -25,7 +25,6 @@ import com.snowplowanalytics.snowplow.network.HttpMethod
 import com.snowplowanalytics.snowplow.util.TimeMeasure
 import java.util.concurrent.TimeUnit
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Serializable
@@ -98,14 +97,14 @@ object AnalyticsTracker {
         app.tracker.track(event)
     }
 
-    fun trackWhichSpeciesMkey(app: NaturblickApplication, group: Group) {
+    fun trackWhichSpeciesMkey(app: NaturblickApplication, group: UiGroup) {
         val event = Structured("UI", "pickSpeciesMKey")
             .label(group.id)
             .property(group.name)
         app.tracker.track(event)
     }
 
-    fun trackWhichSpeciesGroup(app: NaturblickApplication, group: Group) {
+    fun trackWhichSpeciesGroup(app: NaturblickApplication, group: UiGroup) {
         val event = Structured("UI", "pickSpeciesGroup")
             .label(group.id)
             .property(group.name)
