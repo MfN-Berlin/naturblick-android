@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.NaturblickApplication
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentGroupsBinding
-import berlin.mfn.naturblick.ui.data.Group.Companion.portraitGroups
+import berlin.mfn.naturblick.ui.data.GroupRepo
 import berlin.mfn.naturblick.utils.AnalyticsTracker
 
 class GroupsFragment : Fragment() {
@@ -25,7 +25,7 @@ class GroupsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentGroupsBinding.inflate(inflater, container, false)
-        binding.groupsGrid.setGroups(portraitGroups) {
+        binding.groupsGrid.setGroups(GroupRepo.getPortraitGroups()) {
 
             AnalyticsTracker.trackWhichSpeciesGroup(
                 requireActivity().application as NaturblickApplication,

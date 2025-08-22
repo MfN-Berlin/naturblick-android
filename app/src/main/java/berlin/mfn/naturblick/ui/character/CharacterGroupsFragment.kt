@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.NaturblickApplication
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentGroupsBinding
-import berlin.mfn.naturblick.ui.data.Group.Companion.characterGroups
+import berlin.mfn.naturblick.ui.data.GroupRepo
 import berlin.mfn.naturblick.utils.AnalyticsTracker
 
 class CharacterGroupsFragment : Fragment() {
@@ -27,7 +27,7 @@ class CharacterGroupsFragment : Fragment() {
         (requireActivity() as CharacterActivity)
             .supportActionBar?.setTitle(R.string.select_characteristics)
 
-        binding.groupsGrid.setGroups(characterGroups) {
+        binding.groupsGrid.setGroups(GroupRepo.getCharacterGroups()) {
 
             AnalyticsTracker.trackWhichSpeciesMkey(
                 requireActivity().application as NaturblickApplication,

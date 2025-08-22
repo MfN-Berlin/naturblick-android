@@ -20,7 +20,7 @@ import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentFieldbookMapBinding
 import berlin.mfn.naturblick.databinding.ViewObservationPopupBinding
-import berlin.mfn.naturblick.ui.data.Group.Companion.getMapIcon
+import berlin.mfn.naturblick.ui.data.GroupRepo
 import berlin.mfn.naturblick.ui.fieldbook.ManageObservation.OBSERVATION_ACTION
 import berlin.mfn.naturblick.ui.fieldbook.OpenObservation
 import berlin.mfn.naturblick.ui.fieldbook.fieldbook.FieldbookActivity.Companion.OCCURENCE_ID
@@ -124,7 +124,7 @@ class FieldbookMapFragment : Fragment() {
                             observations.mapNotNull { observation ->
                                 observation.coords?.let { coords ->
                                     val group = observation.species?.group
-                                    getMapIcon(requireContext(), group).let { bitmap ->
+                                    GroupRepo.getMapIcon(requireContext(), group).let { bitmap ->
                                         PointAnnotationOptions()
                                             .withPoint(Point.fromLngLat(coords.lon, coords.lat))
                                             .withIconImage(bitmap)

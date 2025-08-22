@@ -20,12 +20,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
@@ -67,7 +68,8 @@ import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.composable.SearchField
 import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
-import berlin.mfn.naturblick.ui.data.Group
+import berlin.mfn.naturblick.ui.data.GroupRepo
+import berlin.mfn.naturblick.ui.data.UiGroup
 import berlin.mfn.naturblick.ui.data.GroupType
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
@@ -505,6 +507,7 @@ class FieldbookActivity : FragmentActivity() {
         onConfirm: (selectedGroup: String) -> Unit
     ) {
         var newSelectedGroup by remember { mutableStateOf(group) }
+        val scrollState = rememberScrollState()
 
         NaturblickAlertDialog(
             title = stringResource(R.string.filter),
@@ -530,7 +533,7 @@ class FieldbookActivity : FragmentActivity() {
                                 )
                             )
                             val g = when (label) {
-                                ALL_GROUPS -> Group(
+                                ALL_GROUPS -> UiGroup(
                                     ALL_GROUPS,
                                     stringResource(R.string.all),
                                     stringResource(R.string.all),
@@ -538,7 +541,7 @@ class FieldbookActivity : FragmentActivity() {
                                     GroupType.FLORA
                                 )
 
-                                OTHERS_GROUPS -> Group(
+                                OTHERS_GROUPS -> UiGroup(
                                     OTHERS_GROUPS,
                                     stringResource(R.string.others),
                                     stringResource(R.string.others),
@@ -546,7 +549,7 @@ class FieldbookActivity : FragmentActivity() {
                                     GroupType.FLORA
                                 )
 
-                                UNKNOWN_GROUPS -> Group(
+                                UNKNOWN_GROUPS -> UiGroup(
                                     UNKNOWN_GROUPS,
                                     stringResource(R.string.unknown),
                                     stringResource(R.string.unknown),
@@ -554,7 +557,7 @@ class FieldbookActivity : FragmentActivity() {
                                     GroupType.FLORA
                                 )
 
-                                else -> Group.groups.first { it.id == label }
+                                else -> GroupRepo.getFieldbookFilterGroups().first { it.id == label }
                             }
 
                             Text(
