@@ -7,11 +7,10 @@ package berlin.mfn.naturblick.ui
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -71,6 +70,22 @@ open class BaseActivity(
             view.updatePadding(top = insets.top)
             windowInsets
         }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+                if (onLeave { closeActivity ->
+                        if (closeActivity) {
+                            finish()
+                        } else {
+                            onBackPressedDispatcher.onBackPressed()
+                        }
+                    }
+                ) {
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -82,29 +97,22 @@ open class BaseActivity(
                 val navController = findNavController(R.id.nav_host_fragment)
                 navController.navigateUp(appBarConfiguration) ||
                     super.onSupportNavigateUp() ||
-                    super.onBackPressed().let { true }
+                    onBackPressedDispatcher.onBackPressed().let { true }
             }
         }
         ) {
             val navController = findNavController(R.id.nav_host_fragment)
-            navController.navigateUp(appBarConfiguration) ||
-                super.onSupportNavigateUp() ||
-                super.onBackPressed().let { true }
+            if(!navController.navigateUp(appBarConfiguration)) {
+                if (!super.onSupportNavigateUp()) {
+                    super.onBackPressedDispatcher.onBackPressed().let { true }
+                } else {
+                    true
+                }
+            } else {
+                true
+            }
         } else {
             false
-        }
-    }
-
-    override fun onBackPressed() {
-        if (onLeave { closeActivity ->
-            if (closeActivity) {
-                finish()
-            } else {
-                super.onBackPressed()
-            }
-        }
-        ) {
-            super.onBackPressed()
         }
     }
 
