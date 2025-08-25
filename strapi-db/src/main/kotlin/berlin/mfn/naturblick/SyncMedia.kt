@@ -41,6 +41,9 @@ open class SyncMedia : DefaultTask() {
     @OutputDirectory
     val imageDirectory: DirectoryProperty = project.objects.directoryProperty()
 
+    @OutputDirectory
+    val nodpiDirectory: DirectoryProperty = project.objects.directoryProperty()
+
     private val vectorStart = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
             android:width="74dp"
@@ -148,7 +151,7 @@ open class SyncMedia : DefaultTask() {
             allGroups?.forEach { group ->
                 val imageUrl = group.image ?: return@forEach
                 val safeName = "group_" +  group.name
-                val file = File(imageDirectory.get().toString(), "$safeName.png")
+                val file = File(nodpiDirectory.get().toString(), "$safeName.png")
 
                 downloadImage(imageUrl) { input ->
                     FileOutputStream(file).use { output ->
