@@ -78,10 +78,12 @@ open class BaseActivity(
                         if (closeActivity) {
                             finish()
                         } else {
+                            isEnabled = false
                             onBackPressedDispatcher.onBackPressed()
                         }
                     }
                 ) {
+                    isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
                 }
             }
