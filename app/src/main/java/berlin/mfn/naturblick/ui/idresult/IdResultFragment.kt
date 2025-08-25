@@ -82,18 +82,7 @@ class IdResultFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val identifySpecies =
-            IntentCompat.getParcelableExtra(
-                requireActivity().intent,
-                IdResultActivityContractBase.ID_SPECIES,
-                IdentifySpecies::class.java
-            )!!
-        val viewModel by activityViewModels<IdResultViewModel> {
-            IdResultViewModelFactory(
-                identifySpecies,
-                requireActivity().application
-            )
-        }
+        val viewModel by activityViewModels<IdResultViewModel>()
         model = viewModel
 
         val binding = FragmentIdResultBinding.inflate(inflater, container, false)

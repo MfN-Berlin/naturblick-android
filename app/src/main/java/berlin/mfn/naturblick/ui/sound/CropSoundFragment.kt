@@ -81,9 +81,7 @@ class CropSoundFragment : Fragment(), RequestedPermissionCallback {
     ): View {
         binding = FragmentCropSpectrogramBinding.inflate(inflater, container, false)
         binding.buttonSheet.setupBottomInset()
-        val viewModel by activityViewModels<CropSoundViewModel> {
-            CropSoundViewModelFactory(requireActivity().application)
-        }
+        val viewModel by activityViewModels<CropSoundViewModel>()
         model = viewModel
         model.data.observe(viewLifecycleOwner) { result ->
             result.fold({ (uri, media, spectrogram, isNew, initialStart, initialEnd) ->

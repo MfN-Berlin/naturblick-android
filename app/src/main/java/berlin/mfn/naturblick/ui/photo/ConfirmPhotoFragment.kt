@@ -253,18 +253,7 @@ class ConfirmPhotoFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val request =
-            IntentCompat.getParcelableExtra(
-                requireActivity().intent,
-                CropAndIdentifyPhoto.CROP_AND_IDENTIFY_REQUEST,
-                CropAndIdentifyPhotoRequest::class.java
-            )!!
-        val imageIdModel by activityViewModels<ImageIdViewModel> {
-            ImageIdViewModelFactory(
-                request,
-                requireActivity().application
-            )
-        }
+        val imageIdModel by activityViewModels<ImageIdViewModel>()
 
         model = imageIdModel
 

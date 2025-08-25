@@ -106,11 +106,7 @@ class RecordSoundFragment : Fragment(), RequiredPermissionCallback {
         val viewModel: RecordSoundViewModel by viewModels()
         model = viewModel
         model.setStart(::start)
-        val cropViewModel: CropSoundViewModel by activityViewModels {
-            CropSoundViewModelFactory(
-                requireActivity().application
-            )
-        }
+        val cropViewModel: CropSoundViewModel by activityViewModels()
         cropModel = cropViewModel
         binding = FragmentRecordSoundBinding.inflate(inflater, container, false)
         binding.buttonSheet.setupBottomInset()

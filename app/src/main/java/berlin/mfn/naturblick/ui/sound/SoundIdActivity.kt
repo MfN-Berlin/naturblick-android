@@ -8,6 +8,9 @@ package berlin.mfn.naturblick.ui.sound
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.IntentCompat
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.ui.BaseActivity
 
@@ -25,7 +28,11 @@ class SoundIdActivity : BaseActivity(
             CropAndIdentifySoundRequest::class.java
         )
         val viewModel: CropSoundViewModel by viewModels {
-            CropSoundViewModelFactory(application)
+            viewModelFactory {
+                initializer {
+                    CropSoundViewModel(application, createSavedStateHandle())
+                }
+            }
         }
         model = viewModel
         if (request != null) {

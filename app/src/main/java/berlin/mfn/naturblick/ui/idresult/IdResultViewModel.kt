@@ -97,19 +97,3 @@ class IdResultViewModel(
     }
 }
 
-class IdResultViewModelFactory(
-    private val identifySpecies: IdentifySpecies,
-    private val application: Application
-) : AbstractSavedStateViewModelFactory() {
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(
-        key: String,
-        modelClass: Class<T>,
-        handle: SavedStateHandle
-    ): T {
-        return IdResultViewModel(
-            identifySpecies, handle, application
-        ) as T
-    }
-}

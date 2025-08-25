@@ -59,6 +59,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
 import berlin.mfn.naturblick.ui.composable.FloatingActionButton
@@ -188,7 +191,11 @@ class FieldbookActivity : FragmentActivity() {
         val initialObservation =
             IntentCompat.getParcelableExtra(intent, OCCURENCE_ID, ParcelUuid::class.java)?.uuid
         val model: FieldbookViewModel by viewModels {
-            FieldbookViewModelFactory(application)
+            viewModelFactory {
+                initializer {
+                    FieldbookViewModel(application, createSavedStateHandle())
+                }
+            }
         }
         val action = IntentCompat.getParcelableExtra(
             intent,
