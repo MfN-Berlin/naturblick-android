@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright © 2024 Museum für Naturkunde Berlin.
  * This code is licensed under MIT license (see LICENSE.txt for details)
@@ -58,9 +60,9 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
         }
-        getByName("debug") {
+        named("debug") {
             applicationIdSuffix = ".debug"
             def strapiBaseUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/strapi/"
             syncDebugMedia.strapiBaseUrl = strapiBaseUrl
@@ -75,31 +77,39 @@ android {
     }
     compileOptions {
         // Flag to enable support for java 1.8 APIs
-        coreLibraryDesugaringEnabled true
+        coreLibraryDesugaringEnabled = true
 
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = '17'
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
     }
     buildFeatures {
-        dataBinding true
-        buildConfig true
-        compose true
+        dataBinding = true
+        buildConfig = true
+        compose = true
     }
     sourceSets {
         main.assets.srcDirs += 'build/assets'
         main.res.srcDirs += 'build/generated/res'
     }
-    namespace 'berlin.mfn.naturblick'
+    namespace = 'berlin.mfn.naturblick'
     applicationVariants.all { variant ->
-        tasks["merge${variant.name.capitalize()}Assets"]
-                .dependsOn(tasks["sync${variant.name.capitalize()}Db"])
-        tasks["generate${variant.name.capitalize()}ResValues"]
-                .dependsOn(tasks["sync${variant.name.capitalize()}Media"])
-        tasks["map${variant.name.capitalize()}SourceSetPaths"].dependsOn(tasks["merge${variant.name.capitalize()}Resources"])
-        tasks["sync${variant.name.capitalize()}Media"].imageDirectory = file("$buildDir/generated/res/drawable")
+        tasks.named("merge${variant.name.capitalize()}Assets") {
+            dependsOn(tasks.named("sync${variant.name.capitalize()}Db"))
+        }
+        tasks.named("generate${variant.name.capitalize()}ResValues") {
+            dependsOn(tasks.named("sync${variant.name.capitalize()}Media"))
+        }
+        tasks.named("map${variant.name.capitalize()}SourceSetPaths") {
+            dependsOn(tasks.named("merge${variant.name.capitalize()}Resources"))
+        }
+        tasks.named("sync${variant.name.capitalize()}Media") {
+            imageDirectory = file("${layout.buildDirectory}/generated/res/drawable")
+        }
     }
 }
 
