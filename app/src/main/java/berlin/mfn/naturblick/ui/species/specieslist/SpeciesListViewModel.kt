@@ -32,6 +32,11 @@ class SpeciesListViewModel(private val speciesDao: SpeciesDao) : ViewModel() {
         _group.value = group
     }
 
+    private val _nature: MutableLiveData<String?> = MutableLiveData()
+    fun setNature(nature: String?) {
+        _nature.value = nature
+    }
+
     private val _charcters: MutableLiveData<CharacterQuery?> = MutableLiveData()
     fun setCharacters(characters: CharacterQuery?) {
         _charcters.value = characters
@@ -40,12 +45,14 @@ class SpeciesListViewModel(private val speciesDao: SpeciesDao) : ViewModel() {
     val pagingData = _group.switchMap { group ->
         _charcters.switchMap { characters ->
             _query.switchMap { query ->
-                Pager(PAGING_CONFIG) {
-                    val searchQuery = if (query != null) "%$query%" else null
-                    if (group != null) {
-                        speciesDao.filterSpeciesWithPortrait(group, searchQuery, languageId())
-                    } else {
-                        if (characters != null) {
+                _nature.switchMap { nature ->
+                    Pager(PAGING_CONFIG) {
+                        val searchQuery = if (query != null) "%$query%" else null
+                        if (group != null) {
+                            speciesDao.filterSpeciesWithPortrait(group, searchQuery, languageId())
+                        } else if (nature != null) {
+                            speciesDao.filterSpeciesByNature(nature, searchQuery, languageId())
+                        } else if (characters != null) {
                             speciesDao.filterSpeciesByCharacters(
                                 searchQuery,
                                 languageId(),
@@ -55,8 +62,8 @@ class SpeciesListViewModel(private val speciesDao: SpeciesDao) : ViewModel() {
                         } else {
                             speciesDao.filterSpecies(searchQuery, languageId())
                         }
-                    }
-                }.liveData.cachedIn(this)
+                    }.liveData.cachedIn(this)
+                }
             }
         }
     }

@@ -53,6 +53,24 @@ interface SpeciesDao {
     ): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
+        """SELECT s.*, NULL as female FROM species AS s
+             JOIN groups AS g ON g.name = s.group_id
+        WHERE g.nature = :nature AND (:query IS NULL 
+            OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query)) 
+            OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query)) 
+            OR sciname LIKE :query) AND gersearchfield IS NOT NULL
+        ORDER BY 
+            CASE WHEN :language = $GERMAN_ID THEN s.gername IS NULL ELSE s.engname IS NULL END, 
+            CASE WHEN :language = $GERMAN_ID THEN s.gername ELSE s.engname END, 
+            CASE WHEN :language = $GERMAN_ID THEN s.gersynonym IS NULL ELSE s.engsynonym IS NULL END,
+            CASE WHEN :language = $GERMAN_ID THEN s.gersynonym ELSE s.engsynonym END,
+            sciname
+            """
+    )
+    fun filterSpeciesByNature(nature: String, query: String?, language: Int
+    ): PagingSource<Int, SpeciesWithGenus>
+
+    @Query(
         """SELECT species.*, NULL as female FROM species 
         WHERE (:query IS NULL 
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query)) 

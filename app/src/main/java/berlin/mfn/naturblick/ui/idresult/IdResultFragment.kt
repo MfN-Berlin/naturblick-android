@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentIdResultBinding
 import berlin.mfn.naturblick.ui.idresult.IdResultActivityContractBase.Companion.ID_RESULT
+import berlin.mfn.naturblick.ui.species.PickFaunaSpecies
 import berlin.mfn.naturblick.ui.species.PickSpecies
 import berlin.mfn.naturblick.ui.species.portrait.SpeciesId
 import berlin.mfn.naturblick.utils.*
@@ -29,6 +30,11 @@ class IdResultFragment : Fragment() {
     private var showSpeciesDialog: AlertDialog? = null
     private var errorDialog: AlertDialog? = null
     private val findSpeciesResult = registerForActivityResult(PickSpecies) { speciesResult ->
+        if (speciesResult != null) {
+            finish(speciesResult.speciesId)
+        }
+    }
+    private val findFaunaSpeciesResult = registerForActivityResult(PickFaunaSpecies) { speciesResult ->
         if (speciesResult != null) {
             finish(speciesResult.speciesId)
         }
@@ -58,7 +64,7 @@ class IdResultFragment : Fragment() {
                         when (chosen) {
                             0 -> finish(null)
                             1 -> cancel()
-                            2 -> findSpeciesResult.launch(Unit)
+                            2 -> if (model.isSound) findFaunaSpeciesResult.launch(Unit) else findSpeciesResult.launch(Unit)
                             3 -> discard()
                             4 -> {} // Closes dialog
                         }
@@ -67,7 +73,7 @@ class IdResultFragment : Fragment() {
                     setItems(if (model.isImage) R.array.photo_options else R.array.sound_options) { _, chosen ->
                         when (chosen) {
                             0 -> cancel()
-                            1 -> findSpeciesResult.launch(Unit)
+                            1 -> if (model.isSound) findFaunaSpeciesResult.launch(Unit) else findSpeciesResult.launch(Unit)
                             2 -> discard()
                             3 -> {} // Closes dialog
                         }
@@ -145,12 +151,12 @@ class IdResultFragment : Fragment() {
                     }
                     binding.selectSpeciesName.setText(R.string.select_species)
                     binding.selectSpecies.setSingleClickListener {
-                        findSpeciesResult.launch(Unit)
+                        if (model.isSound) findFaunaSpeciesResult.launch(Unit) else findSpeciesResult.launch(Unit)
                     }
                 } else {
                     binding.discardName.setText(R.string.select_species)
                     binding.discard.setSingleClickListener {
-                        findSpeciesResult.launch(Unit)
+                        if (model.isSound) findFaunaSpeciesResult.launch(Unit) else findSpeciesResult.launch(Unit)
                     }
                     binding.selectSpeciesName.setText(R.string.cancel)
                     binding.selectSpecies.setSingleClickListener {
@@ -183,7 +189,7 @@ class IdResultFragment : Fragment() {
                 setItems(model.errorOptions) { _, chosen ->
                     when (chosen) {
                         0 -> model.identify()
-                        1 -> findSpeciesResult.launch(Unit)
+                        1 -> if (model.isSound) findFaunaSpeciesResult.launch(Unit) else findSpeciesResult.launch(Unit)
                         2 -> if(model.isNew) {
                             finish(null)
                         } else {

@@ -48,6 +48,9 @@ class SpeciesListActivity : BaseActivity(R.navigation.species_list_navigation) {
         }
 
         speciesListViewModel.setGroup(group)
+        val nature = intent?.extras?.getString(QUERY_NATURE)
+        speciesListViewModel.setNature(nature)
+
         val characters = intent?.let {
             IntentCompat.getParcelableExtra(it, QUERY_CHARACTERS, CharacterQuery::class.java)
         }
@@ -123,6 +126,7 @@ class SpeciesListActivity : BaseActivity(R.navigation.species_list_navigation) {
 
     companion object {
         const val QUERY_GROUP = "group"
+        const val QUERY_NATURE = "nature"
         const val QUERY_CHARACTERS = "characters"
         const val QUERY_TITLE = "title"
         const val QUERY_IS_OPEN = "is_open"
