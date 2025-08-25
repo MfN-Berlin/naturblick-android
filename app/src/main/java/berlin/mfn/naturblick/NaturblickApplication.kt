@@ -10,6 +10,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import berlin.mfn.naturblick.backend.RegisterDeviceWorker
+import berlin.mfn.naturblick.ui.data.GroupRepo
 import berlin.mfn.naturblick.utils.AnalyticsTracker
 import com.snowplowanalytics.snowplow.controller.TrackerController
 
@@ -22,6 +23,7 @@ class NaturblickApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         registerDevice()
+        GroupRepo.init(this)
         _tracker = AnalyticsTracker.createTracker(applicationContext)
         AnalyticsTracker.trackInitEvent(applicationContext, tracker)
     }

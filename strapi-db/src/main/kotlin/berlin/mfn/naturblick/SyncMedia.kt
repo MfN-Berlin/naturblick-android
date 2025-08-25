@@ -6,9 +6,13 @@
 package berlin.mfn.naturblick
 
 import berlin.mfn.naturblick.strapi.DjangoApi
+import berlin.mfn.naturblick.strapi.DjangoApiService
 import berlin.mfn.naturblick.strapi.StrapiApi
+import berlin.mfn.naturblick.strapi.StrapiApiService
 import com.android.ide.common.vectordrawable.Svg2Vector
 import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
@@ -16,9 +20,12 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
+
 
 open class SyncMedia : DefaultTask() {
     init {
@@ -33,6 +40,9 @@ open class SyncMedia : DefaultTask() {
 
     @OutputDirectory
     val imageDirectory: DirectoryProperty = project.objects.directoryProperty()
+
+    @OutputDirectory
+    val nodpiDirectory: DirectoryProperty = project.objects.directoryProperty()
 
     private val vectorStart = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
@@ -117,35 +127,94 @@ open class SyncMedia : DefaultTask() {
         val djangoService = DjangoApi.service(djangoBaseUrl)
 
         runBlocking {
-            val characterValues = djangoService.getCharacterValues()
+            loadGroups(djangoService)
+            loadCharacters(djangoService, strapiService)
+        }
+    }
+    private val client = OkHttpClient()
 
-            characterValues.forEach {
-                val imageFile = File(
-                    imageDirectory.get().toString(),
-                    "character_${it.id}.xml"
-                )
-                it.image?.let { image ->
-                    strapiService.getFile(image).byteStream().use { svgStream ->
-                        val tmpDir = project.layout.buildDirectory.dir("tmp").get().asFile
-                        val svgPath: Path = tmpDir.toPath().resolve("${it.id}.svg")
-                        project.mkdir(tmpDir)
+    private fun downloadImage(url: String, fileHandler: (InputStream) -> Unit) {
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw RuntimeException("Failed: $url")
+            response.body()?.byteStream()?.use(fileHandler)
+        }
+    }
 
-                        Files.copy(svgStream, svgPath, StandardCopyOption.REPLACE_EXISTING)
-                        imageFile.outputStream().use {
-                            Svg2Vector.parseSvgToXml(svgPath, it)
-                        }
+
+    @Suppress("NewApi")
+    private fun loadGroups(
+        djangoService: DjangoApiService) {
+        val response = djangoService.getGroups().execute()
+        if (response.isSuccessful) {
+            val allGroups = response.body()
+            allGroups?.forEach { group ->
+                val imageUrl = group.image ?: return@forEach
+                val safeName = "group_" +  group.name
+                val file = File(nodpiDirectory.get().toString(), "$safeName.png")
+
+                downloadImage(imageUrl) { input ->
+                    FileOutputStream(file).use { output ->
+                        input.copyTo(output)
                     }
                 }
-                it.colors?.let { c ->
-                    if(c.isNotBlank()) {
-                        val cs = c.split(',')
-                        val dots = if(it.dots != null && it.dots.isBlank()) {
-                            null
-                        } else {
-                            it.dots
-                        }
-                        imageFile.writeText(colors(cs, dots = dots))
+            }
+
+            allGroups?.forEach { group ->
+                val svgUrl = group.svg ?: return@forEach
+                val safeName = "ic_" +  group.name
+                val file = File(imageDirectory.get().toString(), "$safeName.xml")
+                downloadImage(svgUrl) { input ->
+
+                    val tmpDir = project.layout.buildDirectory.dir("tmp").get().asFile
+                    val tmpSvgFileName = "${java.util.UUID.randomUUID()}.svg"
+                    val svgPath: Path = tmpDir.toPath().resolve(tmpSvgFileName)
+                    if (!tmpDir.exists()) project.mkdir(tmpDir)
+
+                    Files.copy(input, svgPath, StandardCopyOption.REPLACE_EXISTING)
+                    FileOutputStream(file).use { output ->
+                        Svg2Vector.parseSvgToXml(svgPath, output)
                     }
+                }
+            }
+        } else {
+            logger.error("Error calling loadGroups: ${response.errorBody()?.toString()}")
+        }
+    }
+
+    @Suppress("NewApi")
+    private suspend fun loadCharacters(
+        djangoService: DjangoApiService,
+        strapiService: StrapiApiService
+    ) {
+        val characterValues = djangoService.getCharacterValues()
+
+        characterValues.forEach {
+            val imageFile = File(
+                imageDirectory.get().toString(),
+                "character_${it.id}.xml"
+            )
+            it.image?.let { image ->
+                strapiService.getFile(image).byteStream().use { svgStream ->
+                    val tmpDir = project.layout.buildDirectory.dir("tmp").get().asFile
+                    val svgPath: Path = tmpDir.toPath().resolve("${it.id}.svg")
+                    project.mkdir(tmpDir)
+
+                    Files.copy(svgStream, svgPath, StandardCopyOption.REPLACE_EXISTING)
+                    imageFile.outputStream().use {
+                        Svg2Vector.parseSvgToXml(svgPath, it)
+                    }
+                }
+            }
+            it.colors?.let { c ->
+                if (c.isNotBlank()) {
+                    val cs = c.split(',')
+                    val dots = if (it.dots != null && it.dots.isBlank()) {
+                        null
+                    } else {
+                        it.dots
+                    }
+                    imageFile.writeText(colors(cs, dots = dots))
                 }
             }
         }
