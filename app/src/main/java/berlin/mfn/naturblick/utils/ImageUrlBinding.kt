@@ -113,7 +113,13 @@ fun imageUrlBindingRoundCorners(imageView: ImageView, image: ImageWithSizes?) {
         Glide.with(imageView.context)
             .load(image)
             .transform(CenterInside(), RoundedCorners(8))
-            .thumbnail(0.25f)
+            .thumbnail(
+                Glide
+                    .with(imageView.context)
+                    .load(image)
+                    .sizeMultiplier(0.25f)
+                    .transform(CenterInside(), RoundedCorners(8))
+            )
             .into(imageView)
     }
 }
@@ -129,7 +135,11 @@ fun imageUrlSpeciesHeaderBinding(imageView: ImageView, portrait: FullPortrait?) 
             Glide.with(imageView.context)
                 .load(image)
                 .transform(CenterInside())
-                .thumbnail(0.25f)
+                .thumbnail(Glide.with(imageView.context)
+                    .load(image)
+                    .sizeMultiplier(0.25f)
+                    .transform(CenterInside())
+                )
                 .into(imageView)
         } else {
             val params = imageView.layoutParams as ConstraintLayout.LayoutParams
@@ -138,7 +148,11 @@ fun imageUrlSpeciesHeaderBinding(imageView: ImageView, portrait: FullPortrait?) 
             Glide.with(imageView.context)
                 .load(image)
                 .transform(ObjectFit(portrait.portrait.focus))
-                .thumbnail(0.25f)
+                .thumbnail( Glide.with(imageView.context)
+                    .load(image)
+                    .sizeMultiplier(0.25f)
+                    .transform(ObjectFit(portrait.portrait.focus))
+                )
                 .into(imageView)
         }
     }

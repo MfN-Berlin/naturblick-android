@@ -18,7 +18,9 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentRecordSoundBinding
@@ -28,6 +30,7 @@ import java.io.FileDescriptor
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class RecordSoundFragment : Fragment(), RequiredPermissionCallback {
 
@@ -106,11 +109,7 @@ class RecordSoundFragment : Fragment(), RequiredPermissionCallback {
         val viewModel: RecordSoundViewModel by viewModels()
         model = viewModel
         model.setStart(::start)
-        val cropViewModel: CropSoundViewModel by activityViewModels {
-            CropSoundViewModelFactory(
-                requireActivity().application
-            )
-        }
+        val cropViewModel: CropSoundViewModel by activityViewModels()
         cropModel = cropViewModel
         binding = FragmentRecordSoundBinding.inflate(inflater, container, false)
         binding.buttonSheet.setupBottomInset()
@@ -149,11 +148,13 @@ class RecordSoundFragment : Fragment(), RequiredPermissionCallback {
     fun start() {
         localMedia = Media.createEmpty(MediaType.MP4, requireContext()).let { localMedia ->
             binding.textViewCounter.text = MediaPlayerService.timeFormat(0f)
-            counterJob = lifecycleScope.launchWhenStarted {
-                counter.cancellable().collectLatest {
-                    binding.textViewCounter.text = MediaPlayerService.timeFormat(it)
-                    if (it >= MAX_LENGTH) {
-                        stopRecording()
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    counter.cancellable().collectLatest {
+                        binding.textViewCounter.text = MediaPlayerService.timeFormat(it)
+                        if (it >= MAX_LENGTH) {
+                            stopRecording()
+                        }
                     }
                 }
             }

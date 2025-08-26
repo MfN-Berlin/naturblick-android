@@ -6,10 +6,8 @@
 package berlin.mfn.naturblick.ui.photo
 
 import android.app.Application
-import android.graphics.Rect
 import android.net.Uri
 import androidx.core.net.toUri
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import berlin.mfn.naturblick.utils.*
@@ -130,21 +128,3 @@ class ImageIdViewModel(
     }
 }
 
-class ImageIdViewModelFactory(
-    private val request: CropAndIdentifyPhotoRequest,
-    private val application: Application
-) : AbstractSavedStateViewModelFactory() {
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(
-        key: String,
-        modelClass: Class<T>,
-        handle: SavedStateHandle
-    ): T {
-        return ImageIdViewModel(
-            request,
-            handle,
-            application
-        ) as T
-    }
-}

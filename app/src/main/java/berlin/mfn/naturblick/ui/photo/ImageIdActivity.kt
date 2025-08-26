@@ -8,6 +8,9 @@ package berlin.mfn.naturblick.ui.photo
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.IntentCompat
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.ui.BaseActivity
 
@@ -24,10 +27,11 @@ class ImageIdActivity : BaseActivity(
             CropAndIdentifyPhotoRequest::class.java
         )!!
         val imageIdModel by viewModels<ImageIdViewModel> {
-            ImageIdViewModelFactory(
-                request,
-                application
-            )
+            viewModelFactory {
+                initializer {
+                    ImageIdViewModel(request, createSavedStateHandle(), application)
+                }
+            }
         }
         viewModel = imageIdModel
         initializeNavigationViews()

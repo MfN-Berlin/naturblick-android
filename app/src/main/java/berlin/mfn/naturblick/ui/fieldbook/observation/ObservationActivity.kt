@@ -10,6 +10,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.Coordinates
 import berlin.mfn.naturblick.ui.BaseActivity
@@ -41,10 +44,11 @@ class ObservationActivity : BaseActivity(
             ObservationAction::class.java
         )!!
         val viewModel: ObservationViewModel by viewModels {
-            ObservationViewModelFactory(
-                action,
-                application
-            )
+            viewModelFactory {
+                initializer {
+                    ObservationViewModel(action, createSavedStateHandle(), application)
+                }
+            }
         }
         model = viewModel
     }

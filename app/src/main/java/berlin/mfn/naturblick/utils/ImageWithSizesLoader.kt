@@ -5,6 +5,7 @@
 
 package berlin.mfn.naturblick.utils
 
+import android.util.Log
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.room.ImageWithSizes
 import com.bumptech.glide.load.Options

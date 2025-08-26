@@ -13,6 +13,9 @@ import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.core.content.IntentCompat
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.ThumbnailRequest
 import berlin.mfn.naturblick.databinding.ActivityIdResultBinding
@@ -103,7 +106,11 @@ class IdResultActivity : BaseActivity(
         val identifySpecies =
             IntentCompat.getParcelableExtra(intent, ID_SPECIES, IdentifySpecies::class.java)!!
         val viewModel by viewModels<IdResultViewModel> {
-            IdResultViewModelFactory(identifySpecies, application)
+            viewModelFactory {
+                initializer {
+                    IdResultViewModel(identifySpecies, createSavedStateHandle(), application)
+                }
+            }
         }
 
         val binding = ActivityIdResultBinding.inflate(layoutInflater)

@@ -69,9 +69,7 @@ class FieldbookMapFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val model: FieldbookViewModel by activityViewModels {
-            FieldbookViewModelFactory(requireActivity().application)
-        }
+        val model: FieldbookViewModel by activityViewModels()
         viewModel = model
     }
 

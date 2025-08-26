@@ -111,19 +111,3 @@ class CropSoundViewModel(
     }
 }
 
-class CropSoundViewModelFactory(
-    private val application: Application
-) : AbstractSavedStateViewModelFactory() {
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(
-        key: String,
-        modelClass: Class<T>,
-        handle: SavedStateHandle
-    ): T {
-        return CropSoundViewModel(
-            application,
-            handle
-        ) as T
-    }
-}
