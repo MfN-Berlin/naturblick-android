@@ -88,10 +88,6 @@ import berlin.mfn.naturblick.utils.languageId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.UUID
 
-const val ALL_GROUPS = "all"
-const val OTHERS_GROUPS = "others"
-const val UNKNOWN_GROUPS = "unknown"
-
 class FieldbookActivity : FragmentActivity() {
     private val manageObservation = registerForActivityResult(ManageObservation) {
         when (it) {
@@ -203,13 +199,11 @@ class FieldbookActivity : FragmentActivity() {
         }
         setContent {
             val observations by model.observationsFlow.collectAsState(emptyList())
-            val selectableGroups by model.selectableGroupsFlow.collectAsState(emptyList())
             val selection = remember {
                 mutableStateListOf<UUID>()
             }
             var openDeleteDialog by remember { mutableStateOf(false) }
             var isMapView by remember { mutableStateOf(initialObservation != null) }
-            var openGroupsDialog by remember { mutableStateOf(false) }
 
             NaturblickTheme {
                 Scaffold(
@@ -234,9 +228,7 @@ class FieldbookActivity : FragmentActivity() {
                                 if (!isMapView) {
                                     model.stopTracking()
                                 }
-                            },
-                            updateOpenGroupsDialog = { openGroupsDialog = !openGroupsDialog },
-                            group = model.group
+                            }
                         )
                     },
                     floatingActionButton = {
@@ -309,16 +301,6 @@ class FieldbookActivity : FragmentActivity() {
                                     openDeleteDialog = false
                                 }
                             )
-                    }
-                    if (openGroupsDialog) {
-                        GroupFilterDialog(
-                            selectableGroups,
-                            model.group,
-                            onDismiss = { openGroupsDialog = !openGroupsDialog },
-                            onConfirm = { selectedGroup ->
-                                model.updateGroup(selectedGroup)
-                                openGroupsDialog = !openGroupsDialog
-                            })
                     }
                 }
             }
@@ -402,9 +384,7 @@ class FieldbookActivity : FragmentActivity() {
         updateQuery: (query: String) -> Unit,
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
-        toggleMapView: () -> Unit,
-        updateOpenGroupsDialog: () -> Unit,
-        group: String?
+        toggleMapView: () -> Unit
     ) {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
@@ -437,10 +417,6 @@ class FieldbookActivity : FragmentActivity() {
                                 contentDescription = stringResource(R.string.search)
                             )
                         }
-                        FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -462,10 +438,6 @@ class FieldbookActivity : FragmentActivity() {
                             )
                         }
                     } else {
-                        FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -492,85 +464,6 @@ class FieldbookActivity : FragmentActivity() {
                         }
                     }
                 }
-            }
-        )
-    }
-
-
-    @Composable
-    fun GroupFilterDialog(
-        selectableGroups: List<String>,
-        group: String,
-        onDismiss: () -> Unit,
-        onConfirm: (selectedGroup: String) -> Unit
-    ) {
-        var newSelectedGroup by remember { mutableStateOf(group) }
-
-        NaturblickAlertDialog(
-            title = stringResource(R.string.filter),
-            text = {
-                Column {
-                    selectableGroups.forEachIndexed { index, label ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .selectable(
-                                    selected = group == selectableGroups[index],
-                                    onClick = { newSelectedGroup = selectableGroups[index] },
-                                    role = Role.RadioButton
-                                ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = newSelectedGroup == selectableGroups[index],
-                                onClick = { newSelectedGroup = selectableGroups[index] },
-                                colors = RadioButtonDefaults.colors(
-                                    selectedColor = NaturblickTheme.colors.onSecondaryHighEmphasis,
-                                    unselectedColor = NaturblickTheme.colors.onSecondaryMediumEmphasis
-                                )
-                            )
-                            val g = when (label) {
-                                ALL_GROUPS -> Group(
-                                    ALL_GROUPS,
-                                    stringResource(R.string.all),
-                                    stringResource(R.string.all),
-                                    0,
-                                    GroupType.FLORA
-                                )
-
-                                OTHERS_GROUPS -> Group(
-                                    OTHERS_GROUPS,
-                                    stringResource(R.string.others),
-                                    stringResource(R.string.others),
-                                    0,
-                                    GroupType.FLORA
-                                )
-
-                                UNKNOWN_GROUPS -> Group(
-                                    UNKNOWN_GROUPS,
-                                    stringResource(R.string.unknown),
-                                    stringResource(R.string.unknown),
-                                    0,
-                                    GroupType.FLORA
-                                )
-
-                                else -> Group.groups.first { it.id == label }
-                            }
-
-                            Text(
-                                text = if (languageId() == GERMAN_ID) g.gername else g.engname,
-                                style = NaturblickTheme.typography.body1,
-                                color = NaturblickTheme.colors.onSecondaryHighEmphasis
-                            )
-                        }
-                    }
-                }
-            },
-            confirm = stringResource(R.string.filter_ok),
-            dismiss = stringResource(R.string.cancel),
-            onDismissRequest = onDismiss,
-            onConfirmation = {
-                onConfirm(newSelectedGroup)
             }
         )
     }

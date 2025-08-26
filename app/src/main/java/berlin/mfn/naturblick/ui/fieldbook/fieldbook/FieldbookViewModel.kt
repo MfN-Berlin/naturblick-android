@@ -21,15 +21,12 @@ import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
 import berlin.mfn.naturblick.backend.PublicBackendApi
 import berlin.mfn.naturblick.room.StrapiDb
-import berlin.mfn.naturblick.ui.data.Group
-import berlin.mfn.naturblick.utils.ENGLISH_ID
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import berlin.mfn.naturblick.utils.NetworkResult
 import berlin.mfn.naturblick.utils.languageId
 import com.mapbox.maps.CameraState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -82,13 +79,6 @@ class FieldbookViewModel(
         query = input
     }
 
-    var group: String by mutableStateOf(ALL_GROUPS)
-        private set
-
-    fun updateGroup(group: String) {
-        this.group = group
-    }
-
     fun deleteObservations(selection: List<UUID>) {
         viewModelScope.launch {
             for (occurenceId in selection.toList()) {
@@ -98,80 +88,21 @@ class FieldbookViewModel(
         }
     }
 
-    val queryFlow = snapshotFlow { query }.flowOn(Dispatchers.IO)
-    val groupFlow = snapshotFlow { group }.flowOn(Dispatchers.IO)
-
     @OptIn(ExperimentalCoroutinesApi::class)
     val observationsFlow =
-        queryFlow.combine(groupFlow) { query, group ->
-            Pair(query, group)
-        }.flatMapLatest { queryAndGroup ->
+        snapshotFlow { query }.flowOn(Dispatchers.IO).flatMapLatest { query ->
             operationDao.getAllObservations().map { observations ->
-                Pair(queryAndGroup, observations)
+                Pair(query, observations)
             }
-        }.mapLatest { (queryAndGroup, observations) ->
-            val (query, group) = queryAndGroup
-            if (group == UNKNOWN_GROUPS) {
-                observations.filter {
-                    it.newSpeciesId == null
-                }.map { toFieldbookObservation(it) }
-            } else {
-                val speciesSet = when (group) {
-                    OTHERS_GROUPS -> speciesDao.filterOthersSpeciesIds(
-                        "%$query%",
-                        Group.fieldbookFilterGroupIds,
-                        languageId()
-                    ).toHashSet()
-
-                    ALL_GROUPS -> speciesDao.filterSpeciesIds("%$query%", null, languageId())
-                        .toHashSet()
-
-                    else -> speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
-                }
-
-                observations.filter {
-                    speciesSet.contains(it.newSpeciesId) || (it.newSpeciesId == null
-                            && group == ALL_GROUPS && query.isEmpty())
-                }
-                    .map { toFieldbookObservation(it) }
+        }.mapLatest { (query, observations) ->
+            if (query.isBlank())
+                observations
+            else {
+                val speciesSet = speciesDao.filterSpeciesIds("%$query%", languageId()).toHashSet()
+                observations.filter { speciesSet.contains(it.newSpeciesId) }
+            }.map {
+                toFieldbookObservation(it)
             }
-        }
-
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val selectableGroupsFlow =
-        operationDao.getAllObservations().mapLatest { obervations ->
-            val obsGroups = obervations
-                .map { toFieldbookObservation(it) }
-                .mapNotNull { it.species?.group }
-                .distinct()
-
-            val withUnknown = obervations
-                .map { toFieldbookObservation(it) }.any { it.species == null }
-
-            val withOthers = !Group.fieldbookFilterGroupIds.containsAll(obsGroups)
-
-            val selectableGroups = mutableListOf(ALL_GROUPS)
-
-            selectableGroups.addAll(
-                obsGroups.filter {
-                    Group.fieldbookFilterGroupIds.contains(it)
-                }.sortedBy { sg ->
-                    if (languageId() == ENGLISH_ID) {
-                        Group.groups.first { it.id == sg }.engname
-                    } else {
-                        Group.groups.first { it.id == sg }.gername
-                    }
-                })
-
-            if (withOthers) {
-                selectableGroups.add(OTHERS_GROUPS)
-            }
-
-            if (withUnknown) {
-                selectableGroups.add(UNKNOWN_GROUPS)
-            }
-            selectableGroups
         }
 
     var refreshState by mutableStateOf(false)
