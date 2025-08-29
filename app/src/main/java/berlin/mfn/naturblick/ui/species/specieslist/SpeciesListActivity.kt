@@ -32,10 +32,8 @@ class SpeciesListActivity : BaseActivity(R.navigation.species_list_navigation) {
 
         initializeNavigationViews()
 
-        val speciesDao = StrapiDb.getDb(applicationContext).speciesDao()
-
         val viewModel: SpeciesListViewModel by viewModels {
-            SpeciesListViewModelFactory(speciesDao)
+            SpeciesListViewModel.Factory
         }
         speciesListViewModel = viewModel
 

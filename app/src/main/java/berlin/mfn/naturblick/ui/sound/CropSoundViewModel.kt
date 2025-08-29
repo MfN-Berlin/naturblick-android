@@ -8,8 +8,13 @@ package berlin.mfn.naturblick.ui.sound
 import android.app.Application
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.core.content.IntentCompat
 import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
+import berlin.mfn.naturblick.ui.fieldbook.ObservationAction
 import berlin.mfn.naturblick.utils.*
 import kotlinx.coroutines.launch
 
@@ -108,6 +113,15 @@ class CropSoundViewModel(
         } else {
             leave(true)
         }
+    }
+
+    companion object {
+        val Factory = viewModelFactory {
+                initializer {
+                    val savedStateHandle = createSavedStateHandle()
+                    CropSoundViewModel( (this[APPLICATION_KEY] as Application), savedStateHandle)
+                }
+            }
     }
 }
 

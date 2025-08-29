@@ -11,12 +11,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.room.Species
 import berlin.mfn.naturblick.room.StrapiDb
+import berlin.mfn.naturblick.ui.idresult.IdResultActivityContractBase.Companion.ID_SPECIES
 import berlin.mfn.naturblick.utils.IdApi
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import berlin.mfn.naturblick.utils.NetworkResult
@@ -107,6 +112,16 @@ class IdResultViewModel(
         if (_idResults.value == null && _recoverableError.value == null) {
             identify()
         }
+    }
+
+    companion object {
+        val Factory = viewModelFactory {
+                initializer {
+                    val savedStateHandle = createSavedStateHandle()
+                    val action: IdentifySpecies = savedStateHandle[ID_SPECIES]!!
+                    IdResultViewModel(action, savedStateHandle, (this[APPLICATION_KEY] as Application))
+                }
+            }
     }
 }
 

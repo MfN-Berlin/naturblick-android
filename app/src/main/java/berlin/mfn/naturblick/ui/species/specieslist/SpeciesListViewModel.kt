@@ -5,16 +5,22 @@
 
 package berlin.mfn.naturblick.ui.species.specieslist
 
+import android.app.Application
 import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.liveData
 import berlin.mfn.naturblick.room.SpeciesDao
+import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.species.CharacterQuery
 import berlin.mfn.naturblick.utils.languageId
 
-class SpeciesListViewModel(private val speciesDao: SpeciesDao) : ViewModel() {
+class SpeciesListViewModel(application: Application) : ViewModel() {
+    private val speciesDao = StrapiDb.getDb(application).speciesDao()
     private val _query: MutableLiveData<String?> = MutableLiveData<String?>(null)
 
     fun setQuery(query: String?) {
@@ -70,12 +76,10 @@ class SpeciesListViewModel(private val speciesDao: SpeciesDao) : ViewModel() {
 
     companion object {
         val PAGING_CONFIG = PagingConfig(50)
+        val Factory = viewModelFactory {
+                initializer {
+                    SpeciesListViewModel((this[APPLICATION_KEY] as Application))
+                }
+            }
     }
-}
-
-class SpeciesListViewModelFactory(private val speciesDao: SpeciesDao) :
-    ViewModelProvider.NewInstanceFactory() {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        SpeciesListViewModel(speciesDao) as T
 }

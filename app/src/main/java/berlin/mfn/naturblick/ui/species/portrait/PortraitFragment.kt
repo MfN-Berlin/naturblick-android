@@ -16,6 +16,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import berlin.mfn.naturblick.BuildConfig
@@ -64,23 +66,19 @@ class PortraitFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val args: PortraitFragmentArgs by navArgs()
-        val speciesId = args.speciesId
         val speciesIdPathFragment = speciesIdPathFragment(activity)
+        val portraitViewModel: PortraitViewModel by viewModels(extrasProducer = {
+            MutableCreationExtras(defaultViewModelCreationExtras).apply {
+                set(PortraitViewModel.SPECIES_ID_PATH_FRAGMENT_KEY, speciesIdPathFragment)
+            }
+        }) {
+            PortraitViewModel.Factory
+        }
 
-        if (speciesId == null && speciesIdPathFragment == null) {
+        if (portraitViewModel.speciesId == null && speciesIdPathFragment == null) {
             navToGroupOverview()
         }
 
-        val db = StrapiDb.getDb(requireContext())
-
-        val portraitViewModel: PortraitViewModel by viewModels {
-            PortraitViewModelFactory(
-                db,
-                speciesId,
-                speciesIdPathFragment
-            )
-        }
         val binding = FragmentPortraitBinding.inflate(inflater, container, false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -124,7 +122,7 @@ class PortraitFragment : Fragment() {
                         findNavController().navigate(
                             PortraitFragmentDirections.actionNavPortraitToNavPortrait(
                                 speciesId,
-                                args.allowSelection
+                                portraitViewModel.allowSelection
                             )
                         )
                     }
@@ -164,7 +162,7 @@ class PortraitFragment : Fragment() {
                 binding.portraitContent.removeAllViews()
                 binding.portraitContent.addView(miniPortraitBinding.root)
             }
-            if (args.allowSelection) {
+            if (portraitViewModel.allowSelection) {
                 binding.createObservationAction.visibility = View.VISIBLE
                 binding.createObservationAction.setSingleClickListener { _ ->
                     findNavController().navigate(

@@ -187,11 +187,7 @@ class FieldbookActivity : FragmentActivity() {
         val initialObservation =
             IntentCompat.getParcelableExtra(intent, OCCURENCE_ID, ParcelUuid::class.java)?.uuid
         val model: FieldbookViewModel by viewModels {
-            viewModelFactory {
-                initializer {
-                    FieldbookViewModel(application, createSavedStateHandle())
-                }
-            }
+            FieldbookViewModel.Factory
         }
         val action = IntentCompat.getParcelableExtra(
             intent,
