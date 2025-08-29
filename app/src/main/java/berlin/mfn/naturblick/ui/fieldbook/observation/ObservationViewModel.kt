@@ -8,13 +8,18 @@
 package berlin.mfn.naturblick.ui.fieldbook.observation
 
 import android.app.Application
+import androidx.core.content.IntentCompat
 import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.NaturblickApplication
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.*
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.fieldbook.*
+import berlin.mfn.naturblick.ui.fieldbook.ManageObservation.OBSERVATION_ACTION
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -438,5 +443,13 @@ class ObservationViewModel(
                 acc.merge(e)
             }
         }
+
+        val Factory = viewModelFactory {
+                initializer {
+                    val savedStateHandle = createSavedStateHandle()
+                    val action: ObservationAction = savedStateHandle[OBSERVATION_ACTION]!!
+                    ObservationViewModel(action, savedStateHandle, (this[APPLICATION_KEY] as Application))
+                }
+            }
     }
 }

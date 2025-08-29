@@ -13,7 +13,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.backend.DeleteOperation
 import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
@@ -161,5 +165,14 @@ class FieldbookViewModel(
 
     fun setCameraState(cameraState: CameraState) {
         this.cameraState = cameraState
+    }
+
+    companion object {
+         val Factory = viewModelFactory {
+             initializer {
+                 val savedStateHandle = createSavedStateHandle()
+                 FieldbookViewModel((this[APPLICATION_KEY] as Application), savedStateHandle)
+             }
+         }
     }
 }

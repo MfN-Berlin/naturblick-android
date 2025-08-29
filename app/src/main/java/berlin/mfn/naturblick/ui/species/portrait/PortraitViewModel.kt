@@ -5,21 +5,30 @@
 
 package berlin.mfn.naturblick.ui.species.portrait
 
+import android.app.Application
 import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.room.FullPortrait
 import berlin.mfn.naturblick.room.FullSimilarSpecies
 import berlin.mfn.naturblick.room.ImageWithSizes
 import berlin.mfn.naturblick.room.SimilarSpecies
 import berlin.mfn.naturblick.room.Species
 import berlin.mfn.naturblick.room.StrapiDb
+import berlin.mfn.naturblick.ui.sound.CropSoundFragment
 import berlin.mfn.naturblick.utils.languageId
 
 class PortraitViewModel(
-    private val strapiDb: StrapiDb,
-    private val speciesId: SpeciesId?,
-    private val speciesIdPathFragment: String?
+    application: Application,
+    val speciesId: SpeciesId?,
+    private val speciesIdPathFragment: String?,
+    val allowSelection: Boolean
 ) :
     ViewModel() {
+
+    private val strapiDb: StrapiDb = StrapiDb.getDb(application)
 
     private suspend fun getFullSimilarSpecies(similarSpecies: SimilarSpecies): FullSimilarSpecies {
         return FullSimilarSpecies(
@@ -77,15 +86,21 @@ class PortraitViewModel(
             }
         )
     }
-}
+    companion object {
+        val SPECIES_ID_PATH_FRAGMENT_KEY = object : CreationExtras.Key<String?> {}
+        val Factory = viewModelFactory {
+            initializer {
+                val savedStateHandle = createSavedStateHandle()
+                val args = PortraitFragmentArgs.fromSavedStateHandle(savedStateHandle)
+                val speciesIdPathFragment: String? = this[SPECIES_ID_PATH_FRAGMENT_KEY]
 
-class PortraitViewModelFactory(
-    private val strapiDb: StrapiDb,
-    private val speciesId: SpeciesId?,
-    private val speciesIdPathFragment: String?
-) :
-    ViewModelProvider.NewInstanceFactory() {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        PortraitViewModel(strapiDb, speciesId, speciesIdPathFragment) as T
+                PortraitViewModel(
+                    (this[APPLICATION_KEY] as Application),
+                    args.speciesId,
+                    speciesIdPathFragment,
+                    args.allowSelection
+                )
+            }
+        }
+    }
 }

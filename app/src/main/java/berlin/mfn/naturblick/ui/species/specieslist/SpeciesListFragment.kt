@@ -38,12 +38,7 @@ class SpeciesListFragment : Fragment() {
         val selectable = requireActivity().intent.extras?.getBoolean(SPECIES_SELECTABLE)
 
         val navController = findNavController()
-        val speciesDao = StrapiDb.getDb(requireContext()).speciesDao()
-        val speciesListViewModel: SpeciesListViewModel by activityViewModels {
-            SpeciesListViewModelFactory(
-                speciesDao
-            )
-        }
+        val speciesListViewModel: SpeciesListViewModel by activityViewModels()
         val binding = FragmentSpeciesListBinding.inflate(inflater, container, false)
         val recyclerView = binding.rvSpeciesList
         val pagingAdapter = SpeciesListAdapter { species ->

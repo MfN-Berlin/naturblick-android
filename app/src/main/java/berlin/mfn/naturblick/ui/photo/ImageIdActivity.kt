@@ -21,17 +21,8 @@ class ImageIdActivity : BaseActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val request = IntentCompat.getParcelableExtra(
-            intent,
-            CropAndIdentifyPhoto.CROP_AND_IDENTIFY_REQUEST,
-            CropAndIdentifyPhotoRequest::class.java
-        )!!
         val imageIdModel by viewModels<ImageIdViewModel> {
-            viewModelFactory {
-                initializer {
-                    ImageIdViewModel(request, createSavedStateHandle(), application)
-                }
-            }
+            ImageIdViewModel.Factory
         }
         viewModel = imageIdModel
         initializeNavigationViews()

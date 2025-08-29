@@ -38,17 +38,8 @@ class ObservationActivity : BaseActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeNavigationViews()
-        val action = IntentCompat.getParcelableExtra(
-            intent,
-            OBSERVATION_ACTION,
-            ObservationAction::class.java
-        )!!
         val viewModel: ObservationViewModel by viewModels {
-            viewModelFactory {
-                initializer {
-                    ObservationViewModel(action, createSavedStateHandle(), application)
-                }
-            }
+            ObservationViewModel.Factory
         }
         model = viewModel
     }

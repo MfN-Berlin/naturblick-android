@@ -10,6 +10,10 @@ import android.net.Uri
 import androidx.core.net.toUri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.utils.*
 
 class ImageIdViewModel(
@@ -125,6 +129,13 @@ class ImageIdViewModel(
 
     companion object {
         const val TAG = "ImageIdViewModel"
+        val Factory = viewModelFactory {
+                initializer {
+                    val savedStateHandle = createSavedStateHandle()
+                    val action: CropAndIdentifyPhotoRequest = savedStateHandle[CropAndIdentifyPhoto.CROP_AND_IDENTIFY_REQUEST]!!
+                    ImageIdViewModel(action, savedStateHandle, (this[APPLICATION_KEY] as Application))
+                }
+            }
     }
 }
 
