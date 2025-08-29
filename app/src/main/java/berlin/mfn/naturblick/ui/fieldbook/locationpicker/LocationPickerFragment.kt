@@ -24,6 +24,7 @@ import berlin.mfn.naturblick.utils.MapFragment
 import berlin.mfn.naturblick.utils.RequestedPermissionCallback
 import berlin.mfn.naturblick.utils.registerRequestedOneOfPermission
 import berlin.mfn.naturblick.utils.setSingleClickListener
+import berlin.mfn.naturblick.utils.setupBottomInsetMargin
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -39,6 +40,8 @@ class LocationPickerFragment : MapFragment(), RequestedPermissionCallback {
         binding.model = trackingModel
         val args by navArgs<LocationPickerFragmentArgs>()
         val mapView = binding.mapView
+        binding.toggleGps.setupBottomInsetMargin()
+        binding.selectLocationButton.setupBottomInsetMargin()
         initializeMapView(mapView, args.initialLocation) { map ->
             binding.toggleGps.setOnClickListener {
                 requestLocationPermission.checkPermission(requireContext(), this)
