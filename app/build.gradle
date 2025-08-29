@@ -108,7 +108,7 @@ android {
             dependsOn(tasks.named("merge${variant.name.capitalize()}Resources"))
         }
         tasks.named("sync${variant.name.capitalize()}Media") {
-            imageDirectory = file("${layout.buildDirectory}/generated/res/drawable")
+            imageDirectory = layout.buildDirectory.dir("generated/res/drawable")
         }
     }
 }
