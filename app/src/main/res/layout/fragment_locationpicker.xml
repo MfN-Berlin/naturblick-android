@@ -33,6 +33,7 @@
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/default_margin"
             android:text="@string/select_location"
+            app:icon="@drawable/ic_baseline_edit_location_24"
             style="@style/Theme.Naturblick.FABOverlay"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/toggle_gps"
