@@ -103,14 +103,8 @@ class IdResultActivity : BaseActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val identifySpecies =
-            IntentCompat.getParcelableExtra(intent, ID_SPECIES, IdentifySpecies::class.java)!!
         val viewModel by viewModels<IdResultViewModel> {
-            viewModelFactory {
-                initializer {
-                    IdResultViewModel(identifySpecies, createSavedStateHandle(), application)
-                }
-            }
+            IdResultViewModel.Factory
         }
 
         val binding = ActivityIdResultBinding.inflate(layoutInflater)
