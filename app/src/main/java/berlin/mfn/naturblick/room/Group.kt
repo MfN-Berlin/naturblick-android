@@ -17,13 +17,13 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Group(
-    @PrimaryKey @ColumnInfo(name = "name") val name: String,
+    @PrimaryKey val name: String,
     val nature: String?,
     val gername: String?,
     val engname: String?,
-    val has_portraits: Boolean,
-    val is_fieldbookfilter: Boolean,
-    val has_characters: Boolean
+    @ColumnInfo(name = "has_portraits") val hasPortraits: Boolean,
+    @ColumnInfo(name = "is_fieldbookfilter") val isFieldbookfilter: Boolean,
+    @ColumnInfo(name = "has_characters") val hasCharacters: Boolean
 )
 
 

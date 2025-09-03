@@ -34,6 +34,7 @@ import berlin.mfn.naturblick.BuildConfig
 )
 abstract class StrapiDb : RoomDatabase() {
     abstract fun speciesDao(): SpeciesDao
+    abstract fun groupDao(): GroupDao
     abstract fun portraitDao(): PortraitDao
     abstract fun characterDao(): CharacterDao
     abstract fun sourcesImprintDao(): SourcesImprintDao

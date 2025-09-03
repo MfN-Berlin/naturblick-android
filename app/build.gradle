@@ -110,6 +110,9 @@ android {
         tasks.named("sync${variant.name.capitalize()}Media") {
             imageDirectory = layout.buildDirectory.dir("generated/res/drawable")
         }
+        tasks.named("sync${variant.name.capitalize()}Media") {
+            nodpiDirectory = layout.buildDirectory.dir("generated/res/drawable-nodpi")
+        }
     }
 }
 

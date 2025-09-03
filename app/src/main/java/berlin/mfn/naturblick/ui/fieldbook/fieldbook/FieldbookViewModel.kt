@@ -23,12 +23,16 @@ import berlin.mfn.naturblick.backend.Observation
 import berlin.mfn.naturblick.backend.ObservationDb
 import berlin.mfn.naturblick.backend.PublicBackendApi
 import berlin.mfn.naturblick.room.StrapiDb
+import berlin.mfn.naturblick.ui.data.GroupRepo
+import berlin.mfn.naturblick.ui.data.UiGroup
+import berlin.mfn.naturblick.utils.ENGLISH_ID
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import berlin.mfn.naturblick.utils.NetworkResult
 import berlin.mfn.naturblick.utils.languageId
 import com.mapbox.maps.CameraState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -42,6 +46,15 @@ class FieldbookViewModel(
 ) : AndroidViewModel(application) {
     private val operationDao = ObservationDb.getDb(application).operationDao()
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
+
+    var groups by mutableStateOf<List<UiGroup>>(emptyList())
+        private set
+
+    init {
+        viewModelScope.launch {
+            groups = GroupRepo.getFieldbookFilterGroups(application)
+        }
+    }
 
     private suspend fun toFieldbookObservation(observation: Observation): FieldbookObservation =
         FieldbookObservation(
@@ -81,6 +94,13 @@ class FieldbookViewModel(
         query = input
     }
 
+    var group: String by mutableStateOf(ALL_GROUPS)
+        private set
+
+    fun updateGroup(group: String) {
+        this.group = group
+    }
+
     fun deleteObservations(selection: List<UUID>) {
         viewModelScope.launch {
             for (occurenceId in selection.toList()) {
@@ -90,21 +110,82 @@ class FieldbookViewModel(
         }
     }
 
+    val queryFlow = snapshotFlow { query }.flowOn(Dispatchers.IO)
+    val groupFlow = snapshotFlow { group }.flowOn(Dispatchers.IO)
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val observationsFlow =
-        snapshotFlow { query }.flowOn(Dispatchers.IO).flatMapLatest { query ->
+        queryFlow.combine(groupFlow) { query, group ->
+            Pair(query, group)
+        }.flatMapLatest { queryAndGroup ->
             operationDao.getAllObservations().map { observations ->
-                Pair(query, observations)
+                Pair(queryAndGroup, observations)
             }
-        }.mapLatest { (query, observations) ->
-            if (query.isBlank())
-                observations
-            else {
-                val speciesSet = speciesDao.filterSpeciesIds("%$query%", languageId()).toHashSet()
-                observations.filter { speciesSet.contains(it.newSpeciesId) }
-            }.map {
-                toFieldbookObservation(it)
+        }.mapLatest { (queryAndGroup, observations) ->
+            val (query, group) = queryAndGroup
+            if (group == UNKNOWN_GROUPS) {
+                observations.filter {
+                    it.newSpeciesId == null
+                }.map { toFieldbookObservation(it) }
+            } else {
+                val speciesSet = when (group) {
+                    OTHERS_GROUPS -> speciesDao.filterOthersSpeciesIds(
+                        "%$query%",
+                        GroupRepo.getFieldbookFilterGroupIds(application),
+                        languageId()
+                    ).toHashSet()
+
+                    ALL_GROUPS -> speciesDao.filterSpeciesIds("%$query%", null, languageId())
+                        .toHashSet()
+
+                    else -> speciesDao.filterSpeciesIds("%$query%", group, languageId()).toHashSet()
+                }
+
+                observations.filter {
+                    speciesSet.contains(it.newSpeciesId) || (it.newSpeciesId == null
+                            && group == ALL_GROUPS && query.isEmpty())
+                }
+                    .map { toFieldbookObservation(it) }
             }
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val selectableGroupsFlow =
+        operationDao.getAllObservations().mapLatest { obervations ->
+            val fieldbookFilterGroupIds = GroupRepo.getFieldbookFilterGroupIds(application)
+            val fieldbookFilterGroups = GroupRepo.getFieldbookFilterGroups(application)
+            val obsGroups = obervations
+                .map { toFieldbookObservation(it) }
+                .mapNotNull { it.species?.group }
+                .distinct()
+
+            val withUnknown = obervations
+                .map { toFieldbookObservation(it) }.any { it.species == null }
+
+            val withOthers = !fieldbookFilterGroupIds.containsAll(obsGroups)
+
+            val selectableGroups = mutableListOf(ALL_GROUPS)
+
+            if (withUnknown) {
+                selectableGroups.add(UNKNOWN_GROUPS)
+            }
+
+            selectableGroups.addAll(
+                obsGroups.filter {
+                    fieldbookFilterGroupIds.contains(it)
+                }.sortedBy { sg ->
+                    if (languageId() == ENGLISH_ID) {
+                        fieldbookFilterGroups.first { it.id == sg }.engname
+                    } else {
+                        fieldbookFilterGroups.first { it.id == sg }.gername
+                    }
+                })
+
+            if (withOthers) {
+                selectableGroups.add(OTHERS_GROUPS)
+            }
+
+            selectableGroups
         }
 
     var refreshState by mutableStateOf(false)
