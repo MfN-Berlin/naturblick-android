@@ -25,7 +25,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
@@ -55,13 +54,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.dp
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
-import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
 import berlin.mfn.naturblick.ui.composable.FloatingActionButton
@@ -70,8 +65,8 @@ import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.composable.SearchField
 import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
-import berlin.mfn.naturblick.ui.data.Group
 import berlin.mfn.naturblick.ui.data.GroupType
+import berlin.mfn.naturblick.ui.data.UiGroup
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
@@ -90,6 +85,10 @@ import berlin.mfn.naturblick.utils.GERMAN_ID
 import berlin.mfn.naturblick.utils.languageId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.UUID
+
+const val ALL_GROUPS = "all"
+const val OTHERS_GROUPS = "others"
+const val UNKNOWN_GROUPS = "unknown"
 
 class FieldbookActivity : FragmentActivity() {
     private val manageObservation = registerForActivityResult(ManageObservation) {
@@ -201,12 +200,15 @@ class FieldbookActivity : FragmentActivity() {
             SyncWorker.triggerBackgroundSync(applicationContext, ::onSignedOut)
         }
         setContent {
+            val selectableGroups by model.selectableGroupsFlow.collectAsState(emptyList())
             val observations by model.observationsFlow.collectAsState(emptyList())
             val selection = remember {
                 mutableStateListOf<UUID>()
             }
             var openDeleteDialog by remember { mutableStateOf(false) }
             var isMapView by remember { mutableStateOf(initialObservation != null) }
+
+            var openGroupsDialog by remember { mutableStateOf(false) }
 
             NaturblickTheme {
                 Scaffold(
@@ -231,7 +233,9 @@ class FieldbookActivity : FragmentActivity() {
                                 if (!isMapView) {
                                     model.stopTracking()
                                 }
-                            }
+                            },
+                            updateOpenGroupsDialog = { openGroupsDialog = !openGroupsDialog },
+                            group = model.group
                         )
                     },
                     floatingActionButton = {
@@ -304,6 +308,17 @@ class FieldbookActivity : FragmentActivity() {
                                     openDeleteDialog = false
                                 }
                             )
+                    }
+                    if (openGroupsDialog) {
+                        GroupFilterDialog(
+                            selectableGroups,
+                            model.group,
+                            model.groups,
+                            onDismiss = { openGroupsDialog = !openGroupsDialog },
+                            onConfirm = { selectedGroup ->
+                                model.updateGroup(selectedGroup)
+                                openGroupsDialog = !openGroupsDialog
+                            })
                     }
                 }
             }
@@ -379,6 +394,86 @@ class FieldbookActivity : FragmentActivity() {
     }
 
     @Composable
+    fun GroupFilterDialog(
+        selectableGroups: List<String>,
+        group: String,
+        groups: List<UiGroup>,
+        onDismiss: () -> Unit,
+        onConfirm: (selectedGroup: String) -> Unit
+    ) {
+        var newSelectedGroup by remember { mutableStateOf(group) }
+
+        NaturblickAlertDialog(
+            title = stringResource(R.string.filter),
+            text = {
+                Column {
+                    selectableGroups.forEachIndexed { index, label ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .selectable(
+                                    selected = group == selectableGroups[index],
+                                    onClick = { newSelectedGroup = selectableGroups[index] },
+                                    role = Role.RadioButton
+                                ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = newSelectedGroup == selectableGroups[index],
+                                onClick = { newSelectedGroup = selectableGroups[index] },
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = NaturblickTheme.colors.onSecondaryHighEmphasis,
+                                    unselectedColor = NaturblickTheme.colors.onSecondaryMediumEmphasis
+                                )
+                            )
+                            val g = when (label) {
+                                ALL_GROUPS -> UiGroup(
+                                    ALL_GROUPS,
+                                    stringResource(R.string.all),
+                                    stringResource(R.string.all),
+                                    0,
+                                    GroupType.FLORA
+                                )
+
+                                OTHERS_GROUPS -> UiGroup(
+                                    OTHERS_GROUPS,
+                                    stringResource(R.string.others),
+                                    stringResource(R.string.others),
+                                    0,
+                                    GroupType.FLORA
+                                )
+
+                                UNKNOWN_GROUPS -> UiGroup(
+                                    UNKNOWN_GROUPS,
+                                    stringResource(R.string.unknown),
+                                    stringResource(R.string.unknown),
+                                    0,
+                                    GroupType.FLORA
+                                )
+
+                                else ->
+                                    groups.first { it.id == label }
+                            }
+
+                            Text(
+                                text = if (languageId() == GERMAN_ID) g.gername else g.engname,
+                                style = NaturblickTheme.typography.body1,
+                                color = NaturblickTheme.colors.onSecondaryHighEmphasis
+                            )
+                        }
+                    }
+                }
+            },
+            confirm = stringResource(R.string.filter_ok),
+            dismiss = stringResource(R.string.cancel),
+            onDismissRequest = onDismiss,
+            onConfirmation = {
+                onConfirm(newSelectedGroup)
+            }
+        )
+    }
+
+    @Composable
     fun TopBar(
         selectionCount: Int,
         observationCount: Int,
@@ -387,7 +482,9 @@ class FieldbookActivity : FragmentActivity() {
         updateQuery: (query: String) -> Unit,
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
-        toggleMapView: () -> Unit
+        toggleMapView: () -> Unit,
+        updateOpenGroupsDialog: () -> Unit,
+        group: String?
     ) {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
@@ -420,6 +517,10 @@ class FieldbookActivity : FragmentActivity() {
                                 contentDescription = stringResource(R.string.search)
                             )
                         }
+                        FilterAction(
+                            group != ALL_GROUPS,
+                            updateOpenGroupsDialog = updateOpenGroupsDialog
+                        )
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -441,6 +542,10 @@ class FieldbookActivity : FragmentActivity() {
                             )
                         }
                     } else {
+                        FilterAction(
+                            group != ALL_GROUPS,
+                            updateOpenGroupsDialog = updateOpenGroupsDialog
+                        )
                         MapAction(isMapView) {
                             toggleMapView()
                         }

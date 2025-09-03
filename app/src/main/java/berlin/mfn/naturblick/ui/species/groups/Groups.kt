@@ -10,15 +10,15 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.GridLayout
 import berlin.mfn.naturblick.databinding.FragmentGroupItemBinding
-import berlin.mfn.naturblick.ui.data.Group
+import berlin.mfn.naturblick.ui.data.UiGroup
 import berlin.mfn.naturblick.utils.setSingleClickListener
 
 class Groups(context: Context, attributeSet: AttributeSet) :
     GridLayout(context, attributeSet) {
 
     fun setGroups(
-        groups: List<Group>,
-        click: (Group) -> Unit
+        groups: List<UiGroup>,
+        click: (UiGroup) -> Unit
     ) {
         removeAllViews()
         val inflater = LayoutInflater.from(context)
