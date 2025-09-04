@@ -234,6 +234,7 @@ class FieldbookActivity : FragmentActivity() {
                                     model.stopTracking()
                                 }
                             },
+                            showGroupFilter = selectableGroups.size > 2,
                             updateOpenGroupsDialog = { openGroupsDialog = !openGroupsDialog },
                             group = model.group
                         )
@@ -483,6 +484,7 @@ class FieldbookActivity : FragmentActivity() {
         cancelSelection: () -> Unit,
         deleteSelection: () -> Unit,
         toggleMapView: () -> Unit,
+        showGroupFilter: Boolean,
         updateOpenGroupsDialog: () -> Unit,
         group: String?
     ) {
@@ -517,10 +519,12 @@ class FieldbookActivity : FragmentActivity() {
                                 contentDescription = stringResource(R.string.search)
                             )
                         }
-                        FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
+                        if (showGroupFilter) {
+                            FilterAction(
+                                group != ALL_GROUPS,
+                                updateOpenGroupsDialog = updateOpenGroupsDialog
+                            )
+                        }
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -542,10 +546,12 @@ class FieldbookActivity : FragmentActivity() {
                             )
                         }
                     } else {
-                        FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
+                        if (showGroupFilter) {
+                            FilterAction(
+                                group != ALL_GROUPS,
+                                updateOpenGroupsDialog = updateOpenGroupsDialog
+                            )
+                        }
                         MapAction(isMapView) {
                             toggleMapView()
                         }
