@@ -185,6 +185,11 @@ class FieldbookViewModel(
                 selectableGroups.add(OTHERS_GROUPS)
             }
 
+            // reset filter if it is set and user deletes obs
+            if (selectableGroups.size <= SHOW_FILTER_THRESHOLD) {
+                updateGroup(ALL_GROUPS)
+            }
+
             selectableGroups
         }
 

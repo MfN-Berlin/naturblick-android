@@ -89,6 +89,7 @@ import java.util.UUID
 const val ALL_GROUPS = "all"
 const val OTHERS_GROUPS = "others"
 const val UNKNOWN_GROUPS = "unknown"
+const val SHOW_FILTER_THRESHOLD = 2
 
 class FieldbookActivity : FragmentActivity() {
     private val manageObservation = registerForActivityResult(ManageObservation) {
@@ -209,6 +210,7 @@ class FieldbookActivity : FragmentActivity() {
             var isMapView by remember { mutableStateOf(initialObservation != null) }
 
             var openGroupsDialog by remember { mutableStateOf(false) }
+            val showGroupsFilter = selectableGroups.size > SHOW_FILTER_THRESHOLD
 
             NaturblickTheme {
                 Scaffold(
@@ -235,7 +237,8 @@ class FieldbookActivity : FragmentActivity() {
                                 }
                             },
                             updateOpenGroupsDialog = { openGroupsDialog = !openGroupsDialog },
-                            group = model.group
+                            group = model.group,
+                            showGroupsFilter = showGroupsFilter
                         )
                     },
                     floatingActionButton = {
@@ -484,7 +487,8 @@ class FieldbookActivity : FragmentActivity() {
         deleteSelection: () -> Unit,
         toggleMapView: () -> Unit,
         updateOpenGroupsDialog: () -> Unit,
-        group: String?
+        group: String?,
+        showGroupsFilter: Boolean
     ) {
         var search by remember { mutableStateOf(false) }
         val isInSelectionMode = selectionCount > 0
@@ -517,10 +521,12 @@ class FieldbookActivity : FragmentActivity() {
                                 contentDescription = stringResource(R.string.search)
                             )
                         }
-                        FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
+                        if (showGroupsFilter) {
+                            FilterAction(
+                                group != ALL_GROUPS,
+                                updateOpenGroupsDialog = updateOpenGroupsDialog
+                            )
+                        }
                         MapAction(isMapView) {
                             toggleMapView()
                         }
@@ -542,10 +548,12 @@ class FieldbookActivity : FragmentActivity() {
                             )
                         }
                     } else {
-                        FilterAction(
-                            group != ALL_GROUPS,
-                            updateOpenGroupsDialog = updateOpenGroupsDialog
-                        )
+                        if (showGroupsFilter) {
+                            FilterAction(
+                                group != ALL_GROUPS,
+                                updateOpenGroupsDialog = updateOpenGroupsDialog
+                            )
+                        }
                         MapAction(isMapView) {
                             toggleMapView()
                         }
