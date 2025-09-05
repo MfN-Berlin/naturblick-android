@@ -11,16 +11,22 @@ import android.os.Bundle
 import android.os.ParcelUuid
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -28,7 +34,9 @@ import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -54,18 +62,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.compose.AndroidFragment
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.backend.SyncWorker
 import berlin.mfn.naturblick.ui.composable.FloatingActionButton
-import berlin.mfn.naturblick.ui.composable.NaturblickAlertDialog
 import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.composable.SearchField
 import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
-import berlin.mfn.naturblick.ui.data.GroupType
 import berlin.mfn.naturblick.ui.data.UiGroup
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
@@ -406,71 +414,105 @@ class FieldbookActivity : FragmentActivity() {
     ) {
         var newSelectedGroup by remember { mutableStateOf(group) }
 
-        NaturblickAlertDialog(
-            title = stringResource(R.string.filter),
-            text = {
-                Column {
-                    selectableGroups.forEachIndexed { index, label ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .selectable(
-                                    selected = group == selectableGroups[index],
-                                    onClick = { newSelectedGroup = selectableGroups[index] },
-                                    role = Role.RadioButton
-                                ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = newSelectedGroup == selectableGroups[index],
-                                onClick = { newSelectedGroup = selectableGroups[index] },
-                                colors = RadioButtonDefaults.colors(
-                                    selectedColor = NaturblickTheme.colors.onSecondaryHighEmphasis,
-                                    unselectedColor = NaturblickTheme.colors.onSecondaryMediumEmphasis
-                                )
-                            )
-                            val g = when (label) {
-                                ALL_GROUPS -> UiGroup(
-                                    ALL_GROUPS,
-                                    stringResource(R.string.all),
-                                    stringResource(R.string.all),
-                                    0
+        Dialog(onDismissRequest = onDismiss) {
+            Surface(
+                shape = RoundedCornerShape(16.dp),
+                color = NaturblickTheme.colors.secondary
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.filter),
+                        style = NaturblickTheme.typography.h6,
+                        color = NaturblickTheme.colors.onSecondaryHighEmphasis
+                    )
+
+                    Spacer(Modifier.height(8.dp))
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 310.dp)
+                    ) {
+                        items(selectableGroups.size) { label ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .selectable(
+                                        selected = selectableGroups.indexOf(newSelectedGroup) == label,
+                                        onClick = { newSelectedGroup = selectableGroups[label] },
+                                        role = Role.RadioButton
+                                    ),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = selectableGroups.indexOf(newSelectedGroup) == label,
+                                    onClick = { newSelectedGroup = selectableGroups[label] },
+                                    colors = RadioButtonDefaults.colors(
+                                        selectedColor = NaturblickTheme.colors.onSecondaryHighEmphasis,
+                                        unselectedColor = NaturblickTheme.colors.onSecondaryMediumEmphasis
+                                    )
                                 )
 
-                                OTHERS_GROUPS -> UiGroup(
-                                    OTHERS_GROUPS,
-                                    stringResource(R.string.others),
-                                    stringResource(R.string.others),
-                                    0
-                                )
+                                val g = when (label) {
+                                    selectableGroups.indexOf(ALL_GROUPS) -> UiGroup(
+                                        ALL_GROUPS,
+                                        stringResource(R.string.all),
+                                        stringResource(R.string.all),
+                                        0
+                                    )
 
-                                UNKNOWN_GROUPS -> UiGroup(
-                                    UNKNOWN_GROUPS,
-                                    stringResource(R.string.unknown),
-                                    stringResource(R.string.unknown),
-                                    0
-                                )
+                                    selectableGroups.indexOf(OTHERS_GROUPS) -> UiGroup(
+                                        OTHERS_GROUPS,
+                                        stringResource(R.string.others),
+                                        stringResource(R.string.others),
+                                        0
+                                    )
 
-                                else ->
-                                    groups.first { it.id == label }
+                                    selectableGroups.indexOf(UNKNOWN_GROUPS) -> UiGroup(
+                                        UNKNOWN_GROUPS,
+                                        stringResource(R.string.unknown),
+                                        stringResource(R.string.unknown),
+                                        0
+                                    )
+
+                                    else -> groups.first { it.id == selectableGroups[label] }
+                                }
+
+                                Text(
+                                    text = if (languageId() == GERMAN_ID) g.gername else g.engname,
+                                    style = NaturblickTheme.typography.body1,
+                                    color = NaturblickTheme.colors.onSecondaryHighEmphasis
+                                )
                             }
-
+                        }
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        TextButton(onClick = onDismiss) {
                             Text(
-                                text = if (languageId() == GERMAN_ID) g.gername else g.engname,
-                                style = NaturblickTheme.typography.body1,
-                                color = NaturblickTheme.colors.onSecondaryHighEmphasis
+                                stringResource(R.string.cancel),
+                                style = NaturblickTheme.typography.button,
+                                color = NaturblickTheme.colors.onSecondaryButtonPrimary
+                            )
+                        }
+                        TextButton(onClick = { onConfirm(newSelectedGroup) }) {
+                            Text(
+                                stringResource(R.string.filter_ok),
+                                style = NaturblickTheme.typography.button,
+                                color = NaturblickTheme.colors.onSecondaryButtonPrimary
                             )
                         }
                     }
                 }
-            },
-            confirm = stringResource(R.string.filter_ok),
-            dismiss = stringResource(R.string.cancel),
-            onDismissRequest = onDismiss,
-            onConfirmation = {
-                onConfirm(newSelectedGroup)
             }
-        )
+        }
     }
 
     @Composable
@@ -572,7 +614,11 @@ class FieldbookActivity : FragmentActivity() {
                             )
                         )
                     } else {
-                        SearchField(stringResource(R.string.search_hint), query, updateQuery) {
+                        SearchField(
+                            stringResource(R.string.search_hint),
+                            query,
+                            updateQuery
+                        ) {
                             search = false
                         }
                     }
