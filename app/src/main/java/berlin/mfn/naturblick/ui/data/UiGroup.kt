@@ -19,8 +19,7 @@ data class UiGroup(
     val id: String,
     val gername: String,
     val engname: String,
-    val image: Int,
-    val type: GroupType
+    val image: Int
 ) : Parcelable {
     val name
         get() = if (isGerman()) {

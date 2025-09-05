@@ -36,14 +36,13 @@ object GroupRepo {
     suspend fun getFieldbookFilterGroups(context: Context): List<UiGroup> {
         val db = StrapiDb.getDb(context)
         return db.groupDao().getGroups().filter {
-            it.isFieldbookfilter && it.nature != null
+            it.isFieldbookfilter
         }.map {
             UiGroup(
                 it.name,
                 it.gername!!,
                 it.engname!!,
-                getImageResource(context, "group_${it.name}"),
-                if (it.nature == "fauna") GroupType.FAUNA else GroupType.FLORA
+                getImageResource(context, "group_${it.name}")
             )
         }
     }
@@ -58,8 +57,7 @@ object GroupRepo {
                 it.name,
                 it.gername!!,
                 it.engname!!,
-                getImageResource(context, "group_${it.name}"),
-                if (it.nature == "fauna") GroupType.FAUNA else GroupType.FLORA
+                getImageResource(context, "group_${it.name}")
             )
         }
     }
@@ -74,8 +72,7 @@ object GroupRepo {
                 it.name,
                 it.gername!!,
                 it.engname!!,
-                getImageResource(context, "group_${it.name}"),
-                if (it.nature == "fauna") GroupType.FAUNA else GroupType.FLORA
+                getImageResource(context, "group_${it.name}")
             )
         }
     }
