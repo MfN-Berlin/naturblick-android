@@ -434,24 +434,21 @@ class FieldbookActivity : FragmentActivity() {
                                     ALL_GROUPS,
                                     stringResource(R.string.all),
                                     stringResource(R.string.all),
-                                    0,
-                                    GroupType.FLORA
+                                    0
                                 )
 
                                 OTHERS_GROUPS -> UiGroup(
                                     OTHERS_GROUPS,
                                     stringResource(R.string.others),
                                     stringResource(R.string.others),
-                                    0,
-                                    GroupType.FLORA
+                                    0
                                 )
 
                                 UNKNOWN_GROUPS -> UiGroup(
                                     UNKNOWN_GROUPS,
                                     stringResource(R.string.unknown),
                                     stringResource(R.string.unknown),
-                                    0,
-                                    GroupType.FLORA
+                                    0
                                 )
 
                                 else ->
