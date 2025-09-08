@@ -51,7 +51,7 @@ object GroupRepo {
         val db = StrapiDb.getDb(context)
 
         return db.groupDao().getGroups().filter {
-            it.hasPortraits && it.nature != null
+            it.hasPortraits
         }.map {
             UiGroup(
                 it.name,
@@ -66,7 +66,7 @@ object GroupRepo {
         val db = StrapiDb.getDb(context)
 
         return db.groupDao().getGroups().filter {
-            it.hasCharacters && it.nature != null
+            it.hasCharacters
         }.map {
             UiGroup(
                 it.name,
