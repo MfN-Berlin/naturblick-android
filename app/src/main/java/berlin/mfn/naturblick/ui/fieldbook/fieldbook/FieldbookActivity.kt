@@ -226,7 +226,7 @@ class FieldbookActivity : FragmentActivity() {
                     topBar = {
                         TopBar(
                             selectionCount = selection.size,
-                            observationCount = observations.size,
+                            observationCount = if (!isMapView) observations.size else observations.filter { it.coords != null }.size,
                             query = model.query,
                             isMapView = isMapView,
                             updateQuery = {
