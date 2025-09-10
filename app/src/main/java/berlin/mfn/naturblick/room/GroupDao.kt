@@ -12,4 +12,8 @@ import androidx.room.Query
 interface GroupDao {
     @Query("SELECT * FROM `groups`")
     suspend fun getGroups(): List<Group>
+
+    suspend fun getFieldbookGroups(): List<Group> {
+        return getGroups().filter { it.isFieldbookfilter }
+    }
 }

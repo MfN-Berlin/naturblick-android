@@ -26,18 +26,14 @@ object GroupRepo {
 
     suspend fun getFieldbookFilterGroupIds(context: Context): List<String> {
         val db = StrapiDb.getDb(context)
-        return db.groupDao().getGroups().filter {
-            it.isFieldbookfilter
-        }.map {
+        return db.groupDao().getFieldbookGroups().map {
             it.name
         }
     }
 
     suspend fun getFieldbookFilterGroups(context: Context): List<UiGroup> {
         val db = StrapiDb.getDb(context)
-        return db.groupDao().getGroups().filter {
-            it.isFieldbookfilter
-        }.map {
+        return db.groupDao().getFieldbookGroups().map {
             UiGroup(
                 it.name,
                 it.gername!!,
@@ -51,7 +47,7 @@ object GroupRepo {
         val db = StrapiDb.getDb(context)
 
         return db.groupDao().getGroups().filter {
-            it.hasPortraits && it.nature != null
+            it.hasPortraits
         }.map {
             UiGroup(
                 it.name,
@@ -66,7 +62,7 @@ object GroupRepo {
         val db = StrapiDb.getDb(context)
 
         return db.groupDao().getGroups().filter {
-            it.hasCharacters && it.nature != null
+            it.hasCharacters
         }.map {
             UiGroup(
                 it.name,

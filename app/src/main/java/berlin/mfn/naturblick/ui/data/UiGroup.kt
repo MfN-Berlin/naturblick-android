@@ -10,10 +10,6 @@ import berlin.mfn.naturblick.utils.isGerman
 import kotlinx.parcelize.Parcelize
 
 
-enum class GroupType {
-    FLORA, FAUNA
-}
-
 @Parcelize
 data class UiGroup(
     val id: String,
