@@ -69,12 +69,12 @@ interface SpeciesDao {
     fun filterSpecies(query: String?, language: Int): PagingSource<Int, SpeciesWithGenus>
 
     @Query(
-        """SELECT rowid FROM species 
+        """SELECT rowid FROM species
         WHERE ((:query IS NULL 
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query))
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query))
             OR sciname LIKE :query) AND gersearchfield IS NOT NULL) 
-            AND group_id NOT IN (:groups)
+            AND group_id NOT IN (SELECT name FROM groups WHERE is_fieldbookfilter = True)
         ORDER BY 
             CASE WHEN :language = $GERMAN_ID THEN gername IS NULL ELSE engname IS NULL END, 
             CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END, 
@@ -83,7 +83,7 @@ interface SpeciesDao {
             sciname
             """
     )
-    suspend fun filterOthersSpeciesIds(query: String?, groups: List<String>, language: Int): List<Int>
+    suspend fun filterOthersSpeciesIds(query: String?, language: Int): List<Int>
 
     @Query(
         """SELECT rowid FROM species 

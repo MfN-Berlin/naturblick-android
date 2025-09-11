@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -75,6 +76,7 @@ import berlin.mfn.naturblick.ui.composable.SearchField
 import berlin.mfn.naturblick.ui.composable.SimpleAlertDialog
 import berlin.mfn.naturblick.ui.composable.ToggleGPSFab
 import berlin.mfn.naturblick.ui.data.UiGroup
+import berlin.mfn.naturblick.ui.data.getLabel
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageFromGalleryObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
@@ -89,14 +91,9 @@ import berlin.mfn.naturblick.ui.fieldbook.OpenObservation
 import berlin.mfn.naturblick.ui.fieldbook.observation.ObservationActivity
 import berlin.mfn.naturblick.ui.info.account.AccountActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
-import berlin.mfn.naturblick.utils.GERMAN_ID
-import berlin.mfn.naturblick.utils.languageId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.UUID
 
-const val ALL_GROUPS = "all"
-const val OTHERS_GROUPS = "others"
-const val UNKNOWN_GROUPS = "unknown"
 const val SHOW_FILTER_THRESHOLD = 2
 
 class FieldbookActivity : FragmentActivity() {
@@ -324,7 +321,6 @@ class FieldbookActivity : FragmentActivity() {
                         GroupFilterDialog(
                             selectableGroups,
                             model.group,
-                            model.groups,
                             onDismiss = { openGroupsDialog = !openGroupsDialog },
                             onConfirm = { selectedGroup ->
                                 model.updateGroup(selectedGroup)
@@ -406,11 +402,10 @@ class FieldbookActivity : FragmentActivity() {
 
     @Composable
     fun GroupFilterDialog(
-        selectableGroups: List<String>,
-        group: String,
-        groups: List<UiGroup>,
+        selectableGroups: List<UiGroup>,
+        group: UiGroup,
         onDismiss: () -> Unit,
-        onConfirm: (selectedGroup: String) -> Unit
+        onConfirm: (selectedGroup: UiGroup) -> Unit
     ) {
         var newSelectedGroup by remember { mutableStateOf(group) }
 
@@ -437,53 +432,28 @@ class FieldbookActivity : FragmentActivity() {
                             .fillMaxWidth()
                             .heightIn(max = 310.dp)
                     ) {
-                        items(selectableGroups.size) { label ->
+                        items(items = selectableGroups) { item ->
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .selectable(
-                                        selected = selectableGroups.indexOf(newSelectedGroup) == label,
-                                        onClick = { newSelectedGroup = selectableGroups[label] },
+                                        selected = newSelectedGroup == item,
+                                        onClick = { newSelectedGroup = item },
                                         role = Role.RadioButton
                                     ),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 RadioButton(
-                                    selected = selectableGroups.indexOf(newSelectedGroup) == label,
-                                    onClick = { newSelectedGroup = selectableGroups[label] },
+                                    selected = newSelectedGroup == item,
+                                    onClick = { newSelectedGroup = item },
                                     colors = RadioButtonDefaults.colors(
                                         selectedColor = NaturblickTheme.colors.onSecondaryHighEmphasis,
                                         unselectedColor = NaturblickTheme.colors.onSecondaryMediumEmphasis
                                     )
                                 )
 
-                                val g = when (label) {
-                                    selectableGroups.indexOf(ALL_GROUPS) -> UiGroup(
-                                        ALL_GROUPS,
-                                        stringResource(R.string.all),
-                                        stringResource(R.string.all),
-                                        0
-                                    )
-
-                                    selectableGroups.indexOf(OTHERS_GROUPS) -> UiGroup(
-                                        OTHERS_GROUPS,
-                                        stringResource(R.string.others),
-                                        stringResource(R.string.others),
-                                        0
-                                    )
-
-                                    selectableGroups.indexOf(UNKNOWN_GROUPS) -> UiGroup(
-                                        UNKNOWN_GROUPS,
-                                        stringResource(R.string.unknown),
-                                        stringResource(R.string.unknown),
-                                        0
-                                    )
-
-                                    else -> groups.first { it.id == selectableGroups[label] }
-                                }
-
                                 Text(
-                                    text = if (languageId() == GERMAN_ID) g.gername else g.engname,
+                                    text = applicationContext.getLabel(item.label),
                                     style = NaturblickTheme.typography.body1,
                                     color = NaturblickTheme.colors.onSecondaryHighEmphasis
                                 )
@@ -526,7 +496,7 @@ class FieldbookActivity : FragmentActivity() {
         deleteSelection: () -> Unit,
         toggleMapView: () -> Unit,
         updateOpenGroupsDialog: () -> Unit,
-        group: String?,
+        group: UiGroup?,
         showGroupsFilter: Boolean
     ) {
         var search by remember { mutableStateOf(false) }
@@ -562,7 +532,7 @@ class FieldbookActivity : FragmentActivity() {
                         }
                         if (showGroupsFilter) {
                             FilterAction(
-                                group != ALL_GROUPS,
+                                group?.id != UiGroup.Companion.ALL_GROUP_ID,
                                 updateOpenGroupsDialog = updateOpenGroupsDialog
                             )
                         }
@@ -589,7 +559,7 @@ class FieldbookActivity : FragmentActivity() {
                     } else {
                         if (showGroupsFilter) {
                             FilterAction(
-                                group != ALL_GROUPS,
+                                group?.id != UiGroup.Companion.ALL_GROUP_ID,
                                 updateOpenGroupsDialog = updateOpenGroupsDialog
                             )
                         }

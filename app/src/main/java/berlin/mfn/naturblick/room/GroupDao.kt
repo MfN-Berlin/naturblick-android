@@ -13,7 +13,12 @@ interface GroupDao {
     @Query("SELECT * FROM `groups`")
     suspend fun getGroups(): List<Group>
 
-    suspend fun getFieldbookGroups(): List<Group> {
-        return getGroups().filter { it.isFieldbookfilter }
-    }
+    @Query("SELECT * FROM `groups` WHERE is_fieldbookfilter = True AND name IN (:obsGroups)")
+    suspend fun getFieldbookGroups(obsGroups: List<String>): List<Group>
+
+    @Query("SELECT * FROM `groups` WHERE has_portraits = True")
+    suspend fun getPortraitGroups(): List<Group>
+
+    @Query("SELECT * FROM `groups` WHERE has_characters = True")
+    suspend fun getCharacterGroups(): List<Group>
 }

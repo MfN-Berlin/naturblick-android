@@ -16,6 +16,7 @@ import berlin.mfn.naturblick.NaturblickApplication
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentGroupsBinding
 import berlin.mfn.naturblick.ui.data.GroupRepo
+import berlin.mfn.naturblick.ui.data.getLabel
 import berlin.mfn.naturblick.utils.AnalyticsTracker
 import kotlinx.coroutines.launch
 
@@ -41,7 +42,7 @@ class CharacterGroupsFragment : Fragment() {
                     findNavController().navigate(
                         CharacterGroupsFragmentDirections.actionNavCharacterGroupsToNavCharacters(
                             it.id,
-                            it.name
+                            requireContext().getLabel(it.label)
                         )
                     )
                 }
