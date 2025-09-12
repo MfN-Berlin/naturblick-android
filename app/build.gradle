@@ -6,16 +6,16 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
  */
 
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
-    id 'kotlin-parcelize'
-    id 'org.jetbrains.kotlin.plugin.serialization'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.android.ksp)
+    alias(libs.plugins.android.navigation)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.room)
     id 'berlin.mfn.naturblick.strapidbgenerator' version '1.0.0'
-    id 'org.jetbrains.kotlin.plugin.compose'
-    id 'androidx.room'
-    id 'com.google.devtools.ksp'
 }
 
 def version = new Properties()
