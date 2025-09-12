@@ -137,7 +137,7 @@ open class SyncMedia : DefaultTask() {
         val request = Request.Builder().url(url).build()
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw RuntimeException("Failed: $url")
-            response.body()?.byteStream()?.use(fileHandler)
+            response.body?.byteStream()?.use(fileHandler)
         }
     }
 

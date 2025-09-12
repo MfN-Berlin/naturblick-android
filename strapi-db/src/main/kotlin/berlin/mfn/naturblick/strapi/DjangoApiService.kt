@@ -9,7 +9,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -17,7 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import java.util.concurrent.TimeUnit
 
-private val contentType = MediaType.get("application/json")
+private val contentType = "application/json".toMediaType()
 
 private val client = OkHttpClient.Builder()
     .readTimeout(90, TimeUnit.SECONDS)
