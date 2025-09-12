@@ -100,14 +100,14 @@ object AnalyticsTracker {
     fun trackWhichSpeciesMkey(app: NaturblickApplication, group: UiGroup) {
         val event = Structured("UI", "pickSpeciesMKey")
             .label(group.id)
-            .property(group.name)
+            .property(group.id)
         app.tracker.track(event)
     }
 
     fun trackWhichSpeciesGroup(app: NaturblickApplication, group: UiGroup) {
         val event = Structured("UI", "pickSpeciesGroup")
             .label(group.id)
-            .property(group.name)
+            .property(group.id)
         app.tracker.track(event)
     }
 

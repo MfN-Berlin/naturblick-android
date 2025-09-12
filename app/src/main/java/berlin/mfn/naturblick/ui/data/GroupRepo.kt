@@ -14,6 +14,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.createBitmap
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.room.StrapiDb
+import berlin.mfn.naturblick.utils.ENGLISH_ID
+import berlin.mfn.naturblick.utils.languageId
 import kotlin.math.roundToInt
 
 object GroupRepo {
@@ -24,35 +26,25 @@ object GroupRepo {
     private var unknownBitmap: Bitmap? = null
     private var defaultBitmap: Bitmap? = null
 
-    suspend fun getFieldbookFilterGroupIds(context: Context): List<String> {
+    suspend fun getFieldbookFilterGroups(context: Context, obsGroups: List<String>): List<UiGroup> {
         val db = StrapiDb.getDb(context)
-        return db.groupDao().getFieldbookGroups().map {
-            it.name
-        }
-    }
-
-    suspend fun getFieldbookFilterGroups(context: Context): List<UiGroup> {
-        val db = StrapiDb.getDb(context)
-        return db.groupDao().getFieldbookGroups().map {
-            UiGroup(
-                it.name,
-                it.gername!!,
-                it.engname!!,
-                getImageResource(context, "group_${it.name}")
-            )
-        }
+        return db.groupDao().getFieldbookGroups(obsGroups)
+            .sortedBy { if (languageId() == ENGLISH_ID) it.engname!! else it.gername!! }
+            .map {
+                UiGroup(
+                    it.name,
+                    GroupLabel.Text(if (languageId() == ENGLISH_ID) it.engname!! else it.gername!!),
+                    0
+                )
+            }
     }
 
     suspend fun getPortraitGroups(context: Context): List<UiGroup> {
         val db = StrapiDb.getDb(context)
-
-        return db.groupDao().getGroups().filter {
-            it.hasPortraits
-        }.map {
+        return db.groupDao().getPortraitGroups().map {
             UiGroup(
                 it.name,
-                it.gername!!,
-                it.engname!!,
+                GroupLabel.Text(if (languageId() == ENGLISH_ID) it.engname!! else it.gername!!),
                 getImageResource(context, "group_${it.name}")
             )
         }
@@ -60,21 +52,16 @@ object GroupRepo {
 
     suspend fun getCharacterGroups(context: Context): List<UiGroup> {
         val db = StrapiDb.getDb(context)
-
-        return db.groupDao().getGroups().filter {
-            it.hasCharacters
-        }.map {
+        return db.groupDao().getCharacterGroups().map {
             UiGroup(
                 it.name,
-                it.gername!!,
-                it.engname!!,
+                GroupLabel.Text(if (languageId() == ENGLISH_ID) it.engname!! else it.gername!!),
                 getImageResource(context, "group_${it.name}")
             )
         }
     }
 
     suspend fun getMapIcon(context: Context, id: String?): Bitmap {
-
         if (groupMapIcons == null) {
             groupMapIcons = getGroupMapIcons(context)
         }
