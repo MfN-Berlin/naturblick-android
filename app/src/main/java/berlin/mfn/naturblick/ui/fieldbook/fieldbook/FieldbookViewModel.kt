@@ -28,6 +28,7 @@ import berlin.mfn.naturblick.ui.data.UiGroup
 import berlin.mfn.naturblick.utils.MediaThumbnail
 import berlin.mfn.naturblick.utils.NetworkResult
 import berlin.mfn.naturblick.utils.languageId
+import berlin.mfn.naturblick.utils.toSQLLikeQuery
 import com.mapbox.maps.CameraState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -113,33 +114,34 @@ class FieldbookViewModel(
             }
         }.mapLatest { (queryAndGroup, observations) ->
             val (query, group) = queryAndGroup
+            val fieldBookObservations = observations.map { toFieldbookObservation(it) }
             if (group == UiGroup.Companion.UNKNOWN_GROUP) {
-                observations.filter {
-                    it.newSpeciesId == null
-                }.map { toFieldbookObservation(it) }
+                fieldBookObservations.filter {
+                    it.species == null
+                }
             } else {
                 val speciesSet = when (group) {
                     UiGroup.Companion.OTHERS_GROUP -> speciesDao.filterOthersSpeciesIds(
-                        "%$query%",
+                        query.toSQLLikeQuery(),
                         languageId()
                     ).toHashSet()
 
                     UiGroup.Companion.ALL_GROUP -> speciesDao.filterSpeciesIds(
-                        "%$query%",
+                        query.toSQLLikeQuery(),
                         null,
                         languageId()
                     )
                         .toHashSet()
 
-                    else -> speciesDao.filterSpeciesIds("%$query%", group.id, languageId())
+                    else -> speciesDao.filterSpeciesIds(query.toSQLLikeQuery(), group.id, languageId())
                         .toHashSet()
                 }
 
-                observations.filter {
-                    speciesSet.contains(it.newSpeciesId) || (it.newSpeciesId == null
+                fieldBookObservations.filter {
+                    speciesSet.contains(it.species?.id) || (it.species == null
                             && group == UiGroup.Companion.ALL_GROUP && query.isEmpty())
                 }
-                    .map { toFieldbookObservation(it) }
+
             }
         }
 

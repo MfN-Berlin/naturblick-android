@@ -18,6 +18,7 @@ import berlin.mfn.naturblick.room.SpeciesDao
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.species.CharacterQuery
 import berlin.mfn.naturblick.utils.languageId
+import berlin.mfn.naturblick.utils.toSQLLikeQuery
 
 class SpeciesListViewModel(application: Application) : ViewModel() {
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
@@ -53,7 +54,7 @@ class SpeciesListViewModel(application: Application) : ViewModel() {
             _query.switchMap { query ->
                 _nature.switchMap { nature ->
                     Pager(PAGING_CONFIG) {
-                        val searchQuery = if (query != null) "%$query%" else null
+                        val searchQuery = query?.toSQLLikeQuery()
                         if (group != null) {
                             speciesDao.filterSpeciesWithPortrait(group, searchQuery, languageId())
                         } else if (nature != null) {
