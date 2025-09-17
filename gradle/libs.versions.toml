@@ -68,6 +68,7 @@ androidx-ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding" } # Ve
 androidx-material = { module = "androidx.compose.material:material" } # Version from BOM
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core" } # Version from BOM
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" } # Version from BOM
+androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text"} # Version from BOM
 
 email-intent-builder = { module = "de.cketti.mailto:email-intent-builder", version.ref = "emailIntentBuilder" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
