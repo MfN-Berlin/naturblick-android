@@ -129,6 +129,7 @@ dependencies {
     implementation libs.androidx.lifecycle.viewmodel.compose
     implementation libs.androidx.ui.viewbinding
     implementation libs.androidx.material.icons.core
+    implementation libs.androidx.compose.ui.text
 
     // Android Studio Preview support
     implementation libs.androidx.ui.tooling.preview
