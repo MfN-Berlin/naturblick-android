@@ -74,7 +74,7 @@ interface SpeciesDao {
             OR (:language = $GERMAN_ID AND (gersearchfield LIKE :query))
             OR (:language = $ENGLISH_ID AND (engsearchfield LIKE :query))
             OR sciname LIKE :query) AND gersearchfield IS NOT NULL) 
-            AND group_id NOT IN (SELECT name FROM groups WHERE is_fieldbookfilter = True)
+            AND group_id NOT IN (SELECT name FROM groups WHERE is_fieldbookfilter)
         ORDER BY 
             CASE WHEN :language = $GERMAN_ID THEN gername IS NULL ELSE engname IS NULL END, 
             CASE WHEN :language = $GERMAN_ID THEN gername ELSE engname END, 
