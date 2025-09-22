@@ -279,5 +279,5 @@
     <string name="filter_ok">Auswahl übernehmen</string>
     <string name="all">Kein Filter</string>
     <string name="others">Sonstige</string>
-    <string name="unknown">Unbekannte</string>
+    <string name="unknown">Unbekannte Art</string>
 </resources>

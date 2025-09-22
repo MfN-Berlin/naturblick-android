@@ -326,5 +326,5 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="filter_ok">Accept selection</string>
     <string name="all">No filter</string>
     <string name="others">Others</string>
-    <string name="unknown">Unknown</string>
+    <string name="unknown">Unknown species</string>
 </resources>
