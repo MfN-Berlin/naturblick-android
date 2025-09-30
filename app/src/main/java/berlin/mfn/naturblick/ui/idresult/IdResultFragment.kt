@@ -12,22 +12,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.IntentCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentIdResultBinding
 import berlin.mfn.naturblick.ui.idresult.IdResultActivityContractBase.Companion.ID_RESULT
+import berlin.mfn.naturblick.ui.species.ConfirmSpecies
 import berlin.mfn.naturblick.ui.species.PickFaunaSpecies
 import berlin.mfn.naturblick.ui.species.PickSpecies
-import berlin.mfn.naturblick.ui.species.portrait.SpeciesId
 import berlin.mfn.naturblick.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class IdResultFragment : Fragment() {
     private lateinit var model: IdResultViewModel
-    private var showSpeciesDialog: AlertDialog? = null
     private var errorDialog: AlertDialog? = null
     private val findSpeciesResult = registerForActivityResult(PickSpecies) { speciesResult ->
         if (speciesResult != null) {
@@ -37,6 +34,12 @@ class IdResultFragment : Fragment() {
     private val findFaunaSpeciesResult = registerForActivityResult(PickFaunaSpecies) { speciesResult ->
         if (speciesResult != null) {
             finish(speciesResult.speciesId)
+        }
+    }
+
+    private val confirmSpeciesResult = registerForActivityResult(ConfirmSpecies) { confirmed ->
+        if(confirmed != null) {
+            finish(confirmed.speciesId)
         }
     }
 
@@ -103,20 +106,7 @@ class IdResultFragment : Fragment() {
                             species,
                             backendIdResult.score
                         ) {
-                            showSpeciesDialog = showSpeciesInfo(
-                                inflater,
-                                species,
-                                {
-                                    findNavController().navigate(
-                                        IdResultFragmentDirections.actionNavIdResultToNavPortrait(
-                                            SpeciesId(species.id),
-                                            false
-                                        )
-                                    )
-                                }, {
-                                    finish(species.id)
-                                }
-                            )
+                            confirmSpeciesResult.launch(it)
                         }
                     })
                 binding.speciesLink.setSingleClickListener {
@@ -202,7 +192,6 @@ class IdResultFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        showSpeciesDialog?.dismiss()
         errorDialog?.dismiss()
     }
 }

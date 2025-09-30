@@ -5,6 +5,7 @@
 
 package berlin.mfn.naturblick.ui.species.portrait
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -16,10 +17,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.NaturblickApplication
 import berlin.mfn.naturblick.R
@@ -27,10 +26,13 @@ import berlin.mfn.naturblick.databinding.FragmentPortraitBinding
 import berlin.mfn.naturblick.databinding.IncludeMiniportraitBinding
 import berlin.mfn.naturblick.databinding.IncludePortraitBinding
 import berlin.mfn.naturblick.room.Species
-import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.fieldbook.CreateManualObservation
+import berlin.mfn.naturblick.ui.species.ConfirmSpecies
+import berlin.mfn.naturblick.ui.species.PickSpecies.SELECTED_SPECIES
+import berlin.mfn.naturblick.ui.species.PickSpeciesResult
 import berlin.mfn.naturblick.utils.AnalyticsTracker
 import berlin.mfn.naturblick.utils.SingleTrackPlayer
+import berlin.mfn.naturblick.utils.cancel
 import berlin.mfn.naturblick.utils.setSingleClickListener
 import berlin.mfn.naturblick.utils.setupBottomInset
 import berlin.mfn.naturblick.utils.setupBottomInsetMargin
@@ -42,6 +44,19 @@ class SpeciesId(val value: Int) : Parcelable
 
 class PortraitFragment : Fragment() {
     private lateinit var audioPlayer: SingleTrackPlayer
+
+    private val confirmSpeciesResult = registerForActivityResult(ConfirmSpecies) { confirmed ->
+        if(confirmed != null) {
+            finish(confirmed)
+        }
+    }
+
+    private fun finish(confirmed: PickSpeciesResult) {
+        val intent = Intent()
+        intent.putExtra(SELECTED_SPECIES, confirmed)
+        requireActivity().setResult(Activity.RESULT_OK, intent)
+        requireActivity().finish()
+    }
 
     private fun navToGroupOverview() {
         findNavController().navigate(PortraitFragmentDirections.actionNavPortraitToNavGroups())
@@ -81,19 +96,10 @@ class PortraitFragment : Fragment() {
 
         val binding = FragmentPortraitBinding.inflate(inflater, container, false)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.portraitContent.setOnScrollChangeListener { _, _, _, _, _ ->
-                if (binding.portraitContent.scrollY < 1 && !binding.createObservationAction.isExtended) {
-                    binding.createObservationAction.extend()
-                } else if (binding.portraitContent.scrollY > 1 && binding.createObservationAction.isExtended) {
-                    binding.createObservationAction.shrink()
-                }
-            }
-        }
-
         binding.createObservationAction.isExtended = true
         binding.createObservationAction.setupBottomInsetMargin()
         binding.portraitContent.setupBottomInset()
+        binding.buttonSheet.setupBottomInset()
         portraitViewModel.speciesAndPortrait.observe(viewLifecycleOwner) { (species, portrait) ->
             (requireActivity() as PortraitActivity).supportActionBar?.title = species.name
 
@@ -103,6 +109,15 @@ class PortraitFragment : Fragment() {
             )
 
             if (portrait != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    binding.portraitContent.setOnScrollChangeListener { _, _, _, _, _ ->
+                        if (binding.portraitContent.scrollY < 1 && !binding.createObservationAction.isExtended) {
+                            binding.createObservationAction.extend()
+                        } else if (binding.portraitContent.scrollY > 1 && binding.createObservationAction.isExtended) {
+                            binding.createObservationAction.shrink()
+                        }
+                    }
+                }
                 val portraitBinding =
                     IncludePortraitBinding.inflate(inflater, container, false)
                 audioPlayer.setOnIsPlayingChangedListener { isPlaying ->
@@ -119,12 +134,16 @@ class PortraitFragment : Fragment() {
                 portraitBinding
                     .portraitSimilarSpecies
                     .setNavigateToSpecies { speciesId ->
-                        findNavController().navigate(
-                            PortraitFragmentDirections.actionNavPortraitToNavPortrait(
-                                speciesId,
-                                portraitViewModel.allowSelection
+                        if (portraitViewModel.selectable) {
+                            confirmSpeciesResult.launch(speciesId)
+                        } else {
+                            findNavController().navigate(
+                                PortraitFragmentDirections.actionNavPortraitToNavPortrait(
+                                    speciesId,
+                                    false
+                                )
                             )
-                        )
+                        }
                     }
                 portraitBinding.species = species
                 portraitBinding.portrait = portrait
@@ -155,6 +174,7 @@ class PortraitFragment : Fragment() {
                 val miniPortraitBinding =
                     IncludeMiniportraitBinding
                         .inflate(inflater, container, false)
+
                 miniPortraitBinding.buttonWikipedia.setSingleClickListener {
                     startActivity(Intent(Intent.ACTION_VIEW, species.wikipediaUri))
                 }
@@ -162,7 +182,15 @@ class PortraitFragment : Fragment() {
                 binding.portraitContent.removeAllViews()
                 binding.portraitContent.addView(miniPortraitBinding.root)
             }
-            if (portraitViewModel.allowSelection) {
+            if (portraitViewModel.selectable) {
+                binding.buttonSheet.visibility = View.VISIBLE
+                binding.buttonConfirm.setSingleClickListener { _ ->
+                    finish(PickSpeciesResult(species.id))
+                }
+                binding.buttonBack.setSingleClickListener {
+                    cancel()
+                }
+            } else {
                 binding.createObservationAction.visibility = View.VISIBLE
                 binding.createObservationAction.setSingleClickListener { _ ->
                     findNavController().navigate(
@@ -171,8 +199,6 @@ class PortraitFragment : Fragment() {
                         )
                     )
                 }
-            } else {
-                binding.createObservationAction.visibility = View.GONE
             }
         }
 

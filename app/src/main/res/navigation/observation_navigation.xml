@@ -32,7 +32,7 @@
             android:name="species_id"
             app:argType="berlin.mfn.naturblick.ui.species.portrait.SpeciesId" />
         <argument
-            android:name="allow_selection"
+            android:name="selectable"
             app:argType="boolean" />
     </activity>
     <activity

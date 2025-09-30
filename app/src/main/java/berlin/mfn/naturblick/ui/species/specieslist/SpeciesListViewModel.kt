@@ -14,7 +14,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.liveData
-import berlin.mfn.naturblick.room.SpeciesDao
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.species.CharacterQuery
 import berlin.mfn.naturblick.utils.languageId

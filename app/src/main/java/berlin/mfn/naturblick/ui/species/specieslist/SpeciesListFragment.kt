@@ -19,15 +19,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.databinding.FragmentSpeciesListBinding
-import berlin.mfn.naturblick.room.StrapiDb
+import berlin.mfn.naturblick.ui.species.ConfirmSpecies
 import berlin.mfn.naturblick.ui.species.PickSpecies.SELECTED_SPECIES
 import berlin.mfn.naturblick.ui.species.PickSpecies.SPECIES_SELECTABLE
 import berlin.mfn.naturblick.ui.species.PickSpeciesResult
 import berlin.mfn.naturblick.ui.species.portrait.SpeciesId
-import berlin.mfn.naturblick.utils.showSpeciesInfo
 
 class SpeciesListFragment : Fragment() {
 
+    private val confirmSpeciesResult = registerForActivityResult(ConfirmSpecies) { confirmed ->
+        if(confirmed != null) {
+            finish(confirmed)
+        }
+    }
+
+    private fun finish(confirmed: PickSpeciesResult) {
+        val intent = Intent()
+        intent.putExtra(SELECTED_SPECIES, confirmed)
+        requireActivity().setResult(Activity.RESULT_OK, intent)
+        requireActivity().finish()
+    }
     private var showSpeciesDialog: AlertDialog? = null
 
     override fun onCreateView(
@@ -35,32 +46,19 @@ class SpeciesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val selectable = requireActivity().intent.extras?.getBoolean(SPECIES_SELECTABLE)
-
+        val selectable = requireActivity().intent.extras?.getBoolean(SPECIES_SELECTABLE) ?: false
         val navController = findNavController()
         val speciesListViewModel: SpeciesListViewModel by activityViewModels()
         val binding = FragmentSpeciesListBinding.inflate(inflater, container, false)
         val recyclerView = binding.rvSpeciesList
         val pagingAdapter = SpeciesListAdapter { species ->
-            if (selectable == true) {
-                showSpeciesDialog = showSpeciesInfo(layoutInflater, species.species, {
-                    navController.navigate(
-                        SpeciesListFragmentDirections.actionNavPortraitsToNavPortrait(
-                            SpeciesId(species.species.id),
-                            false
-                        )
-                    )
-                }, {
-                    val intent = Intent()
-                    intent.putExtra(SELECTED_SPECIES, PickSpeciesResult(species.species.id))
-                    requireActivity().setResult(Activity.RESULT_OK, intent)
-                    requireActivity().finish()
-                })
+            if (selectable) {
+                confirmSpeciesResult.launch(SpeciesId(species.species.id))
             } else {
                 navController.navigate(
                     SpeciesListFragmentDirections.actionNavPortraitsToNavPortrait(
                         SpeciesId(species.species.id),
-                        true
+                        false
                     )
                 )
             }

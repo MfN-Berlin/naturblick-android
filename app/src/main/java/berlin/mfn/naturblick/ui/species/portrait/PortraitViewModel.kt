@@ -17,14 +17,13 @@ import berlin.mfn.naturblick.room.ImageWithSizes
 import berlin.mfn.naturblick.room.SimilarSpecies
 import berlin.mfn.naturblick.room.Species
 import berlin.mfn.naturblick.room.StrapiDb
-import berlin.mfn.naturblick.ui.sound.CropSoundFragment
 import berlin.mfn.naturblick.utils.languageId
 
 class PortraitViewModel(
     application: Application,
     val speciesId: SpeciesId?,
     private val speciesIdPathFragment: String?,
-    val allowSelection: Boolean
+    val selectable: Boolean
 ) :
     ViewModel() {
 
@@ -98,7 +97,7 @@ class PortraitViewModel(
                     (this[APPLICATION_KEY] as Application),
                     args.speciesId,
                     speciesIdPathFragment,
-                    args.allowSelection
+                    args.selectable
                 )
             }
         }
