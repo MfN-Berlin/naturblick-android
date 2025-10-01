@@ -14,6 +14,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -25,6 +26,7 @@ import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentPortraitBinding
 import berlin.mfn.naturblick.databinding.IncludeMiniportraitBinding
 import berlin.mfn.naturblick.databinding.IncludePortraitBinding
+import berlin.mfn.naturblick.room.ImageWithSizes
 import berlin.mfn.naturblick.room.Species
 import berlin.mfn.naturblick.ui.fieldbook.CreateManualObservation
 import berlin.mfn.naturblick.ui.species.ConfirmSpecies
@@ -37,6 +39,7 @@ import berlin.mfn.naturblick.utils.setSingleClickListener
 import berlin.mfn.naturblick.utils.setupBottomInset
 import berlin.mfn.naturblick.utils.setupBottomInsetMargin
 import berlin.mfn.naturblick.utils.showCcInfo
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -69,6 +72,26 @@ class PortraitFragment : Fragment() {
             navToGroupOverview()
         }
         return null
+    }
+
+
+    private fun wireImageCC(ccFab: FloatingActionButton, image: ImageWithSizes) {
+        ccFab.setSingleClickListener {
+            showCcInfo(layoutInflater, image.image, requireContext())
+        }
+    }
+    private fun wireImageButtons(ccFab: FloatingActionButton, fullscreenFab: FloatingActionButton, image: ImageWithSizes) {
+        wireImageCC(ccFab, image)
+        image.largest?.let { fullscreen ->
+            val intent =
+                Intent(Intent.ACTION_VIEW).setDataAndType(fullscreen.fullUrl.toUri (), "image/jpeg")
+            if(intent.resolveActivity(requireActivity().packageManager) != null) {
+                fullscreenFab.setSingleClickListener {
+                    startActivity(intent)
+                }
+                fullscreenFab.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,20 +178,18 @@ class PortraitFragment : Fragment() {
                         toggleAudio(url, species)
                     }
                 }
-                portraitBinding.buttonDescriptionCc.setSingleClickListener {
-                    portrait.description?.image?.let {
-                        showCcInfo(inflater, it, requireContext())
-                    }
+                portrait.description?.let {
+                    wireImageButtons(
+                        portraitBinding.buttonDescriptionCc,
+                        portraitBinding.buttonDescriptionFullscreen,
+                        it
+                    )
                 }
-                portrait.inTheCity?.let { iws ->
-                    portraitBinding.includePortraitImageInTheCity.buttonCc.setSingleClickListener {
-                        showCcInfo(inflater, iws.image, requireContext())
-                    }
+                portrait.inTheCity?.let {
+                    wireImageCC(portraitBinding.includePortraitImageInTheCity.buttonCc, it)
                 }
-                portrait.goodToKnow?.let { gtk ->
-                    portraitBinding.includePortraitImageGoodToKnow.buttonCc.setSingleClickListener {
-                        showCcInfo(inflater, gtk.image, requireContext())
-                    }
+                portrait.goodToKnow?.let {
+                    wireImageCC(portraitBinding.includePortraitImageGoodToKnow.buttonCc, it)
                 }
             } else {
                 val miniPortraitBinding =
@@ -178,9 +199,28 @@ class PortraitFragment : Fragment() {
                 miniPortraitBinding.buttonWikipedia.setSingleClickListener {
                     startActivity(Intent(Intent.ACTION_VIEW, species.wikipediaUri))
                 }
+                species.imageUrlOwner?.let { owner ->
+                    species.imageUrlSource?.let { source ->
+                        species.imageUrlLicense?.let { license ->
+                            miniPortraitBinding.buttonSpeciesImageCc.setSingleClickListener {
+                                showCcInfo(inflater, owner, source, license, requireContext())
+                            }
+                            miniPortraitBinding.buttonSpeciesImageCc.visibility = View.VISIBLE
+                        }
+                    }
+                }
                 miniPortraitBinding.species = species
                 binding.portraitContent.removeAllViews()
                 binding.portraitContent.addView(miniPortraitBinding.root)
+                species.avatarOrigUrl?.let {
+                    val intent = Intent(Intent.ACTION_VIEW).setDataAndType( it.toUri(), "image/jpeg")
+                    if(intent.resolveActivity(requireActivity().packageManager) != null) {
+                        miniPortraitBinding.buttonFullscreen.setSingleClickListener {
+                            startActivity(intent)
+                        }
+                        miniPortraitBinding.buttonFullscreen.visibility = View.VISIBLE
+                    }
+                }
             }
             if (portraitViewModel.selectable) {
                 binding.buttonSheet.visibility = View.VISIBLE

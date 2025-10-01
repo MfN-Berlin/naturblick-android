@@ -77,16 +77,31 @@
                 />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_description_fullscreen"
+                style="@style/Theme.Naturblick.OnPrimaryFABOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/half_margin"
+                android:layout_marginEnd="@dimen/half_margin"
+                android:contentDescription="@string/acc_view_observation"
+                android:src="@drawable/ic_resize"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@id/species_image"
+                app:layout_constraintEnd_toStartOf="@id/button_toggle_audio" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/button_toggle_audio"
                 style="@style/Theme.Naturblick.FABOverlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/half_margin"
+                android:layout_marginVertical="@dimen/half_margin"
+                android:layout_marginEnd="@dimen/half_margin"
                 android:src="@drawable/ic_baseline_play_circle_outline_24"
                 android:visibility="@{hasAudio ? View.VISIBLE : View.GONE}"
                 android:contentDescription="@string/acc_example_sound"
                 app:fabSize="mini"
-                app:layout_constraintBottom_toTopOf="@id/oval"
+                app:layout_constraintBottom_toBottomOf="@id/species_image"
                 app:layout_constraintEnd_toEndOf="@id/species_image" />
 
             <com.google.android.material.textview.MaterialTextView

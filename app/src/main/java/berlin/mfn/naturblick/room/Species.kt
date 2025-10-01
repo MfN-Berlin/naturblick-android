@@ -38,7 +38,16 @@ data class Species(
     val engname: String?,
     val wikipedia: String?,
     @ColumnInfo(name = "image_url") val imageUrl: String?,
+    @ColumnInfo(name = "image_url_orig") val imageUrlOrig: String?,
+    @ColumnInfo(name = "image_url_owner") val imageUrlOwner: String?,
+    @ColumnInfo(name = "image_url_owner_link") val imageUrlOwnerLink: String?,
+    @ColumnInfo(name = "image_url_source") val imageUrlSource: String?,
+    @ColumnInfo(name = "image_url_license") val imageUrlLicense: String?,
     @ColumnInfo(name = "female_image_url") val femaleImageUrl: String?,
+    @ColumnInfo(name = "female_image_url_owner") val femaleImageUrlOwner: String?,
+    @ColumnInfo(name = "female_image_url_owner_link") val femaleImageUrlOwnerLink: String?,
+    @ColumnInfo(name = "female_image_url_source") val femaleImageUrlSource: String?,
+    @ColumnInfo(name = "female_image_url_license") val femaleImageUrlLicense: String?,
     val gersynonym: String?,
     val engsynonym: String?,
     @ColumnInfo(name = "red_list_germany") val redListGermany: String?,
@@ -65,6 +74,11 @@ data class Species(
 
     val avatarUrl: String?
         get() = imageUrl?.let {
+            "${BuildConfig.DJANGO_URL}$it"
+        }
+
+    val avatarOrigUrl: String?
+        get() = imageUrlOrig?.let {
             "${BuildConfig.DJANGO_URL}$it"
         }
 

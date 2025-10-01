@@ -21,14 +21,57 @@
         android:orientation="vertical"
         android:padding="@dimen/default_margin">
 
-        <ImageView
-            android:id="@+id/species_image"
-            android:layout_height="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            imageUrlRoundedCorners="@{species.avatarUrl}"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/species_image"
+                imageUrlRoundedCorners="@{species.avatarUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_species_image_cc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/half_margin"
+                android:padding="@dimen/small_margin"
+                android:src="@drawable/ic_baseline_copyright_24"
+                android:contentDescription="@string/acc_copyright"
+                app:backgroundTint="#4C000000"
+                app:tint="?attr/colorOnPrimaryHighEmphasis"
+                app:elevation="0dp"
+                app:hoveredFocusedTranslationZ="0dp"
+                app:layout_constraintEnd_toEndOf="@id/species_image"
+                app:layout_constraintTop_toTopOf="@id/species_image"
+                app:pressedTranslationZ="0dp"
+                app:fabCustomSize="@dimen/fab_micro_size"
+                app:maxImageSize="@dimen/fab_micro_max_icon_size"
+                android:visibility="gone"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_fullscreen"
+                style="@style/Theme.Naturblick.OnPrimaryFABOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/half_margin"
+                android:contentDescription="@string/acc_view_observation"
+                android:src="@drawable/ic_resize"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@id/species_image"
+                app:layout_constraintEnd_toEndOf="@id/species_image"
+                android:visibility="gone"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/name"

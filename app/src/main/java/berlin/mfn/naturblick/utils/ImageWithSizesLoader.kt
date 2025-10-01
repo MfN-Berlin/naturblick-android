@@ -5,8 +5,6 @@
 
 package berlin.mfn.naturblick.utils
 
-import android.util.Log
-import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.room.ImageWithSizes
 import com.bumptech.glide.load.Options
 import com.bumptech.glide.load.model.GlideUrl
@@ -29,7 +27,7 @@ class ImageWithSizesLoader(
         }
         val optimal = sorted.find { it.width > width }
         val chosen = optimal ?: model.sizes.last()
-        val url = GlideUrl(BuildConfig.DJANGO_URL + chosen.url)
+        val url = GlideUrl(chosen.fullUrl)
         return glideUrlLoader.buildLoadData(url, width, height, options)
     }
 

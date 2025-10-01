@@ -114,6 +114,14 @@ private fun textAndSourceAsLink(source: String, context: Context): String {
     return "<a href='$source'>${context.getString(R.string.source)}</a>"
 }
 
+
+fun Fragment.showCcInfo(
+    layoutInflater: LayoutInflater,
+    image: PortraitImage,
+    context: Context
+): AlertDialog =
+    showCcInfo(layoutInflater, image.owner, image.source, image.license, context)
+
 /**
  * https://wiki.creativecommons.org/wiki/License_Versions#Detailed_attribution_comparison_chart
  *
@@ -131,7 +139,9 @@ private fun textAndSourceAsLink(source: String, context: Context): String {
  */
 fun Fragment.showCcInfo(
     layoutInflater: LayoutInflater,
-    image: PortraitImage,
+    owner: String,
+    source: String,
+    license: String,
     context: Context
 ): AlertDialog {
     val dialogBuilder = MaterialAlertDialogBuilder(
@@ -140,8 +150,8 @@ fun Fragment.showCcInfo(
     )
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
-    val text = "${textAndSourceAsLink(image.source, context)} " +
-            licenceToLink(image.license.trim()) + image.owner
+    val text = "${textAndSourceAsLink(source, context)} " +
+            licenceToLink(license.trim()) + owner
 
     binding.ccInfoText.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
     binding.ccInfoText.movementMethod = LinkMovementMethod.getInstance()
