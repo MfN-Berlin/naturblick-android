@@ -22,9 +22,10 @@ class PortraitActivity : BaseActivity(
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.artportrait, menu)
-
+        val args: PortraitFragmentArgs by navArgs()
+        if(!args.selectable) {
+            menuInflater.inflate(R.menu.artportrait, menu)
+        }
         return super.onCreateOptionsMenu(menu)
     }
 

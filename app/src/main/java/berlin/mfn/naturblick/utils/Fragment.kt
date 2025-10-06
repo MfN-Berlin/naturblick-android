@@ -76,90 +76,6 @@ fun <T : Any> Fragment.resolveWithErrorDialog(
     }
 }
 
-fun Fragment.showSpeciesInfo(
-    layoutInflater: LayoutInflater,
-    species: Species,
-    showSpeciesPortrait: () -> Unit,
-    pick: () -> Unit
-): AlertDialog {
-    val dialogBuilder = MaterialAlertDialogBuilder(
-        requireContext(),
-        R.style.Naturblick_MaterialComponents_Dialog_Alert
-    )
-    val binding = DialogSpeciesInfoBinding.inflate(layoutInflater)
-    binding.buttonSpeciesPortrait
-    var audioPlayer: MediaPlayer? = null
-    lifecycleScope.launch {
-        val portrait = StrapiDb.getDb(requireContext()).portraitDao()
-            .getPortrait(species.id, languageId())
-        if (portrait == null) {
-            val uri = species.wikipediaUri
-            binding.buttonSpeciesPortrait.setText(R.string.link_to_wikipedia)
-            binding.buttonSpeciesPortrait.setSingleClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, uri))
-            }
-            binding.buttonSpeciesPortrait.visibility = if (uri == null) { View.GONE } else { View.VISIBLE}
-        } else {
-            binding.buttonSpeciesPortrait.setText(R.string.to_species_portrait)
-            binding.buttonSpeciesPortrait.setSingleClickListener {
-                showSpeciesPortrait()
-            }
-            binding.buttonSpeciesPortrait.visibility = View.VISIBLE
-        }
-        binding.hasAudio = portrait?.audioUrl != null
-
-        portrait?.audioUrl?.let { url ->
-            binding.buttonToggleAudio.setSingleClickListener {
-                audioPlayer = if (audioPlayer == null) {
-                    binding.buttonToggleAudio.setImageResource(
-                        R.drawable.ic_baseline_pause_circle_outline_24
-                    )
-                    MediaPlayer().apply {
-                        setDataSource(
-                            requireContext(),
-                            Uri.parse("${BuildConfig.DJANGO_URL}$url")
-                        )
-                        setOnPreparedListener {
-                            start()
-                        }
-                        prepareAsync()
-                        setOnCompletionListener {
-                            binding.buttonToggleAudio.setImageResource(
-                                R.drawable.ic_baseline_play_circle_outline_24
-                            )
-                            audioPlayer?.release()
-                            audioPlayer = null
-                        }
-                    }
-                } else {
-                    audioPlayer?.release()
-                    binding.buttonToggleAudio.setImageResource(
-                        R.drawable.ic_baseline_play_circle_outline_24
-                    )
-                    null
-                }
-            }
-        }
-    }
-    binding.species = species
-    binding.buttonSelectSpecies.setSingleClickListener {
-        pick()
-    }
-
-    dialogBuilder
-        .setNegativeButton(R.string.cancel) { d, _ ->
-            d.cancel()
-        }
-        .setView(binding.root)
-        .setOnCancelListener {
-            audioPlayer?.release()
-        }
-        .setOnDismissListener {
-            audioPlayer?.release()
-        }
-    return dialogBuilder.show()
-}
-
 private fun licenceToLink(licence: String): String {
 
     fun sa(licence: String): String {
@@ -198,6 +114,14 @@ private fun textAndSourceAsLink(source: String, context: Context): String {
     return "<a href='$source'>${context.getString(R.string.source)}</a>"
 }
 
+
+fun Fragment.showCcInfo(
+    layoutInflater: LayoutInflater,
+    image: PortraitImage,
+    context: Context
+): AlertDialog =
+    showCcInfo(layoutInflater, image.owner, image.source, image.license, context)
+
 /**
  * https://wiki.creativecommons.org/wiki/License_Versions#Detailed_attribution_comparison_chart
  *
@@ -215,7 +139,9 @@ private fun textAndSourceAsLink(source: String, context: Context): String {
  */
 fun Fragment.showCcInfo(
     layoutInflater: LayoutInflater,
-    image: PortraitImage,
+    owner: String,
+    source: String,
+    license: String,
     context: Context
 ): AlertDialog {
     val dialogBuilder = MaterialAlertDialogBuilder(
@@ -224,8 +150,8 @@ fun Fragment.showCcInfo(
     )
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
-    val text = "${textAndSourceAsLink(image.source, context)} " +
-            licenceToLink(image.license.trim()) + image.owner
+    val text = "${textAndSourceAsLink(source, context)} " +
+            licenceToLink(license.trim()) + owner
 
     binding.ccInfoText.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
     binding.ccInfoText.movementMethod = LinkMovementMethod.getInstance()

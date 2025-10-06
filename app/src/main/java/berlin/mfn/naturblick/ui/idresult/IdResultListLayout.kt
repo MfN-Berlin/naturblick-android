@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.FragmentIdResultItemBinding
+import berlin.mfn.naturblick.ui.species.portrait.SpeciesId
 import berlin.mfn.naturblick.utils.setSingleClickListener
 
 class IdResultListLayout(context: Context, attributeSet: AttributeSet) :
@@ -33,7 +34,7 @@ class IdResultListLayout(context: Context, attributeSet: AttributeSet) :
             context.theme.resolveAttribute(attributeId, value, true)
             binding.score.setTextColor(value.data)
             binding.root.setSingleClickListener {
-                idResult.agreeClick()
+                idResult.agreeClick(SpeciesId(idResult.species.id))
             }
             addView(binding.root)
         }

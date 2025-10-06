@@ -8,6 +8,8 @@ package berlin.mfn.naturblick.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import berlin.mfn.naturblick.BuildConfig
+import java.net.URL
 
 @Entity(
     tableName = "portrait_image_size",
@@ -26,4 +28,7 @@ data class PortraitImageSize(
     @ColumnInfo(name = "width") val width: Int,
     @ColumnInfo(name = "height") val height: Int,
     @ColumnInfo(name = "url") val url: String
-)
+) {
+    val fullUrl: String
+        get() = BuildConfig.DJANGO_URL + url
+}

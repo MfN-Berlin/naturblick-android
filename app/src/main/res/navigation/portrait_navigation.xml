@@ -19,7 +19,7 @@
             app:nullable="true"
             />
         <argument
-            android:name="allow_selection"
+            android:name="selectable"
             app:argType="boolean"
             android:defaultValue="true" />
         <action

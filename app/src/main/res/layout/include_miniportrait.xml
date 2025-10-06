@@ -21,12 +21,96 @@
         android:orientation="vertical"
         android:padding="@dimen/default_margin">
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/species_image"
+                imageUrlRoundedCorners="@{species.avatarUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_species_image_cc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/half_margin"
+                android:padding="@dimen/small_margin"
+                android:src="@drawable/ic_baseline_copyright_24"
+                android:contentDescription="@string/acc_copyright"
+                app:backgroundTint="#4C000000"
+                app:tint="?attr/colorOnPrimaryHighEmphasis"
+                app:elevation="0dp"
+                app:hoveredFocusedTranslationZ="0dp"
+                app:layout_constraintEnd_toEndOf="@id/species_image"
+                app:layout_constraintTop_toTopOf="@id/species_image"
+                app:pressedTranslationZ="0dp"
+                app:fabCustomSize="@dimen/fab_micro_size"
+                app:maxImageSize="@dimen/fab_micro_max_icon_size"
+                android:visibility="gone"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_fullscreen"
+                style="@style/Theme.Naturblick.OnPrimaryFABOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/half_margin"
+                android:contentDescription="@string/acc_view_observation"
+                android:src="@drawable/ic_resize"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@id/species_image"
+                app:layout_constraintEnd_toEndOf="@id/species_image"
+                android:visibility="gone"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_artportrait"
-            android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="?attr/colorOnSecondaryMediumEmphasis"/>
+            android:layout_marginTop="@dimen/double_margin"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/species_image">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:text="@{species.sciname}"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceOverline"
+                android:textColor="?attr/colorOnFeatureSignalHigh"
+                android:visibility="@{species.name != null ? View.VISIBLE : View.GONE}" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{species.nameWithFallback}"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textAppearance="?attr/textAppearanceHeadline2"
+                android:textColor="?attr/colorOnSecondaryHighEmphasis" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{species.synonym}"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceCaption"
+                android:textColor="?attr/colorOnSecondaryLowEmphasis"
+                android:visibility="@{species.synonym != null ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/button_wikipedia"

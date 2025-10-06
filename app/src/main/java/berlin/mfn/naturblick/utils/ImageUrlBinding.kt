@@ -20,14 +20,21 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-@BindingAdapter("imageUrl")
-fun imageUrlBinding(imageView: ImageView, imagePath: String?) {
-    Glide.with(imageView.context).load(imagePath).into(imageView)
-}
-
-@BindingAdapter("imageUrl")
-fun imageUrlBinding(imageView: ImageView, uri: Uri) {
-    Glide.with(imageView.context).load(uri).into(imageView)
+@BindingAdapter("imageUrlRoundedCorners")
+fun imageUrlWithRoundedCornersBinding(imageView: ImageView, uri: String?) {
+    if (uri != null) {
+        Glide
+            .with(imageView.context)
+            .load(uri)
+            .transform(RoundedCorners(8))
+            .into(imageView)
+    } else {
+        Glide
+            .with(imageView.context)
+            .load(R.drawable.placeholder)
+            .transform(RoundedCorners(8))
+            .into(imageView)
+    }
 }
 
 @BindingAdapter("imageUrlThumbnailCrop")

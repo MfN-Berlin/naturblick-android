@@ -17,6 +17,9 @@ data class ImageWithSizes(val image: PortraitImage, val sizes: List<PortraitImag
             "H,${it.width}:${it.height}"
         } ?: "H,1:1"
 
+    val largest: PortraitImageSize?
+        get() = sizes.maxByOrNull { it.width * it.height }
+
     fun widerThanFocusPoint(landscape: Boolean): Boolean = sorted.lastOrNull()?.let {
         if (landscape) {
             it.width.toFloat() / it.height.toFloat() > 4f / 3f
