@@ -9,8 +9,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -36,11 +34,18 @@ import berlin.mfn.naturblick.ui.sound.CropAndIdentifySoundRequest
 import berlin.mfn.naturblick.ui.sound.CropAndIdentifySoundResult
 import berlin.mfn.naturblick.ui.species.PickSpecies
 import berlin.mfn.naturblick.utils.*
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
+import com.google.android.material.timepicker.TimeFormat
 import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.*
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.LocalDate
 
 class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
     private lateinit var viewModel: ObservationViewModel
@@ -301,28 +306,33 @@ class ObservationEditFragment : Fragment(), RequestedPermissionsCallback {
             }
         }
         binding.editTimeInput.setSingleClickListener {
-            TimePickerDialog(
-                requireContext(),
-                { _, hourOfDay, minute ->
-                    viewModel.timeChanged(hourOfDay, minute)
-                },
-                viewModel.currentObservation.value.createdState?.hour!!,
-                viewModel.currentObservation.value.createdState?.minute!!,
-                is24HourFormat(activity)
-            ).show()
+            MaterialTimePicker.Builder().apply {
+                setHour(viewModel.currentObservation.value.createdState?.hour!!)
+                setMinute(viewModel.currentObservation.value.createdState?.minute!!)
+                setTimeFormat(if(is24HourFormat(activity)) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
+                setInputMode(INPUT_MODE_CLOCK)
+            }.build().apply {
+                addOnPositiveButtonClickListener {
+                    viewModel.timeChanged(hour, minute)
+                }
+            }.show(parentFragmentManager, "time-picker")
         }
         binding.editDateInput.setSingleClickListener {
-            DatePickerDialog(
-                requireContext(),
-                { _, year, month, dayOfMonth ->
-                    viewModel.dateChanged(year, month + 1, dayOfMonth)
-                },
-                viewModel.currentObservation.value.createdState?.year!!,
-                viewModel.currentObservation.value.createdState?.monthValue!! - 1,
-                viewModel.currentObservation.value.createdState?.dayOfMonth!!
-            ).apply {
-                datePicker.maxDate = System.currentTimeMillis()
-            }.show()
+            MaterialDatePicker.Builder.datePicker().apply {
+                setSelection(viewModel.currentObservation.value.createdState?.toInstant()?.toEpochMilli())
+                setCalendarConstraints(CalendarConstraints.Builder().apply {
+                    setEnd(System.currentTimeMillis())
+                }.build())
+            }.build().apply {
+                addOnPositiveButtonClickListener {
+                    viewModel.currentObservation.value.createdState?.zone?.let { zone ->
+                        selection?.let {
+                            val localDate = LocalDate.ofInstant(Instant.ofEpochMilli(it), zone)
+                            viewModel.dateChanged(localDate.year, localDate.month.value, localDate.dayOfMonth)
+                        }
+                    }
+                }
+            }.show(parentFragmentManager, "date-picker")
         }
         dialogBuild
             .setCancelable(false)
