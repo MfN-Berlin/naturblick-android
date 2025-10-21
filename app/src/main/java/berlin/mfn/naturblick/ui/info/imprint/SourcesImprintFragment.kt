@@ -18,9 +18,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,7 +44,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.room.SourcesImprint
@@ -85,7 +82,6 @@ class SourcesImprintFragment : Fragment() {
     ) {
         Column(
             modifier = Modifier
-//                .fillMaxSize()
                 .animateContentSize()
                 .background(
                     NaturblickTheme.colors.secondary,
