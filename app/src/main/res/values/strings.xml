@@ -327,4 +327,7 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="all">No filter</string>
     <string name="others">Others</string>
     <string name="unknown">Unknown species</string>
+    <string name="ident_keys">Characteristics</string>
+    <string name="sound_recogniotion_sound">Record a bird sound</string>
+    <string name="sound_recogniotion_images">Record a bird images</string>
 </resources>

@@ -5,13 +5,19 @@
 
 package berlin.mfn.naturblick.room
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Dao
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Entity(
     tableName = "sources_imprint"
 )
 data class SourcesImprint(
     @PrimaryKey val id: Int,
+    val section: String,
     @ColumnInfo(name = "scie_name") val scieName: String,
     @ColumnInfo(name = "scie_name_eng") val scieNameEng: String,
     @ColumnInfo(name = "image_source") val imageSource: String?,
@@ -19,8 +25,9 @@ data class SourcesImprint(
     val author: String?
 )
 
+
 @Dao
 interface SourcesImprintDao {
     @Query("SELECT * FROM sources_imprint")
-    suspend fun getSourcesImprint(): List<SourcesImprint>
+    fun getSourcesImprint(): Flow<List<SourcesImprint>>
 }
