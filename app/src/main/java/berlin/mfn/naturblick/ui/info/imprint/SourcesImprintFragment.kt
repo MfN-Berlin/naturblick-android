@@ -169,7 +169,15 @@ class SourcesImprintFragment : Fragment() {
 
 
     fun SourcesImprint.textForSource(): String {
-        return "$author $licence $scieName"
+        return "${
+            author?.let {
+                "$it,"
+            }
+        } ${
+            licence?.let {
+                "$it,"
+            }
+        } $scieName"
     }
 
 
@@ -189,7 +197,11 @@ class SourcesImprintFragment : Fragment() {
                         title = section.key,
                         items = section.value.map {
                             SourceItem(
-                                it.textForSource(),
+                                it.textForSource()
+                                    .replace(
+                                        "{{changed}}",
+                                        "${stringResource(R.string.changedbyus)} - "
+                                    ),
                                 it.imageSource
                             )
                         })
