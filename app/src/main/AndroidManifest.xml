@@ -52,6 +52,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.species.specieslist.SpeciesListActivity"
+            android:launchMode="singleTop"
             android:exported="false"
             android:parentActivityName=".ui.species.groups.GroupsActivity"
             android:screenOrientation="portrait">
