@@ -186,10 +186,10 @@ class PortraitFragment : Fragment() {
                     )
                 }
                 portrait.inTheCity?.let {
-                    wireImageCC(portraitBinding.includePortraitImageInTheCity.buttonCc, it)
+                    wireImageButtons(portraitBinding.includePortraitImageInTheCity.buttonCc, portraitBinding.includePortraitImageInTheCity.buttonFullscreen, it)
                 }
                 portrait.goodToKnow?.let {
-                    wireImageCC(portraitBinding.includePortraitImageGoodToKnow.buttonCc, it)
+                    wireImageButtons(portraitBinding.includePortraitImageGoodToKnow.buttonCc, portraitBinding.includePortraitImageGoodToKnow.buttonFullscreen, it)
                 }
             } else {
                 val miniPortraitBinding =
