@@ -203,7 +203,7 @@ class PortraitFragment : Fragment() {
                     species.imageUrlSource?.let { source ->
                         species.imageUrlLicense?.let { license ->
                             miniPortraitBinding.buttonSpeciesImageCc.setSingleClickListener {
-                                showCcInfo(inflater, owner, source, license, requireContext())
+                                showCcInfo(inflater, owner, source, license, species.imageUrlOwnerLink, requireContext())
                             }
                             miniPortraitBinding.buttonSpeciesImageCc.visibility = View.VISIBLE
                         }

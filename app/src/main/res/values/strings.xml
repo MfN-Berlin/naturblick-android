@@ -47,7 +47,7 @@
     <string name="iucn_ex">extinct</string>
     <string name="iucn_category">Endangerment status IUCN: %s</string>
     <string name="sources">Sources</string>
-    <string name="source">Source</string>
+    <string name="photo">Photo by</string>
     <string name="search_hint">species</string>
     <string name="search">Search</string>
     <string name="share">Share</string>
@@ -331,4 +331,5 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="sound_recogniotion_sound">Record a bird sound</string>
     <string name="sound_recogniotion_images">Record a bird images</string>
     <string name="changedbyus">Modified</string>
+    <string name="ownerpage">Owners\' page</string>
 </resources>

@@ -48,7 +48,7 @@
     <string name="iucn_lc">nicht gefährdet</string>
     <string name="iucn_category">Gefährdungsstatus laut der IUCN: %s</string>
     <string name="sources">Quellen</string>
-    <string name="source">Quelle</string>
+    <string name="photo">Foto von</string>
     <string name="search_hint">Artname</string>
     <string name="search">Suche</string>
     <string name="share">Teilen</string>
@@ -284,4 +284,5 @@
     <string name="sound_recogniotion_sound">Lauterkennung Tonaufnahmen</string>
     <string name="sound_recogniotion_images">Lauterkennung Bilder</string>
     <string name="changedbyus">Abgeändert</string>
+    <string name="ownerpage">Autorenseite</string>
 </resources>
