@@ -7,27 +7,18 @@ package berlin.mfn.naturblick.utils
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Build
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import berlin.mfn.naturblick.BuildConfig
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.DialogCcInfoBinding
-import berlin.mfn.naturblick.databinding.DialogSpeciesInfoBinding
 import berlin.mfn.naturblick.room.PortraitImage
-import berlin.mfn.naturblick.room.Species
-import berlin.mfn.naturblick.room.StrapiDb
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.cketti.mailto.EmailIntentBuilder
-import kotlinx.coroutines.launch
 
 fun Fragment.cancel() {
     requireActivity().setResult(Activity.RESULT_CANCELED)
@@ -76,6 +67,14 @@ fun <T : Any> Fragment.resolveWithErrorDialog(
     }
 }
 
+private fun ownerLinkToLink(context: Context, ownerLink: String?): String {
+    return ownerLink
+        ?.takeIf { it.isNotEmpty() }
+        ?.let {
+            "<br><a href='${it}'>${context.getString(R.string.ownerpage)}</a>"
+        } ?: ""
+}
+
 private fun licenceToLink(licence: String): String {
 
     fun sa(licence: String): String {
@@ -102,16 +101,16 @@ private fun licenceToLink(licence: String): String {
 
     val l = licence.lowercase()
     return if (l.contains("cc0") || l.contains("cc 0"))
-        "(<a href='https://creativecommons.org/publicdomain/zero/1.0'>$licence</a>) "
+        "<a href='https://creativecommons.org/publicdomain/zero/1.0'>CC BY</a>"
     else if (l.contains("cc") && l.contains("by"))
-        "(<a href='https://creativecommons.org/licenses/by${sa(l)}/${version(l)}'>" +
-                "$licence</a>) "
+        "<a href='https://creativecommons.org/licenses/by${sa(l)}/${version(l)}'>" +
+                "CC BY</a>"
     else
-        "($licence) "
+        "CC BY"
 }
 
 private fun textAndSourceAsLink(source: String, context: Context): String {
-    return "<a href='$source'>${context.getString(R.string.source)}</a>"
+    return "<a href='$source'>${context.getString(R.string.photo)}</a>"
 }
 
 
@@ -120,7 +119,7 @@ fun Fragment.showCcInfo(
     image: PortraitImage,
     context: Context
 ): AlertDialog =
-    showCcInfo(layoutInflater, image.owner, image.source, image.license, context)
+    showCcInfo(layoutInflater, image.owner, image.source, image.license, image.ownerLink, context)
 
 /**
  * https://wiki.creativecommons.org/wiki/License_Versions#Detailed_attribution_comparison_chart
@@ -142,6 +141,7 @@ fun Fragment.showCcInfo(
     owner: String,
     source: String,
     license: String,
+    ownerLink: String?,
     context: Context
 ): AlertDialog {
     val dialogBuilder = MaterialAlertDialogBuilder(
@@ -150,8 +150,12 @@ fun Fragment.showCcInfo(
     )
     val binding = DialogCcInfoBinding.inflate(layoutInflater)
 
-    val text = "${textAndSourceAsLink(source, context)} " +
-            licenceToLink(license.trim()) + owner
+    val text = "${
+        textAndSourceAsLink(
+            source,
+            context
+        )
+    } $owner/ ${licenceToLink(license.trim())}${ownerLinkToLink(context, ownerLink)}"
 
     binding.ccInfoText.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
     binding.ccInfoText.movementMethod = LinkMovementMethod.getInstance()
