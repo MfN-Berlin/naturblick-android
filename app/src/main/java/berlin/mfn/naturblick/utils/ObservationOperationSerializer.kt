@@ -46,6 +46,14 @@ object ObservationOperationSerializer : KSerializer<ObservationOperation> {
                     value
                 )
             }
+            is ViewFieldbookOperation -> encoder.encodeStructure(descriptor) {
+                encodeStringElement(descriptor, 0, "view_fieldbook")
+                encodeSerializableElement(descriptor, 1, ViewFieldbookOperation.serializer(), value)
+            }
+            is ViewPortraitOperation -> encoder.encodeStructure(descriptor) {
+                encodeStringElement(descriptor, 0, "view_portrait")
+                encodeSerializableElement(descriptor, 1, ViewPortraitOperation.serializer(), value)
+            }
         }
     }
 

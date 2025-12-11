@@ -9,6 +9,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.ParcelUuid
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
@@ -187,6 +188,7 @@ class FieldbookActivity : FragmentActivity() {
         }.show()
     }
 
+    
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

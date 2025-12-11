@@ -14,7 +14,7 @@ import berlin.mfn.naturblick.room.CustomTypeConverters
 
 @TypeConverters(CustomTypeConverters::class)
 @Database(
-    version = 7,
+    version = 8,
     entities = [
         ObservationOperationEntry::class,
         PatchOperation::class,
@@ -24,7 +24,9 @@ import berlin.mfn.naturblick.room.CustomTypeConverters
         UploadThumbnailMediaOperation::class,
         Observation::class,
         BackendObservation::class,
-        Sync::class
+        Sync::class,
+        ViewFieldbookOperation::class,
+        ViewPortraitOperation::class
     ],
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = ObservationDb.DeleteIdResultColumns::class),
@@ -32,6 +34,8 @@ import berlin.mfn.naturblick.room.CustomTypeConverters
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5),
         AutoMigration(from = 5, to = 6),
+        // 6 to 7: see MIGRATION_6_7
+        AutoMigration(from = 7, to = 8)
     ]
 )
 abstract class ObservationDb : RoomDatabase() {
