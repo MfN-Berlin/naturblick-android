@@ -88,15 +88,14 @@ class SpeciesListViewModel(application: Application) : AndroidViewModel(applicat
 
     fun countViewPortrait(speciesId: Int) {
         if (_charcters.value == null) {
+            val deviceIdentifier = AndroidDeviceId.deviceId(application.contentResolver)
+            val vpo = ViewPortraitOperation(
+                deviceIdentifier,
+                speciesId = speciesId,
+                timestamp = ZonedDateTime.now()
+            )
             viewModelScope.launch(Dispatchers.IO) {
-                val deviceIdentifier = AndroidDeviceId.deviceId(application.contentResolver)
-                operationDao.insertOperation(
-                    ViewPortraitOperation(
-                        deviceIdentifier,
-                        speciesId = speciesId,
-                        timestamp = ZonedDateTime.now()
-                    )
-                )
+                operationDao.insertOperation(vpo)
             }
         }
     }

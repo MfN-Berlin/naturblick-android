@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.backend.ObservationDb
 import berlin.mfn.naturblick.backend.ViewFieldbookOperation
@@ -46,28 +45,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-    private val vm: HomeViewModel by viewModels()
-
-    private lateinit var navController: NavController
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        navController = findNavController()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val navController = findNavController()
+        val vm: HomeViewModel by viewModels()
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.speciesPortraits.button.setSingleClickListener {
             navController.navigate(
@@ -101,5 +86,6 @@ class HomeFragment : Fragment() {
                 HomeFragmentDirections.actionNavStartToNavCharacters()
             )
         }
+        return binding.root
     }
 }
