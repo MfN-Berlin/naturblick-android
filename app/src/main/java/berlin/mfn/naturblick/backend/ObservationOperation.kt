@@ -7,17 +7,22 @@
 
 package berlin.mfn.naturblick.backend
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import androidx.room.Relation
 import berlin.mfn.naturblick.utils.MediaType
 import berlin.mfn.naturblick.utils.ObservationOperationSerializer
 import berlin.mfn.naturblick.utils.UUIDSerializer
 import berlin.mfn.naturblick.utils.ZonedDateTimeSerializer
-import java.time.ZonedDateTime
-import java.util.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlinx.serialization.UseSerializers
+import java.time.ZonedDateTime
+import java.util.UUID
 
 @Serializable()
 enum class ObsType {
@@ -152,6 +157,43 @@ data class DeleteOperation(
     @Transient @PrimaryKey @ColumnInfo(name = "operation_id") override val operationId: Long = -1
 ) : ObservationOperation()
 
+@Entity(
+    tableName = "view_fieldbook_operation",
+    foreignKeys = [
+        ForeignKey(
+            entity = ObservationOperationEntry::class,
+            parentColumns = ["rowid"],
+            childColumns = ["operation_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+@Serializable()
+data class ViewFieldbookOperation(
+    @ColumnInfo(name = "device_identifier") val deviceIdentifier: String,
+    @ColumnInfo(name = "timestamp") val timestamp: ZonedDateTime,
+    @Transient @PrimaryKey @ColumnInfo(name = "operation_id") override val operationId: Long = -1
+) : ObservationOperation()
+
+@Entity(
+    tableName = "view_portrait_operation",
+    foreignKeys = [
+        ForeignKey(
+            entity = ObservationOperationEntry::class,
+            parentColumns = ["rowid"],
+            childColumns = ["operation_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+@Serializable()
+data class ViewPortraitOperation(
+    @ColumnInfo(name = "device_identifier") val deviceIdentifier: String,
+    @ColumnInfo(name = "species_id") val speciesId: Int,
+    @ColumnInfo(name = "timestamp") val timestamp: ZonedDateTime,
+    @Transient @PrimaryKey @ColumnInfo(name = "operation_id") override val operationId: Long = -1
+) : ObservationOperation()
+
 @Entity(tableName = "operation")
 data class ObservationOperationEntry(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rowid") val id: Int
@@ -162,12 +204,8 @@ data class ObservationOperationEntryWithOperation(
     @Relation(parentColumn = "rowid", entityColumn = "operation_id") val create: CreateOperation?,
     @Relation(parentColumn = "rowid", entityColumn = "operation_id") val patch: PatchOperation?,
     @Relation(parentColumn = "rowid", entityColumn = "operation_id") val delete: DeleteOperation?,
-    @Relation(
-        parentColumn = "rowid",
-        entityColumn = "operation_id"
-    ) val upload: UploadMediaOperation?,
-    @Relation(
-        parentColumn = "rowid",
-        entityColumn = "operation_id"
-    ) val uploadThumbnail: UploadThumbnailMediaOperation?
+    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val upload: UploadMediaOperation?,
+    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val uploadThumbnail: UploadThumbnailMediaOperation?,
+    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val viewFieldbook: ViewFieldbookOperation?,
+    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val viewPortrait: ViewPortraitOperation?
 )

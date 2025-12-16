@@ -9,20 +9,21 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import androidx.paging.PagingData
-import androidx.paging.PagingSource
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
+import androidx.room.Query
+import androidx.room.Transaction
 import berlin.mfn.naturblick.utils.Media
 import berlin.mfn.naturblick.utils.MediaType
 import berlin.mfn.naturblick.utils.NetworkResult
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import java.io.File
-import java.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.util.UUID
 
 @Dao
 interface OperationDao {
@@ -36,20 +37,33 @@ interface OperationDao {
                 it.create != null -> {
                     it.create
                 }
+
                 it.patch != null -> {
                     it.patch
                 }
+
                 it.delete != null -> {
                     it.delete
                 }
+
                 it.upload != null -> {
                     it.upload
                 }
+
                 it.uploadThumbnail != null -> {
                     it.uploadThumbnail
                 }
+
+                it.viewFieldbook != null -> {
+                    it.viewFieldbook
+                }
+
+                it.viewPortrait != null -> {
+                    it.viewPortrait
+                }
+
                 else -> {
-                    error("An operation must have create, patch, upload or delete set")
+                    error("An operation must have create, patch, upload or delete set... or view_fieldbook or portrait")
                 }
             }
         }
@@ -104,8 +118,15 @@ interface OperationDao {
             is CreateOperation -> insertCreateOperation(operation.copy(operationId = operationId))
             is UploadMediaOperation ->
                 insertUploadMediaOperation(operation.copy(operationId = operationId))
+
             is UploadThumbnailMediaOperation ->
                 insertUploadThumbnailMediaOperation(operation.copy(operationId = operationId))
+
+            is ViewFieldbookOperation ->
+                insertViewFieldbookOperation(operation.copy(operationId = operationId))
+
+            is ViewPortraitOperation ->
+                insertViewPortraitOperation(operation.copy(operationId = operationId))
         }
         return operationId
     }
@@ -158,11 +179,12 @@ interface OperationDao {
         val existing = findUploadMediaOperationByMediaId(mediaId)
         return existing?.operationId
             ?: if (when (type) {
-                MediaType.JPG ->
-                    jpegCopy(context, local, upload)
-                MediaType.MP4 ->
-                    mp4Copy(context, local, upload)
-            } != null
+                    MediaType.JPG ->
+                        jpegCopy(context, local, upload)
+
+                    MediaType.MP4 ->
+                        mp4Copy(context, local, upload)
+                } != null
             ) {
                 val operationId = insertOperationEntry(ObservationOperationEntry(0))
                 insertUploadMediaOperation(
@@ -213,6 +235,7 @@ interface OperationDao {
                     it.thumbnailId,
                     it.localMediaId
                 )
+
                 is DeleteOperation -> deleteObservation(it.occurenceId)
                 is CreateOperation -> createObservation(
                     Observation(
@@ -230,8 +253,11 @@ interface OperationDao {
                         null
                     )
                 )
+
                 is UploadMediaOperation -> {}
                 is UploadThumbnailMediaOperation -> {}
+                is ViewFieldbookOperation -> {}
+                is ViewPortraitOperation -> {}
             }
         }
     }
@@ -329,13 +355,19 @@ interface OperationDao {
     @Insert
     suspend fun insertUploadThumbnailMediaOperation(uploadMedia: UploadThumbnailMediaOperation)
 
+    @Insert
+    suspend fun insertViewFieldbookOperation(viewFieldbook: ViewFieldbookOperation)
+
+    @Insert
+    suspend fun insertViewPortraitOperation(viewPortraitOperation: ViewPortraitOperation)
+
     @Query("SELECT * FROM upload_thumbnail_media_operation WHERE media_id = :mediaId")
     suspend fun findUploadThumbnailMediaOperationByMediaId(mediaId: UUID):
-        UploadThumbnailMediaOperation?
+            UploadThumbnailMediaOperation?
 
     @Query("SELECT * FROM upload_media_operation WHERE media_id = :mediaId")
     suspend fun findUploadMediaOperationByMediaId(mediaId: UUID):
-        UploadMediaOperation?
+            UploadMediaOperation?
 
     @Transaction
     @Query("SELECT * FROM operation ORDER BY rowid ASC")

@@ -6,22 +6,34 @@
 package berlin.mfn.naturblick.ui.species.specieslist
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.application
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.liveData
+import berlin.mfn.naturblick.backend.ObservationDb
+import berlin.mfn.naturblick.backend.ViewPortraitOperation
 import berlin.mfn.naturblick.room.StrapiDb
 import berlin.mfn.naturblick.ui.species.CharacterQuery
+import berlin.mfn.naturblick.utils.AndroidDeviceId
 import berlin.mfn.naturblick.utils.languageId
 import berlin.mfn.naturblick.utils.toSQLLikeQuery
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
 
-class SpeciesListViewModel(application: Application) : ViewModel() {
+class SpeciesListViewModel(application: Application) : AndroidViewModel(application) {
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
     private val _query: MutableLiveData<String?> = MutableLiveData<String?>(null)
+
+    val operationDao = ObservationDb.getDb(application).operationDao()
 
     fun setQuery(query: String?) {
         if (query != null) {
@@ -74,12 +86,26 @@ class SpeciesListViewModel(application: Application) : ViewModel() {
         }
     }
 
+    fun countViewPortrait(speciesId: Int) {
+        if (_charcters.value == null) {
+            val deviceIdentifier = AndroidDeviceId.deviceId(application.contentResolver)
+            val vpo = ViewPortraitOperation(
+                deviceIdentifier,
+                speciesId = speciesId,
+                timestamp = ZonedDateTime.now()
+            )
+            viewModelScope.launch(Dispatchers.IO) {
+                operationDao.insertOperation(vpo)
+            }
+        }
+    }
+
     companion object {
         val PAGING_CONFIG = PagingConfig(50)
         val Factory = viewModelFactory {
-                initializer {
-                    SpeciesListViewModel((this[APPLICATION_KEY] as Application))
-                }
+            initializer {
+                SpeciesListViewModel((this[APPLICATION_KEY] as Application))
             }
+        }
     }
 }
