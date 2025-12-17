@@ -194,18 +194,54 @@ data class ViewPortraitOperation(
     @Transient @PrimaryKey @ColumnInfo(name = "operation_id") override val operationId: Long = -1
 ) : ObservationOperation()
 
+@Entity(
+    tableName = "view_characters_operation",
+    foreignKeys = [
+        ForeignKey(
+            entity = ObservationOperationEntry::class,
+            parentColumns = ["rowid"],
+            childColumns = ["operation_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+@Serializable()
+data class ViewCharactersOperation(
+    @ColumnInfo(name = "device_identifier") val deviceIdentifier: String,
+    @ColumnInfo(name = "group") val group: String,
+    @ColumnInfo(name = "timestamp") val timestamp: ZonedDateTime,
+    @Transient @PrimaryKey @ColumnInfo(name = "operation_id") override val operationId: Long = -1
+) : ObservationOperation()
+
 @Entity(tableName = "operation")
 data class ObservationOperationEntry(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rowid") val id: Int
 )
+
 
 data class ObservationOperationEntryWithOperation(
     @Embedded val operation: ObservationOperationEntry,
     @Relation(parentColumn = "rowid", entityColumn = "operation_id") val create: CreateOperation?,
     @Relation(parentColumn = "rowid", entityColumn = "operation_id") val patch: PatchOperation?,
     @Relation(parentColumn = "rowid", entityColumn = "operation_id") val delete: DeleteOperation?,
-    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val upload: UploadMediaOperation?,
-    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val uploadThumbnail: UploadThumbnailMediaOperation?,
-    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val viewFieldbook: ViewFieldbookOperation?,
-    @Relation(parentColumn = "rowid", entityColumn = "operation_id") val viewPortrait: ViewPortraitOperation?
+    @Relation(
+        parentColumn = "rowid",
+        entityColumn = "operation_id"
+    ) val upload: UploadMediaOperation?,
+    @Relation(
+        parentColumn = "rowid",
+        entityColumn = "operation_id"
+    ) val uploadThumbnail: UploadThumbnailMediaOperation?,
+    @Relation(
+        parentColumn = "rowid",
+        entityColumn = "operation_id"
+    ) val viewFieldbook: ViewFieldbookOperation?,
+    @Relation(
+        parentColumn = "rowid",
+        entityColumn = "operation_id"
+    ) val viewPortrait: ViewPortraitOperation?,
+    @Relation(
+        parentColumn = "rowid",
+        entityColumn = "operation_id"
+    ) val viewCharacters: ViewCharactersOperation?
 )
