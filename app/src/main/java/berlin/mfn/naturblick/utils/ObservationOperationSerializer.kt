@@ -54,6 +54,10 @@ object ObservationOperationSerializer : KSerializer<ObservationOperation> {
                 encodeStringElement(descriptor, 0, "view_portrait")
                 encodeSerializableElement(descriptor, 1, ViewPortraitOperation.serializer(), value)
             }
+            is ViewCharactersOperation -> encoder.encodeStructure(descriptor) {
+                encodeStringElement(descriptor, 0, "view_characters")
+                encodeSerializableElement(descriptor, 1, ViewCharactersOperation.serializer(), value)
+            }
         }
     }
 

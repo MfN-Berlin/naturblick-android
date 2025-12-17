@@ -9,15 +9,22 @@ package berlin.mfn.naturblick.ui.character
 
 import android.app.Application
 import androidx.lifecycle.*
+import berlin.mfn.naturblick.backend.ObservationDb
+import berlin.mfn.naturblick.backend.ViewCharactersOperation
 import berlin.mfn.naturblick.room.StrapiDb
+import berlin.mfn.naturblick.utils.AndroidDeviceId
 import berlin.mfn.naturblick.utils.languageId
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
 
-class CharacterViewModel(group: String, application: Application) : AndroidViewModel(application) {
+class CharacterViewModel(val group: String, application: Application) : AndroidViewModel(application) {
     private val speciesDao = StrapiDb.getDb(application).speciesDao()
+    private val operationDao = ObservationDb.getDb(application).operationDao()
+
     private val characters = flow {
         emit(StrapiDb.getDb(application).characterDao().getCharacters(group))
     }
@@ -54,6 +61,20 @@ class CharacterViewModel(group: String, application: Application) : AndroidViewM
         val query = it.query
         speciesDao.countSpeciesByCharacters(null, languageId(), query.number, query.query)
     }.asLiveData()
+
+
+    fun countViewCharacters() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val deviceIdentifier = AndroidDeviceId.deviceId(application.contentResolver)
+            operationDao.insertOperation(
+                ViewCharactersOperation(
+                    deviceIdentifier,
+                    group = group,
+                    ZonedDateTime.now()
+                )
+            )
+        }
+    }
 }
 
 class CharacterViewModelFactory(

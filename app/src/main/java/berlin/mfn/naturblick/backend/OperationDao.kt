@@ -62,6 +62,10 @@ interface OperationDao {
                     it.viewPortrait
                 }
 
+                it.viewCharacters != null -> {
+                    it.viewCharacters
+                }
+
                 else -> {
                     error("An operation must have create, patch, upload or delete set... or view_fieldbook or portrait")
                 }
@@ -127,6 +131,9 @@ interface OperationDao {
 
             is ViewPortraitOperation ->
                 insertViewPortraitOperation(operation.copy(operationId = operationId))
+
+            is ViewCharactersOperation ->
+                insertViewCharactersOperation(operation.copy(operationId = operationId))
         }
         return operationId
     }
@@ -258,6 +265,7 @@ interface OperationDao {
                 is UploadThumbnailMediaOperation -> {}
                 is ViewFieldbookOperation -> {}
                 is ViewPortraitOperation -> {}
+                is ViewCharactersOperation -> {}
             }
         }
     }
@@ -360,6 +368,9 @@ interface OperationDao {
 
     @Insert
     suspend fun insertViewPortraitOperation(viewPortraitOperation: ViewPortraitOperation)
+
+    @Insert
+    suspend fun insertViewCharactersOperation(viewCharactersOperation: ViewCharactersOperation)
 
     @Query("SELECT * FROM upload_thumbnail_media_operation WHERE media_id = :mediaId")
     suspend fun findUploadThumbnailMediaOperationByMediaId(mediaId: UUID):

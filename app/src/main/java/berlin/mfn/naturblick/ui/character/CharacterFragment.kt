@@ -37,8 +37,9 @@ class CharacterFragment : Fragment() {
                 requireActivity().application
             )
         }
+        viewModel.countViewCharacters()
         viewModel.state.observe(viewLifecycleOwner) {
-            if(it.selected.isEmpty()) {
+            if (it.selected.isEmpty()) {
                 binding.searchButton.visibility = View.GONE
             } else {
                 binding.searchButton.visibility = View.VISIBLE
