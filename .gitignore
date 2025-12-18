@@ -11,4 +11,4 @@ local.properties
 gradle/wrapper/gradle-wrapper.jar
 /app/lint/
 /strapi-db/build/
-app/schemas/
+app/schemas/berlin.mfn.naturblick.room.StrapiDb
