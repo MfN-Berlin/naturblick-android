@@ -32,6 +32,27 @@
             app:layout_constraintTop_toTopOf="parent"
             android:importantForAccessibility="no"/>
 
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_fullscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_resize"
+            android:contentDescription="@string/acc_view_observation"
+            app:backgroundTint="#4C000000"
+            app:tint="?attr/colorOnPrimaryHighEmphasis"
+            android:layout_marginVertical="@dimen/half_margin"
+            android:padding="@dimen/small_margin"
+            app:layout_constraintTop_toTopOf="@id/portrait_image"
+            app:layout_constraintEnd_toStartOf="@id/button_cc"
+            app:elevation="0dp"
+            app:pressedTranslationZ="0dp"
+            app:hoveredFocusedTranslationZ="0dp"
+            app:fabCustomSize="@dimen/fab_micro_size"
+            app:maxImageSize="@dimen/fab_micro_max_icon_size"
+            />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_cc"
             android:layout_width="wrap_content"
