@@ -17,6 +17,7 @@ import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import berlin.mfn.naturblick.backend.ObservationDb
+import berlin.mfn.naturblick.backend.SyncWorker
 import berlin.mfn.naturblick.backend.ViewFieldbookOperation
 import berlin.mfn.naturblick.databinding.FragmentHomeBinding
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
@@ -87,5 +88,10 @@ class HomeFragment : Fragment() {
             )
         }
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        SyncWorker.triggerBackgroundSync(requireContext())
     }
 }
