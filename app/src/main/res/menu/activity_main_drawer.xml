@@ -20,7 +20,7 @@
         <item
             android:id="@+id/nav_record_a_bird"
             android:icon="@drawable/ic_audio24"
-            android:title="@string/record_a_bird" />
+            android:title="@string/record_an_animal" />
         <item
             android:id="@+id/nav_photograph_a_plant"
             android:icon="@drawable/ic_photo24"

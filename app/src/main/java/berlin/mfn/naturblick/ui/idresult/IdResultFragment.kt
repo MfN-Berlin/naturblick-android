@@ -116,7 +116,10 @@ class IdResultFragment : Fragment() {
                 binding.result.visibility = View.VISIBLE
                 binding.name.setText(R.string.none_of_the_options)
             } else {
-                binding.imageCropAgain.setSingleClickListener {
+                binding.noSpeciesFound.setText(if(model.isImage) R.string.no_plants_found else R.string.no_animals_found)
+                binding.noSpeciesFoundDescription.setText(if(model.isImage) R.string.no_plants_found_description else R.string.no_animals_found_description)
+                binding.selectAgainName.setText(R.string.crop_again)
+                binding.selectAgain.setSingleClickListener {
                     cancel()
                 }
                 if (model.isNew) {

@@ -11,7 +11,7 @@
     <string name="menu_groups">Gruppen</string>
     <string name="menu_species_list">Arten</string>
     <string name="home_identify_animals_and_plants">Bestimme Tiere und Pflanzen</string>
-    <string name="record_a_bird">Vogelstimme aufnehmen</string>
+    <string name="record_an_animal">Tierstimme aufnehmen</string>
     <string name="select_characteristics">Merkmale auswählen</string>
     <string name="photograph_a_plant">Pflanze fotografieren</string>
     <string name="field_book">Feldbuch</string>
@@ -69,7 +69,7 @@
     <string name="sound_recording">Mikrofonaufnahme</string>
     <string name="seconds">Sekunden</string>
     <string name="stop_recording">Stoppen</string>
-    <string name="record_permission_missing">Um Vogelstimmen aufzunehmen, benötigt die App die Berechtigung Audios aufzunehmen.</string>
+    <string name="record_permission_missing">Um Tierstimmen aufzunehmen, benötigt die App die Berechtigung Audios aufzunehmen.</string>
     <string name="select_species">Art eintragen</string>
     <string name="save">Speichern</string>
     <string name="no_artportrait">Für diese Art gibt es noch kein Artportrait.</string>
@@ -92,7 +92,7 @@
     <string name="no_location">Kein Standort</string>
     <string name="sound">Laute</string>
     <string name="nothing">Nichts dabei?</string>
-    <string name="sound_autoid_infotext">Die Vorschläge entstehen durch den Vergleich mit Audioaufnahmen von <a href="https://naturblick.museumfuernaturkunde.berlin/speciesaudiorecognition?lang=de">239 Vögeln</a>, mit denen unser Algorithmus trainiert wurde. Je näher der Score an 100% ist, desto wahrscheinlicher ist die Zuordnung zu einer Art.</string>
+    <string name="sound_autoid_infotext">Die Vorschläge entstehen durch den Vergleich mit Audioaufnahmen von <a href="https://naturblick.museumfuernaturkunde.berlin/animalrecognition?lang=de">über 500 Tieren</a>, mit denen unser Algorithmus trainiert wurde. Je näher der Score an 100% ist, desto wahrscheinlicher ist die Zuordnung zu einer Art.</string>
     <string name="image_autoid_infotext">Die Liste mit Vorschlägen entsteht durch den Vergleich mit Fotos von <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=de">über 2000 Pflanzenarten</a>. Je näher der Score an 100% ist, desto wahrscheinlicher ist die Zuordnung zu einer Art richtig.</string>
     <string name="accept">Zustimmen</string>
     <string name="decline">Ablehnen</string>
@@ -117,7 +117,7 @@
     <string name="to_species_portrait">Artportrait anschauen</string>
     <string name="select_this_species">Diese Art auswählen</string>
     <string name="prepare_pattern_matching">Ausschnitt auswählen</string>
-    <string name="prepare_pattern_matching_info">Bitte wähle für die Lauterkennung einen Abschnitt, der die Vogelstimme am besten darstellt. Die Mustererkennung liefert die besten Ergebnisse für Aufnahmen, die unter 10 Sekunden sind. </string>
+    <string name="prepare_pattern_matching_info">Bitte wähle für die Lauterkennung einen Abschnitt, der die Tierstimme am besten darstellt. Die Mustererkennung liefert die besten Ergebnisse für Aufnahmen, die unter 10 Sekunden sind. </string>
     <string name="imprint_title">Imprint</string>
     <string name="imprint_1">Museum für Naturkunde\nLeibniz-Institut für Evolutions- und Biodiversitätsforschung\nInvalidenstraße 43\n10115 Berlin, Germany</string>
     <string name="imprint_2">Landesunmittelbare rechtsfähige Stiftung des öffentlichen Rechts</string>
@@ -143,7 +143,7 @@
     <string name="imprint_more_9">Allgemeiner Haftungsausschluss</string>
     <string name="imprint_more_10">Über die weiter oben dargelegten Punkte hinaus gilt für alle Seiten dieses Webauftritts der allgemeine <a href="https://www.disclaimer.de/disclaimer.htm">Haftungsausschluss.</a></string>
     <string name="imprint_more_11">© Museum für Naturkunde Berlin</string>
-    <string name="about_1">In einem interdisziplinären Team erforschen und entwickeln wir am Museum für Naturkunde Berlin digitale Werkzeuge für die urbane Naturerfahrung. Beispielsweise erproben wir den Einsatz von Mustererkennung in der Artbestimmung.\n\nMit unserer Smartphone-App Naturblick unterstützen wir die direkte Naturerfahrung in der Stadt. Mit vielfältigen Funktionen kannst du die Natur in der Stadt erkunden, Tiere und Pflanzen bestimmen und deine Beobachtungen speichern. Schau auch auf unsere <a href="https://naturblick.museumfuernaturkunde.berlin/">Plattform</a>. Dort findest du z.B. eine Karte mit bestätigten Beobachtungen anderer Nutzer:innen und die Rubrik “WissensWeiten” mit informierenden und inspirierenden Inhalte für alle, die sich näher mit der Natur um sie herum beschäftigen wollen.\n\n<b>Lauterkennung</b>\n\nDie Ergebnisse der automatisierten Artbestimmung werden durch den Vergleich mit Daten (in diesem Fall Audioaufnahmen von Vögeln), mit denen der Algorithmus trainiert wurde, erzeugt.\n\nDas bedeutet\n1) es können nur Arten erkannt werden, die auch trainiert wurden,\n2) die Erkennung funktioniert am besten, wenn eine große Ähnlichkeit zu der Aufnahmesituation und -qualität besteht (z.B. Mikrofonqualität).\n\nDer Naturblick Algorithmus wurde mit Audiomaterial aus dem Tierstimmenarchiv des Museum für Naturkunde Berlin, der kollaborativen Online-Datenbank Xeno-Canto und verifizierten Naturblick-Aufnahmen trainiert. Die Liste der Arten, die bestimmt werden können findest du <a href="https://naturblick.museumfuernaturkunde.berlin/speciesaudiorecognition">hier</a>.\n\n<b>Pflanzenerkennung</b>\n\nDeine Fotos von Pflanzen werden mit Mustererkennung bestimmt. Die Ergebnisse der Mustererkennung werden durch den Vergleich mit Daten (in diesem Fall Fotos von Pflanzen), mit denen der Algorithmus trainiert wurde, erzeugt.\n\nDas bedeutet:\n1) es können nur Arten erkannt werden, die auch trainiert wurden,\n2) auch nicht trainierte Arten können Übereinstimmungen mit dem trainierten Material haben,\n3) die Erkennung funktioniert am besten, wenn eine große Ähnlichkeit zu der Aufnahmesituation und -qualität des Trainingsmaterials besteht (z.B. Pflanzen in der freien Natur) und\n4) es können auch falsche Ergebnisse angezeigt werden.\n\nDie Liste der Pflanzenarten, die mit Naturblick bestimmt werden können, findest du <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=de">hier</a>.\n\nWir nutzen für die Pflanzenerkennung die Mustererkennung von Pl@ntNet. Mehr Informationen über Pl@ntNet findest du <a href="https://plantnet.org/en/about/">hier</a>.</string>
+    <string name="about_1">In einem interdisziplinären Team erforschen und entwickeln wir am Museum für Naturkunde Berlin digitale Werkzeuge für die urbane Naturerfahrung. Beispielsweise erproben wir den Einsatz von Mustererkennung in der Artbestimmung.\n\nMit unserer Smartphone-App Naturblick unterstützen wir die direkte Naturerfahrung in der Stadt. Mit vielfältigen Funktionen kannst du die Natur in der Stadt erkunden, Tiere und Pflanzen bestimmen und deine Beobachtungen speichern. Schau auch auf unsere <a href="https://naturblick.museumfuernaturkunde.berlin/">Plattform</a>. Dort findest du z.B. eine Karte mit bestätigten Beobachtungen anderer Nutzer:innen und die Rubrik “WissensWeiten” mit informierenden und inspirierenden Inhalte für alle, die sich näher mit der Natur um sie herum beschäftigen wollen.\n\n<b>Lauterkennung</b>\n\nDie Ergebnisse der automatisierten Artbestimmung werden durch den Vergleich mit Daten (in diesem Fall Audioaufnahmen von Tieren), mit denen der Algorithmus trainiert wurde, erzeugt.\n\nDas bedeutet\n1) es können nur Arten erkannt werden, die auch trainiert wurden,\n2) die Erkennung funktioniert am besten, wenn eine große Ähnlichkeit zu der Aufnahmesituation und -qualität besteht (z.B. Mikrofonqualität).\n\nDer Naturblick Algorithmus wurde mit Audiomaterial aus dem Tierstimmenarchiv des Museum für Naturkunde Berlin, der kollaborativen Online-Datenbank Xeno-Canto und verifizierten Naturblick-Aufnahmen trainiert. Die Liste der Arten, die bestimmt werden können findest du <a href="https://naturblick.museumfuernaturkunde.berlin/animalrecognition?lang=de">hier</a>.\n\n<b>Pflanzenerkennung</b>\n\nDeine Fotos von Pflanzen werden mit Mustererkennung bestimmt. Die Ergebnisse der Mustererkennung werden durch den Vergleich mit Daten (in diesem Fall Fotos von Pflanzen), mit denen der Algorithmus trainiert wurde, erzeugt.\n\nDas bedeutet:\n1) es können nur Arten erkannt werden, die auch trainiert wurden,\n2) auch nicht trainierte Arten können Übereinstimmungen mit dem trainierten Material haben,\n3) die Erkennung funktioniert am besten, wenn eine große Ähnlichkeit zu der Aufnahmesituation und -qualität des Trainingsmaterials besteht (z.B. Pflanzen in der freien Natur) und\n4) es können auch falsche Ergebnisse angezeigt werden.\n\nDie Liste der Pflanzenarten, die mit Naturblick bestimmt werden können, findest du <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=de">hier</a>.\n\nWir nutzen für die Pflanzenerkennung die Mustererkennung von Pl@ntNet. Mehr Informationen über Pl@ntNet findest du <a href="https://plantnet.org/en/about/">hier</a>.</string>
     <string name="about_2">Wir sind auf deine Unterstützung und dein Feedback angewiesen. Wir danken allen, die uns auf Fehler oder Probleme hinweisen oder Verbesserungsvorschläge machen.</string>
     <string name="more_sources">Weitere Quellen</string>
     <string name="storage_permission_missing">Um Mediendaten zu speichern benötigt die App die Berechtigung Zugriff auf Fotos, Medien und Dateien</string>
@@ -261,8 +261,10 @@
     <string name="back">Zurück</string>
     <string name="feedback_subject">Naturblick %s Feedback</string>
     <string name="feedback_body">Die folgenden Informationen über dein Gerät und die App helfen uns, dein Problem zu verstehen:\nGerät: %1$s\nAPI: %2$s\nApp: %3$s\n\nDu kannst diese Informationen gerne einfach entfernen, wenn du sie nicht mit uns teilen möchtest.\n\nDeine Nachricht:\n</string>
-    <string name="no_species_found">Wir konnten keine Pflanze identifizieren.</string>
-    <string name="no_species_found_description">Das kann daran liegen, dass auf dem Bild keine Pflanze zu sehen ist oder diese Pflanze nicht Teil der für die Bestimmung trainierten <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=de">Auswahl von Arten</a> ist.</string>
+    <string name="no_plants_found">Wir konnten keine Pflanze identifizieren.</string>
+    <string name="no_plants_found_description">Das kann daran liegen, dass auf dem Bild keine Pflanze zu sehen ist oder diese Pflanze nicht Teil der für die Bestimmung trainierten <a href="https://naturblick.museumfuernaturkunde.berlin/plantrecognition?lang=de">Auswahl von Arten</a> ist.</string>
+    <string name="no_animals_found">Wir konnten kein Tier identifizieren.</string>
+    <string name="no_animals_found_description">Das kann daran liegen, dass in der Aufnahme kein Tier zu hören ist oder dieses Tier nicht Teil der für die Bestimmung trainierten <a href="https://naturblick.museumfuernaturkunde.berlin/animalrecognition?lang=de">Auswahl von Arten</a> ist.</string>
     <plurals name="delete_question_observations">
         <item quantity="one">Beobachtung löschen?</item>
         <item quantity="other">Beobachtungen löschen?</item>
