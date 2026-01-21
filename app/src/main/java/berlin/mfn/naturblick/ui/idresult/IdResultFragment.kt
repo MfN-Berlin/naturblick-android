@@ -118,7 +118,7 @@ class IdResultFragment : Fragment() {
             } else {
                 binding.noSpeciesFound.setText(if(model.isImage) R.string.no_plants_found else R.string.no_animals_found)
                 binding.noSpeciesFoundDescription.setText(if(model.isImage) R.string.no_plants_found_description else R.string.no_animals_found_description)
-                binding.selectAgainName.setText(R.string.crop_again)
+                binding.selectAgainName.setText(if(model.isImage) R.string.crop_again else R.string.crop_sound_again)
                 binding.selectAgain.setSingleClickListener {
                     cancel()
                 }
