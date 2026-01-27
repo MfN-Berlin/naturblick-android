@@ -45,7 +45,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_home"
             app:layout_constraintWidth_percent="0.25"
-            app:text="@{@string/record_a_bird}" />
+            app:text="@{@string/record_an_animal}" />
 
         <include
             android:id="@+id/select_characteristics"
