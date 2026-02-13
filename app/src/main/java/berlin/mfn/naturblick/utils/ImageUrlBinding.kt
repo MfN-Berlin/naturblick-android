@@ -26,6 +26,7 @@ fun imageUrlWithRoundedCornersBinding(imageView: ImageView, uri: String?) {
         Glide
             .with(imageView.context)
             .load(uri)
+            .placeholder(R.drawable.placeholder)
             .transform(RoundedCorners(8))
             .into(imageView)
     } else {
