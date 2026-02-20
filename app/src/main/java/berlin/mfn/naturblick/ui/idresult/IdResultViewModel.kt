@@ -77,15 +77,19 @@ class IdResultViewModel(
                         }
 
                     is IdentifySpeciesSound ->
-                        identifySpecies.media.upload(getApplication()).flatMap { remote ->
-                            NetworkResult.catchNetworkAndServerErrors(getApplication()) {
-                                IdApi.service.soundId(
-                                    remote,
-                                    identifySpecies.segmStart,
-                                    identifySpecies.segmEnd,
-                                    currentVersionDao.getCurrentVersion()
-                                )
-                            }
+                        identifySpecies.media.upload(getApplication()).flatMap { remoteMedia ->
+                            identifySpecies.thumbnail.upload(getApplication())
+                                .flatMap { remoteThumbnail ->
+                                    NetworkResult.catchNetworkAndServerErrors(getApplication()) {
+                                        IdApi.service.soundId(
+                                            remoteMedia,
+                                            remoteThumbnail,
+                                            identifySpecies.segmStart,
+                                            identifySpecies.segmEnd,
+                                            currentVersionDao.getCurrentVersion()
+                                        )
+                                    }
+                                }
                         }
                 }.fold({ results ->
                     _idResults.value = results
@@ -116,12 +120,12 @@ class IdResultViewModel(
 
     companion object {
         val Factory = viewModelFactory {
-                initializer {
-                    val savedStateHandle = createSavedStateHandle()
-                    val action: IdentifySpecies = savedStateHandle[ID_SPECIES]!!
-                    IdResultViewModel(action, savedStateHandle, (this[APPLICATION_KEY] as Application))
-                }
+            initializer {
+                val savedStateHandle = createSavedStateHandle()
+                val action: IdentifySpecies = savedStateHandle[ID_SPECIES]!!
+                IdResultViewModel(action, savedStateHandle, (this[APPLICATION_KEY] as Application))
             }
+        }
     }
 }
 
