@@ -51,6 +51,7 @@ internal interface IdApiServiceInterface {
     @GET("androidsoundid?")
     suspend fun soundId(
         @Query("mediaId") mediaId: UUID,
+        @Query("thumbnailId") thumbnailId: UUID,
         @Query("segmentStart") segmStart: Int,
         @Query("segmentEnd") segmEnd: Int,
         @Query("speciesVersion") speciesVersion: Int
@@ -66,11 +67,12 @@ class IdApiService internal constructor(private val service: IdApiServiceInterfa
 
     suspend fun soundId(
         media: RemoteMedia,
+        thumbnail: RemoteMediaThumbnail,
         segmStart: Int,
         segmEnd: Int,
-         speciesVersion: Int
+        speciesVersion: Int
     ): List<BackendIdResult> =
-        service.soundId(media.id, segmStart, segmEnd, speciesVersion)
+        service.soundId(media.id, thumbnail.id, segmStart, segmEnd, speciesVersion)
 }
 
 object IdApi {
