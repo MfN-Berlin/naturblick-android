@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                     drawerContentColor = NaturblickTheme.colors.onPrimaryHighEmphasis,
                     drawerContent = {
                         Column(
-                            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.default_margin)),
+                            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.double_margin)),
                             modifier = Modifier
                                 .windowInsetsPadding(WindowInsets.systemBars)
                                 .padding(dimensionResource(R.dimen.default_margin))
