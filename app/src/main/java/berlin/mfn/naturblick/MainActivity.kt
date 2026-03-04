@@ -23,9 +23,10 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -92,7 +93,9 @@ class MainActivity : AppCompatActivity() {
                     drawerContent = {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.default_margin)),
-                            modifier = Modifier.padding(dimensionResource(R.dimen.default_margin))
+                            modifier = Modifier
+                                .windowInsetsPadding(WindowInsets.systemBars)
+                                .padding(dimensionResource(R.dimen.default_margin))
                         ) {
                             MenuButton(R.string.menu_start, R.drawable.ic_logo, drawerState) {}
                             MenuButton(
@@ -164,9 +167,12 @@ class MainActivity : AppCompatActivity() {
                         )
                         Scaffold(
                             backgroundColor = Color.Unspecified,
-                            contentWindowInsets = WindowInsets.navigationBars,
+                            contentWindowInsets = WindowInsets.systemBars,
                             topBar = {
-                                Menu(drawerState)
+                                Menu(
+                                    drawerState,
+                                    modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars)
+                                )
                             }) { padding ->
                             Column(
                                 verticalArrangement = Arrangement.Bottom,
@@ -206,6 +212,7 @@ class MainActivity : AppCompatActivity() {
                                         .fillMaxWidth()
                                         .background(NaturblickTheme.colors.primary),
                                 ) {
+                                    Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
                                     Text(
                                         stringResource(R.string.home_identify_animals_and_plants),
                                         style = NaturblickTheme.typography.h6,
@@ -227,7 +234,8 @@ class MainActivity : AppCompatActivity() {
                                             R.drawable.ic_features,
                                             R.string.select_characteristics,
                                             Modifier.weight(0.25f),
-                                            this@MainActivity::selectCharacteristics)
+                                            this@MainActivity::selectCharacteristics
+                                        )
                                         Spacer(Modifier.weight(0.0625f))
                                         HomeButton(
                                             NaturblickTheme.colors.onPrimaryButtonPrimary,
@@ -238,7 +246,7 @@ class MainActivity : AppCompatActivity() {
                                         )
                                         Spacer(Modifier.weight(0.0625f))
                                     }
-                                    Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
+                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
                                     Row(verticalAlignment = Alignment.Top) {
                                         Spacer(Modifier.weight(0.19f))
                                         HomeButton(
@@ -254,10 +262,11 @@ class MainActivity : AppCompatActivity() {
                                             R.drawable.ic_specportraits,
                                             R.string.species_portraits,
                                             Modifier.weight(0.22f),
-                                            this@MainActivity::portraits)
+                                            this@MainActivity::portraits
+                                        )
                                         Spacer(Modifier.weight(0.19f))
                                     }
-                                    Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
+                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
                                 }
                             }
 
@@ -336,15 +345,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun Menu(drawerState: DrawerState) {
+    private fun Menu(drawerState: DrawerState, modifier: Modifier) {
         val scope = rememberCoroutineScope()
-        IconButton(onClick = {
-            scope.launch {
-                drawerState.apply {
-                    if (isClosed) open() else close()
+        IconButton(
+            onClick = {
+                scope.launch {
+                    drawerState.apply {
+                        if (isClosed) open() else close()
+                    }
                 }
-            }
-        }) {
+            },
+            modifier = modifier
+        ) {
             Icon(
                 imageVector = Icons.Filled.Menu,
                 contentDescription = stringResource(R.string.back),
@@ -376,6 +388,7 @@ class MainActivity : AppCompatActivity() {
     private fun portraits() {
         startActivity(Intent(this, GroupsActivity::class.java))
     }
+
     private fun account() {
         startActivity(Intent(this, AccountActivity::class.java).apply {
             putExtra(CLOSE_ON_FINISHED, false)
