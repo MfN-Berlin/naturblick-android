@@ -8,22 +8,54 @@ package berlin.mfn.naturblick
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import berlin.mfn.naturblick.databinding.ActivityMainBinding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.DrawerState
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.ModalDrawer
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.rememberDrawerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import berlin.mfn.naturblick.ui.character.CharacterActivity
+import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
 import berlin.mfn.naturblick.ui.fieldbook.CreateImageObservation
 import berlin.mfn.naturblick.ui.fieldbook.ManageObservation
@@ -38,101 +70,364 @@ import berlin.mfn.naturblick.ui.info.imprint.ImprintActivity
 import berlin.mfn.naturblick.ui.info.privacy.GeneralPrivacyNoticeActivity
 import berlin.mfn.naturblick.ui.info.settings.Settings
 import berlin.mfn.naturblick.ui.info.settings.SettingsActivity
-import berlin.mfn.naturblick.utils.setupBottomInset
-import com.google.android.material.navigation.NavigationView
+import berlin.mfn.naturblick.ui.species.groups.GroupsActivity
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var navView: NavigationView
-    private lateinit var navController: NavController
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.appBar) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(top = insets.top, bottom = insets.bottom)
-            windowInsets
-        }
-        binding.drawerLayout.setupBottomInset()
-        val root = binding.root
-        setContentView(root)
-        setSupportActionBar(root.findViewById<View>(R.id.app_bar).findViewById(R.id.toolbar))
 
-        val drawerLayout: DrawerLayout = root.findViewById(R.id.drawer_layout)
-        navView = root.findViewById(R.id.nav_view)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-        navController.setGraph(R.navigation.start_navigation)
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_start
-            ),
-            drawerLayout
-        )
+        Settings.check(this, layoutInflater, {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }, {
+            startActivity(
+                Intent(this, AccountActivity::class.java).apply {
+                    putExtra(CLOSE_ON_FINISHED, false)
+                })
+        })
+        setContent {
+            val drawerState = rememberDrawerState(DrawerValue.Closed)
+            NaturblickTheme {
+                ModalDrawer(
+                    drawerState = drawerState,
+                    drawerBackgroundColor = NaturblickTheme.colors.primary,
+                    drawerContentColor = NaturblickTheme.colors.onPrimaryHighEmphasis,
+                    drawerContent = {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.double_margin)),
+                            modifier = Modifier
+                                .windowInsetsPadding(WindowInsets.systemBars)
+                                .padding(dimensionResource(R.dimen.default_margin))
+                        ) {
+                            MenuButton(R.string.menu_start, R.drawable.ic_logo, drawerState) {}
+                            MenuButton(
+                                R.string.field_book,
+                                R.drawable.ic_feldbuch24,
+                                drawerState,
+                                this@MainActivity::openFieldbook
+                            )
+                            MenuButton(
+                                R.string.record_an_animal,
+                                R.drawable.ic_audio24,
+                                drawerState,
+                                this@MainActivity::recordAnAnimal
+                            )
+                            MenuButton(
+                                R.string.photograph_a_plant,
+                                R.drawable.ic_photo24,
+                                drawerState,
+                                this@MainActivity::photographAPlant
+                            )
+                            MenuButton(
+                                R.string.help,
+                                R.drawable.ic_info2,
+                                drawerState,
+                                this@MainActivity::help
+                            )
+                            MenuButton(
+                                R.string.account,
+                                drawerState = drawerState,
+                                onClick = this@MainActivity::account
+                            )
+                            MenuButton(
+                                R.string.action_settings,
+                                drawerState = drawerState,
+                                onClick = this@MainActivity::settings
+                            )
+                            MenuButton(
+                                R.string.feedback,
+                                drawerState = drawerState,
+                                onClick = this@MainActivity::feedback
+                            )
+                            MenuButton(
+                                R.string.accessibility,
+                                drawerState = drawerState,
+                                onClick = this@MainActivity::accessibility
+                            )
+                            MenuButton(
+                                R.string.privacy_notice,
+                                drawerState = drawerState,
+                                onClick = this@MainActivity::privacy
+                            )
+                            MenuButton(
+                                R.string.about,
+                                drawerState = drawerState,
+                                onClick = this@MainActivity::about
+                            )
+                        }
+                    }) {
+                    Box(
+                        modifier = Modifier
+                            .background(NaturblickTheme.colors.primary)
+                            .fillMaxSize()
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.background_kingfisher),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillWidth,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Scaffold(
+                            backgroundColor = Color.Unspecified,
+                            contentWindowInsets = WindowInsets.navigationBars,
+                            topBar = {
+                                Menu(
+                                    drawerState,
+                                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                                )
+                            }) { padding ->
+                            Column(
+                                verticalArrangement = Arrangement.Bottom,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(bottom = padding.calculateBottomPadding())
+                            ) {
+                                Spacer(Modifier.weight(0.5f))
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_logo),
+                                    contentDescription = null,
+                                    modifier = Modifier.height(64.dp)
+                                )
+                                Box(
+                                    contentAlignment = Alignment.BottomStart,
+                                    modifier = Modifier
+                                        .weight(0.5f)
+                                        .padding(horizontal = dimensionResource(R.dimen.default_margin))
+                                        .fillMaxWidth()
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_museum_logo_inverted),
+                                        contentDescription = null,
+                                        modifier = Modifier.height(48.dp)
+                                    )
+                                }
+                                Image(
+                                    painter = painterResource(id = R.drawable.oval),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.FillWidth,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(NaturblickTheme.colors.primary),
+                                ) {
+                                    Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
+                                    Text(
+                                        stringResource(R.string.home_identify_animals_and_plants),
+                                        style = NaturblickTheme.typography.h6,
+                                        color = NaturblickTheme.colors.onPrimaryHighEmphasis,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
+                                    Row(verticalAlignment = Alignment.Top) {
+                                        Spacer(Modifier.weight(0.0625f))
+                                        HomeButton(
+                                            NaturblickTheme.colors.onPrimaryButtonPrimary,
+                                            R.drawable.ic_microphone,
+                                            R.string.record_an_animal,
+                                            Modifier.weight(0.25f),
+                                            this@MainActivity::recordAnAnimal
+                                        )
+                                        Spacer(Modifier.weight(0.0625f))
+                                        HomeButton(
+                                            NaturblickTheme.colors.onPrimaryButtonPrimary,
+                                            R.drawable.ic_features,
+                                            R.string.select_characteristics,
+                                            Modifier.weight(0.25f),
+                                            this@MainActivity::selectCharacteristics
+                                        )
+                                        Spacer(Modifier.weight(0.0625f))
+                                        HomeButton(
+                                            NaturblickTheme.colors.onPrimaryButtonPrimary,
+                                            R.drawable.ic_photo24,
+                                            R.string.photograph_a_plant,
+                                            Modifier.weight(0.25f),
+                                            this@MainActivity::photographAPlant
+                                        )
+                                        Spacer(Modifier.weight(0.0625f))
+                                    }
+                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
+                                    Row(verticalAlignment = Alignment.Top) {
+                                        Spacer(Modifier.weight(0.19f))
+                                        HomeButton(
+                                            NaturblickTheme.colors.onPrimaryButtonSecondary,
+                                            R.drawable.ic_feldbuch24,
+                                            R.string.field_book,
+                                            Modifier.weight(0.22f),
+                                            this@MainActivity::openFieldbook
+                                        )
+                                        Spacer(Modifier.weight(0.18f))
+                                        HomeButton(
+                                            NaturblickTheme.colors.onPrimaryButtonSecondary,
+                                            R.drawable.ic_specportraits,
+                                            R.string.species_portraits,
+                                            Modifier.weight(0.22f),
+                                            this@MainActivity::portraits
+                                        )
+                                        Spacer(Modifier.weight(0.19f))
+                                    }
+                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
+                                }
+                            }
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-        val menuItemSelectedListener = createMenuItemListener(
-            drawerLayout
-        )
-        navView.setNavigationItemSelectedListener {
-            menuItemSelectedListener(it)
-        }
-        Settings.check(
-            this, layoutInflater, {
-                setResult(Activity.RESULT_CANCELED)
-                finish()
-            },
-            {
-                startActivity(
-                    Intent(this, AccountActivity::class.java).apply {
-                        putExtra(CLOSE_ON_FINISHED, false)
+                        }
                     }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun MenuButton(
+        text: Int, icon: Int? = null, drawerState: DrawerState, onClick: () -> Unit
+    ) {
+        val scope = rememberCoroutineScope()
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    onClick = {
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                        onClick()
+                    })
+        ) {
+            icon?.let {
+                Icon(
+                    painter = painterResource(it),
+                    contentDescription = null,
+                    tint = NaturblickTheme.colors.onPrimaryHighEmphasis,
+                    modifier = Modifier.width(24.dp)
+                )
+                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.default_margin)))
+            }
+            Text(
+                stringResource(text),
+                style = NaturblickTheme.typography.h6,
+                color = NaturblickTheme.colors.onPrimaryHighEmphasis,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+    }
+
+    @Composable
+    private fun HomeButton(
+        background: Color, icon: Int, text: Int, modifier: Modifier, onClick: () -> Unit
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
+            Button(
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = background),
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .fillMaxWidth(),
+                onClick = onClick
+            ) {
+                Image(
+                    painter = painterResource(id = icon),
+                    contentDescription = stringResource(id = text),
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
-        )
-        supportActionBar?.title = null
+            Spacer(Modifier.height(dimensionResource(R.dimen.half_margin)))
+            Text(
+                stringResource(id = text),
+                style = NaturblickTheme.typography.caption,
+                color = NaturblickTheme.colors.onPrimaryHighEmphasis,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 
-    private fun createMenuItemListener(
-        drawer: DrawerLayout
-    ): (MenuItem) -> Boolean = { it: MenuItem ->
-        val intent = when (it.itemId) {
-            R.id.nav_start -> Intent(this, MainActivity::class.java)
-            R.id.nav_field_book -> Intent(this, FieldbookActivity::class.java)
-            R.id.nav_record_a_bird -> Intent(this, FieldbookActivity::class.java).apply {
-                putExtra(ManageObservation.OBSERVATION_ACTION, CreateAudioObservation)
-            }
-            R.id.nav_photograph_a_plant -> Intent(this, FieldbookActivity::class.java).apply {
-                putExtra(ManageObservation.OBSERVATION_ACTION, CreateImageObservation)
-            }
-            R.id.nav_account -> Intent(this, AccountActivity::class.java).apply {
-                putExtra(CLOSE_ON_FINISHED, false)
-            }
-            R.id.nav_settings -> Intent(this, SettingsActivity::class.java)
-            R.id.nav_feedback -> Intent(this, FeedbackActivity::class.java)
-            R.id.nav_imprint -> Intent(this, ImprintActivity::class.java)
-            R.id.nav_privacy -> Intent(this, GeneralPrivacyNoticeActivity::class.java)
-            R.id.nav_about -> Intent(this, AboutActivity::class.java)
-            R.id.nav_help -> Intent(this, HelpActivity::class.java)
-            R.id.nav_accessibility -> Intent(this, AccessibilityActivity::class.java)
-            else -> {
-                throw IllegalStateException("Unknown navigation ID ${it.itemId}")
-            }
+    @Composable
+    private fun Menu(drawerState: DrawerState, modifier: Modifier) {
+        val scope = rememberCoroutineScope()
+        IconButton(
+            onClick = {
+                scope.launch {
+                    drawerState.apply {
+                        if (isClosed) open() else close()
+                    }
+                }
+            },
+            modifier = modifier
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Menu,
+                contentDescription = stringResource(R.string.back),
+                tint = NaturblickTheme.colors.onPrimaryHighEmphasis
+            )
         }
-        intent.apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        startActivity(intent)
-
-        drawer.closeDrawer(GravityCompat.START)
-        true
     }
+
+    private fun recordAnAnimal() {
+        startActivity(Intent(this, FieldbookActivity::class.java).apply {
+            putExtra(ManageObservation.OBSERVATION_ACTION, CreateAudioObservation)
+        })
+    }
+
+    private fun selectCharacteristics() {
+        startActivity(Intent(this, CharacterActivity::class.java))
+    }
+
+    private fun photographAPlant() {
+        startActivity(Intent(this, FieldbookActivity::class.java).apply {
+            putExtra(ManageObservation.OBSERVATION_ACTION, CreateImageObservation)
+        })
+    }
+
+    private fun openFieldbook() {
+        startActivity(Intent(this, FieldbookActivity::class.java))
+    }
+
+    private fun portraits() {
+        startActivity(Intent(this, GroupsActivity::class.java))
+    }
+
+    private fun account() {
+        startActivity(Intent(this, AccountActivity::class.java).apply {
+            putExtra(CLOSE_ON_FINISHED, false)
+        })
+    }
+
+    private fun settings() {
+        startActivity(Intent(this, SettingsActivity::class.java))
+    }
+
+    private fun feedback() {
+        startActivity(Intent(this, FeedbackActivity::class.java))
+    }
+
+    private fun imprint() {
+        startActivity(Intent(this, ImprintActivity::class.java))
+    }
+
+    private fun privacy() {
+        startActivity(Intent(this, GeneralPrivacyNoticeActivity::class.java))
+    }
+
+    private fun about() {
+        startActivity(Intent(this, AboutActivity::class.java))
+    }
+
+    private fun help() {
+        startActivity(Intent(this, HelpActivity::class.java))
+    }
+
+    private fun accessibility() {
+        startActivity(Intent(this, AccessibilityActivity::class.java))
+    }
+
 }
