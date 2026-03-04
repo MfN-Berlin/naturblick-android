@@ -52,6 +52,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import berlin.mfn.naturblick.ui.character.CharacterActivity
 import berlin.mfn.naturblick.ui.composable.NaturblickTheme
@@ -218,7 +219,9 @@ class MainActivity : AppCompatActivity() {
                                     Text(
                                         stringResource(R.string.home_identify_animals_and_plants),
                                         style = NaturblickTheme.typography.h6,
-                                        color = NaturblickTheme.colors.onPrimaryHighEmphasis
+                                        color = NaturblickTheme.colors.onPrimaryHighEmphasis,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
                                     )
                                     Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
                                     Row(verticalAlignment = Alignment.Top) {
@@ -311,7 +314,9 @@ class MainActivity : AppCompatActivity() {
             Text(
                 stringResource(text),
                 style = NaturblickTheme.typography.h6,
-                color = NaturblickTheme.colors.onPrimaryHighEmphasis
+                color = NaturblickTheme.colors.onPrimaryHighEmphasis,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
