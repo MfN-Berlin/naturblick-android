@@ -334,4 +334,6 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="sound_recogniotion_images">Sound recognition images</string>
     <string name="changedbyus">Modified</string>
     <string name="ownerpage">Owner\'s page</string>
+    <string name="new_birdnet">New sound recognition</string>
+    <string name="new_birdnet_text">Our sound recognition now also recognizes additional animals!\nTry out the new feature and give us feedback via our menu (☰) → Feedback.</string>
 </resources>
