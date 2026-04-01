@@ -151,6 +151,11 @@ class MainActivity : AppCompatActivity() {
                                 onClick = this@MainActivity::feedback
                             )
                             MenuButton(
+                                R.string.imprint,
+                                drawerState = drawerState,
+                                onClick = this@MainActivity::imprint
+                            )
+                            MenuButton(
                                 R.string.accessibility,
                                 drawerState = drawerState,
                                 onClick = this@MainActivity::accessibility
