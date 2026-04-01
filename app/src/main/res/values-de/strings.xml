@@ -287,6 +287,6 @@
     <string name="sound_recogniotion_images">Lauterkennung Bilder</string>
     <string name="changedbyus">Abgeändert</string>
     <string name="ownerpage">Autorenseite</string>
-    <string name="new_birdnet">Neues Lauterkennung</string>
+    <string name="new_birdnet">Neue Lauterkennung</string>
     <string name="new_birdnet_text">Unsere Lauterkennung erkennt jetzt auch weitere Tiergruppen!\nTeste das neue Feature und gib uns Feedback über unser Menü (☰) → Feedback.</string>
 </resources>
