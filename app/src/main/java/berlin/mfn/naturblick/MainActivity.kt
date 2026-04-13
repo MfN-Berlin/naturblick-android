@@ -33,6 +33,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.Icon
@@ -108,8 +109,8 @@ class MainActivity : AppCompatActivity() {
                             modifier = Modifier
                                 .windowInsetsPadding(WindowInsets.systemBars)
                                 .padding(dimensionResource(R.dimen.default_margin))
+                                .padding(top = dimensionResource(R.dimen.double_margin))
                         ) {
-                            MenuButton(R.string.menu_start, R.drawable.ic_logo, drawerState) {}
                             MenuButton(
                                 R.string.field_book,
                                 R.drawable.ic_feldbuch24,
@@ -135,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                                 drawerState,
                                 this@MainActivity::help
                             )
+                            Divider()
                             MenuButton(
                                 R.string.account,
                                 drawerState = drawerState,
