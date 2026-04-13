@@ -321,7 +321,7 @@ class ConfirmPhotoFragment :
             .setNegativeButton(
                 R.string.exit_without_saving_observation
             ) { _, _ ->
-                leave(false)
+                leave(true)
             }
         dialogBuild.show()
     }
