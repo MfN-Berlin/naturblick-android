@@ -13,8 +13,10 @@ import android.database.sqlite.SQLiteDatabase.openDatabase
 import android.database.sqlite.SQLiteException
 import android.os.Build
 import android.view.LayoutInflater
+import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
+import androidx.appcompat.app.AlertDialog
 import berlin.mfn.naturblick.R
 import berlin.mfn.naturblick.databinding.DialogCcbyBinding
 import berlin.mfn.naturblick.databinding.DialogPolicyBinding
@@ -22,6 +24,7 @@ import berlin.mfn.naturblick.utils.AndroidDeviceId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 object Settings {
@@ -339,23 +342,6 @@ object Settings {
         }
     }
 
-
-    private fun setBirdnetInfo(sp: SharedPreferences) {
-        with(sp.edit()) {
-            putBoolean(birdnetInfoKey, true)
-            apply()
-        }
-    }
-    fun showBirdNetDialog(activity: Activity): Boolean {
-        val sp = sharedPreferences(activity)
-        val dialogShowed = sp.getBoolean(birdnetInfoKey, false)
-        return if(!dialogShowed) {
-            setBirdnetInfo(sp)
-            true
-        } else {
-            false
-        }
-    }
     fun hasSeenImportInfo(context: Context): Boolean =
         sharedPreferences(context).getBoolean(importInfoKey, false)
 
@@ -375,5 +361,4 @@ object Settings {
     private const val emailKey = "current-email"
     private const val neverSignedInKey = "never-signed-in"
     private const val importInfoKey = "import-info"
-    private const val birdnetInfoKey = "birdnet-info"
 }
