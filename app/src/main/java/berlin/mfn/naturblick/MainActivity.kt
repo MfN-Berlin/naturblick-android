@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                                 this@MainActivity::openFieldbook
                             )
                             MenuButton(
-                                R.string.record_an_animal,
+                                R.string.record_a_bird,
                                 R.drawable.ic_audio24,
                                 drawerState,
                                 this@MainActivity::recordAnAnimal
@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity() {
                                         HomeButton(
                                             NaturblickTheme.colors.onPrimaryButtonPrimary,
                                             R.drawable.ic_microphone,
-                                            R.string.record_an_animal,
+                                            R.string.record_a_bird,
                                             Modifier.weight(0.25f),
                                             this@MainActivity::recordAnAnimal
                                         )
