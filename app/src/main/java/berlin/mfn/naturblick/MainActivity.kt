@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
@@ -40,18 +39,12 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -62,7 +55,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import berlin.mfn.naturblick.ui.character.CharacterActivity
 import berlin.mfn.naturblick.ui.composable.NaturblickTheme
 import berlin.mfn.naturblick.ui.fieldbook.CreateAudioObservation
@@ -97,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         })
         setContent {
             val drawerState = rememberDrawerState(DrawerValue.Closed)
-            var openBirdNetDialog by remember { mutableStateOf(false) }
             NaturblickTheme {
                 ModalDrawer(
                     drawerState = drawerState,
@@ -118,12 +109,11 @@ class MainActivity : AppCompatActivity() {
                                 this@MainActivity::openFieldbook
                             )
                             MenuButton(
-                                R.string.record_an_animal, R.drawable.ic_audio24, drawerState
-                            ) {
-                                if (Settings.showBirdNetDialog(this@MainActivity)) openBirdNetDialog =
-                                    true
-                                else recordAnAnimal()
-                            }
+                                R.string.record_a_bird,
+                                R.drawable.ic_audio24,
+                                drawerState,
+                                this@MainActivity::recordAnAnimal
+                            )
                             MenuButton(
                                 R.string.photograph_a_plant,
                                 R.drawable.ic_photo24,
@@ -246,13 +236,10 @@ class MainActivity : AppCompatActivity() {
                                         HomeButton(
                                             NaturblickTheme.colors.onPrimaryButtonPrimary,
                                             R.drawable.ic_microphone,
-                                            R.string.record_an_animal,
-                                            Modifier.weight(0.25f)
-                                        ) {
-                                            if (Settings.showBirdNetDialog(this@MainActivity)) openBirdNetDialog =
-                                                true
-                                            else recordAnAnimal()
-                                        }
+                                            R.string.record_a_bird,
+                                            Modifier.weight(0.25f),
+                                            this@MainActivity::recordAnAnimal
+                                        )
                                         Spacer(Modifier.weight(0.0625f))
                                         HomeButton(
                                             NaturblickTheme.colors.onPrimaryButtonPrimary,
@@ -295,12 +282,6 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
 
-                            if (openBirdNetDialog) {
-                                BirdNetDialog {
-                                    openBirdNetDialog = false
-                                    recordAnAnimal()
-                                }
-                            }
                         }
                     }
                 }
@@ -387,51 +368,14 @@ class MainActivity : AppCompatActivity() {
                         if (isClosed) open() else close()
                     }
                 }
-            }, modifier = modifier
+            },
+            modifier = modifier
         ) {
             Icon(
                 imageVector = Icons.Filled.Menu,
                 contentDescription = stringResource(R.string.back),
                 tint = NaturblickTheme.colors.onPrimaryHighEmphasis
             )
-        }
-    }
-
-    @Composable
-    private fun BirdNetDialog(onClose: () -> Unit) {
-        Dialog(onClose) {
-            Surface(
-                shape = RoundedCornerShape(16.dp), color = NaturblickTheme.colors.secondary
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        stringResource(R.string.new_birdnet),
-                        style = NaturblickTheme.typography.subtitle2,
-                        color = NaturblickTheme.colors.onSecondary
-                    )
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.default_margin)))
-                    Text(
-                        stringResource(R.string.new_birdnet_text),
-                        style = NaturblickTheme.typography.body2,
-                        color = NaturblickTheme.colors.onSecondary
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = onClose) {
-                            Text(
-                                stringResource(R.string.close),
-                                style = NaturblickTheme.typography.button,
-                                color = NaturblickTheme.colors.onSecondaryButtonPrimary
-                            )
-                        }
-                    }
-                }
-            }
         }
     }
 
