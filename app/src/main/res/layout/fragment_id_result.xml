@@ -117,19 +117,19 @@
             android:visibility="gone">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/no_species_found"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/default_margin"
-                android:text="@string/no_species_found"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="?attr/colorOnSecondaryHighEmphasis"/>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/no_species_found_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/no_species_found_description"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?attr/colorOnSecondaryMediumEmphasis"
                 android:textColorLink="?attr/colorOnSecondarySignalLow"
@@ -178,13 +178,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/image_crop_again"
+                android:id="@+id/select_again"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/default_margin">
 
                 <ImageView
-                    android:id="@+id/image_crop_again_image"
+                    android:id="@+id/select_again_image"
                     android:layout_width="@dimen/avatar_size"
                     android:layout_height="@dimen/avatar_size"
                     android:src="@drawable/ic_avatar_unknown"
@@ -192,21 +192,20 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/image_crop_again_name"
+                    android:id="@+id/select_again_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_margin"
-                    android:text="@string/crop_again"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorOnSecondaryHighEmphasis"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/image_crop_again_chevron"
+                    app:layout_constraintEnd_toStartOf="@id/select_again_chevron"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@id/image_crop_again_image"
-                    app:layout_constraintTop_toTopOf="@id/image_crop_again_image" />
+                    app:layout_constraintStart_toEndOf="@id/select_again_image"
+                    app:layout_constraintTop_toTopOf="@id/select_again_image" />
 
                 <ImageView
-                    android:id="@+id/image_crop_again_chevron"
+                    android:id="@+id/select_again_chevron"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_margin"
