@@ -199,7 +199,6 @@ class MainActivity : AppCompatActivity() {
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .padding(bottom = padding.calculateBottomPadding())
                             ) {
                                 Spacer(Modifier.weight(0.5f))
                                 Image(
@@ -230,7 +229,8 @@ class MainActivity : AppCompatActivity() {
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .background(NaturblickTheme.colors.primary),
+                                        .background(NaturblickTheme.colors.primary)
+                                        .padding(bottom = padding.calculateBottomPadding()),
                                 ) {
                                     Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
                                     Text(
