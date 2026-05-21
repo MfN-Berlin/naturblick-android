@@ -27,7 +27,7 @@ android {
     defaultConfig {
         applicationId "com.mfn_berlin_stadtnatur_entdecken.naturblick"
         minSdk 23
-        targetSdk 35
+        targetSdk 36
         versionCode Integer.parseInt(version.getProperty("version.code"))
         versionName version.getProperty("version.name")
         def strapiBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
