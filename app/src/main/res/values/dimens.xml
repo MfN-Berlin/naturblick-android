@@ -22,6 +22,7 @@
     <dimen name="avatar_size">64dp</dimen>
     <dimen name="avatar_text_offset">12dp</dimen>
     <dimen name="double_margin">28dp</dimen>
+    <dimen name="quad_margin">56dp</dimen>
     <dimen name="hr_height">1dp</dimen>
     <dimen name="selected_width">1dp</dimen>
     <dimen name="not_selected_width">0dp</dimen>

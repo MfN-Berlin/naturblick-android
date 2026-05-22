@@ -30,8 +30,10 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
@@ -99,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val drawerState = rememberDrawerState(DrawerValue.Closed)
             var openBirdNetDialog by remember { mutableStateOf(false) }
+             val menuScrollState = rememberScrollState()
             NaturblickTheme {
                 ModalDrawer(
                     drawerState = drawerState,
@@ -111,6 +114,7 @@ class MainActivity : AppCompatActivity() {
                                 .windowInsetsPadding(WindowInsets.systemBars)
                                 .padding(dimensionResource(R.dimen.default_margin))
                                 .padding(top = dimensionResource(R.dimen.double_margin))
+                                .verticalScroll(menuScrollState)
                         ) {
                             MenuButton(
                                 R.string.field_book,
@@ -264,6 +268,8 @@ class MainActivity : AppCompatActivity() {
                         .fillMaxWidth()
                         .windowInsetsPadding(WindowInsets.systemBars)
                 ) {
+                    Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
+
                     content()
                 }
             }
@@ -318,6 +324,11 @@ class MainActivity : AppCompatActivity() {
                 modifier = Modifier
                     .background(NaturblickTheme.colors.primary)
                     .fillMaxHeight()
+                    .padding(
+                        start = dimensionResource(R.dimen.quad_margin),
+                        end = dimensionResource(R.dimen.quad_margin)
+                    )
+                    .windowInsetsPadding(WindowInsets.systemBars)
             ) {
                 content()
             }
@@ -326,9 +337,6 @@ class MainActivity : AppCompatActivity() {
 
     @Composable
     private fun HomeButtons(openBirdNetDialog: () -> Unit) {
-
-        Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
-
         Text(
             stringResource(R.string.home_identify_animals_and_plants),
             style = NaturblickTheme.typography.h6,
