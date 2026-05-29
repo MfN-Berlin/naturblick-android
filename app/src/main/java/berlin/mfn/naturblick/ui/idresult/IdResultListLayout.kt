@@ -29,7 +29,7 @@ class IdResultListLayout(context: Context, attributeSet: AttributeSet) :
                     false
                 )
             binding.idResult = idResult
-            val attributeId = if(idResult.score > 50)  R.attr.colorOnSecondarySignalMedium else R.attr.colorOnSecondarySignalLow
+            val attributeId = if(idResult.score > 50)  R.attr.colorOnSecondarySignalMedium else R.attr.colorOnSecondaryHighEmphasis
             val value = TypedValue()
             context.theme.resolveAttribute(attributeId, value, true)
             binding.score.setTextColor(value.data)
