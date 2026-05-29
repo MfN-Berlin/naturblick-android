@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="idResult"
             type="berlin.mfn.naturblick.ui.idresult.IdResultWithSpecies" />
@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginTop="@dimen/avatar_text_offset"
-            android:text="@{idResult.species.nameWithFallback}"
+            android:text="@{idResult.species.name}"
+            android:visibility="@{idResult.species.name != null ? View.VISIBLE : View.GONE}"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="?attr/colorOnSecondaryHighEmphasis"
             app:layout_constraintEnd_toStartOf="@id/chevron"
@@ -46,6 +47,20 @@
             app:layout_constraintVertical_bias="0"
             app:layout_constraintStart_toEndOf="@id/species_image"
             app:layout_constraintTop_toTopOf="@id/species_image" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sciname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="@{idResult.species.sciname}"
+            android:textAppearance="?attr/textAppearanceSubtitle3"
+            android:textColor="?attr/colorOnSecondarySignalLow"
+            app:layout_constraintEnd_toStartOf="@id/chevron"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintStart_toEndOf="@id/species_image"
+            app:layout_constraintTop_toBottomOf="@id/name"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/score"
@@ -59,7 +74,7 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintStart_toEndOf="@id/species_image"
-            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/sciname"
             app:layout_constraintBottom_toTopOf="@id/barrier"
             />
 
