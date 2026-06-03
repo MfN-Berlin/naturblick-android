@@ -7,6 +7,7 @@ package berlin.mfn.naturblick
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -20,17 +21,20 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
@@ -39,7 +43,6 @@ import androidx.compose.material.DrawerValue
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalDrawer
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -56,6 +59,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -98,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val drawerState = rememberDrawerState(DrawerValue.Closed)
             var openBirdNetDialog by remember { mutableStateOf(false) }
+             val menuScrollState = rememberScrollState()
             NaturblickTheme {
                 ModalDrawer(
                     drawerState = drawerState,
@@ -110,6 +115,8 @@ class MainActivity : AppCompatActivity() {
                                 .windowInsetsPadding(WindowInsets.systemBars)
                                 .padding(dimensionResource(R.dimen.default_margin))
                                 .padding(top = dimensionResource(R.dimen.double_margin))
+                                .windowInsetsPadding(WindowInsets.displayCutout)
+                                .verticalScroll(menuScrollState)
                         ) {
                             MenuButton(
                                 R.string.field_book,
@@ -174,138 +181,222 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                     }) {
-                    Box(
-                        modifier = Modifier
-                            .background(NaturblickTheme.colors.primary)
-                            .fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.background_kingfisher),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Scaffold(
-                            backgroundColor = Color.Unspecified,
-                            contentWindowInsets = WindowInsets.navigationBars,
-                            topBar = {
-                                Menu(
-                                    drawerState,
-                                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
-                                )
-                            }) { padding ->
-                            Column(
-                                verticalArrangement = Arrangement.Bottom,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(bottom = padding.calculateBottomPadding())
-                            ) {
-                                Spacer(Modifier.weight(0.5f))
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_logo),
-                                    contentDescription = null,
-                                    modifier = Modifier.height(64.dp)
-                                )
-                                Box(
-                                    contentAlignment = Alignment.BottomStart,
-                                    modifier = Modifier
-                                        .weight(0.5f)
-                                        .padding(horizontal = dimensionResource(R.dimen.default_margin))
-                                        .fillMaxWidth()
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.ic_museum_logo_inverted),
-                                        contentDescription = null,
-                                        modifier = Modifier.height(48.dp)
-                                    )
-                                }
-                                Image(
-                                    painter = painterResource(id = R.drawable.oval),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.FillWidth,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(NaturblickTheme.colors.primary),
-                                ) {
-                                    Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
-                                    Text(
-                                        stringResource(R.string.home_identify_animals_and_plants),
-                                        style = NaturblickTheme.typography.h6,
-                                        color = NaturblickTheme.colors.onPrimaryHighEmphasis,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
-                                    Row(verticalAlignment = Alignment.Top) {
-                                        Spacer(Modifier.weight(0.0625f))
-                                        HomeButton(
-                                            NaturblickTheme.colors.onPrimaryButtonPrimary,
-                                            R.drawable.ic_microphone,
-                                            R.string.record_an_animal,
-                                            Modifier.weight(0.25f)
-                                        ) {
-                                            if (Settings.showBirdNetDialog(this@MainActivity)) openBirdNetDialog =
-                                                true
-                                            else recordAnAnimal()
-                                        }
-                                        Spacer(Modifier.weight(0.0625f))
-                                        HomeButton(
-                                            NaturblickTheme.colors.onPrimaryButtonPrimary,
-                                            R.drawable.ic_features,
-                                            R.string.select_characteristics,
-                                            Modifier.weight(0.25f),
-                                            this@MainActivity::selectCharacteristics
-                                        )
-                                        Spacer(Modifier.weight(0.0625f))
-                                        HomeButton(
-                                            NaturblickTheme.colors.onPrimaryButtonPrimary,
-                                            R.drawable.ic_photo24,
-                                            R.string.photograph_a_plant,
-                                            Modifier.weight(0.25f),
-                                            this@MainActivity::photographAPlant
-                                        )
-                                        Spacer(Modifier.weight(0.0625f))
-                                    }
-                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
-                                    Row(verticalAlignment = Alignment.Top) {
-                                        Spacer(Modifier.weight(0.19f))
-                                        HomeButton(
-                                            NaturblickTheme.colors.onPrimaryButtonSecondary,
-                                            R.drawable.ic_feldbuch24,
-                                            R.string.field_book,
-                                            Modifier.weight(0.22f),
-                                            this@MainActivity::openFieldbook
-                                        )
-                                        Spacer(Modifier.weight(0.18f))
-                                        HomeButton(
-                                            NaturblickTheme.colors.onPrimaryButtonSecondary,
-                                            R.drawable.ic_specportraits,
-                                            R.string.species_portraits,
-                                            Modifier.weight(0.22f),
-                                            this@MainActivity::portraits
-                                        )
-                                        Spacer(Modifier.weight(0.19f))
-                                    }
-                                    Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
-                                }
-                            }
-
-                            if (openBirdNetDialog) {
-                                BirdNetDialog {
-                                    openBirdNetDialog = false
-                                    recordAnAnimal()
-                                }
+                    Layout(drawerState) {
+                        HomeButtons {
+                            openBirdNetDialog = true
+                        }
+                        if (openBirdNetDialog) {
+                            BirdNetDialog {
+                                openBirdNetDialog = false
+                                recordAnAnimal()
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    @Composable
+    private fun Layout(drawerState: DrawerState, content: @Composable () -> Unit) {
+        val orientation = LocalConfiguration.current.orientation
+        if (orientation == ORIENTATION_LANDSCAPE) {
+            LandscapeLayout(drawerState) {
+                content()
+            }
+        } else {
+            PortraitLayout(drawerState) {
+                content()
+            }
+        }
+    }
+
+    @Composable
+    private fun PortraitLayout(drawerState: DrawerState, content: @Composable () -> Unit) {
+        Box(
+            modifier = Modifier
+                .background(NaturblickTheme.colors.primary)
+                .fillMaxSize()
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.background_kingfisher),
+                contentDescription = null,
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Menu(
+                drawerState,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .windowInsetsPadding(WindowInsets.statusBars)
+
+            )
+            Column(
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Spacer(Modifier.weight(0.5f))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_logo),
+                    contentDescription = null,
+                    modifier = Modifier.height(64.dp)
+                )
+                Box(
+                    contentAlignment = Alignment.BottomStart,
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(horizontal = dimensionResource(R.dimen.default_margin))
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_museum_logo_inverted),
+                        contentDescription = null,
+                        modifier = Modifier.height(48.dp)
+                    )
+                }
+                Image(
+                    painter = painterResource(id = R.drawable.oval),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .background(NaturblickTheme.colors.primary)
+                        .fillMaxWidth()
+                        .windowInsetsPadding(WindowInsets.systemBars)
+                ) {
+                    Spacer(Modifier.height(dimensionResource(R.dimen.default_margin)))
+
+                    content()
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun LandscapeLayout(drawerState: DrawerState, content: @Composable () -> Unit) {
+        Row {
+            Box(contentAlignment = Alignment.CenterEnd) {
+                Image(
+                    painter = painterResource(id = R.drawable.background_kingfisher),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillHeight,
+                    modifier = Modifier.fillMaxHeight()
+                )
+                Menu(
+                    drawerState,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .windowInsetsPadding(WindowInsets.statusBars)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.ic_logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .width(128.dp)
+                        .align(Alignment.Center)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.Bottom
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_museum_logo_inverted),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(64.dp)
+                            .windowInsetsPadding(WindowInsets.systemBars)
+                            .padding(end = dimensionResource(R.dimen.default_margin))
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.oval_landscape),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillHeight,
+                        modifier = Modifier.fillMaxHeight()
+                    )
+                }
+            }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .background(NaturblickTheme.colors.primary)
+                    .fillMaxHeight()
+                    .padding(
+                        start = dimensionResource(R.dimen.quad_margin),
+                        end = dimensionResource(R.dimen.quad_margin)
+                    )
+                    .windowInsetsPadding(WindowInsets.systemBars)
+            ) {
+                content()
+            }
+        }
+    }
+
+    @Composable
+    private fun HomeButtons(openBirdNetDialog: () -> Unit) {
+        Text(
+            stringResource(R.string.home_identify_animals_and_plants),
+            style = NaturblickTheme.typography.h6,
+            color = NaturblickTheme.colors.onPrimaryHighEmphasis,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
+        Row(verticalAlignment = Alignment.Top) {
+            Spacer(Modifier.weight(0.0625f))
+            HomeButton(
+                NaturblickTheme.colors.onPrimaryButtonPrimary,
+                R.drawable.ic_microphone,
+                R.string.record_an_animal,
+                Modifier.weight(0.25f)
+            ) {
+                if (Settings.showBirdNetDialog(this@MainActivity)) openBirdNetDialog()
+                else recordAnAnimal()
+            }
+            Spacer(Modifier.weight(0.0625f))
+            HomeButton(
+                NaturblickTheme.colors.onPrimaryButtonPrimary,
+                R.drawable.ic_features,
+                R.string.select_characteristics,
+                Modifier.weight(0.25f),
+                this@MainActivity::selectCharacteristics
+            )
+            Spacer(Modifier.weight(0.0625f))
+            HomeButton(
+                NaturblickTheme.colors.onPrimaryButtonPrimary,
+                R.drawable.ic_photo24,
+                R.string.photograph_a_plant,
+                Modifier.weight(0.25f),
+                this@MainActivity::photographAPlant
+            )
+            Spacer(Modifier.weight(0.0625f))
+        }
+        Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
+        Row(verticalAlignment = Alignment.Top) {
+            Spacer(Modifier.weight(0.19f))
+            HomeButton(
+                NaturblickTheme.colors.onPrimaryButtonSecondary,
+                R.drawable.ic_feldbuch24,
+                R.string.field_book,
+                Modifier.weight(0.22f),
+                this@MainActivity::openFieldbook
+            )
+            Spacer(Modifier.weight(0.18f))
+            HomeButton(
+                NaturblickTheme.colors.onPrimaryButtonSecondary,
+                R.drawable.ic_specportraits,
+                R.string.species_portraits,
+                Modifier.weight(0.22f),
+                this@MainActivity::portraits
+            )
+            Spacer(Modifier.weight(0.19f))
+        }
+        Spacer(Modifier.height(dimensionResource(R.dimen.double_margin)))
     }
 
     @Composable
