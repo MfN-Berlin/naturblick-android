@@ -15,6 +15,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 private val contentType = "application/json".toMediaType()
@@ -38,8 +39,11 @@ interface DjangoApiService {
     @GET("app-content/character-values")
     suspend fun getCharacterValues(): List<CharacterValue>
 
-    @GET("groups/")
+    @GET("app-content/groups")
     fun getGroups(): Call<List<DjangoGroup>>
+
+    @GET("/strapi/{path}")
+    suspend fun getOldStrapiFile(@Path("path") path: String): ResponseBody
 }
 
 object DjangoApi {
