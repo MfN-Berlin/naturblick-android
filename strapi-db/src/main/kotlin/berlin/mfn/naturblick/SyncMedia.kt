@@ -33,9 +33,6 @@ open class SyncMedia : DefaultTask() {
     }
 
     @Input
-    val strapiBaseUrl: Property<String> = project.objects.property(String::class.java)
-
-    @Input
     val djangoBaseUrl: Property<String> = project.objects.property(String::class.java)
 
     @OutputDirectory
@@ -120,15 +117,12 @@ open class SyncMedia : DefaultTask() {
     @Suppress("NewApi")
     @TaskAction
     fun doAction() {
-        val baseUrl = strapiBaseUrl.get()
-        val strapiService = StrapiApi.service(baseUrl)
-
         val djangoBaseUrl = djangoBaseUrl.get()
         val djangoService = DjangoApi.service(djangoBaseUrl)
 
         runBlocking {
             loadGroups(djangoService)
-            loadCharacters(djangoService, strapiService)
+            loadCharacters(djangoService)
         }
     }
     private val client = OkHttpClient()
@@ -184,8 +178,7 @@ open class SyncMedia : DefaultTask() {
 
     @Suppress("NewApi")
     private suspend fun loadCharacters(
-        djangoService: DjangoApiService,
-        strapiService: StrapiApiService
+        djangoService: DjangoApiService
     ) {
         val characterValues = djangoService.getCharacterValues()
 
@@ -195,7 +188,7 @@ open class SyncMedia : DefaultTask() {
                 "character_${it.id}.xml"
             )
             it.image?.let { image ->
-                strapiService.getFile(image).byteStream().use { svgStream ->
+                djangoService.getOldStrapiFile(image).byteStream().use { svgStream ->
                     val tmpDir = project.layout.buildDirectory.dir("tmp").get().asFile
                     val svgPath: Path = tmpDir.toPath().resolve("${it.id}.svg")
                     project.mkdir(tmpDir)
