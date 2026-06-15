@@ -31,8 +31,8 @@ android {
         versionCode Integer.parseInt(version.getProperty("version.code"))
         versionName version.getProperty("version.name")
         def djangoBaseUrl = "https://naturblick.museumfuernaturkunde.berlin/"
-        syncReleaseMedia.djangoBaseUrl = djangoBaseUrl + "django/"
-        syncReleaseDb.djangoBaseUrl = djangoBaseUrl + "django/"
+        syncReleaseMedia.djangoBaseUrl = djangoBaseUrl
+        syncReleaseDb.djangoBaseUrl = djangoBaseUrl
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "DJANGO_URL", "\"$djangoBaseUrl\"")
         buildConfigField("String", "BACKEND_URL", "\"https://naturblick.museumfuernaturkunde.berlin/api/\"")
