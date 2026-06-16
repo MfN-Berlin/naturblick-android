@@ -114,20 +114,6 @@
         <item name="iconTint">?attr/colorOnPrimaryHighEmphasis</item>
     </style>
 
-    <style name="Widget.Naturblick.NavigationView" parent="Widget.MaterialComponents.NavigationView">
-        <item name="android:background">?attr/colorPrimaryVariant</item>
-        <item name="itemIconTint">@color/navigation_item_color</item>
-        <item name="itemTextColor">@color/navigation_item_color</item>
-        <item name="itemTextAppearance">@style/TextAppearance.Naturblick.MenuItem</item>
-        <item name="itemShapeFillColor">@color/navigation_item_background_color</item>
-        <item name="itemShapeInsetStart">0dp</item>
-        <item name="itemShapeInsetTop">0dp</item>
-        <item name="itemShapeInsetEnd">0dp</item>
-        <item name="itemShapeInsetBottom">0dp</item>
-        <item name="itemShapeAppearance">@drawable/shape_rectangle</item>
-        <item name="itemMaxLines">2</item>
-    </style>
-
     <style name="Widget.Naturblick.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">?attr/colorOnSecondaryMinimumEmphasis</item>
         <item name="iconTint">?attr/colorOnSecondaryMinimumEmphasis</item>
