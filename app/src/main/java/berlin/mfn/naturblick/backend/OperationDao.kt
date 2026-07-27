@@ -9,6 +9,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.util.Log
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.UUID
+import java.util.concurrent.ExecutionException
 
 @Dao
 interface OperationDao {
@@ -141,23 +143,28 @@ interface OperationDao {
     private suspend fun jpegCopy(context: Context, local: Uri, upload: File): File? =
         withContext(Dispatchers.IO) {
             NetworkResult.ioToFileException {
-                Glide
-                    .with(context)
-                    .load(local)
-                    .centerInside()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .submit(
-                        PublicBackendApiService.MAX_RESOLUTION,
-                        PublicBackendApiService.MAX_RESOLUTION
-                    ).get()?.let { drawable ->
-                        val image = (drawable as BitmapDrawable).bitmap
+                try {
+                    Glide
+                        .with(context)
+                        .load(local)
+                        .centerInside()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .submit(
+                            PublicBackendApiService.MAX_RESOLUTION,
+                            PublicBackendApiService.MAX_RESOLUTION
+                        ).get()?.let { drawable ->
+                            val image = (drawable as BitmapDrawable).bitmap
 
-                        upload.outputStream().use { os ->
-                            image.compress(Bitmap.CompressFormat.JPEG, Media.JPEG_QUALITY, os)
+                            upload.outputStream().use { os ->
+                                image.compress(Bitmap.CompressFormat.JPEG, Media.JPEG_QUALITY, os)
+                            }
+                            upload
                         }
-                        upload
-                    }
+                } catch (e: ExecutionException) {
+                    Log.e("Glide error", "jpegCopy failed", e.cause)
+                    throw e
+                }
             }
         }
 
