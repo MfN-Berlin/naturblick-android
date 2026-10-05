@@ -100,16 +100,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/imprint_8"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:textColor="?attr/colorOnSecondaryMediumEmphasis"
-                />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/imprint_9"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="?attr/colorOnSecondaryMediumEmphasis"

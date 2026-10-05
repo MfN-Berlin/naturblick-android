@@ -164,10 +164,9 @@ If you want, you can attribute your authorship with a name. The material will th
     <string name="imprint_2">Landesunmittelbare rechtsfähige Stiftung des öffentlichen Rechts</string>
     <string name="imprint_3">Telefon: +49 (0)30 2093-8591\nFax: +49 (0)30 2093-8561</string>
     <string name="imprint_4">E-Mail: <a href="mailto:info@mfn.berlin">info(at)mfn.berlin</a>\nInternet: <a href="https://www.museumfuernaturkunde.berlin">https://www.museumfuernaturkunde.berlin</a></string>
-    <string name="imprint_5">Authorized representative person\nProf. Johannes Vogel, PhD (Director General),\nStephan Junker (Managing Director)</string>
+    <string name="imprint_5">Authorized representative person\nProf. Johannes Vogel, PhD (Director General)</string>
     <string name="imprint_6">Controlling authority\nSenatsverwaltung für Wirtschaft, Technologie und Forschung\nMartin-Luther-Straße 105, 10825 Berlin</string>
     <string name="imprint_7">Content responsibility (German law § 55 Abs. 2 RStV)\nUlrike Sturm</string>
-    <string name="imprint_8">UVAT-ID (German law § 27 a Umsatzsteuergesetz) Bank account\nDeutsche Bank\naccount number: 512 087 800\nbank code: 100 708 48\nIBAN: DE40 1007\n0848 051 2087 800\nBIC/SWIFT: DEUTDEDB110</string>
     <string name="imprint_9">Funding 2016-2021: German Federal Ministry for the Environment, Nature Conservation and Nuclear Safety (BMU)</string>
     <string name="imprint_10">Further information <a href="https://naturblick.museumfuernaturkunde.berlin/about?lang=en">here</a>.</string>
     <string name="imprint_sources_title">Sources</string>

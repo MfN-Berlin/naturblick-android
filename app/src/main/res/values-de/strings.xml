@@ -123,11 +123,10 @@
     <string name="imprint_2">Landesunmittelbare rechtsfähige Stiftung des öffentlichen Rechts</string>
     <string name="imprint_3">Telefon: +49 (0)30 2093-8591\nFax: +49 (0)30 2093-8561</string>
     <string name="imprint_4">E-Mail: <a href="mailto:info@mfn.berlin">info(at)mfn.berlin</a>\nInternet: <a href="https://www.museumfuernaturkunde.berlin">https://www.museumfuernaturkunde.berlin</a></string>
-    <string name="imprint_5">Vertretungsberechtigte Person\nProf. Johannes Vogel, PhD (Generaldirektor),\nStephan Junker (Geschäftsführer)</string>
+    <string name="imprint_5">Vertretungsberechtigte Person\nProf. Johannes Vogel, PhD (Generaldirektor)</string>
     <string name="imprint_6">Zuständige Aufsichtsbehörde\nSenatsverwaltung für Wirtschaft, Technologie und Forschung\nMartin-Luther-Straße 105, 10825 Berlin</string>
     <string name="imprint_7">Inhaltlich Verantwortliche gemäß § 55 Abs. 2 RStV\nUlrike Sturm</string>
-    <string name="imprint_8">Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz\nDE262426477\nBankverbindung\nBerliner Bank AG\nKonto-Nummer: 512 087 800\nBankleitzahl: 100 708 48\nIBAN: DE40 1007 0848 051 2087 800\nBIC/SWIFT: DEUTDEDB110</string>
-    <string name="imprint_9">Förderung 2016-2021 durch Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit (BMU)</string>
+        <string name="imprint_9">Förderung 2016-2021 durch Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit (BMU)</string>
     <string name="imprint_10">Weitere Informationen <a href="https://naturblick.museumfuernaturkunde.berlin/about?lang=de">hier</a>.</string>
     <string name="imprint_sources_title">Quellen</string>
     <string name="imprint_sources">Die Quellen zu den Bild- und Tonmaterialien sind in den einzelnen Artportraits angegeben. Bild- und Tonmaterialien von Arten, die noch kein Artportrait haben oder aus anderen Kontexten der App wie z.B. Bestimmungshilfen sind unter weitere Quellen angeben. Deutsche und englische Namen stammen teilweise von GBIF.org (2022), GBIF Home Page. Verfügbar unter: <a href="https://www.gbif.org">https://www.gbif.org</a> [28 September 2022].</string>
